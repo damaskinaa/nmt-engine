@@ -29,7 +29,10 @@ def cytoscape_js() -> str:
 
 def _script_json(data: object) -> str:
     """JSON safe to embed in a <script> element."""
-    return json.dumps(data, sort_keys=True).replace("</", "<\\/")
+    text = json.dumps(data, sort_keys=True)
+    for ch, esc in (("<", "\\u003c"), (">", "\\u003e"), ("&", "\\u0026")):
+        text = text.replace(ch, esc)
+    return text
 
 
 def write_graph_html(graph: dict, path: Path) -> Path:

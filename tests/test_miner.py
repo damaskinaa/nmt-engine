@@ -339,3 +339,15 @@ def test_llm_disabled_without_key_or_with_flag(tmp_path, monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "k")
     with pytest.raises(LLMDisabled):
         LLM(tmp_path, no_llm=True, cache_dir=tmp_path / "c").complete("x")
+
+
+def test_graph_json_cannot_break_out_of_script(tmp_path: Path) -> None:
+    from nmt_engine.graph.viewer import _script_json, write_graph_html
+
+    evil = "</SCRIPT><script>alert(1)</script><!--<script>"
+    assert "<" not in _script_json({"label": evil})
+    assert json.loads(_script_json({"label": evil}))["label"] == evil
+    html = write_graph_html(
+        {"nodes": [{"data": {"id": "j", "label": evil}}], "edges": []}, tmp_path / "g.html"
+    ).read_text()
+    assert "alert(1)</script>" not in html and "<!--<script>" not in html
