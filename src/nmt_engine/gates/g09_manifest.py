@@ -17,9 +17,12 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
     findings: list[Finding] = []
     if m.manifest_sha256 != manifest_hash(m.frozen):
         findings.append(Finding("run", m.run_id, "manifest_sha256 does not match frozen list"))
+    root = run.run_dir.resolve()
     for f in m.frozen:
-        path = run.run_dir / f.path
-        if not path.is_file():
+        path = (run.run_dir / f.path).resolve()
+        if not path.is_relative_to(root):
+            findings.append(Finding("run", m.run_id, f"frozen path {f.path} is outside the run"))
+        elif not path.is_file():
             findings.append(Finding("run", m.run_id, f"frozen file {f.path} missing"))
         elif sha256_file(path) != f.sha256:
             findings.append(Finding("run", m.run_id, f"frozen file {f.path} changed"))

@@ -105,6 +105,7 @@ def test_demote_collapses_astroturf_and_single_signals(tmp_path):
     from nmt_engine.store import load_run
 
     assert load_run(run).claims["C1"].voices == 3
+    assert run_gates(run, CFG).passed
     run11 = _copy("broken_g11", tmp_path)
     demote(run11, CFG)
     d = load_run(run11)
@@ -121,3 +122,20 @@ def test_demote_flags_unfixable(tmp_path):
     from nmt_engine.store import load_run
 
     assert "g04_calc_recompute" in load_run(run).calcs["K3"].flags
+
+
+def test_demote_recounts_overstated_voices(tmp_path):
+    run = _copy("broken_g02", tmp_path)
+    demote(run, CFG)
+    assert run_gates(run, CFG).passed
+
+
+def test_demote_retracts_calcs_on_dropped_sources(tmp_path):
+    run = _copy("broken_g07", tmp_path)
+    demote(run, CFG)
+    from nmt_engine.store import load_run
+
+    data = load_run(run)
+    assert "S-f1" not in data.sources
+    assert all(i.source_id != "S-f1" for c in data.calcs.values() for i in c.inputs)
+    assert 7 not in run_gates(run, CFG).failed_gates()

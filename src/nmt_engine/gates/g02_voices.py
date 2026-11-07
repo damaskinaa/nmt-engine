@@ -28,13 +28,13 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
         if claim.status != "PUBLIC_VOICE":
             continue
         voices = len(distinct_authors(run, claim))
-        if claim.voices != voices:
+        if claim.voices > voices:  # understating (e.g. after astroturf collapse) is safe
             findings.append(
                 Finding(
                     "claim",
                     claim.id,
                     f"declared voices={claim.voices} but distinct authors={voices}",
-                    "single_signal" if voices < 2 else "flag",
+                    "recount",
                 )
             )
         if voices < 2 and claim.id in seg_refs:

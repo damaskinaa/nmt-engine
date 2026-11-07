@@ -15,7 +15,11 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
             findings.append(Finding("source", src.id, f"{src.url} not in retrieval log", "drop"))
             continue
         text = run.source_text(src)
-        if text is not None and sha256_text(text) != src.sha256:
+        if text is None:
+            findings.append(
+                Finding("source", src.id, f"stored text {src.text_path} missing", "drop")
+            )
+        elif sha256_text(text) != src.sha256:
             findings.append(Finding("source", src.id, "stored text sha256 mismatch", "drop"))
     for claim in run.claims.values():
         for ref in claim.source_refs:

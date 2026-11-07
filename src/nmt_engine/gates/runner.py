@@ -102,8 +102,10 @@ def demote(run_dir: Path, cfg: GateConfig | None = None) -> dict:
 
     demote        PUBLIC_VOICE -> HYPOTHESIS (gate 1)
     single_signal claim marked single_signal; removed from Segment/why_we_win; Jobs -> thin
+    recount       claim voices set to the distinct-author count
     collapse      claim voices set to the post-astroturf count
-    drop          source retracted; refs to it removed; claims left without refs retracted
+    drop          source retracted; refs to it removed; claims left without refs retracted;
+                  Calcs using a retracted source or claim retracted
     flag          object gets a gNN flag (excluded from display)
     """
     cfg = cfg or GateConfig()
@@ -158,6 +160,11 @@ def demote(run_dir: Path, cfg: GateConfig | None = None) -> dict:
                     cur = get("job", job.id)
                     if rec.id in cur.claim_ids:
                         put("job", _bump(cur, flag, thin=True))
+            elif f.action == "recount" and f.object_type == "claim":
+                from nmt_engine.gates.g02_voices import distinct_authors
+
+                n = len(distinct_authors(run, rec))
+                put("claim", _bump(rec, flag, voices=n, single_signal=n < 2 or rec.single_signal))
             elif f.action == "collapse" and f.object_type == "claim":
                 if clusters is None:
                     clusters = near_duplicate_clusters(run, cfg)
@@ -194,6 +201,11 @@ def demote(run_dir: Path, cfg: GateConfig | None = None) -> dict:
                         single_signal=True,
                     ),
                 )
+    gone_claims = {c.id for c in run.claims.values() if (get("claim", c.id) or c).retracted}
+    for calc in run.calcs.values():
+        cur = get("calc", calc.id)
+        if any(i.source_id in dropped_sources or i.claim_id in gone_claims for i in cur.inputs):
+            put("calc", _bump(cur, "dropped_source", retracted=True))
     store = run.store
     for rec in changed.values():
         store.append(rec)

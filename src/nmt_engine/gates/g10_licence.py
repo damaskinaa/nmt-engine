@@ -1,7 +1,7 @@
-"""Gate 10: no run output shares a 12-word sequence with the local forbidden corpus."""
+"""Gate 10: no run output or prompt (prompts/) shares a 12-word run with the forbidden corpus."""
 
 from nmt_engine.gates.base import Finding, GateConfig, gate
-from nmt_engine.gates.outputs import output_texts
+from nmt_engine.gates.outputs import output_texts, prompt_texts
 from nmt_engine.licence import corpus_shingles, find_overlaps
 from nmt_engine.store import RunData
 
@@ -13,7 +13,7 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
     corpus = corpus_shingles(cfg.forbidden_corpus, cfg.ngram)
     if not corpus:
         return []
-    items = list(output_texts(run))
+    items = list(output_texts(run)) + list(prompt_texts(run))
     labelled = [(f"{t}\x00{i}", text) for t, i, text in items]
     return [
         Finding(*label.split("\x00", 1), f"shares {cfg.ngram}-gram: {gram!r}")

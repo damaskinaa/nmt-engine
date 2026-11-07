@@ -83,7 +83,8 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
     for claim in run.claims.values():
         authors = {s.author_hash for s in run.claim_sources(claim) if s.author_hash}
         eff = effective_voices(run, claim, clusters)
-        if eff < len(authors):
+        declared = claim.voices if claim.voices is not None else len(authors)
+        if eff < len(authors) and declared > eff:
             findings.append(
                 Finding(
                     "claim",

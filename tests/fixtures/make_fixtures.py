@@ -315,14 +315,14 @@ def clean() -> dict:
                 {"family": "revealed_price", "calc_id": "K3", "interval_80": [20, 33]},
             ],
             "combined": {"median": 27, "interval_80": [20, 35]},
-            "calibration_ids": ["CAL1"],
+            "calibration_ids": ["CAL1", "CAL2", "CAL3"],
             "forecast_id": "F1",
         },
     ]
     calibrations = [
         {
-            "id": "CAL1",
-            "method_family": "revealed_price",
+            "id": f"CAL{i}",
+            "method_family": fam,
             "reference_class": "fixture class",
             "as_of_rule": "inputs dated <= T-3y",
             "n": 24,
@@ -330,7 +330,8 @@ def clean() -> dict:
             "bias_log_ratio": -0.05,
             "conformal_q80": 0.31,
             "passed": True,
-        },
+        }
+        for i, fam in enumerate(["revealed_price", "statistical", "supply"], start=1)
     ]
     forecasts = [
         {

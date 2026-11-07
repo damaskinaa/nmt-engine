@@ -9,7 +9,7 @@ from typing import Literal
 
 from nmt_engine.store import RunData
 
-Action = Literal["demote", "drop", "flag", "single_signal", "collapse"]
+Action = Literal["demote", "drop", "flag", "single_signal", "collapse", "recount"]
 
 
 @dataclass(frozen=True)

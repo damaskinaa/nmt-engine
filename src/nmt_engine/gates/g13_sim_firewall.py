@@ -4,8 +4,10 @@
   go/no-go or a Calc input.
 - Monte Carlo inputs that are synthetic must be >= S2.
 - Segment / why_we_win / go/no-go synthetic references must be >= S3.
-- A Synthetic graded >= S3 needs >= 3 method families, a passed Calibration (n >= 20,
-  coverage >= 0.75) and a registered Forecast; S4 also needs a MarketTouch.
+- A Synthetic graded >= S2 needs >= 3 method families whose 80% intervals overlap; >= S3 also
+  needs a passed Calibration (n >= 20, coverage >= 0.75) for every family and a registered
+  Forecast; S4 also needs a MarketTouch.
+- A SYNTHETIC_ESTIMATE claim graded above S0 must link a Synthetic of at least that grade.
 """
 
 from nmt_engine.gates.base import Finding, GateConfig, gate
@@ -52,23 +54,40 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
                 findings.append(Finding("sim_run", sim.id, f"MC input {cid} at S{g}; S2+ needed"))
     for syn in run.synthetics.values():
         rank = grade_rank(syn.grade)
-        if rank < 3:
+        if rank < 2:
             continue
         problems = []
-        if len({m.family for m in syn.methods}) < 3:
+        families = {m.family for m in syn.methods}
+        if len(families) < 3:
             problems.append("fewer than 3 method families")
+        for i, a in enumerate(syn.methods):
+            for b in syn.methods[i + 1 :]:
+                if a.family != b.family and (
+                    a.interval_80[1] < b.interval_80[0] or b.interval_80[1] < a.interval_80[0]
+                ):
+                    problems.append(f"80% intervals of {a.calc_id} and {b.calc_id} do not overlap")
+        if rank < 3:
+            findings += [Finding("synthetic", syn.id, f"grade {syn.grade}: {p}") for p in problems]
+            continue
         cals = [run.calibrations.get(c) for c in syn.calibration_ids]
-        ok = [c for c in cals if c and c.passed and c.n >= 20 and (c.coverage_80 or 0) >= 0.75]
-        if not ok:
-            problems.append("no passed Calibration (n>=20, coverage>=0.75)")
+        ok = {
+            c.method_family
+            for c in cals
+            if c and c.passed and c.n >= 20 and (c.coverage_80 or 0) >= 0.75
+        }
+        if families - ok:
+            problems.append(
+                "no passed Calibration (n>=20, coverage>=0.75) for "
+                + ", ".join(sorted(families - ok))
+            )
         if not syn.forecast_id or syn.forecast_id not in run.forecasts:
             problems.append("no registered Forecast")
         if rank >= 4 and (not syn.market_touch_id or syn.market_touch_id not in run.market_touches):
             problems.append("S4 without MarketTouch")
         findings += [Finding("synthetic", syn.id, f"grade {syn.grade}: {p}") for p in problems]
     for claim in run.claims.values():
-        if claim.status == "SYNTHETIC_ESTIMATE" and claim.synthetic_id:
-            syn = run.synthetics.get(claim.synthetic_id)
+        if claim.status == "SYNTHETIC_ESTIMATE" and grade_rank(claim.grade) >= 1:
+            syn = run.synthetics.get(claim.synthetic_id or "")
             if syn is None or grade_rank(syn.grade) < grade_rank(claim.grade):
                 findings.append(
                     Finding("claim", claim.id, f"grade {claim.grade} exceeds its Synthetic")

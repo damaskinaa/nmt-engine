@@ -21,6 +21,15 @@ def output_files(run: RunData) -> list[Path]:
     return [p for p in files if p.is_file()]
 
 
+def prompt_texts(run: RunData) -> Iterator[tuple[str, str, str]]:
+    """Yield ("file", path, text) for every prompt sent to a model (run_dir/prompts/)."""
+    prompts = run.run_dir / "prompts"
+    if prompts.is_dir():
+        for p in sorted(prompts.rglob("*")):
+            if p.is_file():
+                yield "file", str(p.relative_to(run.run_dir)), p.read_text("utf-8", "replace")
+
+
 def visible_text(path: Path) -> str:
     text = path.read_text(encoding="utf-8")
     if path.suffix == ".html":

@@ -199,3 +199,42 @@ def test_source_access_basis_is_free_text_for_gate14():
         sha256="0",
     )
     assert s.access_basis is None
+
+
+def test_frozen_path_outside_run_is_rejected(tmp_path):
+    def post(run):
+        m = json.loads((run / "run_manifest.json").read_text())
+        m["frozen"].append({"path": "../outside.txt", "sha256": "0" * 64})
+        (tmp_path / "outside.txt").write_text("private")
+        (run / "run_manifest.json").write_text(json.dumps(m))
+
+    g9 = next(x for x in failed(tmp_path, lambda fx: None, post).results if x.gate.number == 9)
+    assert any("outside the run" in f.message for f in g9.findings)
+
+
+def test_missing_source_text_fails_gate7(tmp_path):
+    r = failed(tmp_path, lambda fx: None, lambda run: (run / "sources" / "S-p1.txt").unlink())
+    g7 = next(x for x in r.results if x.gate.number == 7)
+    assert any("missing" in f.message for f in g7.findings)
+
+
+def test_prompts_are_licence_scanned(tmp_path):
+    def post(run):
+        (run / "prompts").mkdir()
+        (run / "prompts" / "p.txt").write_text((CORPUS / "sample.txt").read_text())
+
+    assert 10 in failed(tmp_path, lambda fx: None, post).failed_gates()
+
+
+def test_firewall_overlap_and_unlinked_claim(tmp_path):
+    def m(fx):
+        y = _by_id(fx["synthetics"], "Y1")
+        y["grade"] = "S2"
+        y["methods"][0]["interval_80"] = [1, 2]
+        _by_id(fx["claims"], "C7")["grade"] = "S2"
+        _by_id(fx["claims"], "C7")["synthetic_id"] = None
+        fx["strategies"][0]["why_we_win"]["claim_ids"] = ["C1"]
+
+    g13 = next(x for x in failed(tmp_path, m).results if x.gate.number == 13)
+    msgs = " ".join(f.message for f in g13.findings)
+    assert "do not overlap" in msgs and "exceeds its Synthetic" in msgs
