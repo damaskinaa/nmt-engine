@@ -238,3 +238,20 @@ def test_firewall_overlap_and_unlinked_claim(tmp_path):
     g13 = next(x for x in failed(tmp_path, m).results if x.gate.number == 13)
     msgs = " ".join(f.message for f in g13.findings)
     assert "do not overlap" in msgs and "exceeds its Synthetic" in msgs
+
+
+def test_demote_recount_to_one_voice_thins_job(tmp_path):
+    from nmt_engine.gates import demote
+    from nmt_engine.store import load_run
+
+    fx = copy.deepcopy(clean())
+    c9 = copy.deepcopy(_by_id(fx["claims"], "C1"))
+    c9.update(id="C9", voices=2, source_refs=c9["source_refs"][:1])
+    fx["claims"].append(c9)
+    _by_id(fx["jobs"], "J2")["claim_ids"].append("C9")
+    run = write(fx, tmp_path / "run", "t")
+    assert 2 in run_gates(run, CFG).failed_gates()
+    demote(run, CFG)
+    data = load_run(run)
+    assert data.claims["C9"].voices == 1 and data.claims["C9"].single_signal
+    assert data.jobs["J2"].thin

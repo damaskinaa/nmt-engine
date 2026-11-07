@@ -129,6 +129,24 @@ def demote(run_dir: Path, cfg: GateConfig | None = None) -> dict:
     def put(t: str, rec: Record) -> None:
         changed[(t, rec.id)] = rec
 
+    def unsupport(claim_id: str, flag: str) -> None:
+        """A single-signal claim leaves segments and why_we_win, and thins its Jobs."""
+        for seg in run.segments.values():
+            cur = get("segment", seg.id)
+            if claim_id in cur.claim_ids:
+                ids = [c for c in cur.claim_ids if c != claim_id]
+                put("segment", _bump(cur, flag, claim_ids=ids))
+        for st in run.strategies.values():
+            cur = get("strategy", st.id)
+            if claim_id in cur.why_we_win.claim_ids:
+                w = cur.why_we_win.model_dump()
+                w["claim_ids"] = [c for c in w["claim_ids"] if c != claim_id]
+                put("strategy", _bump(cur, flag, why_we_win=w))
+        for job in run.jobs.values():
+            cur = get("job", job.id)
+            if claim_id in cur.claim_ids and not cur.thin:
+                put("job", _bump(cur, flag, thin=True))
+
     from nmt_engine.gates.g12_astroturf import effective_voices, near_duplicate_clusters
 
     clusters = None
@@ -145,26 +163,14 @@ def demote(run_dir: Path, cfg: GateConfig | None = None) -> dict:
                 put("claim", _bump(rec, flag, status="HYPOTHESIS"))
             elif f.action == "single_signal" and f.object_type == "claim":
                 put("claim", _bump(rec, flag, single_signal=True))
-                for seg in run.segments.values():
-                    cur = get("segment", seg.id)
-                    if rec.id in cur.claim_ids:
-                        ids = [c for c in cur.claim_ids if c != rec.id]
-                        put("segment", _bump(cur, flag, claim_ids=ids))
-                for st in run.strategies.values():
-                    cur = get("strategy", st.id)
-                    if rec.id in cur.why_we_win.claim_ids:
-                        w = cur.why_we_win.model_dump()
-                        w["claim_ids"] = [c for c in w["claim_ids"] if c != rec.id]
-                        put("strategy", _bump(cur, flag, why_we_win=w))
-                for job in run.jobs.values():
-                    cur = get("job", job.id)
-                    if rec.id in cur.claim_ids:
-                        put("job", _bump(cur, flag, thin=True))
+                unsupport(rec.id, flag)
             elif f.action == "recount" and f.object_type == "claim":
                 from nmt_engine.gates.g02_voices import distinct_authors
 
                 n = len(distinct_authors(run, rec))
                 put("claim", _bump(rec, flag, voices=n, single_signal=n < 2 or rec.single_signal))
+                if n < 2:
+                    unsupport(rec.id, flag)
             elif f.action == "collapse" and f.object_type == "claim":
                 if clusters is None:
                     clusters = near_duplicate_clusters(run, cfg)
@@ -173,6 +179,8 @@ def demote(run_dir: Path, cfg: GateConfig | None = None) -> dict:
                     "claim",
                     _bump(rec, flag, voices=eff, single_signal=eff < 2 or rec.single_signal),
                 )
+                if eff < 2:
+                    unsupport(rec.id, flag)
             elif f.action == "drop" and f.object_type == "source":
                 dropped_sources.add(rec.id)
                 put("source", _bump(rec, flag, retracted=True))
