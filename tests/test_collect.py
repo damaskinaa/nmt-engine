@@ -604,3 +604,16 @@ def test_contracts_finder_follows_cursor_pages(tmp_path):
 
     out = procurement.contracts_finder(make(tmp_path, handler), "invoicing", date(2026, 10, 1))
     assert [s.url.rsplit("/", 1)[1] for s in out] == ["2"]
+
+
+def test_cache_is_partitioned_by_credentials(tmp_path):
+    def handler(req):
+        return httpx.Response(200, text=f"data for {req.headers.get('Authorization')}")
+
+    c = make(tmp_path, handler)
+    url = "https://api.example.org/private"
+    assert c.fetch(url, "t", headers={"Authorization": "Bearer A"}) == "data for Bearer A"
+    assert c.fetch(url, "t", headers={"Authorization": "Bearer B"}) == "data for Bearer B"
+    assert c.fetch(url, "t", headers={"Authorization": "Bearer A"}) == "data for Bearer A"
+    raw = "".join(f.name + f.read_text() for f in c.cache_dir.iterdir())
+    assert "Bearer" not in raw.replace("data for Bearer", "")

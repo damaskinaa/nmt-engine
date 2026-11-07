@@ -127,8 +127,14 @@ class Collector:
 
     # --- HTTP ---------------------------------------------------------------------------
 
-    def _cache_key(self, method: str, url: str, body: Any) -> str:
-        raw = f"{method} {url} {canonical(body)} {self.as_of.isoformat()}"
+    def _cache_key(
+        self, method: str, url: str, body: Any, headers: Mapping[str, str] | None = None
+    ) -> str:
+        # Headers carry credentials (Authorization, API keys) and content negotiation, so
+        # responses fetched under different accounts never share a cache entry. Only the
+        # hash is written to disk.
+        hdrs = {k.lower(): v for k, v in (headers or {}).items()}
+        raw = f"{method} {url} {canonical(body)} {canonical(hdrs)} {self.as_of.isoformat()}"
         return hashlib.sha256(raw.encode()).hexdigest()[:24]
 
     def _wait(self, host: str) -> None:
@@ -148,13 +154,14 @@ class Collector:
         method: str = "GET",
         json_body: Any = None,
     ) -> str:
-        """Fetch text with cache (URL + params + body + as_of date), rate limit and retries.
+        """Fetch text with cache (URL + params + body + headers + as_of date), rate limit and
+        retries.
         The body is PII-masked before it is cached or returned."""
         if params:
             url = f"{url}{'&' if '?' in url else '?'}{urlencode(params, doseq=True)}"
         if is_forbidden(url):
             raise ForbiddenHostError(url)
-        key = self._cache_key(method, url, json_body)
+        key = self._cache_key(method, url, json_body, headers)
         cached = self.cache_dir / f"{key}.json"
         host = urlparse(url).hostname or ""
         if cached.is_file():
