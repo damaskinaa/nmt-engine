@@ -52,3 +52,35 @@ def gates_demote(run_dir: Path, forbidden_corpus: CorpusOpt = None) -> None:
 
 if __name__ == "__main__":
     app()
+
+
+@app.command("collect")
+def collect_cmd(
+    category: Annotated[str, typer.Option("--category", help="Category search query")],
+    since: Annotated[str, typer.Option("--since", help="YYYY-MM-DD")],
+    geo: Annotated[str, typer.Option("--geo")] = "IE",
+    competitors: Annotated[str, typer.Option("--competitors", help="a.com,b.com")] = "",
+    run_dir: Annotated[Path | None, typer.Option("--run-dir")] = None,
+    per_adapter: Annotated[int, typer.Option("--per-adapter")] = 200,
+) -> None:
+    """Collect lawful public traces for a category into a run folder."""
+    from datetime import date
+
+    from nmt_engine.collect.base import MissingKeyError
+    from nmt_engine.collect.run import CollectPlan, run_collect
+
+    plan = CollectPlan(
+        category=category,
+        since=date.fromisoformat(since),
+        geo=geo,
+        competitors=[d.strip() for d in competitors.split(",") if d.strip()],
+        per_adapter=per_adapter,
+    )
+    slug = "".join(ch if ch.isalnum() else "-" for ch in category.lower()).strip("-")
+    out = run_dir or Path("runs") / f"{date.today():%Y%m%d}-{slug}"
+    try:
+        summary = run_collect(plan, out)
+    except MissingKeyError as exc:
+        typer.echo(f"error: {exc}", err=True)
+        raise typer.Exit(2) from exc
+    typer.echo(json.dumps(summary, indent=2))

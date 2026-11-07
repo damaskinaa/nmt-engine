@@ -1,0 +1,251 @@
+"""Shared collector plumbing: polite HTTP (cache, rate limit, retries, forbidden hosts),
+Source + retrieval-log writing, salted author hashes, as_of_date on everything.
+
+Each adapter module states its `access_basis` and terms URL in its docstring and in
+`ACCESS_BASIS` / `TERMS_URL`. Adapters never log in, never bypass CAPTCHAs and never fetch a
+forbidden host.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import re
+import time
+from collections.abc import Mapping
+from dataclasses import dataclass, field
+from datetime import UTC, date, datetime
+from pathlib import Path
+from typing import Any
+from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
+
+import httpx
+
+from nmt_engine.gates.base import GateConfig
+from nmt_engine.schema import RetrievalLogEntry, Source
+from nmt_engine.store import Store
+from nmt_engine.util import author_hash, sha256_text
+
+FORBIDDEN_HOSTS: tuple[str, ...] = GateConfig().forbidden_hosts
+USER_AGENT = "nmt-engine/0.1 (outside-in research; +https://github.com/damaskinaa/nmt-engine)"
+
+
+class ForbiddenHostError(ValueError):
+    """The URL's host is on the forbidden list (ARCHITECTURE §7)."""
+
+
+class MissingKeyError(RuntimeError):
+    """An adapter that needs an API key was used without one."""
+
+
+_EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+_PHONE = re.compile(
+    r"(?<![\w/.-])(?:\+\d{1,3}[ .-]?)?(?:\(?\d{1,4}\)?[ .-]){2,4}\d{3,4}(?![\w/.-])"
+)
+
+
+def scrub_pii(text: str) -> str:
+    """Mask e-mail addresses and phone numbers before public text is stored."""
+
+    def phone(m: re.Match[str]) -> str:
+        return "[phone]" if sum(ch.isdigit() for ch in m.group()) >= 9 else m.group()
+
+    return _PHONE.sub(phone, _EMAIL.sub("[email]", text))
+
+
+def is_forbidden(url: str) -> bool:
+    host = (urlparse(url).hostname or "").lower()
+    return any(f in host for f in FORBIDDEN_HOSTS)
+
+
+SECRET_PARAMS = frozenset(
+    {"key", "api_key", "app_key", "app_id", "client_secret", "token", "access_token"}
+)
+
+
+def redact(url: str) -> str:
+    """Drop secret query values before a URL is logged."""
+    p = urlparse(url)
+    if not p.query:
+        return url
+    q = [(k, "REDACTED" if k.lower() in SECRET_PARAMS else v) for k, v in parse_qsl(p.query, True)]
+    return urlunparse(p._replace(query=urlencode(q)))
+
+
+def env(name: str, required_by: str | None = None) -> str | None:
+    value = os.environ.get(name) or None
+    if value is None and required_by:
+        raise MissingKeyError(f"{required_by} needs ${name}")
+    return value
+
+
+@dataclass
+class Collector:
+    """Per-run collection context. All adapters write through `fetch` and `add_source`."""
+
+    run_dir: Path
+    as_of: date = field(default_factory=lambda: datetime.now(UTC).date())
+    geo: str = "IE"
+    cache_dir: Path | None = None
+    min_interval_s: float = 1.0
+    retries: int = 3
+    client: httpx.Client | None = None
+    salt: str | None = None
+    _last: dict[str, float] = field(default_factory=dict)
+    _ids: set[str] = field(default_factory=set)
+
+    def __post_init__(self) -> None:
+        self.run_dir = Path(self.run_dir)
+        (self.run_dir / "sources").mkdir(parents=True, exist_ok=True)
+        self.cache_dir = Path(self.cache_dir or self.run_dir / "cache")
+        self.client = self.client or httpx.Client(
+            headers={"User-Agent": USER_AGENT}, timeout=30, follow_redirects=True
+        )
+        self.store = Store(self.run_dir / "store")
+        self._ids = set(self.store.current("source"))
+
+    # --- HTTP ---------------------------------------------------------------------------
+
+    def _cache_key(self, method: str, url: str, body: Any) -> str:
+        raw = f"{method} {url} {canonical(body)} {self.as_of.isoformat()}"
+        return hashlib.sha256(raw.encode()).hexdigest()[:24]
+
+    def _wait(self, host: str) -> None:
+        last = self._last.get(host)
+        if last is not None:
+            delay = self.min_interval_s - (time.monotonic() - last)
+            if delay > 0:
+                time.sleep(delay)
+        self._last[host] = time.monotonic()
+
+    def fetch(
+        self,
+        url: str,
+        adapter: str,
+        params: Mapping[str, Any] | None = None,
+        headers: Mapping[str, str] | None = None,
+        method: str = "GET",
+        json_body: Any = None,
+    ) -> str:
+        """Fetch text with cache (URL + params + body + as_of date), rate limit and retries."""
+        if params:
+            url = f"{url}{'&' if '?' in url else '?'}{urlencode(params, doseq=True)}"
+        if is_forbidden(url):
+            raise ForbiddenHostError(url)
+        key = self._cache_key(method, url, json_body)
+        cached = self.cache_dir / f"{key}.json"
+        host = urlparse(url).hostname or ""
+        if cached.is_file():
+            entry = json.loads(cached.read_text("utf-8"))
+            self._log(url, host, adapter, entry["status"], None, key)
+            return entry["text"]
+        resp = None
+        for attempt in range(self.retries + 1):
+            self._wait(host)
+            resp = self.client.request(method, url, headers=dict(headers or {}), json=json_body)
+            if resp.status_code not in (429, 500, 502, 503, 504) or attempt == self.retries:
+                break
+            time.sleep(float(resp.headers.get("Retry-After", 2**attempt)))
+        assert resp is not None
+        self._log(url, host, adapter, resp.status_code, None, key)
+        resp.raise_for_status()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        cached.write_text(json.dumps({"status": resp.status_code, "text": resp.text}), "utf-8")
+        return resp.text
+
+    def fetch_json(self, url: str, adapter: str, **kw: Any) -> Any:
+        return json.loads(self.fetch(url, adapter, **kw))
+
+    def _log(
+        self,
+        url: str,
+        host: str,
+        adapter: str,
+        status: int | None,
+        sid: str | None,
+        key: str | None,
+        sha: str | None = None,
+    ) -> RetrievalLogEntry:
+        entry = RetrievalLogEntry(
+            source_id=sid,
+            url=redact(url),
+            host=host,
+            retrieved_at=datetime.now(UTC),
+            adapter=adapter,
+            status_code=status,
+            sha256=sha,
+            cache_key=key,
+        )
+        with (self.run_dir / "retrieval_log.jsonl").open("a", encoding="utf-8") as fh:
+            fh.write(entry.model_dump_json(exclude_none=True) + "\n")
+        return entry
+
+    # --- Sources ------------------------------------------------------------------------
+
+    def add_source(
+        self,
+        *,
+        adapter: str,
+        kind: str,
+        platform: str,
+        url: str,
+        text: str,
+        access_basis: str,
+        terms_url: str,
+        author: str | None = None,
+        published_at: datetime | None = None,
+        publisher: str | None = None,
+        geography: str | None = None,
+        as_of_date: date | None = None,
+    ) -> Source | None:
+        """Store PII-scrubbed text under sources/<id>.txt, append the Source and its log entry.
+        Returns None for empty text or an already-stored source."""
+        text = scrub_pii(text.strip())
+        if not text:
+            return None
+        if is_forbidden(url):
+            raise ForbiddenHostError(url)
+        sid = "S-" + hashlib.sha256(f"{url}\n{text}".encode()).hexdigest()[:16]
+        if sid in self._ids:
+            return None
+        rel = f"sources/{sid}.txt"
+        (self.run_dir / rel).write_text(text, "utf-8")
+        src = Source(
+            id=sid,
+            kind=kind,
+            platform=platform,
+            publisher=publisher,
+            url=url,
+            author_hash=author_hash(platform, author, self.salt) if author else None,
+            retrieved_at=datetime.now(UTC),
+            published_at=published_at,
+            as_of_date=as_of_date or (published_at.date() if published_at else self.as_of),
+            geography=geography or self.geo,
+            access_basis=access_basis,
+            terms_url=terms_url,
+            text_path=rel,
+            sha256=sha256_text(text),
+        )
+        self.store.append(src)
+        self._log(url, urlparse(url).hostname or "", adapter, 200, sid, None, src.sha256)
+        self._ids.add(sid)
+        return src
+
+
+def canonical(obj: Any) -> str:
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str)
+
+
+def ts(value: Any) -> datetime | None:
+    """Parse epoch seconds or ISO-8601 into an aware datetime."""
+    if value in (None, ""):
+        return None
+    if isinstance(value, int | float):
+        return datetime.fromtimestamp(value, UTC)
+    s = str(value).replace("Z", "+00:00")
+    try:
+        dt = datetime.fromisoformat(s)
+    except ValueError:
+        return None
+    return dt if dt.tzinfo else dt.replace(tzinfo=UTC)
