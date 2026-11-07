@@ -543,6 +543,14 @@ def test_jsonstat_and_ixbrl_and_diff():
         + '<ix:nonFraction name="core:Turnover" contextRef="cy" scale="3">1,250</ix:nonFraction>'
     )
     assert companies_house.ixbrl_turnover(doc) == 1_250_000
+    scen = "<xbrli:scenario><xbrldi:explicitMember>x</xbrldi:explicitMember></xbrli:scenario>"
+    doc2 = (
+        ctx.format("cy_scen", 2023, 2023, scen)
+        + ctx.format("cy", 2023, 2023, "")
+        + '<ix:nonFraction name="core:Turnover" contextRef="cy_scen">7</ix:nonFraction>'
+        + '<ix:nonFraction name="core:Turnover" contextRef="cy">9</ix:nonFraction>'
+    )
+    assert companies_house.ixbrl_turnover(doc2) == 9
     assert wayback.diff("a\nPrice 10", "Price 12\na") == "+Price 12\n-Price 10"
 
 

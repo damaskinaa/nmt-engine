@@ -28,7 +28,7 @@ _CONTEXT = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 _PERIOD_END = re.compile(r"<(?:\w+:)?(?:endDate|instant)>\s*(\d{4}-\d{2}-\d{2})", re.IGNORECASE)
-_SEGMENT = re.compile(r"<(?:\w+:)?segment\b", re.IGNORECASE)
+_SEGMENT = re.compile(r"<(?:\w+:)?(?:segment|scenario)\b", re.IGNORECASE)
 
 
 def _headers() -> dict[str, str]:
