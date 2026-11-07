@@ -328,6 +328,8 @@ def test_llm_logs_caches_and_never_logs_key(tmp_path, monkeypatch):
     assert first["cost_usd"] == pytest.approx(0.002) and not first["cached"]
     assert second["cached"] and second["prompt_hash"] == first["prompt_hash"]
     assert llm.calls == 1
+    llm.complete("another prompt")
+    assert len(seen) == 2 and llm.client is not None  # one client reused across calls
 
 
 def test_llm_disabled_without_key_or_with_flag(tmp_path, monkeypatch):

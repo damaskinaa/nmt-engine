@@ -121,11 +121,17 @@ class LLM:
         self._log(purpose, phash, t_in, t_out, cached=False)
         return text
 
+    def close(self) -> None:
+        if self.client is not None:
+            self.client.close()
+
     def complete_json(self, prompt: str, system: str = "", purpose: str = "") -> Any:
         return parse_json(self.complete(prompt, system, purpose))
 
     def _call(self, key: str, system: str, prompt: str) -> tuple[str, int, int]:
-        client = self.client or httpx.Client(timeout=180)
+        if self.client is None:
+            self.client = httpx.Client(timeout=180)  # one pooled client per LLM, reused
+        client = self.client
         if self.provider == "anthropic":
             url = ANTHROPIC_URL
             headers = {"x-api-key": key, "anthropic-version": "2023-06-01"}

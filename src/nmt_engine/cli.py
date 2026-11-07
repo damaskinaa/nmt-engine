@@ -97,7 +97,10 @@ def mine_cmd(
     from nmt_engine.miner.pipeline import mine
 
     llm = LLM(run_dir, no_llm=no_llm)
-    summary = mine(run_dir, category, llm, geo, limit, seed, _cfg(forbidden_corpus))
+    try:
+        summary = mine(run_dir, category, llm, geo, limit, seed, _cfg(forbidden_corpus))
+    finally:
+        llm.close()
     typer.echo(json.dumps(summary, indent=2, sort_keys=True, default=str))
     raise typer.Exit(0 if summary.get("status") in ("ok", "skipped") else 1)
 
