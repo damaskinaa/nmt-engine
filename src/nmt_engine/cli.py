@@ -50,10 +50,6 @@ def gates_demote(run_dir: Path, forbidden_corpus: CorpusOpt = None) -> None:
     typer.echo(json.dumps(summary, indent=2, sort_keys=True))
 
 
-if __name__ == "__main__":
-    app()
-
-
 @app.command("collect")
 def collect_cmd(
     category: Annotated[str, typer.Option("--category", help="Category search query")],
@@ -84,3 +80,42 @@ def collect_cmd(
         typer.echo(f"error: {exc}", err=True)
         raise typer.Exit(2) from exc
     typer.echo(json.dumps(summary, indent=2))
+
+
+@app.command("mine")
+def mine_cmd(
+    run_dir: Path,
+    category: Annotated[str, typer.Option("--category")],
+    geo: Annotated[str, typer.Option("--geo")] = "IE",
+    no_llm: Annotated[bool, typer.Option("--no-llm", help="Skip every LLM step")] = False,
+    limit: Annotated[int | None, typer.Option("--limit", help="Max traces")] = None,
+    seed: Annotated[int, typer.Option("--seed")] = 0,
+    forbidden_corpus: CorpusOpt = None,
+) -> None:
+    """Job-Graph Miner on a collected run: jobs, segments, graph, gates, graph/report HTML."""
+    from nmt_engine.llm import LLM
+    from nmt_engine.miner.pipeline import mine
+
+    llm = LLM(run_dir, no_llm=no_llm)
+    summary = mine(run_dir, category, llm, geo, limit, seed, _cfg(forbidden_corpus))
+    typer.echo(json.dumps(summary, indent=2, sort_keys=True, default=str))
+    raise typer.Exit(0 if summary.get("status") in ("ok", "skipped") else 1)
+
+
+@app.command("killline")
+def killline_cmd(
+    run_dirs: list[Path],
+    out: Annotated[Path | None, typer.Option(help="Write the table to this .md file")] = None,
+) -> None:
+    """Kill-line table over mined runs (one per category)."""
+    from nmt_engine.miner.killline import killline
+
+    table, verdict = killline(run_dirs)
+    text = table + "\n\n" + verdict + "\n"
+    if out:
+        out.write_text(text, "utf-8")
+    typer.echo(text)
+
+
+if __name__ == "__main__":
+    app()

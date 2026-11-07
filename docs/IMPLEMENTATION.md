@@ -123,3 +123,21 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
 - **Keyed adapters** (Reddit, YouTube, GitHub discussions, DataForSEO, Companies House, Adzuna,
   Product Hunt) are skipped when their keys are missing and tested against mock transports built from
   the documented response shapes; keyless adapters replay real VCR recordings.
+- **Job-Graph Miner (PR 4).** The LLM proposes spans and labels only; `miner/extract.py` keeps a
+  span only if it occurs verbatim (whitespace-normalised, as gate 1 does) in the stored source
+  text. Each of the 8 elements of a Job is one PUBLIC_VOICE claim whose receipts are all its
+  verified spans. Jobs are merged by statement token overlap, then optionally by the LLM.
+- **Edge p_success** = 1 − Wilson 80% interval of the share of a job's traces that report a
+  Problem or a workaround. `negative_emotion` and `tax_jobs` costs are the Wilson shares of traces
+  with those spans (0–1 scale, weight 1 each); money/time/effort/cognitive are not observable from
+  traces and stay (0, 0). All graph scores are DERIVED.
+- **Importance** is weighted PageRank: edge weight = freq × value of the target job; teleport is
+  weighted the same way. freq = search volume and value = CPC (PROXY_METRIC, DataForSEO) when
+  credentials exist, else freq = distinct voices and value = 1.
+- **Segments** cluster jobs (average linkage) on 0.5 × statement Jaccard + 0.5 × agreement of the
+  top-3 success-criteria priority orders; thin = < 2 voices or < 2 source kinds.
+- **Kill-line metric** is computed after gates: a job counts if ≥ 4 of its 8 element claims are
+  still live PUBLIC_VOICE with a live source, and those sources span ≥ 2 source kinds.
+- **Reports** quote only displayable claims (live, evidential status, no gate flag or finding) and
+  omit quotes that would trip the validation-language lint rather than rewording them. Cytoscape.js
+  3.30.2 (MIT) is vendored in `graph/static/` and inlined, so `graph.html` works offline.

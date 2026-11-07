@@ -51,6 +51,18 @@ This writes `sources/`, `store/source.jsonl`, `retrieval_log.jsonl`, an HTTP `ca
 (`eurostat`, `cso`, `ons`, `sec_edgar`, `companies_house`) return pandas frames with a `source_id`
 column pointing at the stored raw payload.
 
+## Mine (`nmt mine`, `nmt killline`)
+
+```bash
+export ANTHROPIC_API_KEY=...          # or NMT_LLM_PROVIDER=openai + OPENAI_API_KEY
+nmt mine runs/20261107-invoicing --category "invoicing" --geo IE   # --no-llm skips LLM steps
+nmt killline runs/a runs/b runs/c --out killline.md
+```
+
+Writes `extraction.json`, jobs/claims/edges/segments to the store, `graph.json`,
+`reports/graph.html` (self-contained Cytoscape viewer), `reports/report.html`, `gates/gate_report.*`,
+`llm_log.jsonl` (prompt hash, model, tokens, cost) and `mine_summary.json`.
+
 ## Run directory layout
 
 ```
