@@ -317,6 +317,8 @@ class BacktestCase(BaseModel):
 class Calibration(Record):
     sim_kind: str | None = None
     method_family: MethodFamily
+    method_id: str | None = None
+    quantity: Quantity | None = None
     reference_class: str
     as_of_rule: str
     backtest_cases: list[BacktestCase] = Field(default_factory=list)

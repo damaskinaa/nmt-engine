@@ -26,6 +26,16 @@ nmt gates demote <run_dir>   # appends demoted/dropped/collapsed revisions to st
 
 `check` writes `gate_report.json` and `gate_report.md` (to the run dir, or `--out`).
 
+## Synthetic evidence (`nmt_engine.synth`)
+
+Calibrate each method family on a reference class, triangulate across families, grade S0–S4, and
+generate the citation label (docs/PROTOCOL.md §2–§3). `synth/world.py` generates seeded markets with
+known truth to test the maths:
+
+```bash
+python scripts/coverage_histogram.py   # 200 worlds -> docs/img/coverage_histogram.png
+```
+
 ## Run directory layout
 
 ```
@@ -40,7 +50,7 @@ nmt gates demote <run_dir>   # appends demoted/dropped/collapsed revisions to st
 ## Tests
 
 ```bash
-pytest --cov=nmt_engine.gates   # never touches the network
+pytest --cov=nmt_engine.gates --cov=nmt_engine.synth   # never touches the network
 ruff check . && ruff format --check .
 python tests/fixtures/make_fixtures.py   # regenerate fixtures (a test checks they are in sync)
 ```

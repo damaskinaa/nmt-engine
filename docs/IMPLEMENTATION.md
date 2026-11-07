@@ -15,6 +15,15 @@ Precedence when documents disagree: master prompt > ARCHITECTURE > PROTOCOL > PR
 | §6 gates 1–14 | `src/nmt_engine/gates/gNN_*.py`, registry in `gates/base.py`, runner/demote in `gates/runner.py` |
 | CLI `nmt gates check / demote` | `src/nmt_engine/cli.py` |
 | Fixtures (clean + one seeded defect per gate) | `tests/fixtures/make_fixtures.py` → `tests/fixtures/runs/` |
+| PROTOCOL §2 log form (μ, σ from median + 80% interval) | `src/nmt_engine/synth/logform.py` |
+| PROTOCOL §3.3 per-family calibration (bias, split-conformal q80, LOO coverage, pass rule) | `src/nmt_engine/synth/calibrate.py` |
+| PROTOCOL §3.2 triangulation (same-family merge, 1/σ² weights, ρ inflation, pairwise z) | `src/nmt_engine/synth/triangulate.py` |
+| PROTOCOL §2 grades S0–S4 | `src/nmt_engine/synth/grade.py`; end-to-end `synth/estimate.py::estimate` |
+| PROTOCOL §2 mandatory citation label | `src/nmt_engine/synth/label.py::citation_label` |
+| PROTOCOL §3.5 forecast registry + scoring (hit, log error, Brier) | `src/nmt_engine/synth/forecast.py` |
+| Leakage guard (as-of T) | `src/nmt_engine/synth/leakage.py` |
+| EVPI on method disagreement (go/no-go) | `src/nmt_engine/synth/evpi.py` |
+| Known-truth worlds | `src/nmt_engine/synth/world.py`; histogram `scripts/coverage_histogram.py` → `docs/img/coverage_histogram.png` |
 
 ## Gate → defect → demote action
 
@@ -52,3 +61,16 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   runs as a test against `forbidden_corpus/` (git-ignored; set `NMT_FORBIDDEN_CORPUS` to move it).
 - **Gate 13 persona-panel monotonicity** is not checked yet: persona panels arrive in PR 9 (calibrated
   synthetic panel), which adds that test.
+- **Calibration is applied even if it did not pass.** `estimate` always uses a family's fitted bias and
+  conformal q80 when one exists; `passed` (n ≥ 20, LOO coverage 0.75–0.90) only decides whether the
+  family counts towards S3. Falling back to the stated interval would reuse a known-overconfident
+  interval.
+- **S2 needs agreement two ways.** Pairwise z ≤ 1.645 (master prompt) *and* overlapping 80% intervals
+  (PROTOCOL §2). Either failing sets `methods_disagree` and caps the grade at S1.
+- **Same-family merge** takes the mean μ′ and mean σ′ of that family's calcs, so padding a family never
+  narrows the interval beyond its single tightest calc.
+- **Brier score.** For a binary forecast, (p − y)² with the given p. For an interval forecast,
+  (0.8 − hit)², i.e. the nominal 80% coverage claim scored as a probability.
+- **World error model.** Family errors share a common market shock with correlation ρ = 0.3 (the same
+  ρ the triangulation assumes), and stated method intervals are 0.6× the true noise (overconfident),
+  so the coverage test exercises the conformal correction rather than the stated widths.
