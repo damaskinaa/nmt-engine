@@ -62,6 +62,13 @@ def is_anchored(
     return bool(methods)
 
 
+def _same_prediction(fc: Forecast, median: float, lo: float, hi: float) -> bool:
+    if fc.median is None or fc.interval_80 is None:
+        return False
+    pairs = ((fc.median, median), (fc.interval_80[0], lo), (fc.interval_80[1], hi))
+    return all(math.isclose(a, b, rel_tol=1e-9) for a, b in pairs)
+
+
 def _intervals_overlap(fams: Sequence[MethodEstimate]) -> bool:
     return all(
         abs(a.mu - b.mu) <= Z80 * (a.sigma + b.sigma)
@@ -88,7 +95,8 @@ def estimate(
 
     Grade inputs are checked, not trusted: methods are anchored only if each `calc_id` is in
     `calcs` with receipts on every input; a Calibration counts only for its own family and
-    `quantity`; `forecast` and `market_touch` count only if their `synthetic_id` is `id`.
+    `quantity`; `forecast` and `market_touch` count only if their `synthetic_id` is `id`, and the
+    forecast only if its frozen median and interval equal this estimate's.
     `market_touch.value` must be in the quantity's unit and land inside the 80% interval.
     """
     calibrations = {
@@ -104,6 +112,8 @@ def estimate(
     tri = triangulate(ests, rho)
     median, lo, hi = from_log(tri.mu, tri.half_width)
     disagree = tri.methods_disagree or not _intervals_overlap(tri.families)
+    if forecast is not None and not _same_prediction(forecast, median, lo, hi):
+        forecast = None  # registered for an earlier revision of this estimate
     calibrated = frozenset(f for f, c in calibrations.items() if c.passed)
     touched = market_touch is not None and lo <= market_touch.value <= hi
     g = grade(

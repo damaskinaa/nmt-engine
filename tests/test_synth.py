@@ -1,3 +1,4 @@
+import dataclasses
 import math
 from datetime import date
 
@@ -335,6 +336,10 @@ def test_estimate_reaches_s3_and_s4_and_label(tmp_path):
     assert estimate("Y1", "Q4", "WORLD", ms, cals, forecast=fc, market_touch=miss)[0].grade == "S3"
     other = touch.model_copy(update={"synthetic_id": "Y2"})
     assert estimate("Y1", "Q4", "WORLD", ms, cals, forecast=fc, market_touch=other)[0].grade == "S3"
+    m0 = dataclasses.replace(ms[0], median=ms[0].median * 1.05)
+    calcs2 = {**calcs, m0.calc_id: calcs[m0.calc_id].model_copy(update={"median": m0.median})}
+    revised, _ = _estimate("Y1", "Q4", "WORLD", [m0, *ms[1:]], cals, calcs=calcs2, forecast=fc)
+    assert revised.forecast_id is None and revised.grade == "S2"
     other_fc = fc.model_copy(update={"synthetic_id": "Y2"})
     assert estimate("Y1", "Q4", "WORLD", ms, cals, forecast=other_fc)[0].grade == "S2"
     q1_cals = {f: c.model_copy(update={"quantity": "Q1"}) for f, c in cals.items()}
