@@ -630,3 +630,18 @@ def test_redirect_drops_credentials_on_host_change(tmp_path):
 
     make(tmp_path, handler).fetch("https://api.example.org/a", "t", headers={"Authorization": "k"})
     assert seen == {"api.example.org": "k", "cdn.example.net": None}
+
+
+def test_redirect_keeps_put_method_and_body(tmp_path):
+    seen = []
+
+    def handler(req):
+        seen.append((req.method, req.url.path, req.content))
+        if req.url.path == "/old":
+            return httpx.Response(301, headers={"Location": "/new"})
+        return httpx.Response(200, text="ok")
+
+    make(tmp_path, handler).fetch(
+        "https://a.example.org/old", "t", method="PUT", json_body={"x": 1}
+    )
+    assert seen[1][:2] == ("PUT", "/new") and seen[1][2] == seen[0][2] != b""

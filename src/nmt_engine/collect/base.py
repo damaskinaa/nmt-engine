@@ -202,7 +202,7 @@ class Collector:
             host = nxt.hostname or ""
             if host != prev.host or (prev.scheme == "https" and nxt.scheme != "https"):
                 headers = {k: v for k, v in headers.items() if k.lower() not in CREDENTIAL_HEADERS}
-            if resp.status_code in (301, 302, 303):
+            if resp.status_code == 303 or (resp.status_code in (301, 302) and method == "POST"):
                 method, body = "GET", None
         raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects", request=resp.request)
 
