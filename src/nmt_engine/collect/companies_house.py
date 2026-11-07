@@ -69,31 +69,36 @@ def accounts(c: Collector, company_number: str, limit: int = 5) -> list[dict]:
     return data.get("items", [])
 
 
-def _period_ends(xhtml: str) -> dict[str, str]:
-    """contextRef -> period end date, for contexts without dimensional segments (totals)."""
-    out = {}
+def _contexts(xhtml: str) -> dict[str, str | None]:
+    """contextRef -> period end date; None for dimensioned (segment/scenario) contexts."""
+    out: dict[str, str | None] = {}
     for m in _CONTEXT.finditer(xhtml):
         end = _PERIOD_END.search(m.group("body"))
-        if end and not _SEGMENT.search(m.group("body")):
-            out[m.group("id")] = end.group(1)
+        dimensioned = _SEGMENT.search(m.group("body"))
+        out[m.group("id")] = None if dimensioned else (end.group(1) if end else "")
     return out
 
 
 def ixbrl_turnover(xhtml: str) -> float | None:
     """Current-period turnover/revenue in an iXBRL document, applying `scale` and `sign`.
-    Accounts also tag the comparative year, so the fact whose (undimensioned) context ends
-    latest wins; documents without parseable contexts fall back to the first fact."""
-    facts = list(_TURNOVER.finditer(xhtml))
-    if not facts:
-        return None
-    ends = _period_ends(xhtml)
-
-    def end(f: re.Match[str]) -> str:
+    Accounts also tag the comparative year, so the fact whose undimensioned context ends latest
+    wins. Facts in dimensioned contexts are segment amounts, never the company total; facts
+    whose context cannot be parsed are a last resort (first one wins)."""
+    contexts = _contexts(xhtml)
+    dated, unknown = [], []
+    for f in _TURNOVER.finditer(xhtml):
         ref = re.search(r"\bcontextRef=\"([^\"]+)\"", f.group("attrs"))
-        return ends.get(ref.group(1), "") if ref else ""
-
-    dated = [f for f in facts if end(f)]
-    m = max(dated, key=end) if dated else facts[0]
+        end = contexts.get(ref.group(1), "") if ref else ""
+        if end:
+            dated.append((end, f))
+        elif end == "":
+            unknown.append(f)
+    if dated:
+        m = max(dated, key=lambda t: t[0])[1]
+    elif unknown:
+        m = unknown[0]
+    else:
+        return None
     raw = re.sub(r"[^\d.]", "", m.group("value"))
     if not raw:
         return None

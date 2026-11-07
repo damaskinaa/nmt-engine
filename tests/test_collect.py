@@ -551,6 +551,10 @@ def test_jsonstat_and_ixbrl_and_diff():
         + '<ix:nonFraction name="core:Turnover" contextRef="cy">9</ix:nonFraction>'
     )
     assert companies_house.ixbrl_turnover(doc2) == 9
+    only_dims = ctx.format("cy_scen", 2023, 2023, scen) + (
+        '<ix:nonFraction name="core:Turnover" contextRef="cy_scen">7</ix:nonFraction>'
+    )
+    assert companies_house.ixbrl_turnover(only_dims) is None
     assert wayback.diff("a\nPrice 10", "Price 12\na") == "+Price 12\n-Price 10"
 
 
