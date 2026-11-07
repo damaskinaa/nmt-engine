@@ -8,9 +8,12 @@ from __future__ import annotations
 
 import json
 import time
+import warnings
 from dataclasses import asdict
 from datetime import UTC, datetime
 from pathlib import Path
+
+import httpx
 
 from nmt_engine.gates import GateConfig, demote, run_gates, write_reports
 from nmt_engine.gates.g09_manifest import manifest_hash
@@ -61,16 +64,20 @@ def search_proxies(run_dir: Path, built: list[BuiltJob], geo: str) -> list[Claim
     """Search volume (frequency proxy) and CPC (commercial-value proxy) per job, from DataForSEO
     when credentials are set. Returns PROXY_METRIC claims; sets weights on the BuiltJobs."""
     from nmt_engine.collect import dataforseo
-    from nmt_engine.collect.base import Collector, env
+    from nmt_engine.collect.base import Collector, MissingKeyError, env
 
-    if not env("DATAFORSEO_LOGIN") or not env("NMT_AUTHOR_SALT"):
+    if not all(env(k) for k in ("DATAFORSEO_LOGIN", "DATAFORSEO_PASSWORD", "NMT_AUTHOR_SALT")):
         return []
     queries: dict[str, str] = {}
     for b in built:
         qs = [i.search_query for i in b.group.instances if i.search_query]
         queries[b.job.id] = (max(set(qs), key=qs.count) if qs else b.job.statement)[:80].lower()
     c = Collector(run_dir, geo=geo, salt=env("NMT_AUTHOR_SALT"))
-    df = dataforseo.search_volume(c, sorted(set(queries.values())), geo)
+    try:
+        df = dataforseo.search_volume(c, sorted(set(queries.values())), geo)
+    except (MissingKeyError, httpx.HTTPError, KeyError, ValueError) as exc:
+        warnings.warn(f"search proxies skipped, using voice weights: {exc!r}", stacklevel=2)
+        return []
     claims = []
     if df.empty:
         return claims

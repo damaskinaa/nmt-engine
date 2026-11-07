@@ -364,3 +364,22 @@ def test_receipt_cap_keeps_every_source_kind() -> None:
     refs = _refs(pairs, "job", sources)
     assert len(refs) == MAX_REFS
     assert {sources[r.source_id].kind for r in refs} == {"review", "forum"}
+
+
+def test_search_proxies_fall_back_without_full_credentials(tmp_path: Path, monkeypatch) -> None:
+    from nmt_engine.collect import dataforseo
+    from nmt_engine.miner.pipeline import search_proxies
+
+    monkeypatch.setenv("NMT_AUTHOR_SALT", "s")
+    monkeypatch.setenv("DATAFORSEO_LOGIN", "login")
+    monkeypatch.delenv("DATAFORSEO_PASSWORD", raising=False)
+    assert search_proxies(tmp_path, [], "IE") == []
+
+    monkeypatch.setenv("DATAFORSEO_PASSWORD", "pw")
+
+    def boom(*a, **k):
+        raise httpx.ConnectError("down")
+
+    monkeypatch.setattr(dataforseo, "search_volume", boom)
+    with pytest.warns(UserWarning, match="search proxies skipped"):
+        assert search_proxies(tmp_path, [], "IE") == []
