@@ -1,0 +1,1 @@
+{"compete_for": [{"job_ids": ["J1"], "segment_id": "SEG1"}], "goal": "First 50 paying IE micro firms", "horizon": "6 months", "id": "ST1", "not_compete_for": ["firms with an in-house bookkeeper"], "why_we_win": {"activation": "VAT-deadline reminders", "added_value": "Bank-feed reconciliation removes the VAT weekend", "claim_ids": ["C2", "C7"]}}

@@ -1,0 +1,1 @@
+{"as_of_rule": "inputs dated <= T-3y", "bias_log_ratio": -0.05, "conformal_q80": 0.31, "coverage_80": 0.79, "id": "CAL1", "method_family": "revealed_price", "n": 24, "passed": true, "reference_class": "fixture class"}

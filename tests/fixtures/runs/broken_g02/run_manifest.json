@@ -1,0 +1,14 @@
+{
+  "frozen": [
+    {
+      "path": "inputs/brief.md",
+      "sha256": "8728053e33f7b1d92e7943be2eaaa6bf4eed6a507309fdbcf66eabd0e0a6ecf9"
+    }
+  ],
+  "manifest_sha256": "892db882ef2f63708e1302cb81fc3c264177a16d26c37bb61edd92acd3266f59",
+  "method_module": "B",
+  "purpose": "third_party_output",
+  "run_id": "broken_g02",
+  "seed": 7,
+  "stage": "S4"
+}
