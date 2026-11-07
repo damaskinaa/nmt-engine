@@ -232,15 +232,23 @@ class InvoicesOnlyLLM(FakeLLM):
 
 def test_rerun_replaces_previous_mine(mined, tmp_path):
     run_dir, first = mined
+    from nmt_engine.schema import Job
+    from nmt_engine.store import Store
+
+    Store(run_dir / "store").append(
+        Job(id="job_manual", statement="I want a manual job", level="core")
+    )
     before = load_run(run_dir)
     cfg = GateConfig(forbidden_corpus=None)
     s = mine(run_dir, "invoicing", InvoicesOnlyLLM(run_dir, cache_dir=tmp_path / "c2"), cfg=cfg)
     run = load_run(run_dir)
-    assert s["status"] == "ok" and s["jobs"] == len(run.jobs) == 1 < first["jobs"]
-    assert set(run.jobs) < set(before.jobs)
+    assert "job_manual" in run.jobs  # not written by mine, so never retracted by it
+    mined_jobs = set(run.jobs) - {"job_manual"}
+    assert s["status"] == "ok" and s["jobs"] == len(mined_jobs) == 1 < first["jobs"]
+    assert mined_jobs < set(before.jobs)
     assert all(e.to_job in run.jobs for e in run.edges.values())
     assert all(e.from_job in run.jobs or e.kind == "performs" for e in run.edges.values())
-    jids = {j.removeprefix("job_") for j in run.jobs}
+    jids = {j.removeprefix("job_") for j in mined_jobs}
     assert all(c.split("_")[2] in jids for c in run.claims if c.startswith("c_job_"))
     # a full mine again brings the dropped job back as a newer revision
     again = mine(run_dir, "invoicing", FakeLLM(run_dir, cache_dir=tmp_path / "c3"), cfg=cfg)

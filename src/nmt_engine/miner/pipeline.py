@@ -61,12 +61,13 @@ def write_manifest(run_dir: Path, frozen: list[Path], seed: int, vendor: str | N
 
 
 MINED_TYPES = ("claim", "job", "edge", "segment")
-MINED_CLAIM_PREFIXES = ("c_job_", "c_q_")
 
 
-def replace_mined(store: Store, records: list[Record]) -> None:
-    """Write this mine's records as the newest revisions and retract records from an earlier
-    mine of the same run that this one no longer produces."""
+def replace_mined(store: Store, records: list[Record], ledger: Path) -> None:
+    """Write this mine's records as the newest revisions and retract records that an earlier
+    mine of the same run wrote (listed in `ledger`) but this one no longer produces. Records
+    from anything other than `mine` are never touched."""
+    previous = json.loads(ledger.read_text("utf-8")) if ledger.is_file() else {}
     new: dict[str, list[Record]] = {t: [] for t in MINED_TYPES}
     for r in records:
         new[type_name(r)].append(r)
@@ -76,11 +77,14 @@ def replace_mined(store: Store, records: list[Record]) -> None:
             top[r.id] = max(top.get(r.id, -1), r.rev)
         ids = {r.id for r in new[t]}
         out = [r.model_copy(update={"rev": top[r.id] + 1}) if r.id in top else r for r in new[t]]
-        for i, old in sorted(store.current(t).items()):
-            if i in ids or (t == "claim" and not i.startswith(MINED_CLAIM_PREFIXES)):
-                continue
-            out.append(old.model_copy(update={"rev": top[i] + 1, "retracted": True}))
+        current = store.current(t)
+        for i in sorted(set(previous.get(t, [])) - ids):
+            if i in current:
+                out.append(current[i].model_copy(update={"rev": top[i] + 1, "retracted": True}))
         store.append_many(out)
+    ledger.write_text(
+        json.dumps({t: sorted(r.id for r in new[t]) for t in MINED_TYPES}, indent=1), "utf-8"
+    )
 
 
 def search_proxies(run_dir: Path, built: list[BuiltJob], geo: str) -> list[Claim]:
@@ -131,11 +135,11 @@ def search_proxies(run_dir: Path, built: list[BuiltJob], geo: str) -> list[Claim
     return claims
 
 
-def evidence_table(run: RunData) -> list[dict]:
+def evidence_table(run: RunData, job_ids: set[str] | None = None) -> list[dict]:
     """Per job, after gates: which of the 8 elements keep a live PUBLIC_VOICE receipt."""
     rows = []
     for job in sorted(run.jobs.values(), key=lambda j: j.id):
-        if job.retracted:
+        if job.retracted or (job_ids is not None and job.id not in job_ids):
             continue
         elements, kinds = [], set()
         for el in prompts.ELEMENTS:
@@ -227,13 +231,14 @@ def mine(
             *parts.edges,
             *segs,
         ],
+        run_dir / "mined_ids.json",
     )
     write_manifest(run_dir, frozen, seed, llm.provider if llm.enabled else None)
 
     demotion = demote(run_dir, cfg)
     run = load_run(run_dir)
     shown = displayable(run, run_gates(run_dir, cfg))
-    table = evidence_table(run)
+    table = evidence_table(run, {b.job.id for b in built})
     freq = {b.job.id: b.freq if b.freq is not None else float(b.voices or 1) for b in built}
     value = {b.job.id: b.value if b.value is not None else 1.0 for b in built}
     graph = graph_payload(run, shown, freq, value, parts.solutions)
