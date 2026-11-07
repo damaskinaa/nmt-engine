@@ -143,6 +143,9 @@ def test_appstore(tmp_path):
     c = make(tmp_path)
     with cassette("appstore"):
         out = appstore.collect(c, "invoice", "ie", apps=1, pages=1)
+        recent = appstore.collect(make(tmp_path / "b"), "invoice", "ie", 1, 1, date(2023, 7, 19))
+    assert 0 < len(recent) < len(out)
+    assert all(s.published_at.date() >= date(2023, 7, 19) for s in recent)
     assert out and all(
         s.kind == "review" and "Rating:" in (c.run_dir / s.text_path).read_text() for s in out
     )

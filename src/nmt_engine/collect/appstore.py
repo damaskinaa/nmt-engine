@@ -7,6 +7,8 @@ customer-reviews RSS feed generator (https://rss.marketingtools.apple.com/)
 
 from __future__ import annotations
 
+from datetime import date
+
 from nmt_engine.collect.base import Collector, ts
 
 NAME = "appstore"
@@ -28,7 +30,15 @@ def find_apps(c: Collector, term: str, country: str = "ie", limit: int = 5) -> l
     ]
 
 
-def reviews(c: Collector, app_id: int, country: str = "ie", pages: int = 2, app_name: str = ""):
+def reviews(
+    c: Collector,
+    app_id: int,
+    country: str = "ie",
+    pages: int = 2,
+    app_name: str = "",
+    since: date | None = None,
+):
+    """Most recent reviews; those published before `since` are skipped."""
     out = []
     for page in range(1, pages + 1):
         url = REVIEWS.format(country=country, page=page, app_id=app_id)
@@ -41,6 +51,9 @@ def reviews(c: Collector, app_id: int, country: str = "ie", pages: int = 2, app_
             title = e.get("title", {}).get("label", "")
             body = e.get("content", {}).get("label", "")
             rid = e.get("id", {}).get("label", "")
+            published = ts(e.get("updated", {}).get("label"))
+            if since and (published is None or published.date() < since):
+                continue
             src = c.add_source(
                 adapter=NAME,
                 kind="review",
@@ -49,7 +62,7 @@ def reviews(c: Collector, app_id: int, country: str = "ie", pages: int = 2, app_
                 url=f"https://apps.apple.com/{country}/app/id{app_id}#review-{rid}",
                 text=f"{title}\n\n{body}\n\nRating: {e['im:rating']['label']}/5",
                 author=e.get("author", {}).get("name", {}).get("label"),
-                published_at=ts(e.get("updated", {}).get("label")),
+                published_at=published,
                 access_basis=ACCESS_BASIS,
                 terms_url=TERMS_URL,
                 geography=country.upper(),
@@ -61,8 +74,15 @@ def reviews(c: Collector, app_id: int, country: str = "ie", pages: int = 2, app_
     return out
 
 
-def collect(c: Collector, query: str, country: str = "ie", apps: int = 5, pages: int = 2):
+def collect(
+    c: Collector,
+    query: str,
+    country: str = "ie",
+    apps: int = 5,
+    pages: int = 2,
+    since: date | None = None,
+):
     out = []
     for app in find_apps(c, query, country, apps):
-        out += reviews(c, app["id"], country, pages, app["name"])
+        out += reviews(c, app["id"], country, pages, app["name"], since)
     return out

@@ -64,4 +64,4 @@ def _vcr() -> vcr.VCR:
 
 
 def cassette(name: str):
-    return _vcr().use_cassette(f"{name}.json.gz")
+    return _vcr().use_cassette(f"{name}.json.gz", allow_playback_repeats=True)

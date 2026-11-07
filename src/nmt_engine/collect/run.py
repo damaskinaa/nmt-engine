@@ -42,7 +42,7 @@ def _steps(p: CollectPlan) -> list[tuple[str, Callable[[Collector], list]]]:
     steps: list[tuple[str, Callable[[Collector], list]]] = [
         ("hackernews:comments", lambda c: hackernews.collect(c, q, p.since, n, "comment")),
         ("hackernews:stories", lambda c: hackernews.collect(c, q, p.since, n // 2, "story")),
-        ("appstore", lambda c: appstore.collect(c, q, p.geo.lower(), apps=5, pages=2)),
+        ("appstore", lambda c: appstore.collect(c, q, p.geo.lower(), 5, 2, p.since)),
         ("github", lambda c: github.collect(c, q, p.since, n // 2)),
         ("reddit", lambda c: reddit.collect(c, q, p.since, n)),
         ("youtube", lambda c: youtube.collect(c, q, p.since)),
