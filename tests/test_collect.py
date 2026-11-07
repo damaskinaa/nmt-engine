@@ -530,3 +530,27 @@ def test_cli_collect_requires_salt(tmp_path, monkeypatch):
     args = ["collect", "--category", "x", "--since", "2023-01-01", "--run-dir", str(tmp_path)]
     res = CliRunner().invoke(app, args)
     assert res.exit_code == 2 and "NMT_AUTHOR_SALT" in res.output
+
+
+def test_redirect_to_forbidden_host_refused(tmp_path):
+    seen = []
+
+    def handler(req):
+        seen.append(req.url.host)
+        if req.url.host == "short.example.org":
+            return httpx.Response(302, headers={"Location": "https://www.linkedin.com/in/x"})
+        return httpx.Response(200, text="ok")
+
+    c = make(tmp_path, handler)
+    with pytest.raises(ForbiddenHostError):
+        c.fetch("https://short.example.org/a", "t")
+    assert seen == ["short.example.org"]
+
+
+def test_redirect_followed_to_allowed_host(tmp_path):
+    def handler(req):
+        if req.url.path == "/old":
+            return httpx.Response(301, headers={"Location": "/new"})
+        return httpx.Response(200, text="moved")
+
+    assert make(tmp_path, handler).fetch("https://a.example.org/old", "t") == "moved"

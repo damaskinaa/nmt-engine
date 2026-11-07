@@ -28,6 +28,7 @@ from nmt_engine.store import Store
 from nmt_engine.util import author_hash, sha256_text
 
 FORBIDDEN_HOSTS: tuple[str, ...] = GateConfig().forbidden_hosts
+MAX_REDIRECTS = 5
 USER_AGENT = "nmt-engine/0.1 (outside-in research; +https://github.com/damaskinaa/nmt-engine)"
 
 
@@ -100,7 +101,7 @@ class Collector:
         (self.run_dir / "sources").mkdir(parents=True, exist_ok=True)
         self.cache_dir = Path(self.cache_dir or self.run_dir / "cache")
         self.client = self.client or httpx.Client(
-            headers={"User-Agent": USER_AGENT}, timeout=30, follow_redirects=True
+            headers={"User-Agent": USER_AGENT}, timeout=30, follow_redirects=False
         )
         self.store = Store(self.run_dir / "store")
         self._ids = set(self.store.current("source"))
@@ -140,19 +141,37 @@ class Collector:
             entry = json.loads(cached.read_text("utf-8"))
             self._log(url, host, adapter, entry["status"], None, key)
             return entry["text"]
-        resp = None
-        for attempt in range(self.retries + 1):
-            self._wait(host)
-            resp = self.client.request(method, url, headers=dict(headers or {}), json=json_body)
-            if resp.status_code not in (429, 500, 502, 503, 504) or attempt == self.retries:
-                break
-            time.sleep(float(resp.headers.get("Retry-After", 2**attempt)))
-        assert resp is not None
+        resp = self._request(method, url, host, dict(headers or {}), json_body)
         self._log(url, host, adapter, resp.status_code, None, key)
         resp.raise_for_status()
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         cached.write_text(json.dumps({"status": resp.status_code, "text": resp.text}), "utf-8")
         return resp.text
+
+    def _request(
+        self, method: str, url: str, host: str, headers: dict[str, str], body: Any
+    ) -> httpx.Response:
+        """Send with retries; follow redirects by hand so every hop passes the host check."""
+        for _hop in range(MAX_REDIRECTS + 1):
+            resp = None
+            for attempt in range(self.retries + 1):
+                self._wait(host)
+                resp = self.client.request(
+                    method, url, headers=headers, json=body, follow_redirects=False
+                )
+                if resp.status_code not in (429, 500, 502, 503, 504) or attempt == self.retries:
+                    break
+                time.sleep(float(resp.headers.get("Retry-After", 2**attempt)))
+            assert resp is not None
+            if not resp.is_redirect:
+                return resp
+            url = str(resp.url.join(resp.headers["Location"]))
+            if is_forbidden(url):
+                raise ForbiddenHostError(url)
+            host = urlparse(url).hostname or ""
+            if resp.status_code in (301, 302, 303):
+                method, body = "GET", None
+        raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects", request=resp.request)
 
     def fetch_json(self, url: str, adapter: str, **kw: Any) -> Any:
         return json.loads(self.fetch(url, adapter, **kw))
