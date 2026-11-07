@@ -617,3 +617,16 @@ def test_cache_is_partitioned_by_credentials(tmp_path):
     assert c.fetch(url, "t", headers={"Authorization": "Bearer A"}) == "data for Bearer A"
     raw = "".join(f.name + f.read_text() for f in c.cache_dir.iterdir())
     assert "Bearer" not in raw.replace("data for Bearer", "")
+
+
+def test_redirect_drops_credentials_on_host_change(tmp_path):
+    seen = {}
+
+    def handler(req):
+        seen[req.url.host] = req.headers.get("Authorization")
+        if req.url.host == "api.example.org":
+            return httpx.Response(302, headers={"Location": "https://cdn.example.net/x"})
+        return httpx.Response(200, text="ok")
+
+    make(tmp_path, handler).fetch("https://api.example.org/a", "t", headers={"Authorization": "k"})
+    assert seen == {"api.example.org": "k", "cdn.example.net": None}

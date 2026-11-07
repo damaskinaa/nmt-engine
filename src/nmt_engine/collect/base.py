@@ -29,6 +29,7 @@ from nmt_engine.util import author_hash, sha256_text
 
 FORBIDDEN_HOSTS: tuple[str, ...] = GateConfig().forbidden_hosts
 MAX_REDIRECTS = 5
+CREDENTIAL_HEADERS = frozenset({"authorization", "proxy-authorization", "cookie", "x-api-key"})
 USER_AGENT = "nmt-engine/0.1 (outside-in research; +https://github.com/damaskinaa/nmt-engine)"
 
 
@@ -193,10 +194,14 @@ class Collector:
             assert resp is not None
             if not resp.is_redirect:
                 return resp
-            url = str(resp.url.join(resp.headers["Location"]))
+            prev = resp.url
+            url = str(prev.join(resp.headers["Location"]))
             if is_forbidden(url):
                 raise ForbiddenHostError(url)
-            host = urlparse(url).hostname or ""
+            nxt = urlparse(url)
+            host = nxt.hostname or ""
+            if host != prev.host or (prev.scheme == "https" and nxt.scheme != "https"):
+                headers = {k: v for k, v in headers.items() if k.lower() not in CREDENTIAL_HEADERS}
             if resp.status_code in (301, 302, 303):
                 method, body = "GET", None
         raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects", request=resp.request)
