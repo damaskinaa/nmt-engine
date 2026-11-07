@@ -5,6 +5,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from nmt_engine.schema import (
+    Calc,
     Calibration,
     Combined,
     Forecast,
@@ -43,6 +44,17 @@ def calibrated_estimate(m: MethodInput, cal: Calibration | None) -> MethodEstima
     return MethodEstimate(m.family, mu, h / Z80, (m.calc_id,))
 
 
+def is_anchored(methods: Sequence[MethodInput], calcs: Mapping[str, Calc]) -> bool:
+    """Every method cites a stored Calc whose inputs all carry a source or claim receipt."""
+    for m in methods:
+        calc = calcs.get(m.calc_id)
+        if calc is None or not calc.inputs:
+            return False
+        if any(not (i.source_id or i.claim_id) for i in calc.inputs):
+            return False
+    return bool(methods)
+
+
 def _intervals_overlap(fams: Sequence[MethodEstimate]) -> bool:
     return all(
         abs(a.mu - b.mu) <= Z80 * (a.sigma + b.sigma)
@@ -58,7 +70,7 @@ def estimate(
     methods: Sequence[MethodInput],
     calibrations: Mapping[str, Calibration] | None = None,
     *,
-    anchored: bool = True,
+    calcs: Mapping[str, Calc] | None = None,
     forecast: Forecast | None = None,
     market_touch: MarketTouch | None = None,
     segment_id: str | None = None,
@@ -67,10 +79,20 @@ def estimate(
 ) -> tuple[Synthetic, Triangulation]:
     """Calibrate each method, triangulate across families, grade, and return the Synthetic.
 
-    `calibrations` maps method family -> Calibration. `market_touch.value` must be in the
-    quantity's unit; it counts for S4 only if it lands inside the combined 80% interval.
+    Grade inputs are checked, not trusted: methods are anchored only if each `calc_id` is in
+    `calcs` with receipts on every input; a Calibration counts only for its own family and
+    `quantity`; `forecast` and `market_touch` count only if their `synthetic_id` is `id`.
+    `market_touch.value` must be in the quantity's unit and land inside the 80% interval.
     """
-    calibrations = calibrations or {}
+    calibrations = {
+        f: c
+        for f, c in (calibrations or {}).items()
+        if c.method_family == f and c.quantity == quantity
+    }
+    if forecast is not None and forecast.synthetic_id != id:
+        forecast = None
+    if market_touch is not None and market_touch.synthetic_id != id:
+        market_touch = None
     ests = [calibrated_estimate(m, calibrations.get(m.family)) for m in methods]
     tri = triangulate(ests, rho)
     median, lo, hi = from_log(tri.mu, tri.half_width)
@@ -79,7 +101,7 @@ def estimate(
     touched = market_touch is not None and lo <= market_touch.value <= hi
     g = grade(
         GradeInputs(
-            anchored=anchored,
+            anchored=is_anchored(methods, calcs or {}),
             families=frozenset(e.family for e in tri.families),
             methods_disagree=disagree,
             calibrated_families=calibrated,
