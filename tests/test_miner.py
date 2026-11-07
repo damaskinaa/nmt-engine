@@ -208,6 +208,20 @@ def test_no_llm_skips(tmp_path):
     assert s["status"] == "skipped" and not (run_dir / "reports" / "graph.html").exists()
 
 
+def test_sources_failing_gates_are_dropped_before_mining(tmp_path, monkeypatch):
+    monkeypatch.delenv("DATAFORSEO_LOGIN", raising=False)
+    run_dir = make_run(tmp_path)
+    run = load_run(run_dir)
+    bad = sorted(run.sources.values(), key=lambda x: x.id)[0]
+    text = run_dir / bad.text_path
+    text.write_text(text.read_text("utf-8") + " tampered", "utf-8")  # gate 7: sha mismatch
+    s = mine(run_dir, "invoicing", FakeLLM(run_dir, cache_dir=tmp_path / "c"))
+    assert s["traces"] == len(POSTS) - 1
+    run = load_run(run_dir)
+    assert bad.id not in run.sources
+    assert all(r.source_id != bad.id for c in run.claims.values() for r in c.source_refs)
+
+
 class BrokenLLM(LLM):
     def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
         from nmt_engine.llm import LLMError

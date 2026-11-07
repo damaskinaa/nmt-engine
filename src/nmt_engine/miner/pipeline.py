@@ -161,6 +161,8 @@ def mine(
 ) -> dict:
     t0 = time.monotonic()
     run_dir = Path(run_dir)
+    cfg = cfg or GateConfig()
+    demote(run_dir, cfg)  # drop failing sources (gates 7, 14) before they shape any score
     run = load_run(run_dir)
     traces = load_traces(run, limit=limit)
     summary: dict = {"category": category, "geo": geo, "traces": len(traces), "seed": seed}
@@ -200,7 +202,6 @@ def mine(
     store.append_many(segs)
     write_manifest(run_dir, frozen, seed, llm.provider if llm.enabled else None)
 
-    cfg = cfg or GateConfig()
     demotion = demote(run_dir, cfg)
     run = load_run(run_dir)
     shown = displayable(run, run_gates(run_dir, cfg))
