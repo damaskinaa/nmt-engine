@@ -55,6 +55,25 @@ def scrub_pii(text: str) -> str:
     return _PHONE.sub(phone, _EMAIL.sub("[email]", text))
 
 
+def _scrub_json(value: Any) -> Any:
+    if isinstance(value, str):
+        return scrub_pii(value)
+    if isinstance(value, list):
+        return [_scrub_json(v) for v in value]
+    if isinstance(value, dict):
+        return {k: _scrub_json(v) for k, v in value.items()}
+    return value
+
+
+def scrub_payload(text: str) -> str:
+    """scrub_pii for a response body; JSON is masked string by string so escapes stay valid."""
+    try:
+        data = json.loads(text)
+    except ValueError:
+        return scrub_pii(text)
+    return json.dumps(_scrub_json(data), ensure_ascii=False)
+
+
 def is_forbidden(url: str) -> bool:
     host = (urlparse(url).hostname or "").lower()
     return any(f in host for f in FORBIDDEN_HOSTS)
@@ -129,7 +148,8 @@ class Collector:
         method: str = "GET",
         json_body: Any = None,
     ) -> str:
-        """Fetch text with cache (URL + params + body + as_of date), rate limit and retries."""
+        """Fetch text with cache (URL + params + body + as_of date), rate limit and retries.
+        The body is PII-masked before it is cached or returned."""
         if params:
             url = f"{url}{'&' if '?' in url else '?'}{urlencode(params, doseq=True)}"
         if is_forbidden(url):
@@ -144,9 +164,10 @@ class Collector:
         resp = self._request(method, url, host, dict(headers or {}), json_body)
         self._log(url, host, adapter, resp.status_code, None, key)
         resp.raise_for_status()
+        text = scrub_payload(resp.text)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
-        cached.write_text(json.dumps({"status": resp.status_code, "text": resp.text}), "utf-8")
-        return resp.text
+        cached.write_text(json.dumps({"status": resp.status_code, "text": text}), "utf-8")
+        return text
 
     def _request(
         self, method: str, url: str, host: str, headers: dict[str, str], body: Any

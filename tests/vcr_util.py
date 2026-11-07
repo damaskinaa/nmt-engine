@@ -4,14 +4,13 @@ NMT_VCR_RECORD=1. Secrets are stripped from headers and query strings before sav
 from __future__ import annotations
 
 import gzip
-import json
 import os
 from pathlib import Path
 
 import vcr
 from vcr.serialize import deserialize, serialize
 
-from nmt_engine.collect.base import scrub_pii
+from nmt_engine.collect.base import scrub_payload
 
 CASSETTES = Path(__file__).parent / "cassettes"
 SECRET_QUERY = ["key", "api_key", "app_key", "app_id", "client_secret", "token", "access_token"]
@@ -33,16 +32,6 @@ class GzipPersister:
         path.write_bytes(gzip.compress(data, mtime=0))
 
 
-def _scrub_json(value):
-    if isinstance(value, str):
-        return scrub_pii(value)
-    if isinstance(value, list):
-        return [_scrub_json(v) for v in value]
-    if isinstance(value, dict):
-        return {k: _scrub_json(v) for k, v in value.items()}
-    return value
-
-
 def _scrub_response(response):
     """Mask e-mails/phones in recorded bodies so cassettes carry no contact details."""
     body = response.get("body", {}).get("string")
@@ -52,11 +41,7 @@ def _scrub_response(response):
         text = body.decode("utf-8")
     except UnicodeDecodeError:
         return response
-    try:
-        scrubbed = json.dumps(_scrub_json(json.loads(text)), ensure_ascii=False)
-    except ValueError:
-        scrubbed = scrub_pii(text)
-    response["body"]["string"] = scrubbed.encode("utf-8")
+    response["body"]["string"] = scrub_payload(text).encode("utf-8")
     headers = response.get("headers", {})
     for k in [k for k in headers if k.lower() == "content-length"]:
         del headers[k]

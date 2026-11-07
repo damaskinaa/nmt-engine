@@ -554,3 +554,11 @@ def test_redirect_followed_to_allowed_host(tmp_path):
         return httpx.Response(200, text="moved")
 
     assert make(tmp_path, handler).fetch("https://a.example.org/old", "t") == "moved"
+
+
+def test_cache_holds_masked_payload(tmp_path):
+    body = {"text": "mail <jo@example.com> or +353 1 234 5678", "n": 3}
+    c = make(tmp_path, lambda r: httpx.Response(200, json=body))
+    assert c.fetch_json("https://api.example.org/p", "t")["text"] == "mail <[email]> or [phone]"
+    raw = "".join(f.read_text() for f in c.cache_dir.iterdir())
+    assert "jo@example.com" not in raw and "234 5678" not in raw
