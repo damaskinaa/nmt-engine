@@ -212,7 +212,14 @@ def test_e_leakage_raises():
         assert_no_leakage([via_src], date(2024, 1, 1), {"S1": src})
     cases = [BacktestCase(case="c", as_of=date(2026, 6, 1), known_outcome=1, predicted=1)] * 3
     with pytest.raises(LeakageError):
-        calibration_record("C", "statistical", "r", "<=T", cases, as_of=AS_OF)
+        calibration_record("C", "statistical", "r", "<=T", cases, quantity="Q4", as_of=AS_OF)
+
+
+def test_calibration_record_requires_quantity():
+    cases = [BacktestCase(case="c", as_of=AS_OF, known_outcome=1, predicted=1)] * 3
+    with pytest.raises(TypeError):
+        calibration_record("C", "statistical", "r", "<=T", cases)  # type: ignore[call-arg]
+    assert calibration_record("C", "statistical", "r", "<=T", cases, quantity="Q4").quantity == "Q4"
 
 
 # --- (f) grade boundaries -------------------------------------------------------------------

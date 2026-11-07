@@ -70,11 +70,13 @@ def calibration_record(
     reference_class: str,
     as_of_rule: str,
     cases: Sequence[BacktestCase],
+    *,
+    quantity: str,
     method_id: str | None = None,
-    quantity: str | None = None,
     as_of: date | None = None,
 ) -> Calibration:
-    """Build a Calibration record. If `as_of` is given, every case must be dated <= as_of."""
+    """Build a Calibration record for one family and `quantity` (required: `estimate` ignores
+    calibrations for any other quantity). If `as_of` is given, cases must be dated <= as_of."""
     if as_of is not None:
         late = [c.case for c in cases if c.as_of > as_of]
         if late:
