@@ -70,6 +70,7 @@ def dataset_source(
         access_basis=access_basis,
         terms_url=terms_url,
         geography=geography,
+        existing_ok=True,
     )
 
 

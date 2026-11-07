@@ -181,6 +181,9 @@ def test_eurostat(tmp_path):
         df = eurostat.dataset(c, "sbs_sc_ovw", geo="IE", nace_r2="J62", time="2021")
     assert {"value", "source_id", "geo"} <= set(df.columns) and len(df) > 0
     check_sources(c)
+    with cassette("eurostat"):
+        again = eurostat.dataset(c, "sbs_sc_ovw", geo="IE", nace_r2="J62", time="2021")
+    assert set(again["source_id"]) == set(df["source_id"]) == {df.loc[0, "source_id"]}
 
 
 def test_cso(tmp_path):

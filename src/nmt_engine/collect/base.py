@@ -238,9 +238,11 @@ class Collector:
         publisher: str | None = None,
         geography: str | None = None,
         as_of_date: date | None = None,
+        existing_ok: bool = False,
     ) -> Source | None:
         """Store PII-scrubbed text under sources/<id>.txt, append the Source and its log entry.
-        Returns None for empty text or an already-stored source."""
+        Returns None for empty text, and for an already-stored source unless `existing_ok`
+        (then the stored Source is returned so callers can still cite it)."""
         text = scrub_pii(text.strip())
         if not text:
             return None
@@ -248,7 +250,7 @@ class Collector:
             raise ForbiddenHostError(url)
         sid = "S-" + hashlib.sha256(f"{url}\n{text}".encode()).hexdigest()[:16]
         if sid in self._ids:
-            return None
+            return self.store.current("source").get(sid) if existing_ok else None
         rel = f"sources/{sid}.txt"
         (self.run_dir / rel).write_text(text, "utf-8")
         src = Source(
