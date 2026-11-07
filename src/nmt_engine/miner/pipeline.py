@@ -24,8 +24,8 @@ from nmt_engine.miner import prompts
 from nmt_engine.miner.extract import extract, load_traces
 from nmt_engine.miner.graph_build import build_edges, segments
 from nmt_engine.miner.jobs import BuiltJob, build_job, group_instances, llm_merge
-from nmt_engine.schema import Claim, FrozenFile, RunManifest, SourceRef
-from nmt_engine.store import RunData, Store, load_run
+from nmt_engine.schema import Claim, FrozenFile, Record, RunManifest, SourceRef
+from nmt_engine.store import RunData, Store, load_run, type_name
 from nmt_engine.util import sha256_file, sha256_text
 
 KILL_ELEMENTS = 4
@@ -58,6 +58,29 @@ def write_manifest(run_dir: Path, frozen: list[Path], seed: int, vendor: str | N
         model_vendor=vendor,
     )
     (run_dir / "run_manifest.json").write_text(m.model_dump_json(indent=2), "utf-8")
+
+
+MINED_TYPES = ("claim", "job", "edge", "segment")
+MINED_CLAIM_PREFIXES = ("c_job_", "c_q_")
+
+
+def replace_mined(store: Store, records: list[Record]) -> None:
+    """Write this mine's records as the newest revisions and retract records from an earlier
+    mine of the same run that this one no longer produces."""
+    new: dict[str, list[Record]] = {t: [] for t in MINED_TYPES}
+    for r in records:
+        new[type_name(r)].append(r)
+    for t in MINED_TYPES:
+        top: dict[str, int] = {}
+        for r in store.history(t):
+            top[r.id] = max(top.get(r.id, -1), r.rev)
+        ids = {r.id for r in new[t]}
+        out = [r.model_copy(update={"rev": top[r.id] + 1}) if r.id in top else r for r in new[t]]
+        for i, old in sorted(store.current(t).items()):
+            if i in ids or (t == "claim" and not i.startswith(MINED_CLAIM_PREFIXES)):
+                continue
+            out.append(old.model_copy(update={"rev": top[i] + 1, "retracted": True}))
+        store.append_many(out)
 
 
 def search_proxies(run_dir: Path, built: list[BuiltJob], geo: str) -> list[Claim]:
@@ -194,12 +217,17 @@ def mine(
         json.dumps([asdict(i) for i in ex.instances], indent=1, sort_keys=True), "utf-8"
     )
     frozen.append(extraction)
-    store = Store(run_dir / "store")
-    store.append_many(c for b in built for c in b.claims.values())
-    store.append_many(parts.claims + proxies)
-    store.append_many(b.job for b in built)
-    store.append_many(parts.edges)
-    store.append_many(segs)
+    replace_mined(
+        Store(run_dir / "store"),
+        [
+            *(c for b in built for c in b.claims.values()),
+            *parts.claims,
+            *proxies,
+            *(b.job for b in built),
+            *parts.edges,
+            *segs,
+        ],
+    )
     write_manifest(run_dir, frozen, seed, llm.provider if llm.enabled else None)
 
     demotion = demote(run_dir, cfg)

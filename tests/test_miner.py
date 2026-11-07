@@ -222,6 +222,31 @@ def test_sources_failing_gates_are_dropped_before_mining(tmp_path, monkeypatch):
     assert all(r.source_id != bad.id for c in run.claims.values() for r in c.source_refs)
 
 
+class InvoicesOnlyLLM(FakeLLM):
+    def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
+        out = json.loads(super().complete(prompt, system, purpose))
+        for p in out.get("posts", []):
+            p["jobs"] = [j for j in p["jobs"] if "invoices" in j["statement"]]
+        return json.dumps(out)
+
+
+def test_rerun_replaces_previous_mine(mined, tmp_path):
+    run_dir, first = mined
+    before = load_run(run_dir)
+    cfg = GateConfig(forbidden_corpus=None)
+    s = mine(run_dir, "invoicing", InvoicesOnlyLLM(run_dir, cache_dir=tmp_path / "c2"), cfg=cfg)
+    run = load_run(run_dir)
+    assert s["status"] == "ok" and s["jobs"] == len(run.jobs) == 1 < first["jobs"]
+    assert set(run.jobs) < set(before.jobs)
+    assert all(e.to_job in run.jobs for e in run.edges.values())
+    assert all(e.from_job in run.jobs or e.kind == "performs" for e in run.edges.values())
+    jids = {j.removeprefix("job_") for j in run.jobs}
+    assert all(c.split("_")[2] in jids for c in run.claims if c.startswith("c_job_"))
+    # a full mine again brings the dropped job back as a newer revision
+    again = mine(run_dir, "invoicing", FakeLLM(run_dir, cache_dir=tmp_path / "c3"), cfg=cfg)
+    assert again["jobs"] == first["jobs"] and again["share_passing"] == first["share_passing"]
+
+
 class BrokenLLM(LLM):
     def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
         from nmt_engine.llm import LLMError
