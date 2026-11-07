@@ -68,9 +68,10 @@ def _steps(p: CollectPlan) -> list[tuple[str, Callable[[Collector], list]]]:
 def _dfs(c: Collector, q: str, geo: str) -> list:
     if not env("DATAFORSEO_LOGIN"):
         raise MissingKeyError("dataforseo needs $DATAFORSEO_LOGIN")
+    before = set(c.store.current("source"))
     dataforseo.autocomplete(c, q, geo)
     dataforseo.serp_questions(c, q, geo)
-    return []
+    return [s for sid, s in c.store.current("source").items() if sid not in before]
 
 
 def run_collect(plan: CollectPlan, run_dir: Path, collector: Collector | None = None) -> dict:

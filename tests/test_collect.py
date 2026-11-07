@@ -370,6 +370,10 @@ def test_dataforseo(tmp_path, monkeypatch):
     assert df.loc[0, "cpc"] == 4.2 and df.loc[0, "month"] == "2026-09"
     assert dataforseo.autocomplete(c, "invoice app") == ["invoice app free"]
     assert dataforseo.serp_questions(c, "invoice app")["related"] == ["invoice template"]
+    from nmt_engine.collect.run import _dfs
+
+    fresh = Collector(tmp_path / "b", as_of=c.as_of, min_interval_s=0, salt="t", client=c.client)
+    assert len(_dfs(fresh, "invoice app", "IE")) == 2  # autocomplete + SERP question sources
 
 
 def test_companies_house(tmp_path, monkeypatch):
