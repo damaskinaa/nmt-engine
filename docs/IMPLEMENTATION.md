@@ -29,7 +29,7 @@ Precedence when documents disagree: master prompt > ARCHITECTURE > PROTOCOL > PR
 | 7 | source exists | source missing from retrieval log | source and its claims dropped |
 | 8 | validation-language lint | "Customers want …" in report.md | flagged (fix the text) |
 | 9 | manifest hash | frozen input edited after freeze | flagged (re-freeze) |
-| 10 | licence overlap | 12-word overlap with forbidden corpus | flagged (rewrite) |
+| 10 | licence overlap (outputs + `prompts/`) | 12-word overlap with forbidden corpus | flagged (rewrite) |
 | 11 | source-type diversity | segment claim with one source type | single signal, removed from Segment/why_we_win/Job |
 | 12 | astroturf | near-duplicate burst within 72 h | voices collapsed |
 | 13 | simulation firewall | `why_we_win` cites an S2 synthetic estimate | flagged |
@@ -50,5 +50,5 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   `MarketTouch` id.
 - **Gate 10 scope.** Applies unless `run_manifest.method_module == "A"`. The repo-wide check on `src/`
   runs as a test against `forbidden_corpus/` (git-ignored; set `NMT_FORBIDDEN_CORPUS` to move it).
-- **Gate 13 persona-panel monotonicity** is not checked yet: persona panels don't exist until the
-  synth core (PR 2) adds them.
+- **Gate 13 persona-panel monotonicity** is not checked yet: persona panels arrive in PR 9 (calibrated
+  synthetic panel), which adds that test.
