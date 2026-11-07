@@ -351,3 +351,16 @@ def test_graph_json_cannot_break_out_of_script(tmp_path: Path) -> None:
         {"nodes": [{"data": {"id": "j", "label": evil}}], "edges": []}, tmp_path / "g.html"
     ).read_text()
     assert "alert(1)</script>" not in html and "<!--<script>" not in html
+
+
+def test_receipt_cap_keeps_every_source_kind() -> None:
+    from types import SimpleNamespace
+
+    from nmt_engine.miner.jobs import MAX_REFS, _refs
+
+    sources = {f"r{i}": SimpleNamespace(kind="review") for i in range(60)}
+    sources["f0"] = SimpleNamespace(kind="forum")
+    pairs = [(f"r{i}", f"span {i}") for i in range(60)] + [("f0", "forum span")]
+    refs = _refs(pairs, "job", sources)
+    assert len(refs) == MAX_REFS
+    assert {sources[r.source_id].kind for r in refs} == {"review", "forum"}

@@ -155,13 +155,21 @@ def _claim(
     )
 
 
-def _refs(pairs: list[tuple[str, str]], locator: str) -> list[SourceRef]:
-    seen, out = set(), []
+def _refs(
+    pairs: list[tuple[str, str]], locator: str, sources: dict[str, Source]
+) -> list[SourceRef]:
+    """Unique receipts, round-robin across source kinds so the cap keeps every kind."""
+    seen: set[tuple[str, str]] = set()
+    by_kind: dict[str, list[SourceRef]] = defaultdict(list)
     for sid, span in pairs:
         if (sid, span) in seen:
             continue
         seen.add((sid, span))
-        out.append(SourceRef(source_id=sid, verbatim=span, locator=locator))
+        by_kind[sources[sid].kind].append(SourceRef(source_id=sid, verbatim=span, locator=locator))
+    queues = [by_kind[k] for k in sorted(by_kind)]
+    out: list[SourceRef] = []
+    for i in range(max((len(q) for q in queues), default=0)):
+        out += [q[i] for q in queues if i < len(q)]
     return out[:MAX_REFS]
 
 
@@ -176,7 +184,7 @@ def build_job(group: JobGroup, sources: dict[str, Source], geo: str) -> BuiltJob
         per_field["alternatives"] += [(inst.source_id, s) for _, s in inst.alternatives]
     claims: dict[str, Claim] = {}
     for f in (*ELEMENTS, *VALUE_MARKERS):
-        refs = _refs(per_field.get(f, []), f)
+        refs = _refs(per_field.get(f, []), f, sources)
         if refs:
             label = f.replace("_", " ")
             claims[f] = _claim(f"c_{jid}_{f}", label, group.statement, refs, sources, geo)
