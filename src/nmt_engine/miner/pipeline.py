@@ -171,6 +171,16 @@ def mine(
         summary.update(status="skipped", reason=str(exc))
         (run_dir / "mine_summary.json").write_text(json.dumps(summary, indent=2), "utf-8")
         return summary
+    n_batches = -(-len(traces) // batch_size)
+    if ex.failed_batches and 2 * ex.failed_batches >= n_batches:
+        summary.update(
+            status="failed",
+            reason=f"LLM extraction failed for {ex.failed_batches} of {n_batches} batches",
+            failed_batches=ex.failed_batches,
+            cost_usd=round(llm.cost, 4),
+        )
+        (run_dir / "mine_summary.json").write_text(json.dumps(summary, indent=2), "utf-8")
+        return summary
     groups = llm_merge(llm, group_instances(ex.instances), category)
     built = [build_job(g, run.sources, geo) for g in groups]
     proxies = search_proxies(run_dir, built, geo)

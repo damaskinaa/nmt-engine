@@ -208,6 +208,21 @@ def test_no_llm_skips(tmp_path):
     assert s["status"] == "skipped" and not (run_dir / "reports" / "graph.html").exists()
 
 
+class BrokenLLM(LLM):
+    def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
+        from nmt_engine.llm import LLMError
+
+        raise LLMError("HTTP 500")
+
+
+def test_failed_extraction_is_not_a_kill_line_result(tmp_path):
+    run_dir = make_run(tmp_path)
+    s = mine(run_dir, "invoicing", BrokenLLM(run_dir, cache_dir=tmp_path / "c"))
+    assert s["status"] == "failed" and s["failed_batches"] == 1
+    _, verdict = killline([run_dir, run_dir, run_dir])
+    assert "not decidable" in verdict
+
+
 # --- scoring -----------------------------------------------------------------------------
 
 
