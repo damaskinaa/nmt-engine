@@ -23,6 +23,10 @@ Precedence when documents disagree: master prompt > ARCHITECTURE > PROTOCOL > PR
 | PROTOCOL §3.5 forecast registry + scoring (hit, log error, Brier) | `src/nmt_engine/synth/forecast.py` |
 | Leakage guard (as-of T) | `src/nmt_engine/synth/leakage.py` |
 | EVPI on method disagreement (go/no-go) | `src/nmt_engine/synth/evpi.py` |
+| Collectors: shared plumbing (cache keyed by request + as-of date, per-host rate limit, retries, forbidden-host refusal, secret redaction, PII masking, Source + retrieval log) | `src/nmt_engine/collect/base.py` |
+| Trace adapters (HN, Stack Exchange, App Store, GitHub, Reddit, YouTube, Wayback, public web; Google Play disabled) | `src/nmt_engine/collect/<adapter>.py`; access basis + terms URL in each module docstring |
+| Official/stats, procurement, search, labour, dataset adapters | `collect/{eurostat,cso,ons,companies_house,sec_edgar,procurement,dataforseo,adzuna,datasets}.py` |
+| `nmt collect` orchestration | `src/nmt_engine/collect/run.py`, `cli.py`; VCR cassettes `tests/cassettes/`, tests `tests/test_collect.py` |
 | Known-truth worlds | `src/nmt_engine/synth/world.py`; histogram `scripts/coverage_histogram.py` → `docs/img/coverage_histogram.png` |
 
 ## Gate → defect → demote action
@@ -85,3 +89,15 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   cells (`world.FALLBACK_CELLS`); each must reach 75–90% coverage over 200 worlds
   (`scripts/coverage_matrix.py` prints the table). The ρ floor makes the true-ρ = 0 cells
   conservative: with honest stated intervals that cell sits near the 90% ceiling.
+- **Collector text is PII-masked.** E-mail addresses and phone numbers in public text are replaced by
+  `[email]` / `[phone]` before the source text is stored (and before cassettes are saved), so quotes
+  are verified against the masked text. Author ids are salted hashes; `nmt collect` refuses to run
+  without `NMT_AUTHOR_SALT` so hashes are reproducible across runs.
+- **Google Play is disabled** (`collect/googleplay.py`): no terms-compliant review source exists.
+- **Product Hunt** needs `PRODUCTHUNT_TOKEN` *and* `NMT_PRODUCTHUNT_TERMS_OK=1`, because its API terms
+  restrict commercial use; the operator confirms the terms before enabling it.
+- **ONS CSVs above 50 MB** (e.g. ASHE table 3, ~760 MB) are refused; use `ons.observations()` with
+  dimension filters instead.
+- **Keyed adapters** (Reddit, YouTube, GitHub discussions, DataForSEO, Companies House, Adzuna,
+  Product Hunt) are skipped when their keys are missing and tested against mock transports built from
+  the documented response shapes; keyless adapters replay real VCR recordings.
