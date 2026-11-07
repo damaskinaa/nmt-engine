@@ -44,11 +44,18 @@ def calibrated_estimate(m: MethodInput, cal: Calibration | None) -> MethodEstima
     return MethodEstimate(m.family, mu, h / Z80, (m.calc_id,))
 
 
-def is_anchored(methods: Sequence[MethodInput], calcs: Mapping[str, Calc]) -> bool:
-    """Every method cites a stored Calc whose inputs all carry a source or claim receipt."""
+def is_anchored(
+    methods: Sequence[MethodInput], calcs: Mapping[str, Calc], quantity: Quantity
+) -> bool:
+    """Every method cites a stored Calc for this quantity, family and median whose inputs all
+    carry a source or claim receipt."""
     for m in methods:
         calc = calcs.get(m.calc_id)
         if calc is None or not calc.inputs:
+            return False
+        if calc.quantity != quantity or calc.method_family != m.family:
+            return False
+        if not math.isclose(calc.median, m.median, rel_tol=1e-9):
             return False
         if any(not (i.source_id or i.claim_id) for i in calc.inputs):
             return False
@@ -101,7 +108,7 @@ def estimate(
     touched = market_touch is not None and lo <= market_touch.value <= hi
     g = grade(
         GradeInputs(
-            anchored=is_anchored(methods, calcs or {}),
+            anchored=is_anchored(methods, calcs or {}, quantity),
             families=frozenset(e.family for e in tri.families),
             methods_disagree=disagree,
             calibrated_families=calibrated,

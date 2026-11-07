@@ -100,10 +100,12 @@ def test_b_family_bias_detected_and_corrected():
 # --- (c) same-family padding ----------------------------------------------------------------
 
 
-def _calcs(methods, receipts=True):
+def _calcs(methods, receipts=True, quantity="Q4"):
     return {
         m.calc_id: Calc(
             id=m.calc_id,
+            quantity=quantity,
+            method_family=m.family,
             formula="x",
             inputs=[CalcInput(name="x", value=m.median, source_id="S1" if receipts else None)],
             median=m.median,
@@ -147,6 +149,14 @@ def test_unanchored_methods_grade_s0():
     assert estimate("Y", "Q4", "IE", ms)[0].grade == "S0"
     assert estimate("Y", "Q4", "IE", ms, calcs=_calcs(ms, receipts=False))[0].grade == "S0"
     assert estimate("Y", "Q4", "IE", ms, calcs=_calcs(ms[:2]))[0].grade == "S0"
+    assert estimate("Y", "Q4", "IE", ms, calcs=_calcs(ms))[0].grade == "S2"
+    assert estimate("Y", "Q4", "IE", ms, calcs=_calcs(ms, quantity="Q1"))[0].grade == "S0"
+    other_value = {k: c.model_copy(update={"median": c.median * 2}) for k, c in _calcs(ms).items()}
+    assert estimate("Y", "Q4", "IE", ms, calcs=other_value)[0].grade == "S0"
+    other_family = {
+        k: c.model_copy(update={"method_family": "supply"}) for k, c in _calcs(ms).items()
+    }
+    assert estimate("Y", "Q4", "IE", ms, calcs=other_family)[0].grade == "S0"
 
 
 # --- (d) disagreement -----------------------------------------------------------------------
