@@ -4,7 +4,7 @@ from datetime import date
 import numpy as np
 import pytest
 
-from nmt_engine.schema import BacktestCase, CalcInput, Forecast, MarketTouch, Source
+from nmt_engine.schema import BacktestCase, Calc, CalcInput, Forecast, MarketTouch, Source
 from nmt_engine.store import Store
 from nmt_engine.synth import (
     ForecastRegistry,
@@ -25,6 +25,7 @@ from nmt_engine.synth import (
 )
 from nmt_engine.synth.calibrate import calibration_record
 from nmt_engine.synth.estimate import calibrated_estimate
+from nmt_engine.synth.estimate import estimate as _estimate
 from nmt_engine.synth.world import (
     AS_OF,
     WorldConfig,
@@ -99,6 +100,19 @@ def test_b_family_bias_detected_and_corrected():
 # --- (c) same-family padding ----------------------------------------------------------------
 
 
+def _calcs(methods, receipts=True):
+    return {
+        m.calc_id: Calc(
+            id=m.calc_id,
+            formula="x",
+            inputs=[CalcInput(name="x", value=m.median, source_id="S1" if receipts else None)],
+            median=m.median,
+            geography="IE",
+        )
+        for m in methods
+    }
+
+
 def _three():
     return [
         MethodInput("statistical", "K1", 27, 20, 36),
@@ -108,12 +122,12 @@ def _three():
 
 
 def test_c_same_family_calcs_do_not_raise_grade_or_shrink_interval():
-    base, tb = estimate("Y", "Q4", "IE", _three())
     padded = _three() + [
         MethodInput("statistical", f"P{i}", 26 + i, 20 + i, 35 + i) for i in range(5)
     ]
-    more, tm = estimate("Y", "Q4", "IE", padded)
-    assert more.grade == base.grade
+    base, tb = estimate("Y", "Q4", "IE", _three(), calcs=_calcs(padded))
+    more, tm = estimate("Y", "Q4", "IE", padded, calcs=_calcs(padded))
+    assert more.grade == base.grade == "S2"
     assert tm.k == tb.k == 3
     tightest = min((m for m in padded if m.family == "statistical"), key=lambda m: m.hi / m.lo)
     single = [m for m in _three() if m.family != "statistical"] + [tightest]
@@ -124,8 +138,15 @@ def test_c_same_family_calcs_do_not_raise_grade_or_shrink_interval():
 def test_c_padding_cannot_reach_s2_from_two_families():
     two = [MethodInput("statistical", f"K{i}", 27, 20, 36) for i in range(6)]
     two.append(MethodInput("supply", "K9", 30, 21, 42))
-    syn, _ = estimate("Y", "Q4", "IE", two)
+    syn, _ = estimate("Y", "Q4", "IE", two, calcs=_calcs(two))
     assert syn.grade == "S1"
+
+
+def test_unanchored_methods_grade_s0():
+    ms = _three()
+    assert estimate("Y", "Q4", "IE", ms)[0].grade == "S0"
+    assert estimate("Y", "Q4", "IE", ms, calcs=_calcs(ms, receipts=False))[0].grade == "S0"
+    assert estimate("Y", "Q4", "IE", ms, calcs=_calcs(ms[:2]))[0].grade == "S0"
 
 
 # --- (d) disagreement -----------------------------------------------------------------------
@@ -138,7 +159,7 @@ def test_d_families_3x_apart_disagree_cap_s1_evpi_positive():
         MethodInput("revealed_price", "K3", 11, 9, 13.5),
     ]
     reg_fc = Forecast(id="F1", synthetic_id="Y", resolution_rule="r", resolve_by=date(2027, 1, 1))
-    syn, tri = estimate("Y", "Q4", "IE", ms, forecast=reg_fc)
+    syn, tri = estimate("Y", "Q4", "IE", ms, calcs=_calcs(ms), forecast=reg_fc)
     assert tri.methods_disagree and syn.methods_disagree and syn.grade == "S1"
     comps = [(e.mu, e.sigma) for e in tri.families]
     assert evpi_go_no_go(comps, threshold=18) > 0
@@ -265,12 +286,16 @@ def _calibrated_world():
     w = generate_world(WorldConfig(seed=3))
     cals = calibrations_for(w)["Q4"]
     assert all(c.passed for c in cals.values())
-    return w, cals
+    return w, cals, {c.id: c for c in w.calcs}
 
 
 def test_estimate_reaches_s3_and_s4_and_label(tmp_path):
-    w, cals = _calibrated_world()
+    w, cals, calcs = _calibrated_world()
     ms = w.methods[("SEG1", "Q4")]
+
+    def estimate(*a, **k):
+        return _estimate(*a, calcs=calcs, **k)
+
     s2, _ = estimate("Y1", "Q4", "WORLD", ms, cals, unit="EUR/month", segment_id="SEG1")
     assert s2.grade == "S2"
     reg = ForecastRegistry(Store(tmp_path))
@@ -285,11 +310,19 @@ def test_estimate_reaches_s3_and_s4_and_label(tmp_path):
         value=(lo * hi) ** 0.5,
         n=200,
         started=date(2026, 2, 1),
+        synthetic_id="Y1",
     )
     s4, _ = estimate("Y1", "Q4", "WORLD", ms, cals, forecast=fc, market_touch=touch)
     assert s4.grade == "S4" and s4.market_touch_id == "MT1"
     miss = touch.model_copy(update={"value": hi * 2})
     assert estimate("Y1", "Q4", "WORLD", ms, cals, forecast=fc, market_touch=miss)[0].grade == "S3"
+    other = touch.model_copy(update={"synthetic_id": "Y2"})
+    assert estimate("Y1", "Q4", "WORLD", ms, cals, forecast=fc, market_touch=other)[0].grade == "S3"
+    other_fc = fc.model_copy(update={"synthetic_id": "Y2"})
+    assert estimate("Y1", "Q4", "WORLD", ms, cals, forecast=other_fc)[0].grade == "S2"
+    q1_cals = {f: c.model_copy(update={"quantity": "Q1"}) for f, c in cals.items()}
+    wrong_q, _ = estimate("Y1", "Q4", "WORLD", ms, q1_cals, forecast=fc)
+    assert wrong_q.grade != "S3" and wrong_q.calibration_ids == []
 
     label = citation_label(s3, {c.id: c for c in cals.values()}, reg.all())
     assert label.startswith("Q4 WTP: ")
@@ -299,27 +332,31 @@ def test_estimate_reaches_s3_and_s4_and_label(tmp_path):
 
 
 def test_forecast_registry_scoring(tmp_path):
-    w, cals = _calibrated_world()
-    syn, _ = estimate("Y1", "Q4", "WORLD", w.methods[("SEG1", "Q4")], cals)
+    w, cals, calcs = _calibrated_world()
+    syn, _ = estimate("Y1", "Q4", "WORLD", w.methods[("SEG1", "Q4")], cals, calcs=calcs)
     reg = ForecastRegistry(Store(tmp_path))
     fc = reg.add(syn, "rule", date(2027, 1, 1))
     assert fc.id == "F-0001"
     truth = w.truth[("SEG1", "Q4")]
-    scored = reg.score(fc.id, syn, truth)
+    scored = reg.score(fc.id, truth)
     lo, hi = syn.combined.interval_80
     assert scored.score.hit == (lo <= truth <= hi)
     assert scored.score.log_error == pytest.approx(math.log(truth / syn.combined.median))
     assert scored.score.brier == pytest.approx((0.8 - scored.score.hit) ** 2)
     assert reg.all()[fc.id].rev == 1
-    fc2 = reg.add(syn, "conversion > 2%", date(2027, 1, 1))
-    assert reg.score(fc2.id, syn, 1, probability=0.7).score.brier == pytest.approx(0.09)
     with pytest.raises(ValueError):
-        reg.score(fc2.id, syn, 0.5, probability=0.7)
+        reg.score(fc.id, truth)  # already scored
+    fc2 = reg.add(syn, "conversion > 2%", date(2027, 1, 1))
+    assert reg.score(fc2.id, 1, probability=0.7).score.brier == pytest.approx(0.09)
+    with pytest.raises(ValueError):
+        reg.score(fc2.id, 0.5, probability=0.7)
     s1 = syn.model_copy(update={"grade": "S1"})
     with pytest.raises(ValueError):
         reg.add(s1, "r", date(2027, 1, 1))
+    bare = Forecast(id="F-9", synthetic_id="Y1", resolution_rule="r", resolve_by=date(2027, 1, 1))
+    reg.store.append(bare)
     with pytest.raises(ValueError):
-        reg.score(fc.id, syn.model_copy(update={"id": "other"}), 1.0)
+        reg.score("F-9", 1.0)
 
 
 def test_world_emits_calcs_with_receipts():

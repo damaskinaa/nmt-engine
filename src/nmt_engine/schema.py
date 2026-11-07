@@ -341,6 +341,8 @@ class Forecast(Record):
     synthetic_id: str
     resolution_rule: str
     resolve_by: date
+    median: float | None = None  # frozen at registration
+    interval_80: Range | None = None  # frozen at registration
     outcome: float | None = None
     score: ForecastScore | None = None
 

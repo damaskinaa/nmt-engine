@@ -25,26 +25,31 @@ class ForecastRegistry:
             raise ValueError(f"synthetic {syn.id} has no combined interval")
         fid = f"F-{len(self.store.history('forecast')) + 1:04d}"
         fc = Forecast(
-            id=fid, synthetic_id=syn.id, resolution_rule=resolution_rule, resolve_by=resolve_by
+            id=fid,
+            synthetic_id=syn.id,
+            resolution_rule=resolution_rule,
+            resolve_by=resolve_by,
+            median=syn.combined.median,
+            interval_80=syn.combined.interval_80,
         )
         self.store.append(fc)
         return fc
 
-    def score(
-        self, forecast_id: str, syn: Synthetic, outcome: float, probability: float | None = None
-    ) -> Forecast:
-        """Score against the realised outcome; append the scored revision.
+    def score(self, forecast_id: str, outcome: float, probability: float | None = None) -> Forecast:
+        """Score the interval frozen at registration against the outcome; append the revision.
 
         hit: outcome inside the 80% interval. log_error: ln(outcome / median).
         brier: (p - y)^2 where p is `probability` for a binary forecast (outcome 0/1), else the
         nominal 0.8 interval-coverage probability with y = hit.
         """
         fc = self.all()[forecast_id]
-        if fc.synthetic_id != syn.id or syn.combined is None:
-            raise ValueError(f"forecast {forecast_id} is not for synthetic {syn.id}")
-        lo, hi = syn.combined.interval_80
+        if fc.interval_80 is None or fc.median is None:
+            raise ValueError(f"forecast {forecast_id} has no registered interval")
+        if fc.score is not None:
+            raise ValueError(f"forecast {forecast_id} is already scored")
+        lo, hi = fc.interval_80
         hit = lo <= outcome <= hi
-        log_error = math.log(outcome / syn.combined.median) if outcome > 0 else None
+        log_error = math.log(outcome / fc.median) if outcome > 0 else None
         if probability is not None:
             if outcome not in (0, 1):
                 raise ValueError("binary forecast outcome must be 0 or 1")
