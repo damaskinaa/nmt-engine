@@ -529,6 +529,20 @@ def test_jsonstat_and_ixbrl_and_diff():
     neg = '<ix:nonFraction name="core:Revenue" sign="-">500</ix:nonFraction>'
     assert companies_house.ixbrl_turnover(neg) == -500
     assert companies_house.ixbrl_turnover("<p/>") is None
+    ctx = (
+        '<xbrli:context id="{}"><xbrli:period><xbrli:startDate>{}-01-01</xbrli:startDate>'
+        "<xbrli:endDate>{}-12-31</xbrli:endDate></xbrli:period>{}</xbrli:context>"
+    )
+    seg = "<xbrli:segment><xbrldi:explicitMember>x</xbrldi:explicitMember></xbrli:segment>"
+    doc = (
+        ctx.format("py", 2022, 2022, "")
+        + ctx.format("cy", 2023, 2023, "")
+        + ctx.format("cy_seg", 2023, 2023, seg)
+        + '<ix:nonFraction name="core:Turnover" contextRef="py" scale="3">1,000</ix:nonFraction>'
+        + '<ix:nonFraction name="core:Turnover" contextRef="cy_seg">7</ix:nonFraction>'
+        + '<ix:nonFraction name="core:Turnover" contextRef="cy" scale="3">1,250</ix:nonFraction>'
+    )
+    assert companies_house.ixbrl_turnover(doc) == 1_250_000
     assert wayback.diff("a\nPrice 10", "Price 12\na") == "+Price 12\n-Price 10"
 
 

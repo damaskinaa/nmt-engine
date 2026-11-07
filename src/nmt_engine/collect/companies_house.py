@@ -23,6 +23,12 @@ _TURNOVER = re.compile(
     r"(?P<value>[^<]*)</ix:nonFraction>",
     re.IGNORECASE,
 )
+_CONTEXT = re.compile(
+    r"<(?:\w+:)?context\b[^>]*\bid=\"(?P<id>[^\"]+)\"[^>]*>(?P<body>.*?)</(?:\w+:)?context>",
+    re.IGNORECASE | re.DOTALL,
+)
+_PERIOD_END = re.compile(r"<(?:\w+:)?(?:endDate|instant)>\s*(\d{4}-\d{2}-\d{2})", re.IGNORECASE)
+_SEGMENT = re.compile(r"<(?:\w+:)?segment\b", re.IGNORECASE)
 
 
 def _headers() -> dict[str, str]:
@@ -63,11 +69,31 @@ def accounts(c: Collector, company_number: str, limit: int = 5) -> list[dict]:
     return data.get("items", [])
 
 
+def _period_ends(xhtml: str) -> dict[str, str]:
+    """contextRef -> period end date, for contexts without dimensional segments (totals)."""
+    out = {}
+    for m in _CONTEXT.finditer(xhtml):
+        end = _PERIOD_END.search(m.group("body"))
+        if end and not _SEGMENT.search(m.group("body")):
+            out[m.group("id")] = end.group(1)
+    return out
+
+
 def ixbrl_turnover(xhtml: str) -> float | None:
-    """First turnover/revenue fact in an iXBRL document, applying `scale` and `sign`."""
-    m = _TURNOVER.search(xhtml)
-    if not m:
+    """Current-period turnover/revenue in an iXBRL document, applying `scale` and `sign`.
+    Accounts also tag the comparative year, so the fact whose (undimensioned) context ends
+    latest wins; documents without parseable contexts fall back to the first fact."""
+    facts = list(_TURNOVER.finditer(xhtml))
+    if not facts:
         return None
+    ends = _period_ends(xhtml)
+
+    def end(f: re.Match[str]) -> str:
+        ref = re.search(r"\bcontextRef=\"([^\"]+)\"", f.group("attrs"))
+        return ends.get(ref.group(1), "") if ref else ""
+
+    dated = [f for f in facts if end(f)]
+    m = max(dated, key=end) if dated else facts[0]
     raw = re.sub(r"[^\d.]", "", m.group("value"))
     if not raw:
         return None
