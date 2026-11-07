@@ -29,16 +29,26 @@ TED_FIELDS = [
 ]
 
 
-def contracts_finder(c: Collector, keyword: str, since: date, limit: int = 100):
+def _cf_releases(c: Collector, since: date, max_pages: int):
+    # A trailing "Z" on publishedFrom makes the endpoint return no releases.
+    params = {"stages": "award", "publishedFrom": f"{since.isoformat()}T00:00:00", "limit": 100}
+    url: str | None = CF
+    for _ in range(max_pages):
+        data = c.fetch_json(url, NAME, params=params)
+        yield from data.get("releases") or []
+        url, params = (data.get("links") or {}).get("next"), None
+        if not url or not data.get("releases"):
+            return
+
+
+def contracts_finder(
+    c: Collector, keyword: str, since: date, limit: int = 100, max_pages: int = 20
+):
     """Award notices published since `since` whose title/description mention `keyword`.
-    The OCDS endpoint has no keyword filter, so matching is done locally."""
-    data = c.fetch_json(
-        CF,
-        NAME,
-        params={"stages": "award", "publishedFrom": f"{since.isoformat()}T00:00:00Z", "limit": 100},
-    )
+    The OCDS endpoint has no keyword filter, so matching is done locally over up to
+    `max_pages` cursor pages of 100 awards."""
     out, kw = [], keyword.lower()
-    for rel in data.get("releases", []):
+    for rel in _cf_releases(c, since, max_pages):
         tender = rel.get("tender") or {}
         text_blob = f"{tender.get('title', '')} {tender.get('description', '')}"
         if kw not in text_blob.lower():

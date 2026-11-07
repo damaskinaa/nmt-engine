@@ -214,8 +214,9 @@ def test_procurement(tmp_path):
     c = make(tmp_path)
     with cassette("procurement"):
         out = procurement.ted(c, "accounting software", SINCE, 5)
-        procurement.contracts_finder(c, "software", date(2026, 10, 1), 5)
+        cf = procurement.contracts_finder(c, "software", date(2026, 10, 1), 5, max_pages=5)
     assert len(out) == 5 and all(s.kind == "procurement" for s in out)
+    assert cf and all(s.platform == "contracts_finder" for s in cf)
 
 
 def test_package_downloads_and_twin(tmp_path):
@@ -565,3 +566,20 @@ def test_cache_holds_masked_payload(tmp_path):
     assert c.fetch_json("https://api.example.org/p", "t")["text"] == "mail <[email]> or [phone]"
     raw = "".join(f.read_text() for f in c.cache_dir.iterdir())
     assert "jo@example.com" not in raw and "234 5678" not in raw
+
+
+def test_contracts_finder_follows_cursor_pages(tmp_path):
+    def rel(i, title):
+        return {"ocid": f"ocds-b5fd17-{i}", "tender": {"title": title}, "awards": []}
+
+    def handler(req):
+        if "cursor" not in str(req.url):
+            assert req.url.params["publishedFrom"] == "2026-10-01T00:00:00"
+            nxt = (
+                "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?cursor=2"
+            )
+            return httpx.Response(200, json={"releases": [rel(1, "Roads")], "links": {"next": nxt}})
+        return httpx.Response(200, json={"releases": [rel(2, "Invoicing software")], "links": {}})
+
+    out = procurement.contracts_finder(make(tmp_path, handler), "invoicing", date(2026, 10, 1))
+    assert [s.url.rsplit("/", 1)[1] for s in out] == ["2"]
