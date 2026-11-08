@@ -64,8 +64,10 @@ def collect(c: Collector, query: str, since: date, videos: int = 10, comments: i
             },
         )
         for t in threads.get("items", []):
-            top = t["snippet"]["topLevelComment"]
-            cs = top["snippet"]
+            top = (t.get("snippet") or {}).get("topLevelComment") or {}
+            cs = top.get("snippet") or {}
+            if not top.get("id"):
+                continue
             src = c.add_source(
                 adapter=NAME,
                 kind="forum",

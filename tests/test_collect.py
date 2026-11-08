@@ -474,6 +474,10 @@ def test_malformed_sec_and_youtube_items_skipped(tmp_path, monkeypatch):
     yt = {"items": [{"id": {"kind": "youtube#channel"}, "snippet": {}}, {"snippet": {}}]}
     c = make(tmp_path / "yt", _router({"/search": yt, "/commentThreads": {"items": []}}))
     assert youtube.collect(c, "x", SINCE) == []
+    yt = {"items": [{"id": {"videoId": "v1"}, "snippet": {"title": "t"}}]}
+    threads = {"items": [{"snippet": {}}, {"snippet": {"topLevelComment": {"snippet": {}}}}]}
+    c = make(tmp_path / "yt2", _router({"/search": yt, "/commentThreads": threads}))
+    assert [s.platform for s in youtube.collect(c, "x", SINCE)] == ["youtube"]
 
 
 def test_opt_in_dns_egress_check(tmp_path, monkeypatch):
