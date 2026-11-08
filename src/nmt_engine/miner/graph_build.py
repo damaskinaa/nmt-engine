@@ -13,7 +13,15 @@ from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.spatial.distance import squareform
 
 from nmt_engine.miner.jobs import BuiltJob, jaccard, tokens
-from nmt_engine.schema import Claim, Edge, EdgeCosts, Segment, Source, SourceRef
+from nmt_engine.schema import (
+    Claim,
+    Edge,
+    EdgeCosts,
+    Segment,
+    Source,
+    SourceRef,
+    voice_families,
+)
 from nmt_engine.util import sha256_text
 
 Z80 = 1.2815515655446004  # standard-normal quantile for an 80% two-sided interval
@@ -74,7 +82,7 @@ def segments(built: list[BuiltJob], sources: dict[str, Source], cut: float = 0.7
         sids = {i.source_id for b in members for i in b.group.instances}
         srcs = [sources[s] for s in sids]
         voices = len({s.author_hash for s in srcs if s.author_hash})
-        kinds = {s.kind for s in srcs}
+        families = voice_families(srcs)
         crit_voices: dict[str, set[str]] = defaultdict(set)
         for b in members:
             for inst in b.group.instances:
@@ -93,7 +101,7 @@ def segments(built: list[BuiltJob], sources: dict[str, Source], cut: float = 0.7
                 causal_criteria=[c for c in order if len(crit_voices[c]) >= 2],
                 qualification_questions=[f"How important is '{c}' to you?" for c in order[:3]],
                 claim_ids=claim_ids,
-                thin=voices < 2 or len(kinds) < 2 or not claim_ids,
+                thin=voices < 2 or len(families) < 2 or not claim_ids,
             )
         )
     return sorted(out, key=lambda s: (s.thin, -len(s.core_job_ids), s.id))

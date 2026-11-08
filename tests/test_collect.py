@@ -44,7 +44,7 @@ from nmt_engine.collect.base import (
 )
 from nmt_engine.collect.run import CollectPlan, run_collect
 from nmt_engine.collect.stats import jsonstat_frame
-from nmt_engine.schema import ALLOWED_ACCESS_BASIS
+from nmt_engine.schema import ALLOWED_ACCESS_BASIS, KIND_FAMILY
 from nmt_engine.store import load_run
 from nmt_engine.util import sha256_text
 from tests.vcr_util import CASSETTES, SECRET_QUERY, cassette
@@ -98,6 +98,67 @@ def log(c: Collector) -> list[dict]:
     return [json.loads(ln) for ln in path.read_text().splitlines()]
 
 
+# Evidence family per platform (and kind, where one platform yields more than one family).
+FAMILY = {
+    "hackernews": "discussion",
+    "reddit": "discussion",
+    "github-discussions": "discussion",
+    "youtube-comments": "discussion",
+    "github": "support_issue",
+    "stackexchange": "qa",
+    "appstore": "review",
+    "youtube": "market_record",
+    ("web", "pricing"): "vendor_page",
+    ("web", "web"): "vendor_page",
+    ("web", "changelog"): "change_history",
+    ("wayback", "pricing"): "vendor_page",
+    ("wayback", "changelog"): "change_history",
+    "producthunt": "vendor_page",
+    "dataforseo": "search_demand",
+    "ted": "market_record",
+    "contracts_finder": "market_record",
+    "eurostat": "market_record",
+    "cso": "market_record",
+    "ons": "market_record",
+    "sec_edgar": "market_record",
+    "companies_house": "market_record",
+    "adzuna": "market_record",
+    "npm": "market_record",
+    "pypi": "market_record",
+    "huggingface": "market_record",
+}
+CUSTOMER = {"discussion", "support_issue", "qa", "review"}
+
+
+def expected_family(s) -> str:
+    base = s.platform.split(":")[0]
+    return FAMILY.get((base, s.kind)) or FAMILY.get(base) or KIND_FAMILY[s.kind]
+
+
+@pytest.fixture(autouse=True)
+def _family_checked(monkeypatch):
+    """Every source any adapter stores in these tests gets the expected evidence family."""
+    seen: list = []
+    orig = Collector.add_source
+
+    def add_source(self, **kw):
+        src = orig(self, **kw)
+        if src is not None:
+            assert src.evidence_family == expected_family(src), (src.platform, src.kind)
+            seen.append(src.platform.split(":")[0])
+        return src
+
+    monkeypatch.setattr(Collector, "add_source", add_source)
+    yield seen
+
+
+def test_every_family_mapping_is_exercised(tmp_path, _family_checked):
+    c = make(tmp_path)
+    with cassette("run_invoicing"):
+        run_collect(CollectPlan("invoicing", SINCE, "IE"), c.run_dir, c)
+    assert {"hackernews", "github", "stackexchange", "appstore"} <= set(_family_checked)
+
+
 def check_sources(c: Collector, minimum: int = 1) -> dict:
     srcs = c.store.current("source")
     assert len(srcs) >= minimum
@@ -109,6 +170,8 @@ def check_sources(c: Collector, minimum: int = 1) -> dict:
         assert s.id in logged
         assert s.author_hash is None or s.author_hash.startswith("a_")
         assert not is_forbidden(s.url)
+        assert s.evidence_family == expected_family(s), (s.platform, s.kind)
+        assert s.customer_voice == (s.evidence_family in CUSTOMER)
     return srcs
 
 

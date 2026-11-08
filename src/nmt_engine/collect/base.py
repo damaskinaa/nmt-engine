@@ -402,6 +402,7 @@ class Collector:
         geography: str | None = None,
         as_of_date: date | None = None,
         existing_ok: bool = False,
+        evidence_family: str | None = None,
     ) -> Source | None:
         """Store PII-scrubbed text under sources/<id>.txt, append the Source and its log entry.
         Returns None for empty text, and for an already-stored source unless `existing_ok`
@@ -431,6 +432,7 @@ class Collector:
             terms_url=terms_url,
             text_path=rel,
             sha256=sha256_text(text),
+            evidence_family=evidence_family,
         )
         self.store.append(src)
         self._log(url, urlparse(url).hostname or "", adapter, 200, sid, None, src.sha256)

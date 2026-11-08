@@ -58,6 +58,38 @@ class Record(BaseModel):
     flags: list[str] = Field(default_factory=list)
 
 
+EvidenceFamily = Literal[
+    "discussion",
+    "support_issue",
+    "qa",
+    "review",
+    "vendor_page",
+    "change_history",
+    "search_demand",
+    "market_record",
+]
+# Families whose words come from customers. Vendor pages, change history, search demand and
+# market records may corroborate problems, pricing and consideration sets, but never count
+# toward customer-voice diversity and never yield job spans.
+CUSTOMER_VOICE: frozenset[str] = frozenset({"discussion", "support_issue", "qa", "review"})
+KIND_FAMILY: dict[str, str] = {
+    "forum": "discussion",
+    "issue": "support_issue",
+    "qa": "qa",
+    "review": "review",
+    "pricing": "vendor_page",
+    "web": "vendor_page",
+    "changelog": "change_history",
+    "search": "search_demand",
+    "filing": "market_record",
+    "stats": "market_record",
+    "procurement": "market_record",
+    "dataset": "market_record",
+    "paper": "market_record",
+    "news": "market_record",
+}
+
+
 class Source(Record):
     kind: SourceKind
     platform: str
@@ -74,6 +106,24 @@ class Source(Record):
     terms_url: str | None = None
     text_path: str
     sha256: str
+    # Who is speaking, independent of platform genre (`kind`) and site (`platform`). Defaults
+    # from `kind`, so stores written before the field existed load unchanged.
+    evidence_family: EvidenceFamily | None = None
+
+    @model_validator(mode="after")
+    def _default_family(self) -> Source:
+        if self.evidence_family is None:
+            self.evidence_family = KIND_FAMILY[self.kind]
+        return self
+
+    @property
+    def customer_voice(self) -> bool:
+        return self.evidence_family in CUSTOMER_VOICE
+
+
+def voice_families(sources: list[Source]) -> set[str]:
+    """Customer-voice evidence families among `sources` (the unit of diversity)."""
+    return {s.evidence_family for s in sources if s.evidence_family in CUSTOMER_VOICE}
 
 
 class SourceRef(BaseModel):

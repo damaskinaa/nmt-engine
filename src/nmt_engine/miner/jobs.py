@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from nmt_engine.llm import LLM, LLMDisabled, LLMError
 from nmt_engine.miner.extract import JobInstance
 from nmt_engine.miner.prompts import ELEMENTS, MERGE_PROMPT, MERGE_SYSTEM, VALUE_MARKERS
-from nmt_engine.schema import Claim, Job, Source, SourceRef, SuccessCriterion
+from nmt_engine.schema import Claim, Job, Source, SourceRef, SuccessCriterion, voice_families
 from nmt_engine.util import sha256_text
 
 _STOP_WORDS = (
@@ -128,7 +128,7 @@ class BuiltJob:
     job: Job
     claims: dict[str, Claim]  # element -> claim (8 elements + value markers + statement)
     group: JobGroup
-    kinds: set[str]
+    families: set[str]  # customer-voice evidence families
     voices: int
     freq: float | None = None  # search volume (proxy), when available
     value: float | None = None  # CPC (proxy), when available
@@ -147,6 +147,7 @@ def _claim(
 ) -> Claim:
     srcs = [sources[r.source_id] for r in refs]
     kinds = sorted({s.kind for s in srcs})
+    families = voice_families(srcs)
     voices = len({s.author_hash for s in srcs if s.author_hash})
     return Claim(
         id=cid,
@@ -156,7 +157,7 @@ def _claim(
         source_types=kinds,
         source_refs=refs,
         geography=geo,
-        single_signal=voices < 2 or len(kinds) < 2,
+        single_signal=voices < 2 or len(families) < 2,
         stage="S4",
     )
 
@@ -195,12 +196,12 @@ def build_job(group: JobGroup, sources: dict[str, Source], geo: str) -> BuiltJob
             label = f.replace("_", " ")
             claims[f] = _claim(f"c_{jid}_{f}", label, group.statement, refs, sources, geo)
     srcs = [sources[i.source_id] for i in insts]
-    kinds = {s.kind for s in srcs}
+    families = voice_families(srcs)
     voices = len({s.author_hash for s in srcs if s.author_hash})
     crit = Counter(label for i in insts for label, _ in i.criteria)
     alts = Counter(name for i in insts for name, _ in i.alternatives)
     first = {f: (per_field[f][0][1] if per_field.get(f) else None) for f in ELEMENTS}
-    thin = voices < 2 or len(kinds) < 2
+    thin = voices < 2 or len(families) < 2
     job = Job(
         id=jid,
         statement=group.statement,
@@ -221,4 +222,4 @@ def build_job(group: JobGroup, sources: dict[str, Source], geo: str) -> BuiltJob
         claim_ids=[c.id for c in claims.values() if thin or not c.single_signal],
         thin=thin,
     )
-    return BuiltJob(job, claims, group, kinds, voices)
+    return BuiltJob(job, claims, group, families, voices)

@@ -190,7 +190,8 @@ def extract(llm: LLM, traces: list[Trace], category: str, batch_size: int = 8) -
 def load_traces(run, kinds: tuple[str, ...] = TRACE_KINDS, limit: int | None = None) -> list[Trace]:
     out = []
     for src in sorted(run.sources.values(), key=lambda s: s.id):
-        if src.kind not in kinds:
+        # Job spans come only from customer voice: never vendor pages or change history.
+        if src.kind not in kinds or not src.customer_voice:
             continue
         text = run.source_text(src)
         if text and len(text.strip()) >= MIN_CHARS:

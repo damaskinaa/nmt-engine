@@ -24,7 +24,7 @@ from nmt_engine.miner import prompts
 from nmt_engine.miner.extract import extract, load_traces
 from nmt_engine.miner.graph_build import build_edges, segments
 from nmt_engine.miner.jobs import BuiltJob, build_job, group_instances, llm_merge
-from nmt_engine.schema import Claim, FrozenFile, Record, RunManifest, SourceRef
+from nmt_engine.schema import Claim, FrozenFile, Record, RunManifest, SourceRef, voice_families
 from nmt_engine.store import RunData, Store, load_run, type_name
 from nmt_engine.util import sha256_file, sha256_text
 
@@ -147,7 +147,7 @@ def evidence_table(run: RunData, job_ids: set[str] | None = None) -> list[dict]:
     for job in sorted(run.jobs.values(), key=lambda j: j.id):
         if job.retracted or (job_ids is not None and job.id not in job_ids):
             continue
-        elements, kinds = [], set()
+        elements, kinds, families, voices, posts = [], set(), set(), set(), set()
         for el in prompts.ELEMENTS:
             c = run.claims.get(f"c_{job.id}_{el}")
             if c is None or c.retracted or c.status != "PUBLIC_VOICE" or not c.source_refs:
@@ -156,12 +156,19 @@ def evidence_table(run: RunData, job_ids: set[str] | None = None) -> list[dict]:
             if srcs:
                 elements.append(el)
                 kinds |= {s.kind for s in srcs}
+                families |= voice_families(srcs)
+                voices |= {s.author_hash for s in srcs if s.author_hash}
+                posts |= {s.id for s in srcs if s.customer_voice}
         rows.append(
             {
                 "job_id": job.id,
                 "statement": job.statement,
                 "elements": elements,
                 "source_kinds": sorted(kinds),
+                "families": sorted(families),
+                "voices": len(voices),
+                "posts": len(posts),
+                "level": job.level,
                 "passes": len(elements) >= KILL_ELEMENTS and len(kinds) >= KILL_KINDS,
                 "thin": job.thin,
             }
