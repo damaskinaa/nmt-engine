@@ -93,6 +93,18 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   `[email]` / `[phone]` before the source text is stored (and before cassettes are saved), so quotes
   are verified against the masked text. Author ids are salted hashes; `nmt collect` refuses to run
   without `NMT_AUTHOR_SALT` so hashes are reproducible across runs.
+  The phone pattern is deliberately broad: any run of 2–5 digit groups with ≥ 9 digits in total is
+  masked, so the odd long numeric span (e.g. a spaced-out ID) can become `[phone]`. ISO dates,
+  versions and money amounts are not touched. We accept slightly lower quote fidelity in exchange
+  for missing fewer phone numbers; quotes are always verified against the masked text, so
+  receipts stay valid.
+- **Egress control.** Besides the platform denylist, `is_forbidden` refuses loopback, private
+  (RFC 1918 / ULA), link-local (incl. `169.254.169.254` metadata), reserved literal IPs and
+  `localhost` / `.local` / `.internal` names. It applies to every request, every redirect hop and
+  streamed downloads (`Collector.download`). Hostnames are not DNS-resolved, so tests stay offline
+  and a public name that resolves to a private address is not caught. Competitor domains are given
+  by the operator, not taken from untrusted input. Cassettes are saved without credential headers,
+  `Set-Cookie`, secret query values or contact details, and a test checks this.
 - **Google Play is disabled** (`collect/googleplay.py`): no terms-compliant review source exists.
 - **Product Hunt** needs `PRODUCTHUNT_TOKEN` *and* `NMT_PRODUCTHUNT_TERMS_OK=1`, because its API terms
   restrict commercial use; the operator confirms the terms before enabling it.

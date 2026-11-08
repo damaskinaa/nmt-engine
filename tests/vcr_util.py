@@ -33,7 +33,11 @@ class GzipPersister:
 
 
 def _scrub_response(response):
-    """Mask e-mails/phones in recorded bodies so cassettes carry no contact details."""
+    """Drop Set-Cookie and mask e-mails/phones in recorded bodies so cassettes carry no
+    session cookies or contact details."""
+    headers = response.get("headers", {})
+    for k in [k for k in headers if k.lower() == "set-cookie"]:
+        del headers[k]
     body = response.get("body", {}).get("string")
     if not isinstance(body, bytes):
         return response

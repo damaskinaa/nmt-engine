@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import gzip
 import json
 from datetime import date
 from pathlib import Path
+from urllib.parse import parse_qsl, urlparse
 
 import httpx
 import pytest
@@ -43,7 +45,7 @@ from nmt_engine.collect.stats import jsonstat_frame
 from nmt_engine.schema import ALLOWED_ACCESS_BASIS
 from nmt_engine.store import load_run
 from nmt_engine.util import sha256_text
-from tests.vcr_util import cassette
+from tests.vcr_util import CASSETTES, SECRET_QUERY, cassette
 
 SINCE = date(2023, 1, 1)
 KEYS = [
@@ -731,3 +733,15 @@ def test_redirect_keeps_put_method_and_body(tmp_path):
         "https://a.example.org/old", "t", method="PUT", json_body={"x": 1}
     )
     assert seen[1][:2] == ("PUT", "/new") and seen[1][2] == seen[0][2] != b""
+
+
+def test_cassettes_carry_no_credentials_or_contact_details():
+    secret_headers = {"authorization", "proxy-authorization", "cookie", "x-api-key", "user-agent"}
+    for path in CASSETTES.glob("*.json.gz"):
+        for i in json.loads(gzip.decompress(path.read_bytes()))["interactions"]:
+            assert not secret_headers & {k.lower() for k in i["request"]["headers"]}, path
+            assert "set-cookie" not in {k.lower() for k in i["response"]["headers"]}, path
+            query = dict(parse_qsl(urlparse(i["request"]["uri"]).query))
+            assert all(query.get(k, "REDACTED") == "REDACTED" for k in SECRET_QUERY), path
+            body = i["response"]["body"].get("string") or ""
+            assert scrub_pii(body) == body, path
