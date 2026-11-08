@@ -1,6 +1,6 @@
 """Text embeddings over an OpenAI-compatible `/embeddings` endpoint (TensorX by default).
 
-Vectors are cached per (model, text hash) as float32 `.npy`, so reruns are free and identical.
+Vectors are cached per (endpoint host, model, text hash) as float32 `.npy`, so reruns are free and identical.
 Every request is logged to runs/<id>/llm_log.jsonl with tokens and cost, like `LLM` calls.
 """
 
@@ -46,7 +46,8 @@ class Embedder:
         self.base_url = self.base_url.rstrip("/")
         self.run_dir = Path(self.run_dir)
         root = Path(self.cache_dir or repo_root() / "cache" / "embed")
-        self.cache_dir = root / self.model.replace("/", "__")
+        host = httpx.URL(self.base_url).host or "local"
+        self.cache_dir = root / host / self.model.replace("/", "__")
 
     @property
     def key_env(self) -> str:
