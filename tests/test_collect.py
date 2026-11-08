@@ -812,13 +812,27 @@ def test_default_collector_only_fetches_builtin_or_operator_hosts(tmp_path):
     assert seen[-1] == "api.example.org" and "api.github.com" not in seen
 
 
-def test_redirect_between_apex_and_www_is_followed(tmp_path):
-    def handler(req):
-        if req.url.host == "invoiceninja.com":
-            return httpx.Response(301, headers={"Location": "https://www.invoiceninja.com/p"})
-        return httpx.Response(200, text="ok")
+def test_apex_redirect_is_refused_and_page_fetched_on_www(tmp_path):
+    from nmt_engine.collect import web
 
-    assert make(tmp_path, handler).fetch("https://invoiceninja.com/p", "t") == "ok"
+    hits = []
+
+    def handler(req):
+        hits.append(str(req.url))
+        if req.url.host == "invoiceninja.com":
+            return httpx.Response(
+                301, headers={"Location": f"https://www.invoiceninja.com{req.url.path}"}
+            )
+        if req.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nDisallow: /changelog\n")
+        return httpx.Response(200, text="<p>Pro plan 10 EUR per month</p>")
+
+    c = make(tmp_path, handler)
+    c.extra_hosts = operator_hosts(["invoiceninja.com"])
+    srcs = web.competitor_pages(c, "invoiceninja.com")
+    assert [s.url for s in srcs] == ["https://www.invoiceninja.com/pricing"]
+    assert "https://www.invoiceninja.com/robots.txt" in hits  # destination robots consulted
+    assert "https://www.invoiceninja.com/changelog" not in hits  # www robots forbids it
 
 
 def test_run_collect_allows_only_competitor_hosts(tmp_path, monkeypatch):

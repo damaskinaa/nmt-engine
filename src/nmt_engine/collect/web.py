@@ -13,7 +13,7 @@ from urllib.robotparser import RobotFileParser
 
 import httpx
 
-from nmt_engine.collect.base import USER_AGENT, Collector, env
+from nmt_engine.collect.base import USER_AGENT, Collector, HostNotAllowedError, env
 from nmt_engine.collect.text import html_to_text
 
 NAME = "web"
@@ -67,14 +67,22 @@ def page(c: Collector, url: str, kind: str = "web", terms_url: str | None = None
 
 
 def competitor_pages(c: Collector, domain: str, paths=("pricing", "changelog")):
-    """Fetch common public pages for a competitor domain; skips missing or disallowed pages."""
+    """Fetch common public pages for a competitor domain; skips missing or disallowed pages.
+
+    Redirects never leave the requested host, so when the apex redirects elsewhere the page is
+    requested afresh on the `www.` host (its own robots.txt applies)."""
+    hosts = [domain] if domain.startswith("www.") else [domain, f"www.{domain}"]
     out = []
     for path in paths:
-        url = f"https://{domain}/{path}"
-        try:
-            src = page(c, url, kind="pricing" if path == "pricing" else "changelog")
-        except (httpx.HTTPError, RobotsDisallowedError):
-            continue
-        if src:
-            out.append(src)
+        kind = "pricing" if path == "pricing" else "changelog"
+        for host in hosts:
+            try:
+                src = page(c, f"https://{host}/{path}", kind=kind)
+            except HostNotAllowedError:
+                continue  # cross-host redirect refused (or host not allowed): try the next host
+            except (httpx.HTTPError, RobotsDisallowedError):
+                break
+            if src:
+                out.append(src)
+            break
     return out
