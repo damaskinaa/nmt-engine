@@ -96,6 +96,15 @@ def is_internal_host(host: str) -> bool:
     return not ip.is_global or ip.is_multicast
 
 
+def resolves_internal(host: str) -> bool:
+    """True if any address the system resolver returns for `host` is internal."""
+    try:
+        infos = socket.getaddrinfo(host, None)
+    except OSError:
+        return False
+    return any(is_internal_host(str(info[4][0]).split("%")[0]) for info in infos)
+
+
 def is_forbidden(url: str) -> bool:
     """Denylisted platforms, and any internal/non-public host (egress control)."""
     host = (urlparse(url).hostname or "").lower()
@@ -135,6 +144,8 @@ class Collector:
     retries: int = 3
     client: httpx.Client | None = None
     salt: str | None = None
+    # opt-in DNS check of every hop (off by default so tests never touch the network)
+    resolve_hosts: bool = field(default_factory=lambda: env("NMT_EGRESS_RESOLVE") == "1")
     _last: dict[str, float] = field(default_factory=dict)
     _ids: set[str] = field(default_factory=set)
 
@@ -204,6 +215,7 @@ class Collector:
     ) -> httpx.Response:
         """Send with retries; follow redirects by hand so every hop passes the host check."""
         for _hop in range(MAX_REDIRECTS + 1):
+            self._check_egress(host, url)
             resp = None
             for attempt in range(self.retries + 1):
                 self._wait(host)
@@ -228,14 +240,21 @@ class Collector:
                 method, body = "GET", None
         raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects", request=resp.request)
 
+    def _check_egress(self, host: str, url: str) -> None:
+        if self.resolve_hosts and resolves_internal(host):
+            raise ForbiddenHostError(url)
+
     def download(self, url: str, adapter: str, dest: Path) -> Path:
         """Stream a large file to `dest` (bypasses the text cache); redirects are followed by
-        hand so every hop passes the host check, like `fetch`."""
+        hand so every hop passes the host check, like `fetch`. Bytes are written as received,
+        without the PII masking `fetch` applies: callers must scrub any text they store as a
+        Source (via `add_source`)."""
         dest.parent.mkdir(parents=True, exist_ok=True)
         for _hop in range(MAX_REDIRECTS + 1):
             if is_forbidden(url):
                 raise ForbiddenHostError(url)
             host = urlparse(url).hostname or ""
+            self._check_egress(host, url)
             self._wait(host)
             with self.client.stream("GET", url, follow_redirects=False) as resp:
                 if resp.has_redirect_location:

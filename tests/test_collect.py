@@ -464,6 +464,33 @@ def test_malformed_payloads_skipped(tmp_path, monkeypatch):
     assert df["month"].isna().all()
 
 
+def test_malformed_sec_and_youtube_items_skipped(tmp_path, monkeypatch):
+    monkeypatch.setenv("SEC_USER_AGENT", "nmt test@example.org")
+    monkeypatch.setenv("YOUTUBE_API_KEY", "k")
+    fact = {"fy": 2025, "fp": "FY", "form": "10-K", "end": "2025-12-31"}
+    facts = {"facts": {"us-gaap": {"Revenues": {"units": {"USD": [fact, {**fact, "val": 7}]}}}}}
+    df = sec_edgar.company_facts(make(tmp_path / "sec", _router({"companyfacts": facts})), 1)
+    assert df["value"].tolist() == [7.0]
+    yt = {"items": [{"id": {"kind": "youtube#channel"}, "snippet": {}}, {"snippet": {}}]}
+    c = make(tmp_path / "yt", _router({"/search": yt, "/commentThreads": {"items": []}}))
+    assert youtube.collect(c, "x", SINCE) == []
+
+
+def test_opt_in_dns_egress_check(tmp_path, monkeypatch):
+    import socket
+
+    monkeypatch.setattr(
+        socket, "getaddrinfo", lambda host, port: [(2, 1, 6, "", ("169.254.169.254", 0))]
+    )
+    seen = []
+    handler = lambda req: seen.append(req) or httpx.Response(200, text="x")  # noqa: E731
+    assert make(tmp_path / "off", handler).fetch("https://a.example.org/", "t") == "x"
+    monkeypatch.setenv("NMT_EGRESS_RESOLVE", "1")
+    with pytest.raises(ForbiddenHostError):
+        make(tmp_path / "on", handler).fetch("https://rebind.example.org/", "t")
+    assert len(seen) == 1
+
+
 def test_producthunt_needs_terms_flag(tmp_path, monkeypatch):
     monkeypatch.setenv("PRODUCTHUNT_TOKEN", "t")
     with pytest.raises(MissingKeyError):
