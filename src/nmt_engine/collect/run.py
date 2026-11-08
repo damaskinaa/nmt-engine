@@ -37,6 +37,8 @@ class CollectPlan:
     per_adapter: int = 200
     stack_sites: list[str] = field(default_factory=lambda: list(STACK_SITES))
     apps: list[str] = field(default_factory=list)  # App Store names, e.g. competitors' apps
+    only: list[str] = field(default_factory=list)  # step-name prefixes to run; empty = all
+    as_of: date | None = None  # cache date; an earlier run's date replays its responses
 
 
 def _steps(p: CollectPlan) -> list[tuple[str, Callable[[Collector], list]]]:
@@ -91,11 +93,17 @@ def run_collect(plan: CollectPlan, run_dir: Path, collector: Collector | None = 
     c = collector or Collector(
         run_dir,
         geo=plan.geo,
+        **({"as_of": plan.as_of} if plan.as_of else {}),
         salt=env("NMT_AUTHOR_SALT"),
         extra_hosts=operator_hosts(plan.competitors),
     )
     summary: dict = {"category": plan.category, "since": plan.since.isoformat(), "adapters": {}}
+    prior = Path(run_dir) / "collect_summary.json"
+    if plan.only and prior.is_file():  # a top-up run keeps the earlier adapters' record
+        summary["adapters"] = json.loads(prior.read_text("utf-8")).get("adapters", {})
     for name, step in _steps(plan):
+        if plan.only and not name.startswith(tuple(plan.only)):
+            continue
         try:
             summary["adapters"][name] = {"status": "ok", "sources": len(step(c))}
         except MissingKeyError as exc:
@@ -107,8 +115,10 @@ def run_collect(plan: CollectPlan, run_dir: Path, collector: Collector | None = 
                 "status": "error",
                 "reason": f"{type(exc).__name__}: {exc}",
             }
-    kinds = Counter(s.kind for s in c.store.current("source").values())
+    live = [s for s in c.store.current("source").values() if not s.retracted]
+    kinds = Counter(s.kind for s in live)
     summary["sources_by_kind"] = dict(sorted(kinds.items()))
+    summary["sources_by_family"] = dict(sorted(Counter(s.evidence_family for s in live).items()))
     summary["trace_sources"] = sum(
         v for k, v in kinds.items() if k in {"review", "forum", "qa", "issue", "web"}
     )

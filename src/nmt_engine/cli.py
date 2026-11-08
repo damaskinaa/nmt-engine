@@ -62,6 +62,13 @@ def collect_cmd(
         str, typer.Option("--stack-sites", help="Stack Exchange sites, e.g. webapps,money")
     ] = "",
     apps: Annotated[str, typer.Option("--apps", help="App Store app names, e.g. Habitica")] = "",
+    only: Annotated[
+        str,
+        typer.Option("--only", help="run only steps with these name prefixes, e.g. appstore:,web:"),
+    ] = "",
+    as_of: Annotated[
+        str, typer.Option("--as-of", help="YYYY-MM-DD cache date; reuse an earlier run's responses")
+    ] = "",
 ) -> None:
     """Collect lawful public traces for a category into a run folder."""
     from datetime import date
@@ -76,6 +83,8 @@ def collect_cmd(
         competitors=[d.strip() for d in competitors.split(",") if d.strip()],
         per_adapter=per_adapter,
         apps=[a.strip() for a in apps.split(",") if a.strip()],
+        as_of=date.fromisoformat(as_of) if as_of else None,
+        only=[o.strip() for o in only.split(",") if o.strip()],
     )
     if stack_sites.strip():
         plan.stack_sites = [s.strip() for s in stack_sites.split(",") if s.strip()]

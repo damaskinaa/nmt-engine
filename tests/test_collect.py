@@ -1012,3 +1012,10 @@ def test_plan_runs_named_apps_and_operator_stack_sites(tmp_path):
     assert summary["adapters"]["appstore:FreshBooks"]["status"] in ("none", "error")
     assert "stackexchange:money" in summary["adapters"]
     assert "stackexchange:superuser" not in summary["adapters"]
+
+
+def test_plan_only_runs_selected_steps(tmp_path):
+    c = make(tmp_path, lambda r: httpx.Response(404, json={}))
+    plan = CollectPlan("invoicing", SINCE, "IE", stack_sites=["money"], only=["stackexchange:"])
+    summary = run_collect(plan, c.run_dir, c)
+    assert list(summary["adapters"]) == ["stackexchange:money"]
