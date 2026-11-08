@@ -284,7 +284,7 @@ def test_validation_lint_negation_window():
         "Not cheap, but customers want it and it is proven.",
         "There is no doubt customers want this.",
     ]
-    bad.append("The market is not only proven but growing.")
+    bad += ["The market is not only proven but growing.", "It is not merely proven but thriving."]
     assert all(offending_sentences(s, set()) == [] for s in ok)
     assert all(offending_sentences(s, set()) for s in bad)
 
