@@ -35,8 +35,10 @@ from nmt_engine.collect.base import (
     FORBIDDEN_HOSTS,
     Collector,
     ForbiddenHostError,
+    HostNotAllowedError,
     MissingKeyError,
     is_forbidden,
+    operator_hosts,
     redact,
     scrub_pii,
 )
@@ -72,10 +74,22 @@ def _no_keys(monkeypatch):
     monkeypatch.setenv("SEC_USER_AGENT", "nmt-engine tests research@example.org")
 
 
-def make(tmp_path: Path, handler=None) -> Collector:
+# hosts the tests pass as if from `--competitors`
+TEST_HOSTS = operator_hosts(
+    ["a.example.org", "api.example.org", "short.example.org", "rebind.example.org"]
+    + ["blocked.example.org", "evil.example.org", "invoiceninja.com"]
+)
+
+
+def make(tmp_path: Path, handler=None, hosts: frozenset[str] = TEST_HOSTS) -> Collector:
     client = httpx.Client(transport=httpx.MockTransport(handler)) if handler else None
     return Collector(
-        tmp_path / "run", as_of=date(2026, 11, 7), min_interval_s=0, salt="t", client=client
+        tmp_path / "run",
+        as_of=date(2026, 11, 7),
+        min_interval_s=0,
+        salt="t",
+        client=client,
+        extra_hosts=hosts,
     )
 
 
@@ -682,8 +696,8 @@ def test_download_follows_redirects_with_host_checks(tmp_path):
 
     def handler(req):
         if req.url.host == "webrobots.io":
-            return httpx.Response(302, headers={"Location": "https://cdn.example.org/d.zip"})
-        if req.url.host == "cdn.example.org":
+            if req.url.path == "/d.zip":
+                return httpx.Response(302, headers={"Location": "/files/d.zip"})
             return httpx.Response(200, content=b"PK-zip")
         return httpx.Response(302, headers={"Location": "http://127.0.0.1/d.zip"})
 
@@ -762,17 +776,58 @@ def test_cache_is_partitioned_by_credentials(tmp_path):
     assert "Bearer" not in raw.replace("data for Bearer", "")
 
 
-def test_redirect_drops_credentials_on_host_change(tmp_path):
-    seen = {}
+def test_redirect_drops_credentials_on_https_downgrade(tmp_path):
+    seen = []
 
     def handler(req):
-        seen[req.url.host] = req.headers.get("Authorization")
-        if req.url.host == "api.example.org":
-            return httpx.Response(302, headers={"Location": "https://cdn.example.net/x"})
+        seen.append((req.url.scheme, req.headers.get("Authorization")))
+        if req.url.scheme == "https":
+            return httpx.Response(302, headers={"Location": "http://api.example.org/x"})
         return httpx.Response(200, text="ok")
 
     make(tmp_path, handler).fetch("https://api.example.org/a", "t", headers={"Authorization": "k"})
-    assert seen == {"api.example.org": "k", "cdn.example.net": None}
+    assert seen == [("https", "k"), ("http", None)]
+
+
+def test_default_collector_only_fetches_builtin_or_operator_hosts(tmp_path):
+    seen = []
+
+    def handler(req):
+        seen.append(req.url.host)
+        if req.url.host == "api.example.org":  # cross-host, even to a built-in API host
+            return httpx.Response(302, headers={"Location": "https://api.github.com/x"})
+        return httpx.Response(200, text="ok")
+
+    bare = make(tmp_path / "bare", handler, hosts=frozenset())
+    with pytest.raises(HostNotAllowedError):
+        bare.fetch("https://rebind.example.org/", "t")
+    with pytest.raises(HostNotAllowedError):
+        bare.download("https://rebind.example.org/d.zip", "t", tmp_path / "d.zip")
+    assert bare.fetch("https://hn.algolia.com/api/v1/search", "t") == "ok"
+    assert seen == ["hn.algolia.com"]
+    op = make(tmp_path / "op", handler, hosts=operator_hosts(["api.example.org", "www.b.io"]))
+    assert {"api.example.org", "www.api.example.org", "b.io", "www.b.io"} <= op.allowed_hosts()
+    with pytest.raises(HostNotAllowedError, match="another host"):
+        op.fetch("https://api.example.org/a", "t")
+    assert seen[-1] == "api.example.org" and "api.github.com" not in seen
+
+
+def test_run_collect_allows_only_competitor_hosts(tmp_path, monkeypatch):
+    from nmt_engine.collect import run
+
+    monkeypatch.setenv("NMT_AUTHOR_SALT", "s")
+    captured = {}
+    monkeypatch.setattr(run, "_steps", lambda p: [])
+    real = run.Collector
+
+    def spy(*a, **k):
+        captured["c"] = real(*a, **k)
+        return captured["c"]
+
+    monkeypatch.setattr(run, "Collector", spy)
+    plan = run.CollectPlan(category="x", since=SINCE, competitors=["invoiceninja.com"])
+    run.run_collect(plan, tmp_path)
+    assert captured["c"].extra_hosts == {"invoiceninja.com", "www.invoiceninja.com"}
 
 
 def test_redirect_keeps_put_method_and_body(tmp_path):

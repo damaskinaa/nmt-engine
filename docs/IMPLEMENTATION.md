@@ -103,8 +103,15 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   `localhost` / `.local` / `.internal` names. It applies to every request, every redirect hop and
   streamed downloads (`Collector.download`). Hostnames are DNS-checked only with
   `NMT_EGRESS_RESOLVE=1` (off by default so tests stay offline); without it a public name that
-  resolves to a private address is not caught. Competitor domains are given
-  by the operator, not taken from untrusted input. Cassettes are saved without credential headers,
+  resolves to a private address is not caught.
+- **Default-deny host list.** A collector only fetches hosts in `base.BUILTIN_HOSTS` (the APIs the
+  built-in adapters call) or passed by the operator (`nmt collect --competitors`, each domain plus
+  its `www.` form, via `Collector.extra_hosts`); anything else raises `HostNotAllowedError` before
+  a request is sent. Redirects are followed only within the same host (plus the one documented
+  hand-off `download.ons.gov.uk` → `static.ons.gov.uk`, `base.REDIRECT_PAIRS`); a redirect to any
+  other host is refused, for `fetch` and `download`. So a hostile DNS answer can only repoint one of
+  these fixed names, never introduce a new one; the opt-in DNS check stays as defence in depth.
+  Cassettes are saved without credential headers,
   `Set-Cookie`, secret query values or contact details, and a test checks this.
 - **Google Play is disabled** (`collect/googleplay.py`): no terms-compliant review source exists.
 - **Product Hunt** needs `PRODUCTHUNT_TOKEN` *and* `NMT_PRODUCTHUNT_TERMS_OK=1`, because its API terms

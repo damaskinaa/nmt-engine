@@ -35,8 +35,68 @@ CREDENTIAL_HEADERS = frozenset({"authorization", "proxy-authorization", "cookie"
 USER_AGENT = "nmt-engine/0.1 (outside-in research; +https://github.com/damaskinaa/nmt-engine)"
 
 
+# Hosts the built-in adapters call. Anything else must be passed by the operator
+# (`nmt collect --competitors`); a default-deny list means a hostile DNS answer can only ever
+# point one of these names somewhere else, never introduce a new name.
+BUILTIN_HOSTS: frozenset[str] = frozenset(
+    {
+        "hn.algolia.com",
+        "itunes.apple.com",
+        "api.github.com",
+        "www.reddit.com",
+        "oauth.reddit.com",
+        "www.googleapis.com",
+        "api.stackexchange.com",
+        "api.ted.europa.eu",
+        "www.contractsfinder.service.gov.uk",
+        "api.dataforseo.com",
+        "api.company-information.service.gov.uk",
+        "document-api.company-information.service.gov.uk",
+        "api.adzuna.com",
+        "api.producthunt.com",
+        "api.firecrawl.dev",
+        "web.archive.org",
+        "ws.cso.ie",
+        "ec.europa.eu",
+        "api.beta.ons.gov.uk",
+        "download.ons.gov.uk",
+        "www.ons.gov.uk",
+        "static.ons.gov.uk",
+        "data.sec.gov",
+        "www.sec.gov",
+        "webrobots.io",
+        "s3.amazonaws.com",
+        "api.npmjs.org",
+        "pypistats.org",
+        "huggingface.co",
+        "datasets-server.huggingface.co",
+    }
+)
+
+
+# The only cross-host redirects followed: documented hand-offs between two built-in hosts.
+REDIRECT_PAIRS: frozenset[tuple[str, str]] = frozenset(
+    {("download.ons.gov.uk", "static.ons.gov.uk")}  # ONS CSV downloads are served from static
+)
+
+
 class ForbiddenHostError(ValueError):
     """The URL's host is on the forbidden list (ARCHITECTURE §7)."""
+
+
+class HostNotAllowedError(ForbiddenHostError):
+    """The host is neither a built-in API host nor one the operator passed explicitly, or a
+    redirect tried to leave the requested host."""
+
+
+def operator_hosts(domains: list[str] | tuple[str, ...]) -> frozenset[str]:
+    """Hosts for operator-supplied domains (`--competitors`): the domain and its www. form."""
+    out: set[str] = set()
+    for d in domains:
+        h = (urlparse(d if "//" in d else f"https://{d}").hostname or "").lower().rstrip(".")
+        if h:
+            out |= {h, h[4:] if h.startswith("www.") else f"www.{h}"}
+    return frozenset(out)
 
 
 class MissingKeyError(RuntimeError):
@@ -146,6 +206,8 @@ class Collector:
     salt: str | None = None
     # opt-in DNS check of every hop (off by default so tests never touch the network)
     resolve_hosts: bool = field(default_factory=lambda: env("NMT_EGRESS_RESOLVE") == "1")
+    # operator-supplied hosts on top of BUILTIN_HOSTS (see `operator_hosts`)
+    extra_hosts: frozenset[str] = frozenset()
     _last: dict[str, float] = field(default_factory=dict)
     _ids: set[str] = field(default_factory=set)
 
@@ -193,8 +255,7 @@ class Collector:
         The body is PII-masked before it is cached or returned."""
         if params:
             url = f"{url}{'&' if '?' in url else '?'}{urlencode(params, doseq=True)}"
-        if is_forbidden(url):
-            raise ForbiddenHostError(url)
+        self._check_host(url)
         key = self._cache_key(method, url, json_body, headers)
         cached = self.cache_dir / f"{key}.json"
         host = urlparse(url).hostname or ""
@@ -213,7 +274,7 @@ class Collector:
     def _request(
         self, method: str, url: str, host: str, headers: dict[str, str], body: Any
     ) -> httpx.Response:
-        """Send with retries; follow redirects by hand so every hop passes the host check."""
+        """Send with retries; follow same-host redirects by hand, checking every hop."""
         for _hop in range(MAX_REDIRECTS + 1):
             self._check_egress(host, url)
             resp = None
@@ -230,35 +291,52 @@ class Collector:
                 return resp
             prev = resp.url
             url = str(prev.join(resp.headers["Location"]))
-            if is_forbidden(url):
-                raise ForbiddenHostError(url)
+            self._check_redirect(str(prev), url)
             nxt = urlparse(url)
             host = nxt.hostname or ""
-            if host != prev.host or (prev.scheme == "https" and nxt.scheme != "https"):
+            if prev.scheme == "https" and nxt.scheme != "https":
                 headers = {k: v for k, v in headers.items() if k.lower() not in CREDENTIAL_HEADERS}
             if resp.status_code == 303 or (resp.status_code in (301, 302) and method == "POST"):
                 method, body = "GET", None
         raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects", request=resp.request)
+
+    def allowed_hosts(self) -> frozenset[str]:
+        return BUILTIN_HOSTS | self.extra_hosts
+
+    def _check_host(self, url: str) -> None:
+        if is_forbidden(url):
+            raise ForbiddenHostError(url)
+        if (urlparse(url).hostname or "").lower().rstrip(".") not in self.allowed_hosts():
+            raise HostNotAllowedError(url)
+
+    def _check_redirect(self, prev: str, url: str) -> None:
+        self._check_host(url)
+        src, dst = urlparse(prev).hostname, urlparse(url).hostname
+        if src != dst and (src, dst) not in REDIRECT_PAIRS:
+            raise HostNotAllowedError(
+                f"redirect from {redact(prev)} to another host: {redact(url)}"
+            )
 
     def _check_egress(self, host: str, url: str) -> None:
         if self.resolve_hosts and resolves_internal(host):
             raise ForbiddenHostError(url)
 
     def download(self, url: str, adapter: str, dest: Path) -> Path:
-        """Stream a large file to `dest` (bypasses the text cache); redirects are followed by
-        hand so every hop passes the host check, like `fetch`. Bytes are written as received,
-        without the PII masking `fetch` applies: callers must scrub any text they store as a
-        Source (via `add_source`)."""
+        """Stream a large file to `dest` (bypasses the text cache); same-host redirects are
+        followed by hand so every hop passes the host check, like `fetch`. Bytes are written
+        as received, without the PII masking `fetch` applies: callers must scrub any text they
+        store as a Source (via `add_source`)."""
         dest.parent.mkdir(parents=True, exist_ok=True)
+        self._check_host(url)
         for _hop in range(MAX_REDIRECTS + 1):
-            if is_forbidden(url):
-                raise ForbiddenHostError(url)
             host = urlparse(url).hostname or ""
             self._check_egress(host, url)
             self._wait(host)
             with self.client.stream("GET", url, follow_redirects=False) as resp:
                 if resp.has_redirect_location:
-                    url = str(resp.url.join(resp.headers["Location"]))
+                    nxt = str(resp.url.join(resp.headers["Location"]))
+                    self._check_redirect(url, nxt)
+                    url = nxt
                     continue
                 if not resp.is_success:
                     self._log(url, host, adapter, resp.status_code, None, None)

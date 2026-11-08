@@ -23,7 +23,7 @@ from nmt_engine.collect import (
     web,
     youtube,
 )
-from nmt_engine.collect.base import Collector, MissingKeyError, env
+from nmt_engine.collect.base import Collector, MissingKeyError, env, operator_hosts
 
 STACK_SITES = ("stackoverflow", "softwarerecs", "webapps", "superuser")
 
@@ -79,7 +79,12 @@ def run_collect(plan: CollectPlan, run_dir: Path, collector: Collector | None = 
     Writes and returns `collect_summary.json`."""
     if collector is None and not env("NMT_AUTHOR_SALT"):
         raise MissingKeyError("set $NMT_AUTHOR_SALT so author hashes are salted and reproducible")
-    c = collector or Collector(run_dir, geo=plan.geo, salt=env("NMT_AUTHOR_SALT"))
+    c = collector or Collector(
+        run_dir,
+        geo=plan.geo,
+        salt=env("NMT_AUTHOR_SALT"),
+        extra_hosts=operator_hosts(plan.competitors),
+    )
     summary: dict = {"category": plan.category, "since": plan.since.isoformat(), "adapters": {}}
     for name, step in _steps(plan):
         try:
