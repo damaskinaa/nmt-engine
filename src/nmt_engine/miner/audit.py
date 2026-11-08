@@ -174,7 +174,7 @@ def mislabel_rates(spans: Sequence[Span], verdicts: Sequence[bool | None]) -> di
 
 
 def blind_sample(n_items: int, k: int, seed: int, exclude: Sequence[int] = ()) -> list[int]:
-    """Indices for an operator packet: `k` of `n_items`, seeded, among those with an answer."""
+    """Indices for an operator packet: `k` of `n_items`, seeded, never one in `exclude`."""
     pool = [i for i in range(n_items) if i not in set(exclude)]
     return sorted(random.Random(seed).sample(pool, min(k, len(pool))))
 

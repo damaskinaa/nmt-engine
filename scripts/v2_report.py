@@ -2,7 +2,9 @@
 
 R0 = Session A runs (~/nmt-live); R1 and R2 are one mined copy of R0 with clustering, scored on
 source kinds (R1) and customer-voice families (R2); R3 = clustered mining of the R3 collection;
-R4 = R3 with the label-audit exclusions. Robustness re-mines R3 at t* -/+ 0.05."""
+R4 = R3 with the label-audit exclusions. Robustness re-mines R3 at t* -/+ 0.05.
+Without agreement.json (pairs_ok) or specificity.json for every category the verdict is
+STOPPED or PENDING by design: the human checkpoint is not done, which is not a kill-line result."""
 
 from __future__ import annotations
 
