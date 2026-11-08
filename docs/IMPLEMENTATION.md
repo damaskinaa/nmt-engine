@@ -108,7 +108,7 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   built-in adapters call) or passed by the operator (`nmt collect --competitors`, each domain plus
   its `www.` form, via `Collector.extra_hosts`); anything else raises `HostNotAllowedError` before
   a request is sent. Redirects are followed only within the same host (plus the one documented
-  hand-off `download.ons.gov.uk` → `static.ons.gov.uk`, `base.REDIRECT_PAIRS`); a redirect to any
+  hand-off `download.ons.gov.uk` → `static.ons.gov.uk`, `base.REDIRECT_PAIRS`); a redirect between a domain and its `www.` twin is followed; a redirect to any
   other host is refused, for `fetch` and `download`. So a hostile DNS answer can only repoint one of
   these fixed names, never introduce a new one; the opt-in DNS check stays as defence in depth.
   Cassettes are saved without credential headers,

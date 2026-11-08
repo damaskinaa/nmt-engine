@@ -89,6 +89,11 @@ class HostNotAllowedError(ForbiddenHostError):
     redirect tried to leave the requested host."""
 
 
+def _www_twins(a: str | None, b: str | None) -> bool:
+    """`example.com` and `www.example.com`: one site, so a redirect between them is followed."""
+    return bool(a and b) and (a == f"www.{b}" or b == f"www.{a}")
+
+
 def operator_hosts(domains: list[str] | tuple[str, ...]) -> frozenset[str]:
     """Hosts for operator-supplied domains (`--competitors`): the domain and its www. form."""
     out: set[str] = set()
@@ -312,7 +317,7 @@ class Collector:
     def _check_redirect(self, prev: str, url: str) -> None:
         self._check_host(url)
         src, dst = urlparse(prev).hostname, urlparse(url).hostname
-        if src != dst and (src, dst) not in REDIRECT_PAIRS:
+        if src != dst and (src, dst) not in REDIRECT_PAIRS and not _www_twins(src, dst):
             raise HostNotAllowedError(
                 f"redirect from {redact(prev)} to another host: {redact(url)}"
             )

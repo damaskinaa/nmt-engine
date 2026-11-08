@@ -812,6 +812,15 @@ def test_default_collector_only_fetches_builtin_or_operator_hosts(tmp_path):
     assert seen[-1] == "api.example.org" and "api.github.com" not in seen
 
 
+def test_redirect_between_apex_and_www_is_followed(tmp_path):
+    def handler(req):
+        if req.url.host == "invoiceninja.com":
+            return httpx.Response(301, headers={"Location": "https://www.invoiceninja.com/p"})
+        return httpx.Response(200, text="ok")
+
+    assert make(tmp_path, handler).fetch("https://invoiceninja.com/p", "t") == "ok"
+
+
 def test_run_collect_allows_only_competitor_hosts(tmp_path, monkeypatch):
     from nmt_engine.collect import run
 
