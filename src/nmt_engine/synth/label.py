@@ -47,7 +47,7 @@ def citation_label(
         "methods: " + ", ".join(sorted({m.family for m in syn.methods if m.in_combined})),
     ]
     if left_out := sorted({m.family for m in syn.methods if not m.in_combined}):
-        parts.append("not pooled (calibration failed): " + ", ".join(left_out))
+        parts.append("not pooled (no passing calibration): " + ", ".join(left_out))
     cals = [c for i in syn.calibration_ids if (c := (calibrations or {}).get(i))]
     if cals:
         n = min(c.n for c in cals)

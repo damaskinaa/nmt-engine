@@ -137,7 +137,7 @@ def test_failed_family_is_listed_but_not_pooled(tmp_path):
     assert all(not c.endswith("behavioural") for c in syn.calibration_ids)
     label = citation_label(syn)
     assert "methods: revealed_price, statistical, supply" in label
-    assert "not pooled (calibration failed): behavioural" in label
+    assert "not pooled (no passing calibration): behavioural" in label
     run = RunData(
         tmp_path,
         None,
