@@ -224,6 +224,27 @@ class Collector:
                 method, body = "GET", None
         raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects", request=resp.request)
 
+    def download(self, url: str, adapter: str, dest: Path) -> Path:
+        """Stream a large file to `dest` (bypasses the text cache); redirects are followed by
+        hand so every hop passes the host check, like `fetch`."""
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        for _hop in range(MAX_REDIRECTS + 1):
+            if is_forbidden(url):
+                raise ForbiddenHostError(url)
+            host = urlparse(url).hostname or ""
+            self._wait(host)
+            with self.client.stream("GET", url, follow_redirects=False) as resp:
+                if resp.is_redirect:
+                    url = str(resp.url.join(resp.headers["Location"]))
+                    continue
+                self._log(url, host, adapter, resp.status_code, None, None)
+                resp.raise_for_status()
+                with dest.open("wb") as fh:
+                    for chunk in resp.iter_bytes():
+                        fh.write(chunk)
+                return dest
+        raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects")
+
     def fetch_json(self, url: str, adapter: str, **kw: Any) -> Any:
         return json.loads(self.fetch(url, adapter, **kw))
 

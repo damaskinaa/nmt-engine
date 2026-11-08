@@ -611,6 +611,23 @@ def test_redirect_to_internal_host_refused(tmp_path):
         make(tmp_path, handler).fetch("https://a.example.org/x", "t")
 
 
+def test_download_follows_redirects_with_host_checks(tmp_path):
+    from nmt_engine.collect import datasets
+
+    def handler(req):
+        if req.url.host == "webrobots.io":
+            return httpx.Response(302, headers={"Location": "https://cdn.example.org/d.zip"})
+        if req.url.host == "cdn.example.org":
+            return httpx.Response(200, content=b"PK-zip")
+        return httpx.Response(302, headers={"Location": "http://127.0.0.1/d.zip"})
+
+    c = make(tmp_path, handler)
+    out = datasets.kickstarter_download(c, "https://webrobots.io/d.zip", tmp_path / "d.zip")
+    assert out.read_bytes() == b"PK-zip"
+    with pytest.raises(ForbiddenHostError):
+        c.download("https://evil.example.org/d.zip", "t", tmp_path / "e.zip")
+
+
 def test_redirect_followed_to_allowed_host(tmp_path):
     def handler(req):
         if req.url.path == "/old":

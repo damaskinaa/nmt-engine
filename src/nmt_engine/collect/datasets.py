@@ -24,10 +24,8 @@ import pandas as pd
 
 from nmt_engine.collect.base import (
     Collector,
-    ForbiddenHostError,
     MissingKeyError,
     env,
-    is_forbidden,
 )
 
 NAME = "datasets"
@@ -72,16 +70,7 @@ def kickstarter_dumps(c: Collector) -> list[str]:
 
 def kickstarter_download(c: Collector, url: str, dest: Path) -> Path:
     """Stream a dump zip to `dest` (dumps are hundreds of MB, so they bypass the text cache)."""
-    if is_forbidden(url):
-        raise ForbiddenHostError(url)
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    with c.client.stream("GET", url) as resp:
-        resp.raise_for_status()
-        with dest.open("wb") as fh:
-            for chunk in resp.iter_bytes():
-                fh.write(chunk)
-    c._log(url, "webrobots.io", NAME, 200, None, None)
-    return dest
+    return c.download(url, NAME, dest)
 
 
 def kickstarter_projects(zip_path: Path, category: str | None = None) -> pd.DataFrame:
