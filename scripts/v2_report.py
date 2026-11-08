@@ -48,7 +48,7 @@ def main(labels: Path, abl: Path) -> None:
         "largest | over-merged | cost | time |",
         "|---|---|---:|---:|---:|---:|---:|---:|---|---:|---:|",
     ]
-    r4, lo, hi, tops, extra = {}, {}, {}, {}, []
+    r4, raw, lo, hi, tops, extra = {}, {}, {}, {}, {}, []
     for name, r0 in CATS:
         s0 = summary(R0 / r0)
         out.append(
@@ -75,19 +75,17 @@ def main(labels: Path, abl: Path) -> None:
                 f"{str(round(s['runtime_s'])) + ' s' if run in ('R1', 'R3') else '-'} |"
             )
         ok = lambda v: None if v["over_merged"] else v["v2_share"]  # noqa: E731
-        too_broad = broad.get(name, 0) > 3
-        r4[name] = None if too_broad else ok(v4)
-        vlo, vhi = (
-            score_v2(abl / f"r34lo-{name}", excluded),
-            score_v2(abl / f"r34hi-{name}", excluded),
-        )
-        lo[name] = None if too_broad else ok(vlo)
-        hi[name] = None if too_broad else ok(vhi)
+        raw[name] = ok(v4)
+        r4[name] = None if broad.get(name, 0) > 3 else raw[name]
+        lo[name] = ok(score_v2(abl / f"r34lo-{name}", excluded))
+        hi[name] = ok(score_v2(abl / f"r34hi-{name}", excluded))
         tops[name] = v4["top"]
         extra.append((name, s34, v4))
-    verdicts = {k: verdict_v2(v) for k, v in (("t*", r4), ("t*-0.05", lo), ("t*+0.05", hi))}
+    # Robustness compares the three thresholds under one rule (no specificity review, which
+    # judged the t* clusters only); the specificity rule then applies to the t* verdict.
+    verdicts = {k: verdict_v2(v) for k, v in (("t*", raw), ("t*-0.05", lo), ("t*+0.05", hi))}
     hit = {k: v.startswith("KILL LINE v2 HIT") for k, v in verdicts.items()}
-    final = verdicts["t*"] if len(set(hit.values())) == 1 else "Kill line v2 UNDECIDABLE"
+    final = verdict_v2(r4) if len(set(hit.values())) == 1 else "Kill line v2 UNDECIDABLE"
     unreviewed = [name for name, _ in CATS if name not in broad]
     if not agree.get("pairs_ok"):
         got = agree.get("pairs", {}).get("agreement")
@@ -95,9 +93,15 @@ def main(labels: Path, abl: Path) -> None:
     elif unreviewed:
         final = f"PENDING: no top-10 specificity review for {', '.join(unreviewed)}; no verdict"
     out += ["", f"**Verdict (R4, kill line {KILL_LINE:.0%}):** {final}", ""]
+    tag = "provisional, " if final.startswith(("STOPPED", "PENDING")) else ""
+    out.append(
+        f"- t* after specificity review ({tag}R4): "
+        + ", ".join(f"{c} {pct(s)}" for c, s in r4.items())
+    )
     out += [
-        f"- {k}: {v}  shares " + ", ".join(f"{c} {pct(s)}" for c, s in d.items())
-        for (k, v), d in zip(verdicts.items(), (r4, lo, hi), strict=True)
+        f"- {k} ({tag}before specificity review): {v}  shares "
+        + ", ".join(f"{c} {pct(s)}" for c, s in d.items())
+        for (k, v), d in zip(verdicts.items(), (raw, lo, hi), strict=True)
     ]
     out += [
         "",
