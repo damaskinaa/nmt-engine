@@ -115,7 +115,17 @@ def test_bad_names_keep_representative(tmp_path):
     llm = Scripted(tmp_path, {"groups": []}, {"clusters": [{"id": 0, "name": "Track habits"}]})
     res = cl.cluster_category(INSTS, VECS, t, llm, "x")
     assert res.clusters[0].members == [0, 1] and res.clusters[0].name.startswith("I want to a")
-    assert not res.clusters[0].mixed
+    assert res.clusters[0].mixed  # no verdict on its outcomes: it cannot pass
+
+
+def test_naming_shows_every_distinct_member(tmp_path):
+    insts = [inst(f"I want to do thing {k % 12}", sid=f"s{k}") for k in range(15)]
+    clusters = [cl.Cluster(list(range(15)), insts[0].statement)]
+    llm = Scripted(tmp_path, {}, {"clusters": [{"id": 0, "name": "I want to do", "mixed": False}]})
+    cl.name_clusters(llm, clusters, insts, "x")
+    prompt = llm.prompts[0][1]
+    assert all(f"thing {k}\n" in prompt or prompt.endswith(f"thing {k}") for k in range(12))
+    assert prompt.count("thing 0") == 1 and not clusters[0].mixed
 
 
 def test_to_groups_keys_are_stable_and_carry_level_and_mixed():

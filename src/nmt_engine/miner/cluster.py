@@ -29,7 +29,6 @@ BAND = 0.05
 LEVEL_ORDER = ("core", "small", "big", "micro")  # tie-break order (§3)
 CONFIRM_CHUNK = 120  # tight clusters per confirmation request
 NAME_CHUNK = 12  # clusters per naming request
-NAME_MEMBERS = 10  # member statements shown per cluster
 
 
 def instance_text(inst: JobInstance) -> str:
@@ -239,22 +238,27 @@ def confirm(
 def name_clusters(
     llm: LLM, clusters: list[Cluster], instances: list[JobInstance], category: str
 ) -> tuple[int, int]:
-    """Name clusters of 2+ instances ("I want to <verb> ...") and flag mixed outcomes."""
+    """Name clusters of 2+ instances ("I want to <verb> ...") and flag mixed outcomes.
+
+    Every distinct member line is shown. A cluster the producer gives no verdict on stays
+    mixed, so it cannot pass without its outcomes having been checked."""
     multi = [c for c in clusters if len(c.members) > 1]
+    for c in multi:
+        c.mixed = True
     requests = failed = 0
     for start in range(0, len(multi), NAME_CHUNK):
         chunk = multi[start : start + NAME_CHUNK]
         blocks = []
         for k, c in enumerate(chunk):
-            lines = []
-            for i in c.members[:NAME_MEMBERS]:
+            lines: list[str] = []
+            for i in c.members:
                 inst = instances[i]
                 outcome = (inst.spans.get("success_criteria") or [""])[0] or next(
                     (v for _, v in inst.criteria), ""
                 )
-                lines.append(
-                    f"  - {inst.statement}" + (f' (outcome: "{outcome}")' if outcome else "")
-                )
+                line = f"  - {inst.statement}" + (f' (outcome: "{outcome}")' if outcome else "")
+                if line not in lines:
+                    lines.append(line)
             blocks.append(f"cluster {k} ({len(c.members)} posts):\n" + "\n".join(lines))
         requests += 1
         try:
@@ -276,7 +280,8 @@ def name_clusters(
             name = row.get("name")
             if isinstance(name, str) and name.strip().lower().startswith("i want to "):
                 c.name = name.strip()
-            c.mixed = row.get("mixed") is True
+            if isinstance(row.get("mixed"), bool):
+                c.mixed = row["mixed"]
     return requests, failed
 
 
