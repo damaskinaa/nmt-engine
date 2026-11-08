@@ -26,6 +26,8 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
         ids = {s.id for s in segs}
         # possible double count: shares are ranges, so their upper bounds must fit the base
         total = sum(s.population.share[1] for s in segs)
+        # pairwise declared overlaps only: sum - pairwise overlaps is a lower bound on the union
+        # (Bonferroni), so triple overlaps can only make the gate miss, never false-fail
         overlap = 0.0
         seen: set[frozenset[str]] = set()
         for s in segs:
