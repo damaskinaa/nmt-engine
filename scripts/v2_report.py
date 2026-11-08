@@ -77,13 +77,23 @@ def main(labels: Path, abl: Path) -> None:
         ok = lambda v: None if v["over_merged"] else v["v2_share"]  # noqa: E731
         too_broad = broad.get(name, 0) > 3
         r4[name] = None if too_broad else ok(v4)
-        lo[name] = ok(score_v2(abl / f"r34lo-{name}", excluded))
-        hi[name] = ok(score_v2(abl / f"r34hi-{name}", excluded))
+        vlo, vhi = (
+            score_v2(abl / f"r34lo-{name}", excluded),
+            score_v2(abl / f"r34hi-{name}", excluded),
+        )
+        lo[name] = None if too_broad else ok(vlo)
+        hi[name] = None if too_broad else ok(vhi)
         tops[name] = v4["top"]
         extra.append((name, s34, v4))
     verdicts = {k: verdict_v2(v) for k, v in (("t*", r4), ("t*-0.05", lo), ("t*+0.05", hi))}
     hit = {k: v.startswith("KILL LINE v2 HIT") for k, v in verdicts.items()}
     final = verdicts["t*"] if len(set(hit.values())) == 1 else "Kill line v2 UNDECIDABLE"
+    unreviewed = [name for name, _ in CATS if name not in broad]
+    if not agree.get("pairs_ok"):
+        got = agree.get("pairs", {}).get("agreement")
+        final = f"STOPPED: human pair agreement {got} is not >= 80% (or not recorded); no verdict"
+    elif unreviewed:
+        final = f"PENDING: no top-10 specificity review for {', '.join(unreviewed)}; no verdict"
     out += ["", f"**Verdict (R4, kill line {KILL_LINE:.0%}):** {final}", ""]
     out += [
         f"- {k}: {v}  shares " + ", ".join(f"{c} {pct(s)}" for c, s in d.items())
