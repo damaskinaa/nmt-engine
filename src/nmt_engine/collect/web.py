@@ -70,8 +70,9 @@ def competitor_pages(c: Collector, domain: str, paths=("pricing", "changelog")):
     """Fetch common public pages for a competitor domain; skips missing or disallowed pages.
 
     Redirects never leave the requested host, so when the apex redirects elsewhere the page is
-    requested afresh on the `www.` host (its own robots.txt applies)."""
-    hosts = [domain] if domain.startswith("www.") else [domain, f"www.{domain}"]
+    requested afresh on its `www.` twin (or the apex, for a `www.` domain), under that host's own
+    robots.txt."""
+    hosts = [domain, domain[4:] if domain.startswith("www.") else f"www.{domain}"]
     out = []
     for path in paths:
         kind = "pricing" if path == "pricing" else "changelog"

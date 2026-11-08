@@ -835,6 +835,27 @@ def test_apex_redirect_is_refused_and_page_fetched_on_www(tmp_path):
     assert "https://www.invoiceninja.com/changelog" not in hits  # www robots forbids it
 
 
+def test_www_redirect_to_apex_is_refused_and_page_fetched_on_apex(tmp_path):
+    from nmt_engine.collect import web
+
+    def handler(req):
+        if req.url.host == "www.invoiceninja.com":
+            return httpx.Response(
+                301, headers={"Location": f"https://invoiceninja.com{req.url.path}"}
+            )
+        if req.url.path == "/robots.txt":
+            return httpx.Response(404)
+        return httpx.Response(200, text="<p>Pro plan</p>")
+
+    c = make(tmp_path, handler)
+    c.extra_hosts = operator_hosts(["www.invoiceninja.com"])
+    srcs = web.competitor_pages(c, "www.invoiceninja.com")
+    assert [s.url for s in srcs] == [
+        "https://invoiceninja.com/pricing",
+        "https://invoiceninja.com/changelog",
+    ]
+
+
 def test_run_collect_allows_only_competitor_hosts(tmp_path, monkeypatch):
     from nmt_engine.collect import run
 
