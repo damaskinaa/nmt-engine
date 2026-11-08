@@ -187,9 +187,16 @@ def extract(llm: LLM, traces: list[Trace], category: str, batch_size: int = 8) -
     return ex
 
 
-def load_traces(run, kinds: tuple[str, ...] = TRACE_KINDS, limit: int | None = None) -> list[Trace]:
+def load_traces(
+    run,
+    kinds: tuple[str, ...] = TRACE_KINDS,
+    limit: int | None = None,
+    first: frozenset[str] = frozenset(),
+) -> list[Trace]:
+    """Customer-voice traces in source-id order. Sources in `first` (an earlier run's traces)
+    go first, so their extraction batches are unchanged and replay from the LLM cache."""
     out = []
-    for src in sorted(run.sources.values(), key=lambda s: s.id):
+    for src in sorted(run.sources.values(), key=lambda s: (s.id not in first, s.id)):
         # Job spans come only from customer voice: never vendor pages or change history.
         if src.kind not in kinds or not src.customer_voice:
             continue

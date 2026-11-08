@@ -15,6 +15,7 @@ from nmt_engine.collect.base import Collector
 from nmt_engine.gates import GateConfig, run_gates
 from nmt_engine.graph import score
 from nmt_engine.llm import LLM, LLMDisabled, LLMError
+from nmt_engine.miner import prompts
 from nmt_engine.miner.graph_build import criteria_similarity, search_queries, wilson
 from nmt_engine.miner.killline import killline
 from nmt_engine.miner.pipeline import mine
@@ -729,3 +730,49 @@ def test_higher_job_links_cannot_cycle():
     by_id = {"a": bj("b"), "b": bj("c"), "c": bj()}
     assert _reaches("b", "a", by_id) is False  # b -> c never returns to a
     assert _reaches("a", "c", by_id) is True  # so c.higher = a would close a cycle
+
+
+class HashEmbedder:
+    model, tokens, cost = "fake", 0, 0.0
+
+    def embed(self, texts, purpose=""):
+        import numpy as np
+
+        out = [[1.0, 0.0] if "invoice" in t else [0.0, 1.0] for t in texts]
+        return np.asarray(out)
+
+
+def test_mine_v2_grouper_writes_clusters_and_v2_scores(tmp_path, monkeypatch):
+    from nmt_engine.miner.cluster import v2_grouper
+    from nmt_engine.miner.killline import score_v2
+
+    monkeypatch.delenv("DATAFORSEO_LOGIN", raising=False)
+    run_dir = make_run(tmp_path)
+    llm = FakeLLM(run_dir, cache_dir=tmp_path / "llmcache")
+    grouper = v2_grouper(HashEmbedder(), 0.2, "invoicing")
+    s = mine(run_dir, "invoicing", llm, cfg=GateConfig(forbidden_corpus=None), grouper=grouper)
+    assert s["status"] == "ok" and s["grouping"]["method"] == "v2"
+    clusters = json.loads((run_dir / "clusters.json").read_text())
+    assert sum(c["instances"] for c in clusters) == s["instances"]
+    v2 = score_v2(run_dir)
+    assert v2["jobs"] == len(clusters) and v2["v1_share"] == s["share_passing"]
+    assert s["v2"]["v2_share"] == v2["v2_share"] and v2["sizes"] is not None
+    # excluding every element makes nothing pass v2, and leaves v1 untouched
+    none = score_v2(run_dir, frozenset(prompts.ELEMENTS))
+    assert none["v2_passing"] == 0 and none["v1_share"] == v2["v1_share"]
+
+
+def test_carry_from_puts_earlier_traces_first(tmp_path):
+    from nmt_engine.miner.extract import load_traces
+
+    run = load_run(make_run(tmp_path))
+    ids = [t.source.id for t in load_traces(run)]
+    first = frozenset(ids[-2:])
+    assert [t.source.id for t in load_traces(run, first=first)] == ids[-2:] + ids[:-2]
+
+
+def test_verdict_v2_counts_unscored_as_below():
+    from nmt_engine.miner.killline import verdict_v2
+
+    assert verdict_v2({"a": 0.5, "b": None, "c": 0.1}).startswith("KILL LINE v2 HIT")
+    assert verdict_v2({"a": 0.5, "b": 0.4, "c": 0.1}).startswith("Kill line v2 passed")

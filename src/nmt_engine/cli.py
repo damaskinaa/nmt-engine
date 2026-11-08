@@ -106,16 +106,40 @@ def mine_cmd(
     limit: Annotated[int | None, typer.Option("--limit", help="Max traces")] = None,
     seed: Annotated[int, typer.Option("--seed")] = 0,
     forbidden_corpus: CorpusOpt = None,
+    t_star: Annotated[
+        float | None,
+        typer.Option("--t-star", help="v2: whole-category embedding clustering cut at this t*"),
+    ] = None,
+    carry_from: Annotated[
+        Path | None,
+        typer.Option(help="Earlier run whose traces are extracted first (LLM cache replay)"),
+    ] = None,
 ) -> None:
     """Job-Graph Miner on a collected run: jobs, segments, graph, gates, graph/report HTML."""
+    from nmt_engine.embed import Embedder
     from nmt_engine.llm import LLM
+    from nmt_engine.miner.cluster import v2_grouper
     from nmt_engine.miner.pipeline import mine
 
     llm = LLM(run_dir, no_llm=no_llm)
+    embedder = Embedder(run_dir) if t_star is not None else None
+    grouper = v2_grouper(embedder, t_star, category) if embedder else None
     try:
-        summary = mine(run_dir, category, llm, geo, limit, seed, _cfg(forbidden_corpus))
+        summary = mine(
+            run_dir,
+            category,
+            llm,
+            geo,
+            limit,
+            seed,
+            _cfg(forbidden_corpus),
+            grouper=grouper,
+            carry_from=carry_from,
+        )
     finally:
         llm.close()
+        if embedder:
+            embedder.close()
     typer.echo(json.dumps(summary, indent=2, sort_keys=True, default=str))
     raise typer.Exit(0 if summary.get("status") in ("ok", "skipped") else 1)
 

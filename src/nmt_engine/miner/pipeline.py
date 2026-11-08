@@ -9,6 +9,8 @@ from __future__ import annotations
 import json
 import time
 import warnings
+from collections import Counter
+from collections.abc import Callable
 from dataclasses import asdict
 from datetime import UTC, datetime
 from pathlib import Path
@@ -21,9 +23,9 @@ from nmt_engine.graph import score
 from nmt_engine.graph.viewer import write_graph_html, write_report_html
 from nmt_engine.llm import LLM, LLMDisabled, model_family
 from nmt_engine.miner import prompts
-from nmt_engine.miner.extract import extract, load_traces
+from nmt_engine.miner.extract import JobInstance, extract, load_traces
 from nmt_engine.miner.graph_build import build_edges, segments
-from nmt_engine.miner.jobs import BuiltJob, build_job, group_instances, llm_merge
+from nmt_engine.miner.jobs import BuiltJob, JobGroup, build_job, group_instances, llm_merge
 from nmt_engine.schema import Claim, FrozenFile, Record, RunManifest, SourceRef, voice_families
 from nmt_engine.store import RunData, Store, load_run, type_name
 from nmt_engine.util import sha256_file, sha256_text
@@ -31,13 +33,19 @@ from nmt_engine.util import sha256_file, sha256_text
 KILL_ELEMENTS = 4
 KILL_KINDS = 2
 KILL_LINE = 0.30
+V2_FAMILIES = 2  # PREREG_killline_v2.md §4
+V2_VOICES = 3
+V2_LEVELS = ("core", "small")
+OVER_MERGED = 0.10
 
 
 def write_prompts(run_dir: Path) -> list[Path]:
     d = run_dir / "prompts"
     d.mkdir(parents=True, exist_ok=True)
     out = []
-    for name in ("EXTRACT_SYSTEM", "EXTRACT_PROMPT", "MERGE_SYSTEM", "MERGE_PROMPT"):
+    names = ("EXTRACT_SYSTEM", "EXTRACT_PROMPT", "MERGE_SYSTEM", "MERGE_PROMPT")
+    names += ("CONFIRM_SYSTEM", "CONFIRM_PROMPT", "NAME_SYSTEM", "NAME_PROMPT")
+    for name in names:
         p = d / f"{name.lower()}.txt"
         p.write_text(getattr(prompts, name), "utf-8")
         out.append(p)
@@ -141,13 +149,23 @@ def search_proxies(run_dir: Path, built: list[BuiltJob], geo: str) -> list[Claim
     return claims
 
 
-def evidence_table(run: RunData, job_ids: set[str] | None = None) -> list[dict]:
-    """Per job, after gates: which of the 8 elements keep a live PUBLIC_VOICE receipt."""
+def evidence_table(
+    run: RunData,
+    job_ids: set[str] | None = None,
+    mixed: frozenset[str] = frozenset(),
+    excluded: frozenset[str] = frozenset(),
+) -> list[dict]:
+    """Per job, after gates: which of the 8 elements keep a live PUBLIC_VOICE receipt.
+
+    `passes` is the v1 rule. `passes_v2` is PREREG_killline_v2.md §4: elements not `excluded`
+    by the label audit, customer-voice families and voices over the element receipts, not in
+    `mixed`. `passes_v2_kinds` is the same rule counting source kinds (ablation R1)."""
     rows = []
     for job in sorted(run.jobs.values(), key=lambda j: j.id):
         if job.retracted or (job_ids is not None and job.id not in job_ids):
             continue
         elements, kinds, families, voices, posts = [], set(), set(), set(), set()
+        v2_kinds: set[str] = set()
         for el in prompts.ELEMENTS:
             c = run.claims.get(f"c_{job.id}_{el}")
             if c is None or c.retracted or c.status != "PUBLIC_VOICE" or not c.source_refs:
@@ -156,9 +174,14 @@ def evidence_table(run: RunData, job_ids: set[str] | None = None) -> list[dict]:
             if srcs:
                 elements.append(el)
                 kinds |= {s.kind for s in srcs}
+                posts |= {s.id for s in srcs if s.customer_voice}
+                if el in excluded:
+                    continue
+                v2_kinds |= {s.kind for s in srcs if s.customer_voice}
                 families |= voice_families(srcs)
                 voices |= {s.author_hash for s in srcs if s.author_hash}
-                posts |= {s.id for s in srcs if s.customer_voice}
+        counted = [e for e in elements if e not in excluded]
+        v2_ok = len(counted) >= KILL_ELEMENTS and len(voices) >= V2_VOICES and job.id not in mixed
         rows.append(
             {
                 "job_id": job.id,
@@ -170,6 +193,9 @@ def evidence_table(run: RunData, job_ids: set[str] | None = None) -> list[dict]:
                 "posts": len(posts),
                 "level": job.level,
                 "passes": len(elements) >= KILL_ELEMENTS and len(kinds) >= KILL_KINDS,
+                "passes_v2": v2_ok and len(families) >= V2_FAMILIES,
+                "passes_v2_kinds": v2_ok and len(v2_kinds) >= V2_FAMILIES,
+                "mixed": job.id in mixed,
                 "thin": job.thin,
             }
         )
@@ -198,17 +224,25 @@ def mine(
     seed: int = 0,
     cfg: GateConfig | None = None,
     batch_size: int = 8,
+    grouper: Callable[[list[JobInstance], LLM], tuple[list[JobGroup], dict]] | None = None,
+    carry_from: Path | None = None,
 ) -> dict:
+    """`grouper` replaces the v1 token-overlap + chunked LLM merge (e.g. the v2 clusterer); it
+    returns the groups and a dict of its own stats for the summary."""
     t0 = time.monotonic()
     run_dir = Path(run_dir)
     cfg = cfg or GateConfig()
     demote(run_dir, cfg)  # drop failing sources (gates 7, 14) before they shape any score
     run = load_run(run_dir)
-    traces = load_traces(run, limit=limit)
+    first = frozenset()
+    if carry_from is not None:
+        first = frozenset(t.source.id for t in load_traces(load_run(Path(carry_from))))
+    traces = load_traces(run, limit=limit, first=first)
     summary: dict = {
         "category": category,
         "geo": geo,
         "traces": len(traces),
+        "carried_traces": len(first & {t.source.id for t in traces}),
         "seed": seed,
         "llm_host": llm.host,
         "model": llm.model,
@@ -231,8 +265,24 @@ def mine(
         )
         (run_dir / "mine_summary.json").write_text(json.dumps(summary, indent=2), "utf-8")
         return summary
-    groups = llm_merge(llm, group_instances(ex.instances), category)
+    if grouper is None:
+        groups, grouping = llm_merge(llm, group_instances(ex.instances), category), {"method": "v1"}
+    else:
+        groups, grouping = grouper(ex.instances, llm)
     built = [build_job(g, run.sources, geo) for g in groups]
+    clusters = [
+        {
+            "job_id": b.job.id,
+            "name": g.statement,
+            "instances": len(g.instances),
+            "posts": len({i.source_id for i in g.instances}),
+            "level": b.job.level,
+            "instance_levels": dict(Counter(i.level for i in g.instances)),
+            "mixed": g.mixed,
+        }
+        for g, b in zip(groups, built, strict=True)
+    ]
+    (run_dir / "clusters.json").write_text(json.dumps(clusters, indent=1), "utf-8")
     proxies = search_proxies(run_dir, built, geo)
     parts = build_edges(built, run.sources, geo, run.source_text)
     segs = segments(built, run.sources)
@@ -267,6 +317,7 @@ def mine(
     summary.update(
         status="ok",
         instances=len(ex.instances),
+        grouping=grouping,
         jobs=len(table),
         jobs_passing=passing,
         # PRODUCT.md D1: denominator is every extracted job, thin ones included (a thin job has
@@ -299,6 +350,9 @@ def mine(
         failed_gates=report.failed_gates(),
         runtime_s=round(time.monotonic() - t0, 1),
     )
+    from nmt_engine.miner.killline import score_v2
+
+    summary["v2"] = {k: v for k, v in score_v2(run_dir).items() if k != "top"}
     (run_dir / "graph.json").write_text(json.dumps(graph, indent=1, sort_keys=True), "utf-8")
     (run_dir / "mine_summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True, default=str), "utf-8"
