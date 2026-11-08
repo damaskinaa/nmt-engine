@@ -241,11 +241,22 @@ class Collector:
                 if resp.has_redirect_location:
                     url = str(resp.url.join(resp.headers["Location"]))
                     continue
-                self._log(url, host, adapter, resp.status_code, None, None)
-                resp.raise_for_status()
-                with dest.open("wb") as fh:
-                    for chunk in resp.iter_bytes():
-                        fh.write(chunk)
+                if not resp.is_success:
+                    self._log(url, host, adapter, resp.status_code, None, None)
+                    resp.raise_for_status()
+                part = dest.with_name(dest.name + ".part")
+                digest = hashlib.sha256()
+                try:
+                    with part.open("wb") as fh:
+                        for chunk in resp.iter_bytes():
+                            fh.write(chunk)
+                            digest.update(chunk)
+                except BaseException:
+                    part.unlink(missing_ok=True)
+                    self._log(url, host, adapter, None, None, None)
+                    raise
+                part.replace(dest)
+                self._log(url, host, adapter, resp.status_code, None, None, digest.hexdigest())
                 return dest
         raise httpx.TooManyRedirects(f"more than {MAX_REDIRECTS} redirects")
 

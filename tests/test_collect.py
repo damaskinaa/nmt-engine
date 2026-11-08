@@ -663,6 +663,19 @@ def test_download_follows_redirects_with_host_checks(tmp_path):
         c.download("https://evil.example.org/d.zip", "t", tmp_path / "e.zip")
 
 
+def test_interrupted_download_not_logged_as_success(tmp_path):
+    class Broken(httpx.SyncByteStream):
+        def __iter__(self):
+            yield b"PK-part"
+            raise httpx.ReadError("connection reset")
+
+    c = make(tmp_path, lambda req: httpx.Response(200, stream=Broken()))
+    with pytest.raises(httpx.ReadError):
+        c.download("https://a.example.org/d.zip", "t", tmp_path / "d.zip")
+    assert not list(tmp_path.glob("d.zip*"))
+    assert [e.get("status_code") for e in log(c)] == [None]
+
+
 def test_redirect_without_location_is_an_http_error(tmp_path):
     c = make(tmp_path, lambda req: httpx.Response(302))
     with pytest.raises(httpx.HTTPStatusError):
