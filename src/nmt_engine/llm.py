@@ -83,6 +83,7 @@ class LLM:
     retries: int = 4
     calls: int = 0
     cost: float = 0.0
+    unpriced_calls: int = 0
 
     def __post_init__(self) -> None:
         if self.provider not in DEFAULT_MODEL:
@@ -175,6 +176,7 @@ class LLM:
         cost = 0.0 if cached else cost_usd(self.model or "", t_in, t_out)
         self.calls += 0 if cached else 1
         self.cost += cost or 0.0
+        self.unpriced_calls += cost is None
         entry = {
             "at": datetime.now(UTC).isoformat(timespec="seconds"),
             "purpose": purpose,

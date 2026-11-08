@@ -207,6 +207,7 @@ def mine(
             reason=f"LLM extraction failed for {ex.failed_batches} of {n_batches} batches",
             failed_batches=ex.failed_batches,
             cost_usd=round(llm.cost, 4),
+            unpriced_llm_calls=llm.unpriced_calls,
         )
         (run_dir / "mine_summary.json").write_text(json.dumps(summary, indent=2), "utf-8")
         return summary
@@ -260,6 +261,7 @@ def mine(
         failed_batches=ex.failed_batches,
         llm_calls=llm.calls,
         cost_usd=round(llm.cost, 4),
+        unpriced_llm_calls=llm.unpriced_calls,  # cost_usd excludes these
         claims_displayed=len(shown),
         claims_total=len(run.claims),
         demotion=demotion,

@@ -396,6 +396,20 @@ def test_llm_logs_caches_and_never_logs_key(tmp_path, monkeypatch):
     assert len(seen) == 2 and llm.client is not None  # one client reused across calls
 
 
+def test_unpriced_model_calls_are_counted(tmp_path, monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "k")
+    monkeypatch.delenv("NMT_LLM_PRICES", raising=False)
+    llm = LLM(
+        tmp_path / "run",
+        provider="anthropic",
+        model="some-new-model",
+        cache_dir=tmp_path / "c",
+        client=_anthropic([]),
+    )
+    llm.complete("x")
+    assert llm.cost == 0.0 and llm.unpriced_calls == 1
+
+
 def test_llm_disabled_without_key_or_with_flag(tmp_path, monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     with pytest.raises(LLMDisabled):

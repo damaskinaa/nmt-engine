@@ -27,11 +27,14 @@ def killline(run_dirs: list[Path]) -> tuple[str, str]:
             )
             continue
         done += 1
+        n = s.get("unpriced_llm_calls") or 0
+        unpriced = f" + {n} unpriced calls" if n else ""
         below += s["share_passing"] < KILL_LINE
         rows.append(
             f"| {cat} | {s['traces']} | {s['jobs']} | {s.get('thin_jobs', '-')} | "
             f"{s['jobs_passing']} | "
-            f"{100 * s['share_passing']:.1f}% | {s['cost_usd']:.2f} | {s['runtime_s']:.0f} |"
+            f"{100 * s['share_passing']:.1f}% | {s['cost_usd']:.2f}{unpriced} | "
+            f"{s['runtime_s']:.0f} |"
         )
     if done < 3:
         verdict = f"Kill line not decidable: {done} of 3 categories mined."
