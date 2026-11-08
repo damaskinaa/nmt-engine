@@ -1,6 +1,7 @@
 """Text embeddings over an OpenAI-compatible `/embeddings` endpoint (TensorX by default).
 
-Vectors are cached per (endpoint host, model, text hash) as float32 `.npy`, so reruns are free and identical.
+Vectors are cached per (endpoint host, model, text hash) as float32 `.npy`, so reruns are free
+and identical.
 Every request is logged to runs/<id>/llm_log.jsonl with tokens and cost, like `LLM` calls.
 """
 
@@ -56,6 +57,17 @@ class Embedder:
 
     def _path(self, text: str) -> Path:
         return self.cache_dir / f"{sha256_text(text)}.npy"
+
+    def close(self) -> None:
+        if self.client is not None:
+            self.client.close()
+            self.client = None
+
+    def __enter__(self) -> Embedder:
+        return self
+
+    def __exit__(self, *exc) -> None:
+        self.close()
 
     def embed(self, texts: list[str], purpose: str = "embed") -> np.ndarray:
         """Unit-normalised vectors, one row per text, in order."""
