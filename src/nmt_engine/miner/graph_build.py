@@ -63,7 +63,7 @@ def segments(built: list[BuiltJob], sources: dict[str, Source], cut: float = 0.7
         d = np.zeros((n, n))
         for i in range(n):
             for j in range(i + 1, n):
-                d[i, j] = d[j, i] = max(0.0, 1 - job_similarity(built[i], built[j]))
+                d[i, j] = d[j, i] = min(1.0, max(0.0, 1 - job_similarity(built[i], built[j])))
         labels = fcluster(linkage(squareform(d), "average"), t=cut, criterion="distance")
     groups: dict[int, list[BuiltJob]] = defaultdict(list)
     for lab, bj in zip(labels, built, strict=True):

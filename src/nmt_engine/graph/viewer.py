@@ -74,6 +74,7 @@ def receipts(run: RunData, claim_id: str, shown: set[str], limit: int = 3) -> li
 def write_report_html(
     summary: dict, table: list[dict], graph: dict, run: RunData, shown: set[str], path: Path
 ) -> Path:
+    assert summary.get("status") == "ok", "report.html is only written for a completed mine"
     path.parent.mkdir(parents=True, exist_ok=True)
     jobs = []
     for row in sorted(table, key=lambda r: (not r["passes"], -len(r["elements"]), r["job_id"])):
