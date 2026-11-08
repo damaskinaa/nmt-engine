@@ -1,0 +1,119 @@
+{
+ "spans": 400,
+ "answered": 400,
+ "rates": {
+  "context": {
+   "n": 50,
+   "mislabelled": 21,
+   "rate": 0.42,
+   "wilson95": [
+    0.29375,
+    0.557666
+   ],
+   "excluded": true
+  },
+  "trigger": {
+   "n": 50,
+   "mislabelled": 16,
+   "rate": 0.32,
+   "wilson95": [
+    0.207582,
+    0.458103
+   ],
+   "excluded": true
+  },
+  "job": {
+   "n": 50,
+   "mislabelled": 11,
+   "rate": 0.22,
+   "wilson95": [
+    0.127539,
+    0.352415
+   ],
+   "excluded": false
+  },
+  "success_criteria": {
+   "n": 50,
+   "mislabelled": 13,
+   "rate": 0.26,
+   "wilson95": [
+    0.158715,
+    0.395532
+   ],
+   "excluded": false
+  },
+  "alternatives": {
+   "n": 50,
+   "mislabelled": 11,
+   "rate": 0.22,
+   "wilson95": [
+    0.127539,
+    0.352415
+   ],
+   "excluded": false
+  },
+  "negative_emotions": {
+   "n": 50,
+   "mislabelled": 20,
+   "rate": 0.4,
+   "wilson95": [
+    0.276084,
+    0.538186
+   ],
+   "excluded": true
+  },
+  "positive_emotions": {
+   "n": 50,
+   "mislabelled": 23,
+   "rate": 0.46,
+   "wilson95": [
+    0.329697,
+    0.596011
+   ],
+   "excluded": true
+  },
+  "higher_goal": {
+   "n": 50,
+   "mislabelled": 22,
+   "rate": 0.44,
+   "wilson95": [
+    0.311622,
+    0.57694
+   ],
+   "excluded": true
+  }
+ },
+ "excluded": [
+  "context",
+  "higher_goal",
+  "negative_emotions",
+  "positive_emotions",
+  "trigger"
+ ],
+ "auditor": "moonshotai/kimi-k3.1-pro",
+ "auditor_cost_usd": 0.1783,
+ "auditor_calls": 1,
+ "runtime_s": 245.4,
+ "blind": [
+  18,
+  28,
+  43,
+  46,
+  81,
+  86,
+  108,
+  128,
+  157,
+  184,
+  201,
+  220,
+  260,
+  297,
+  310,
+  326,
+  342,
+  348,
+  370,
+  376
+ ]
+}
