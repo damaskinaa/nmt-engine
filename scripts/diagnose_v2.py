@@ -139,12 +139,14 @@ def md(ds: list[dict]) -> str:
 
 
 if __name__ == "__main__":
-    done = []
+    done, failed = [], []
     for p in sys.argv[1:]:
         try:
             done.append(diagnose(Path(p)))
         except (OSError, ValueError, KeyError) as e:
-            print(f"skipped {p}: {type(e).__name__}: {e}", file=sys.stderr)
-    if not done:
-        sys.exit("no readable run directories")
-    print(md(done))
+            failed.append(p)
+            print(f"ERROR: skipped {p}: {type(e).__name__}: {e}", file=sys.stderr)
+    if done:
+        print(md(done))
+    if failed:  # a missing category must never pass unnoticed into the tables
+        sys.exit(f"{len(failed)} of {len(sys.argv) - 1} run(s) unreadable: {', '.join(failed)}")
