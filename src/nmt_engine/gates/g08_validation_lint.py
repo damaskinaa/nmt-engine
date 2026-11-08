@@ -15,14 +15,18 @@ BANNED = re.compile(
 )
 _NEGATORS = {"not", "never", "no", "isn't", "wasn't", "hasn't", "haven't", "aren't", "nor"}
 _FILLER = {"yet", "been", "be", "being", "is", "was", "are", "were", "has", "have", "had"}
-_FILLER |= {"really", "fully", "ever", "actually", "truly", "formally", "properly", "so", "far"}
+_FILLER |= {"a", "an", "the", "ever", "so", "far"}
 _WORD = re.compile(r"[\w']+")
+
+
+def _skippable(word: str) -> bool:
+    return word in _FILLER or (word.endswith("ly") and word != "only")
 
 
 def _asserted(sent: str) -> bool:
     for m in BANNED.finditer(sent):
         before = _WORD.findall(sent[: m.start()].lower())
-        while before and before[-1] in _FILLER:
+        while before and _skippable(before[-1]):
             before.pop()
         if not (before and before[-1] in _NEGATORS):
             return True
