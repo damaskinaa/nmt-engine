@@ -892,7 +892,7 @@ def test_apex_redirect_is_refused_and_page_fetched_on_www(tmp_path):
 
     c = make(tmp_path, handler)
     c.extra_hosts = operator_hosts(["invoiceninja.com"])
-    srcs = web.competitor_pages(c, "invoiceninja.com")
+    srcs = web.competitor_pages(c, "invoiceninja.com", ("pricing", "changelog"))
     assert [s.url for s in srcs] == ["https://www.invoiceninja.com/pricing"]
     assert "https://www.invoiceninja.com/robots.txt" in hits  # destination robots consulted
     assert "https://www.invoiceninja.com/changelog" not in hits  # www robots forbids it
@@ -912,7 +912,7 @@ def test_www_redirect_to_apex_is_refused_and_page_fetched_on_apex(tmp_path):
 
     c = make(tmp_path, handler)
     c.extra_hosts = operator_hosts(["www.invoiceninja.com"])
-    srcs = web.competitor_pages(c, "www.invoiceninja.com")
+    srcs = web.competitor_pages(c, "www.invoiceninja.com", ("pricing", "changelog"))
     assert [s.url for s in srcs] == [
         "https://invoiceninja.com/pricing",
         "https://invoiceninja.com/changelog",
