@@ -103,7 +103,7 @@ def calibration_record(
         as_of_rule=as_of_rule,
         backtest_cases=list(cases),
         bias_log_ratio=stats.bias_log,
-        conformal_q80=stats.conformal_q80,
+        conformal_q80=stats.conformal_q80 if math.isfinite(stats.conformal_q80) else None,
         coverage_80=stats.coverage_loo,
         n=stats.n,
         passed=stats.passed,
