@@ -13,6 +13,7 @@ import ipaddress
 import json
 import os
 import re
+import socket
 import time
 from collections.abc import Mapping
 from dataclasses import dataclass, field
@@ -88,7 +89,10 @@ def is_internal_host(host: str) -> bool:
     try:
         ip = ipaddress.ip_address(host)
     except ValueError:
-        return False
+        try:  # legacy IPv4 forms the resolver accepts: 2130706433, 0x7f.1, 127.1
+            ip = ipaddress.IPv4Address(socket.inet_aton(host))
+        except OSError:
+            return False
     return not ip.is_global or ip.is_multicast
 
 

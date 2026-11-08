@@ -625,6 +625,9 @@ def test_redirect_to_forbidden_host_refused(tmp_path):
         "http://192.168.1.1/",
         "http://[::1]/",
         "http://intranet.internal/",
+        "http://2130706433/",
+        "http://0x7f.1/",
+        "http://127.1/",
     ],
 )
 def test_internal_hosts_refused(tmp_path, url):
