@@ -23,7 +23,7 @@ def test_label_pairs_batches_by_category_and_ignores_bad_rows(tmp_path):
 
     llm = Scripted(tmp_path, answer)
     pairs = [("a", "x", "y"), ("b", "p", "q"), ("a", "u", "v")]
-    assert audit.label_pairs(llm, pairs) == [True, True, None]
+    assert audit.label_pairs(llm, pairs, rounds=1) == [True, True, None]
     assert len(llm.prompts) == 2 and "Category: a" in llm.prompts[0]
 
 
@@ -74,3 +74,20 @@ def test_blind_sample_and_agreement():
     s = audit.blind_sample(10, 4, 1, exclude=[0, 1])
     assert len(s) == 4 and not {0, 1} & set(s) and s == audit.blind_sample(10, 4, 1, [0, 1])
     assert audit.agreement([True, False, True], [True, True, True]) == 0.6667
+
+
+def test_unanswered_items_are_asked_again(tmp_path):
+    seen = []
+
+    def answer(prompt):  # first request drops item 1; later requests answer everything
+        seen.append(prompt)
+        rows = [{"id": n, "same": True} for n in range(3)]
+        return {"pairs": rows[:1] + rows[2:] if len(seen) == 1 else rows}
+
+    llm = Scripted(tmp_path, answer)
+    pairs = [("a", "x", "y"), ("a", "p", "q"), ("a", "u", "v")]
+    assert audit.label_pairs(llm, pairs) == [True, True, True]
+    assert len(seen) == 2 and "A: p" in seen[1] and "A: x" not in seen[1]
+    stubborn = Scripted(tmp_path / "s", lambda p: {"pairs": []})
+    assert audit.label_pairs(stubborn, pairs[:1]) == [None]
+    assert len(stubborn.prompts) == audit.ROUNDS

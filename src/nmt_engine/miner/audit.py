@@ -24,6 +24,9 @@ def _batched(items: Sequence, size: int):
         yield items[i : i + size]
 
 
+ROUNDS = 3  # passes over still-unanswered items
+
+
 def _answers(llm: LLM, prompt: str, system: str, purpose: str, key: str, field: str, n: int):
     """{item number: bool} from one auditor request; missing or malformed items are left out."""
     try:
@@ -44,30 +47,33 @@ def _answers(llm: LLM, prompt: str, system: str, purpose: str, key: str, field: 
 
 
 def label_pairs(
-    llm: LLM, pairs: Sequence[tuple[str, str, str]], batch: int = 10
+    llm: LLM, pairs: Sequence[tuple[str, str, str]], batch: int = 10, rounds: int = ROUNDS
 ) -> list[bool | None]:
     """Auditor same-job labels for (category, text_a, text_b) pairs; None where it gave none.
-    A batch holds pairs of one category so the prompt names it."""
+    A batch holds pairs of one category so the prompt names it. Pairs left unanswered are
+    asked again in fresh batches, up to `rounds` passes in all."""
     out: list[bool | None] = [None] * len(pairs)
-    by_cat: dict[str, list[int]] = {}
-    for k, (cat, _, _) in enumerate(pairs):
-        by_cat.setdefault(cat, []).append(k)
-    for cat, idx in by_cat.items():
-        for chunk in _batched(idx, batch):
-            body = "\n\n".join(
-                f"{n}.\nA: {pairs[k][1]}\nB: {pairs[k][2]}" for n, k in enumerate(chunk)
-            )
-            ans = _answers(
-                llm,
-                prompts.PAIR_PROMPT.format(category=cat, pairs=body),
-                prompts.PAIR_SYSTEM,
-                "audit.pairs",
-                "pairs",
-                "same",
-                len(chunk),
-            )
-            for n, k in enumerate(chunk):
-                out[k] = ans.get(n)
+    for _ in range(rounds):
+        by_cat: dict[str, list[int]] = {}
+        for k, (cat, _, _) in enumerate(pairs):
+            if out[k] is None:
+                by_cat.setdefault(cat, []).append(k)
+        for cat, idx in by_cat.items():
+            for chunk in _batched(idx, batch):
+                body = "\n\n".join(
+                    f"{n}.\nA: {pairs[k][1]}\nB: {pairs[k][2]}" for n, k in enumerate(chunk)
+                )
+                ans = _answers(
+                    llm,
+                    prompts.PAIR_PROMPT.format(category=cat, pairs=body),
+                    prompts.PAIR_SYSTEM,
+                    "audit.pairs",
+                    "pairs",
+                    "same",
+                    len(chunk),
+                )
+                for n, k in enumerate(chunk):
+                    out[k] = ans.get(n)
     return out
 
 
@@ -114,27 +120,31 @@ def sample_spans(
     return out
 
 
-def audit_spans(llm: LLM, spans: Sequence[Span], batch: int = 10) -> list[bool | None]:
-    """Auditor verdict per span: True = correctly labelled, None = no answer."""
+def audit_spans(
+    llm: LLM, spans: Sequence[Span], batch: int = 10, rounds: int = ROUNDS
+) -> list[bool | None]:
+    """Auditor verdict per span: True = correctly labelled, None = no answer.
+    Unanswered spans are asked again in fresh batches, up to `rounds` passes in all."""
     meanings = "\n".join(f"- {k}: {v}" for k, v in prompts.ELEMENT_MEANING.items())
     out: list[bool | None] = [None] * len(spans)
-    for start in range(0, len(spans), batch):
-        chunk = spans[start : start + batch]
-        body = "\n\n".join(
-            f'{n}. job: {s.job}\n   element: {s.element}\n   quote: "{s.span}"'
-            for n, s in enumerate(chunk)
-        )
-        ans = _answers(
-            llm,
-            prompts.AUDIT_PROMPT.format(meanings=meanings, items=body),
-            prompts.AUDIT_SYSTEM,
-            "audit.spans",
-            "items",
-            "correct",
-            len(chunk),
-        )
-        for n in range(len(chunk)):
-            out[start + n] = ans.get(n)
+    for _ in range(rounds):
+        for chunk in _batched([k for k in range(len(spans)) if out[k] is None], batch):
+            items = [spans[k] for k in chunk]
+            body = "\n\n".join(
+                f'{n}. job: {s.job}\n   element: {s.element}\n   quote: "{s.span}"'
+                for n, s in enumerate(items)
+            )
+            ans = _answers(
+                llm,
+                prompts.AUDIT_PROMPT.format(meanings=meanings, items=body),
+                prompts.AUDIT_SYSTEM,
+                "audit.spans",
+                "items",
+                "correct",
+                len(chunk),
+            )
+            for n, k in enumerate(chunk):
+                out[k] = ans.get(n)
     return out
 
 
