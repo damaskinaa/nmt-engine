@@ -33,7 +33,8 @@ def citation_label(
     """e.g. `Q4 WTP, segment SEG1: 20–35 EUR/month (80% conformal interval), median 27 ·
     SYNTHETIC S3 · methods: revealed_price, statistical, supply · backtest n=24, coverage 79%,
     bias ×0.95 corrected · forecast F1 resolves 2027-06-30`."""
-    if syn.combined is None:
+    # `estimate` always fills combined.interval_80; hand-built records may not
+    if syn.combined is None or syn.combined.interval_80 is None:
         raise ValueError(f"synthetic {syn.id} has no combined estimate")
     lo, hi = syn.combined.interval_80
     unit = f" {syn.unit}" if syn.unit else ""

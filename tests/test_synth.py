@@ -357,6 +357,9 @@ def test_estimate_reaches_s3_and_s4_and_label(tmp_path):
     assert "80% conformal interval" in label and "SYNTHETIC S3 ·" in label
     assert f"forecast {fc.id} resolves 2027-06-30" in label and "backtest n≥30" in label
     assert "(not citable)" in citation_label(s2) and "80% interval" in citation_label(s2)
+    bare = s2.combined.model_copy(update={"interval_80": None})
+    with pytest.raises(ValueError, match="no combined estimate"):
+        citation_label(s2.model_copy(update={"combined": bare}))
 
 
 def test_forecast_registry_scoring(tmp_path):
