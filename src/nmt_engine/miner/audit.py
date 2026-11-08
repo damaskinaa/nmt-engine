@@ -27,8 +27,13 @@ def _batched(items: Sequence, size: int):
 ROUNDS = 3  # passes over still-unanswered items
 
 
-def _answers(llm: LLM, prompt: str, system: str, purpose: str, key: str, field: str, n: int):
-    """{item number: bool} from one auditor request; missing or malformed items are left out."""
+def _answers(
+    llm: LLM, prompt: str, system: str, purpose: str, key: str, field: str, n: int, round_: int = 0
+):
+    """{item number: bool} from one auditor request; missing or malformed items are left out.
+    A retry round changes the prompt, so the cache cannot replay an earlier unusable answer."""
+    if round_:
+        prompt += f"\n\n(Retry {round_}: give an answer for every id from 0 to {n - 1}.)"
     try:
         data = llm.complete_json(prompt, system, purpose)
     except (LLMError, ValueError):
@@ -53,7 +58,7 @@ def label_pairs(
     A batch holds pairs of one category so the prompt names it. Pairs left unanswered are
     asked again in fresh batches, up to `rounds` passes in all."""
     out: list[bool | None] = [None] * len(pairs)
-    for _ in range(rounds):
+    for round_ in range(rounds):
         by_cat: dict[str, list[int]] = {}
         for k, (cat, _, _) in enumerate(pairs):
             if out[k] is None:
@@ -71,6 +76,7 @@ def label_pairs(
                     "pairs",
                     "same",
                     len(chunk),
+                    round_,
                 )
                 for n, k in enumerate(chunk):
                     out[k] = ans.get(n)
@@ -127,7 +133,7 @@ def audit_spans(
     Unanswered spans are asked again in fresh batches, up to `rounds` passes in all."""
     meanings = "\n".join(f"- {k}: {v}" for k, v in prompts.ELEMENT_MEANING.items())
     out: list[bool | None] = [None] * len(spans)
-    for _ in range(rounds):
+    for round_ in range(rounds):
         for chunk in _batched([k for k in range(len(spans)) if out[k] is None], batch):
             items = [spans[k] for k in chunk]
             body = "\n\n".join(
@@ -142,6 +148,7 @@ def audit_spans(
                 "items",
                 "correct",
                 len(chunk),
+                round_,
             )
             for n, k in enumerate(chunk):
                 out[k] = ans.get(n)

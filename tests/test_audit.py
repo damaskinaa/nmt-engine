@@ -91,3 +91,4 @@ def test_unanswered_items_are_asked_again(tmp_path):
     stubborn = Scripted(tmp_path / "s", lambda p: {"pairs": []})
     assert audit.label_pairs(stubborn, pairs[:1]) == [None]
     assert len(stubborn.prompts) == audit.ROUNDS
+    assert len(set(stubborn.prompts)) == audit.ROUNDS  # retries never hit the cache key
