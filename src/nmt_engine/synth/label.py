@@ -44,8 +44,10 @@ def citation_label(
         f"{syn.quantity} {QUANTITY_NAMES[syn.quantity]}{seg}: {_num(lo)}–{_num(hi)}{unit} "
         f"({kind}), median {_num(syn.combined.median)}",
         f"SYNTHETIC {syn.grade}" + (" (not citable)" if grade_rank(syn.grade) < 3 else ""),
-        "methods: " + ", ".join(sorted({m.family for m in syn.methods})),
+        "methods: " + ", ".join(sorted({m.family for m in syn.methods if m.in_combined})),
     ]
+    if left_out := sorted({m.family for m in syn.methods if not m.in_combined}):
+        parts.append("not pooled (calibration failed): " + ", ".join(left_out))
     cals = [c for i in syn.calibration_ids if (c := (calibrations or {}).get(i))]
     if cals:
         n = min(c.n for c in cals)

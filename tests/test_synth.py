@@ -135,6 +135,9 @@ def test_failed_family_is_listed_but_not_pooled(tmp_path):
     assert listed == {**dict.fromkeys(F3, True), "behavioural": False}
     assert {e.family for e in tri.families} == F3
     assert all(not c.endswith("behavioural") for c in syn.calibration_ids)
+    label = citation_label(syn)
+    assert "methods: revealed_price, statistical, supply" in label
+    assert "not pooled (calibration failed): behavioural" in label
     run = RunData(
         tmp_path,
         None,
@@ -143,6 +146,14 @@ def test_failed_family_is_listed_but_not_pooled(tmp_path):
         calibrations={c.id: c for c in cals.values()},
     )
     assert [f.message for f in g13.check(run, GateConfig())] == ["grade S3: no registered Forecast"]
+
+
+def test_tiny_reference_class_gives_uncalibrated_finite_estimate():
+    w = generate_world(WorldConfig(seed=3, n_reference=3))
+    joint, cals = joint_calibrations_for(w)["Q1"]
+    assert all(c.conformal_q80 is None and not c.passed for c in cals.values())
+    syn, tri = estimate("Y", "Q1", "WORLD", w.methods[("SEG1", "Q1")], cals, joint=joint)
+    assert math.isfinite(tri.half_width) and syn.rho == 1.0
 
 
 def test_sparse_family_is_left_uncalibrated_not_fatal():
