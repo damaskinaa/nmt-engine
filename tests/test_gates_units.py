@@ -278,11 +278,13 @@ def test_validation_lint_negation_window():
 
     ok = ["Demand is not yet validated.", "This was never really proven.", "Unvalidated idea."]
     ok.append("Demand has not so far been validated.")
+    ok += ["Demand is not independently validated.", "This is not a proven market."]
     bad = [
         "Demand is validated.",
         "Not cheap, but customers want it and it is proven.",
         "There is no doubt customers want this.",
     ]
+    bad.append("The market is not only proven but growing.")
     assert all(offending_sentences(s, set()) == [] for s in ok)
     assert all(offending_sentences(s, set()) for s in bad)
 
