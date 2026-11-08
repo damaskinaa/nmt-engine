@@ -2,6 +2,7 @@
 
 Vectors are cached per (endpoint host, model, text hash) as float32 `.npy`, so reruns are free
 and identical.
+Batches are cached as they arrive, so a run that fails midway resumes from the last good batch.
 Every request is logged to runs/<id>/llm_log.jsonl with tokens and cost, like `LLM` calls.
 """
 
