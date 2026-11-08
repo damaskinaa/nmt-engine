@@ -50,6 +50,8 @@ def company_facts(c: Collector, cik: int, concepts=CONCEPTS) -> pd.DataFrame:
                 continue
             for unit, facts in body.get("units", {}).items():
                 for f in facts:
+                    if not isinstance(f.get("val"), int | float):
+                        continue
                     if f.get("fp") == "FY" and str(f.get("form", "")).startswith("10-K"):
                         rows.append(
                             {

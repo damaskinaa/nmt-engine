@@ -32,7 +32,9 @@ def collect(c: Collector, query: str, since: date, videos: int = 10, comments: i
     )
     out = []
     for item in found.get("items", []):
-        vid, sn = item["id"]["videoId"], item["snippet"]
+        vid, sn = (item.get("id") or {}).get("videoId"), item.get("snippet") or {}
+        if not vid:
+            continue
         url = f"https://www.youtube.com/watch?v={vid}"
         src = c.add_source(
             adapter=NAME,
