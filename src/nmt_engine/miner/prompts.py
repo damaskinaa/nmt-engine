@@ -100,3 +100,42 @@ For each cluster return a name of the form "I want to <verb> ..." that fits ever
 end results), else false.
 Return {{"clusters": [{{"id": <cluster number>, "name": "I want to ...", \
 "mixed": <true|false>}}]}}."""
+
+PAIR_SYSTEM = """You judge whether two customer job statements describe the same job: the same \
+goal and the same expected outcome, maybe worded differently or at a different level of detail. \
+Statements that only share a topic, a tool or a feature are different jobs. Output JSON only."""
+
+PAIR_PROMPT = """Category: {category}
+
+Each item is a pair of jobs. Each job is a statement, sometimes followed by the customer's own \
+words on a second line.
+
+{pairs}
+
+Return {{"pairs": [{{"id": <pair number>, "same": <true|false>}}, ...]}} with one entry per pair."""
+
+ELEMENT_MEANING = {
+    "context": "the situation or circumstances the customer is in while doing the job",
+    "trigger": "what made the customer start the job now",
+    "job": "what the customer is trying to get done",
+    "success_criteria": "how the customer judges whether the job was done well",
+    "alternatives": "a product, tool or manual method the customer uses or considers for the job",
+    "negative_emotions": "a negative feeling the customer has about the job or its outcome",
+    "positive_emotions": "a positive feeling the customer has or wants about the job",
+    "higher_goal": "a bigger goal that this job serves",
+}
+
+AUDIT_SYSTEM = """You check labels on quotes from public customer posts. A label is correct only \
+if the quote itself evidences that element for that specific job, not merely the topic or the \
+category. Output JSON only."""
+
+AUDIT_PROMPT = """Element meanings:
+{meanings}
+
+Each item gives a job, an element and a verbatim quote labelled as that element:
+
+{items}
+
+For each item answer: is this quote evidence of the element for the job?
+Return {{"items": [{{"id": <item number>, "correct": <true|false>}}, ...]}} with one entry per \
+item."""
