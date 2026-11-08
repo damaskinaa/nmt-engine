@@ -1019,3 +1019,16 @@ def test_plan_only_runs_selected_steps(tmp_path):
     plan = CollectPlan("invoicing", SINCE, "IE", stack_sites=["money"], only=["stackexchange:"])
     summary = run_collect(plan, c.run_dir, c)
     assert list(summary["adapters"]) == ["stackexchange:money"]
+
+
+def test_competitor_custom_path_is_a_vendor_page(tmp_path):
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(404, text="")
+        return httpx.Response(
+            200, text="<html><body><p>About our invoicing tool.</p></body></html>"
+        )
+
+    c = make(tmp_path, handler, TEST_HOSTS | {"invoiceninja.com"})
+    srcs = web.competitor_pages(c, "invoiceninja.com", ("about",))
+    assert [(s.kind, s.evidence_family) for s in srcs] == [("web", "vendor_page")]

@@ -78,7 +78,7 @@ def competitor_pages(c: Collector, domain: str, paths=("pricing", "features", "d
     hosts = [domain, domain[4:] if domain.startswith("www.") else f"www.{domain}"]
     out = []
     for path in paths:
-        kind = PAGE_KIND[path]  # only pricing, features, docs and changelog pages are fetched
+        kind = PAGE_KIND.get(path, "web")
         for host in hosts:
             try:
                 src = page(c, f"https://{host}/{path}", kind=kind)
