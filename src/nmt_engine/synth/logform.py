@@ -14,6 +14,8 @@ def to_log(median: float, lo: float, hi: float) -> tuple[float, float]:
         raise ValueError("log form needs positive median and interval")
     if not lo <= median <= hi:
         raise ValueError(f"median {median} outside interval [{lo}, {hi}]")
+    if lo == hi:
+        raise ValueError("log form needs a non-degenerate interval (lo < hi)")
     return math.log(median), (math.log(hi) - math.log(lo)) / (2 * Z80)
 
 

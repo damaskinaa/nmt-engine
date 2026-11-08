@@ -25,6 +25,8 @@ def evpi_go_no_go(
     """EVPI in units of value_per_unit * quantity. `components` are (mu, sigma) in log units."""
     if not components:
         raise ValueError("no components")
+    if any(s <= 0 for _, s in components):
+        raise ValueError("every component needs sigma > 0")
     if value_per_unit <= 0:
         raise ValueError("value_per_unit must be positive (go pays off above the threshold)")
     parts = [_partial_mean(mu, s, threshold) for mu, s in components]

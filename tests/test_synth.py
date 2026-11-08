@@ -184,6 +184,12 @@ def test_evpi_zero_when_all_mass_on_one_side_and_input_checks():
         evpi_go_no_go([], 1)
     with pytest.raises(ValueError):
         evpi_go_no_go([(0, 1)], 1, value_per_unit=-1)
+    with pytest.raises(ValueError):
+        evpi_go_no_go([(0, 0.0)], 1)
+    from nmt_engine.synth.logform import to_log
+
+    with pytest.raises(ValueError):
+        to_log(5, 5, 5)
 
 
 def test_triangulate_formula():
