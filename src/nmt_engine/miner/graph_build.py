@@ -175,12 +175,12 @@ def build_edges(
         goals = [s for i in b.group.instances for s in i.spans.get("higher_goal", [])]
         best, score = None, 0.4
         for other in built:
-            if other.job.id == b.job.id:
+            if other.job.id == b.job.id or _reaches(other.job.id, b.job.id, by_id):
                 continue
             s = max((jaccard(tokens(g), tokens(other.job.statement)) for g in goals), default=0)
             if s >= score:
                 best, score = other, s
-        if best is not None and not _reaches(best.job.id, b.job.id, by_id):
+        if best is not None:
             b.job.higher_job_id = best.job.id
             hc = [b.claims["higher_goal"].id] if "higher_goal" in b.claims else claim(b)
             add("hierarchy", b.job.id, best.job.id, "customer", hc)
