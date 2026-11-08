@@ -13,6 +13,7 @@ triangulations of the reference cases (each held-out case re-fits bias, q80 and 
 """
 
 import math
+from collections import Counter
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
@@ -146,7 +147,8 @@ def combined_stats(
     rows = [c for c in cases if all(f in c.predicted for f in fams)]
     n = len(rows)
     if not fams or n < 3:
-        return CombinedStats(fams, n, _floored(None, rho_floor), None, None, None)
+        rho = rho_override if rho_override is not None else _floored(None, rho_floor)
+        return CombinedStats(fams, n, rho, None, None, None)
     lr = np.array([[math.log(c.predicted[f] / c.known_outcome) for f in fams] for c in rows])
     stated = np.zeros_like(lr)
     for i, c in enumerate(rows):
@@ -165,7 +167,7 @@ def combined_stats(
     rho = rho_override if rho_override is not None else _floored(rho_est, rho_floor)
     errs = np.empty(n)
     for i in range(n):
-        b, q, r_i = fit(np.delete(lr, i, axis=0))
+        b, q, _ = fit(np.delete(lr, i, axis=0))  # weights do not depend on rho
         sigma = np.maximum(q, Z80 * stated[i]) / Z80
         if not np.all(np.isfinite(sigma)) or np.any(sigma <= 0):
             return CombinedStats(fams, n, rho, rho_est, None, None)
@@ -193,7 +195,8 @@ def joint_calibration(
     ids = [c.case for c in cases]
     if len(set(ids)) != len(ids):
         raise ValueError("joint reference cases need unique case ids")
-    families = sorted({f for c in cases for f in c.predicted})
+    counts = Counter(f for c in cases for f in c.predicted)
+    families = sorted(f for f, k in counts.items() if k >= 2)  # rest: uncalibrated, not pooled
     cals = {
         f: calibration_record(
             f"{id}-{f}",
