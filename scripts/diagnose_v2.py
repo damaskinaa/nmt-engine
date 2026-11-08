@@ -142,6 +142,8 @@ def md(ds: list[dict]) -> str:
 
 
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        sys.exit("usage: diagnose_v2.py RUN_DIR [RUN_DIR ...]")
     done, failed = [], []
     for p in sys.argv[1:]:
         try:
