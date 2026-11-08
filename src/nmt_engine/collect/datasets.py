@@ -180,7 +180,7 @@ def twin2k(
         terms_url=TWIN_TERMS,
         geography="US",
     )
-    df = pd.DataFrame([r["row"] for r in data.get("rows", [])])
+    df = pd.DataFrame([r["row"] for r in data.get("rows", []) if isinstance(r.get("row"), dict)])
     df["source_id"] = src.id if src else None
     return df
 

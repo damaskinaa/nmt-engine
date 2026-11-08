@@ -10,6 +10,8 @@ from __future__ import annotations
 import base64
 import re
 
+import httpx
+
 from nmt_engine.collect.base import Collector, env
 
 NAME = "companies_house"
@@ -118,7 +120,7 @@ def turnover(c: Collector, company_number: str) -> float | None:
         url = f"{DOCS}/document/{doc_id}/content"
         try:
             xhtml = c.fetch(url, NAME, headers={**_headers(), "Accept": "application/xhtml+xml"})
-        except Exception:  # noqa: BLE001 - PDF-only filings return 406
+        except httpx.HTTPStatusError:  # PDF-only filings return 406
             continue
         value = ixbrl_turnover(xhtml)
         if value is not None:

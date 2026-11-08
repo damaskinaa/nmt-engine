@@ -800,3 +800,15 @@ def test_cassettes_carry_no_credentials_or_contact_details():
             assert all(query.get(k, "REDACTED") == "REDACTED" for k in SECRET_QUERY), path
             body = i["response"]["body"].get("string") or ""
             assert scrub_pii(body) == body, path
+
+
+def test_turnover_skips_only_http_errors(tmp_path, monkeypatch):
+    monkeypatch.setenv("COMPANIES_HOUSE_API_KEY", "k")
+    meta = "https://document-api.company-information.service.gov.uk/document/D1"
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        if "filing-history" in str(req.url):
+            return httpx.Response(200, json={"items": [{"links": {"document_metadata": meta}}]})
+        return httpx.Response(406)
+
+    assert companies_house.turnover(make(tmp_path, handler), "01234567") is None
