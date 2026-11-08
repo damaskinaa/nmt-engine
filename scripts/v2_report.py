@@ -21,7 +21,6 @@ CATS = (
     ("invoicing", "invoicing-deepseek"),
 )
 R0 = Path.home() / "nmt-live"
-R3 = Path.home() / "nmt-v2" / "r3"
 FAMILIES = (
     "discussion",
     "support_issue",
@@ -140,7 +139,7 @@ def main(labels: Path, abl: Path) -> None:
             f"| {e} | {r['n']} | {r['mislabelled']} | {pct(r['rate'])} | "
             f"{lo95:.1%}-{hi95:.1%} | {'yes' if r['excluded'] else 'no'} |"
         )
-    out += collection_section() + roles_section(labels) + labels_cost_section(labels, th, au)
+    out += collection_section(abl) + roles_section(labels) + labels_cost_section(labels, th, au)
     for name, v3, v in extra:
         out += [
             "",
@@ -167,7 +166,7 @@ def main(labels: Path, abl: Path) -> None:
     print("\n".join(out))
 
 
-def collection_section() -> list[str]:
+def collection_section(abl: Path) -> list[str]:
     out = ["", "### R3 collection (sources by family; adapters with 0 or skipped listed)", ""]
     out += [
         "| category | " + " | ".join(FAMILIES) + " | customer voice |",
@@ -175,7 +174,7 @@ def collection_section() -> list[str]:
     ]
     notes = []
     for name, _ in CATS:
-        c = json.loads((R3 / name / "collect_summary.json").read_text("utf-8"))
+        c = json.loads((abl / f"r34-{name}" / "collect_summary.json").read_text("utf-8"))
         fam = c["sources_by_family"]
         out.append(
             f"| {name} | "
