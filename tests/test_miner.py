@@ -484,6 +484,31 @@ def test_malformed_json_is_billed_but_not_cached(tmp_path, monkeypatch):
     assert llm.complete_json("p") == {"ok": True} and len(seen) == 2
 
 
+@pytest.mark.parametrize(
+    "answer",
+    [{"posts": None}, {"posts": 3}, [1], {"posts": [{"i": 0, "jobs": 5}]}, {"groups": [7]}],
+)
+def test_wrong_shaped_json_does_not_abort_extraction_or_merge(tmp_path, answer):
+    from nmt_engine.miner.extract import JobInstance, Trace, extract
+    from nmt_engine.miner.jobs import JobGroup, llm_merge
+    from nmt_engine.schema import Source
+
+    class ShapeLLM(LLM):
+        def complete(self, prompt, system="", purpose="", json_mode=False, check=None):
+            return json.dumps(answer)
+
+    llm = ShapeLLM(tmp_path, cache_dir=tmp_path / "c")
+    src = Source.model_construct(id="s1", kind="forum")
+    ex = extract(llm, [Trace(src, "I send invoices every Friday.")], "invoicing")
+    ok = isinstance(answer, dict) and isinstance(answer.get("posts"), list)
+    assert ex.failed_batches == (0 if ok else 1) and not ex.instances
+    groups = [
+        JobGroup(st, [JobInstance("s1", "other", st, "core", "functional", None, None)])
+        for st in ("send invoices", "chase payments")
+    ]
+    assert len(llm_merge(llm, groups, "invoicing")) == 2
+
+
 def test_truncated_answer_is_billed_but_not_cached(tmp_path, monkeypatch):
     monkeypatch.setenv("TENSORX_API_KEY", "tx")
     monkeypatch.setenv("NMT_LLM_MAX_TOKENS", "512")

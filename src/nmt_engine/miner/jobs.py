@@ -96,8 +96,14 @@ def llm_merge(llm: LLM, groups: list[JobGroup], category: str, chunk: int = 150)
             )
         except (LLMDisabled, LLMError):
             continue
-        for g in data.get("groups", []) if isinstance(data, dict) else []:
-            members = [i for i in g.get("ids", []) if isinstance(i, int) and i in ids]
+        found = data.get("groups") if isinstance(data, dict) else None
+        for g in found if isinstance(found, list) else []:
+            raw_ids = g.get("ids") if isinstance(g, dict) else None
+            members = [
+                i
+                for i in (raw_ids if isinstance(raw_ids, list) else [])
+                if isinstance(i, int) and i in ids
+            ]
             if len(members) < 2:
                 continue
             root = find(members[0])

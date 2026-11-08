@@ -93,6 +93,10 @@ def _order(value: object) -> int | None:
     return value if isinstance(value, int) and not isinstance(value, bool) and value > 0 else None
 
 
+def _list(v: object) -> list:
+    return v if isinstance(v, list) else []
+
+
 def parse_post(raw: dict, trace: Trace, ex: Extraction) -> None:
     norm = normalize_ws(trace.prompt_text)
 
@@ -107,7 +111,7 @@ def parse_post(raw: dict, trace: Trace, ex: Extraction) -> None:
 
     sid = trace.source.id
     ex.context_types[sid] = _choice(raw.get("context_type"), CONTEXT_TYPES, "other")
-    for job in raw.get("jobs") or []:
+    for job in _list(raw.get("jobs")):
         if not isinstance(job, dict) or not isinstance(job.get("statement"), str):
             continue
         spans = {}
@@ -117,13 +121,13 @@ def parse_post(raw: dict, trace: Trace, ex: Extraction) -> None:
             if kept:
                 spans[f] = list(dict.fromkeys(kept))
         criteria = []
-        for item in job.get("success_criteria") or []:
+        for item in _list(job.get("success_criteria")):
             if isinstance(item, dict) and isinstance(item.get("label"), str):
                 span = keep(item.get("span"))
                 if span:
                     criteria.append((item["label"].strip().lower(), span))
         alternatives = []
-        for item in job.get("alternatives") or []:
+        for item in _list(job.get("alternatives")):
             if isinstance(item, dict) and isinstance(item.get("name"), str):
                 span = keep(item.get("span"))
                 if span and item["name"].strip().lower() in span.lower():
@@ -172,7 +176,11 @@ def extract(llm: LLM, traces: list[Trace], category: str, batch_size: int = 8) -
         except LLMError:
             ex.failed_batches += 1
             continue
-        for raw in (data or {}).get("posts", []) if isinstance(data, dict) else []:
+        posts_out = data.get("posts") if isinstance(data, dict) else None
+        if not isinstance(posts_out, list):
+            ex.failed_batches += 1
+            continue
+        for raw in posts_out:
             i = raw.get("i") if isinstance(raw, dict) else None
             if isinstance(i, int) and 0 <= i < len(batch):
                 parse_post(raw, batch[i], ex)
