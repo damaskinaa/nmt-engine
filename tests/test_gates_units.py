@@ -324,3 +324,36 @@ def test_source_text_stays_inside_run(tmp_path, kind):
         (run / "sources" / "link.txt").symlink_to(secret)
     assert data.source_text(src.model_copy(update={"text_path": path[kind]})) is None
     assert data.source_text(src) is not None
+
+
+def test_three_segment_mutual_overlap_uses_pairwise_union_bound(tmp_path):
+    def add_seg3(overlap):
+        def m(fx):
+            s3 = copy.deepcopy(_by_id(fx["segments"], "SEG2"))
+            s3.update(id="SEG3", size=None)
+            s3["population"]["share"] = [0.3, 0.4]
+            fx["segments"].append(s3)
+            if overlap:
+                for sid, others in (("SEG2", ["SEG1"]), ("SEG3", ["SEG1", "SEG2"])):
+                    seg = s3 if sid == "SEG3" else _by_id(fx["segments"], sid)
+                    seg["population"]["declared_overlaps"] = [
+                        {"segment_id": o, "share": 0.1} for o in others
+                    ]
+
+        return m
+
+    g6 = lambda r: next(x for x in r.results if x.gate.number == 6)  # noqa: E731
+    assert not g6(failed(tmp_path / "a", add_seg3(False))).passed
+    assert g6(failed(tmp_path / "b", add_seg3(True))).passed
+
+
+def test_unreadable_source_is_dropped_by_gate7_before_gate12_counts_it(tmp_path):
+    from nmt_engine.gates import demote
+    from nmt_engine.store import load_run
+
+    r = failed(tmp_path, lambda fx: None, post=lambda run: (run / "sources/S-r1.txt").unlink())
+    assert 7 in r.failed_gates()
+    run = tmp_path / "run"
+    demote(run, CFG)
+    assert "S-r1" not in load_run(run).sources
+    assert run_gates(run, CFG).passed
