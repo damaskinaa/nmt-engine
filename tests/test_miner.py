@@ -66,7 +66,7 @@ class FakeLLM(LLM):
     """Deterministic stand-in: proposes spans by keyword from each post, plus one invented
     span per job that the verbatim check must reject."""
 
-    def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
+    def complete(self, prompt: str, system: str = "", purpose: str = "", json_mode=False) -> str:
         if self.no_llm:
             raise LLMDisabled("--no-llm")
         self.calls += 1
@@ -224,7 +224,7 @@ def test_sources_failing_gates_are_dropped_before_mining(tmp_path, monkeypatch):
 
 
 class InvoicesOnlyLLM(FakeLLM):
-    def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
+    def complete(self, prompt: str, system: str = "", purpose: str = "", json_mode=False) -> str:
         out = json.loads(super().complete(prompt, system, purpose))
         for p in out.get("posts", []):
             p["jobs"] = [j for j in p["jobs"] if "invoices" in j["statement"]]
@@ -257,7 +257,7 @@ def test_rerun_replaces_previous_mine(mined, tmp_path):
 
 
 class BrokenLLM(LLM):
-    def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
+    def complete(self, prompt: str, system: str = "", purpose: str = "", json_mode=False) -> str:
         from nmt_engine.llm import LLMError
 
         raise LLMError("HTTP 500")
@@ -417,6 +417,104 @@ def test_llm_disabled_without_key_or_with_flag(tmp_path, monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "k")
     with pytest.raises(LLMDisabled):
         LLM(tmp_path, no_llm=True, cache_dir=tmp_path / "c").complete("x")
+
+
+def _openai(log, responses=None):
+    queue = list(responses or [])
+
+    def handler(req):
+        log.append(req)
+        if queue:
+            return queue.pop(0)
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": '{"ok": true}'}}],
+                "usage": {"prompt_tokens": 1000, "completion_tokens": 200},
+            },
+        )
+
+    return httpx.Client(transport=httpx.MockTransport(handler))
+
+
+def test_tensorx_base_url_key_json_mode_and_log(tmp_path, monkeypatch):
+    for k in ("OPENAI_API_KEY", "NMT_LLM_PRICES", "NMT_LLM_MODEL"):
+        monkeypatch.delenv(k, raising=False)
+    monkeypatch.setenv("TENSORX_API_KEY", "tx-secret")
+    monkeypatch.setenv("NMT_LLM_BASE_URL", "https://api.tensorx.ai/v1/")
+    seen: list = []
+    llm = LLM(
+        tmp_path / "run",
+        provider="openai",
+        model="z-ai/glm-5.3",
+        cache_dir=tmp_path / "c",
+        client=_openai(seen),
+    )
+    assert llm.enabled and llm.key_env == "TENSORX_API_KEY"
+    assert llm.complete_json("hi", "sys", purpose="t") == {"ok": True}
+    req = seen[0]
+    assert str(req.url) == "https://api.tensorx.ai/v1/chat/completions"
+    assert req.headers["authorization"] == "Bearer tx-secret"
+    body = json.loads(req.content)
+    assert body["response_format"] == {"type": "json_object"} and body["temperature"] == 0
+    assert "seed" not in body and body["max_completion_tokens"] == llm.max_tokens
+    log_text = (tmp_path / "run" / "llm_log.jsonl").read_text()
+    assert "tx-secret" not in log_text
+    entry = json.loads(log_text)
+    assert entry["host"] == "api.tensorx.ai" and entry["model"] == "z-ai/glm-5.3"
+    assert entry["cost_usd"] == pytest.approx((1000 * 1.75 + 200 * 4.50) / 1e6)
+    llm.complete("hi", "sys")  # plain completion: different request, so not served from cache
+    assert len(seen) == 2 and "response_format" not in json.loads(seen[1].content)
+
+
+def test_default_openai_host_still_uses_openai_key(tmp_path, monkeypatch):
+    monkeypatch.delenv("NMT_LLM_BASE_URL", raising=False)
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    llm = LLM(tmp_path, provider="openai", cache_dir=tmp_path / "c")
+    assert llm.host == "api.openai.com" and llm.key_env == "OPENAI_API_KEY" and not llm.enabled
+
+
+def test_retry_honours_retry_after_else_backs_off(tmp_path, monkeypatch):
+    from nmt_engine.llm import backoff
+
+    monkeypatch.setenv("OPENAI_API_KEY", "k")
+    waits: list[float] = []
+    seen: list = []
+    busy = [
+        httpx.Response(429, headers={"retry-after": "7"}),
+        httpx.Response(503),
+        httpx.Response(500),
+    ]
+    llm = LLM(
+        tmp_path,
+        provider="openai",
+        model="gpt-4o-mini",
+        cache_dir=tmp_path / "c",
+        client=_openai(seen, busy),
+        sleep=waits.append,
+    )
+    assert llm.complete_json("x") == {"ok": True} and len(seen) == 4
+    assert waits[0] == 7.0
+    assert 8.0 <= waits[1] <= 12.0 and 16.0 <= waits[2] <= 24.0
+    assert all(48.0 <= backoff(a, None) <= 60.0 for a in range(4, 10))
+    assert backoff(0, "soon") <= 6.0  # unparsable retry-after falls back
+
+
+def test_auditor_is_always_another_vendor(monkeypatch):
+    from nmt_engine.llm import auditor_model, model_family
+
+    monkeypatch.delenv("NMT_LLM_AUDITOR_MODEL", raising=False)
+    assert model_family("z-ai/glm-5.3-flash") == model_family("z-ai/glm-5.3") == "z-ai"
+    assert model_family("claude-haiku-4-5") == "anthropic"
+    assert auditor_model("z-ai/glm-5.3") == "moonshotai/kimi-k3.1-pro"
+    assert auditor_model("deepseek/deepseek-v4.1-flash") == "z-ai/glm-5.3"
+    assert auditor_model("z-ai/glm-5.3", "qwen/qwen3.8-2.4t-a95b") == "qwen/qwen3.8-2.4t-a95b"
+    with pytest.raises(ValueError):
+        auditor_model("z-ai/glm-5.3", "z-ai/glm-5.3-flash")
+    monkeypatch.setenv("NMT_LLM_AUDITOR_MODEL", "z-ai/glm-5.3-flash")
+    with pytest.raises(ValueError):
+        auditor_model("z-ai/glm-5.3")
 
 
 def test_graph_json_cannot_break_out_of_script(tmp_path: Path) -> None:

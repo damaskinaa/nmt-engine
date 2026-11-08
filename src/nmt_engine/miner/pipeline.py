@@ -19,7 +19,7 @@ from nmt_engine.gates import GateConfig, demote, run_gates, write_reports
 from nmt_engine.gates.g09_manifest import manifest_hash
 from nmt_engine.graph import score
 from nmt_engine.graph.viewer import write_graph_html, write_report_html
-from nmt_engine.llm import LLM, LLMDisabled
+from nmt_engine.llm import LLM, LLMDisabled, model_family
 from nmt_engine.miner import prompts
 from nmt_engine.miner.extract import extract, load_traces
 from nmt_engine.miner.graph_build import build_edges, segments
@@ -194,7 +194,14 @@ def mine(
     demote(run_dir, cfg)  # drop failing sources (gates 7, 14) before they shape any score
     run = load_run(run_dir)
     traces = load_traces(run, limit=limit)
-    summary: dict = {"category": category, "geo": geo, "traces": len(traces), "seed": seed}
+    summary: dict = {
+        "category": category,
+        "geo": geo,
+        "traces": len(traces),
+        "seed": seed,
+        "llm_host": llm.host,
+        "model": llm.model,
+    }
     frozen = write_prompts(run_dir)
     try:
         ex = extract(llm, traces, category, batch_size)
@@ -236,7 +243,7 @@ def mine(
         ],
         run_dir / "mined_ids.json",
     )
-    write_manifest(run_dir, frozen, seed, llm.provider if llm.enabled else None)
+    write_manifest(run_dir, frozen, seed, model_family(llm.model or "") if llm.enabled else None)
 
     demotion = demote(run_dir, cfg)
     run = load_run(run_dir)
@@ -260,6 +267,9 @@ def mine(
         edges=len(parts.edges),
         spans_proposed=ex.proposed_spans,
         spans_rejected=ex.rejected_spans,
+        rejected_span_rate=round(ex.rejected_spans / ex.proposed_spans, 4)
+        if ex.proposed_spans
+        else 0.0,
         failed_batches=ex.failed_batches,
         llm_calls=llm.calls,
         cost_usd=round(llm.cost, 4),

@@ -127,6 +127,21 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   span only if it occurs verbatim (whitespace-normalised, as gate 1 does) in the stored source
   text. Each of the 8 elements of a Job is one PUBLIC_VOICE claim whose receipts are all its
   verified spans. Jobs are merged by statement token overlap, then optionally by the LLM.
+- **LLM provider (TensorX).** `llm.py` reads the endpoint root from `NMT_LLM_BASE_URL` (default:
+  the provider's own API) and appends `/messages` or `/chat/completions`. With
+  `NMT_LLM_PROVIDER=openai` and `NMT_LLM_BASE_URL=https://api.tensorx.ai/v1` the key comes from
+  `TENSORX_API_KEY`; keys are never logged, and `llm_log.jsonl` records host and model per call.
+  JSON calls send `response_format={"type": "json_object"}` (TensorX documents it; `json_schema`
+  is not documented), but `parse_json` and the verbatim-span check remain the real guard.
+  `temperature=0`; TensorX does not document `seed`, so none is sent and **reruns are deterministic
+  only through the prompt-hash cache** (`cache/llm/`, keyed on provider, host, model, system,
+  prompt, max_tokens and JSON mode). On 429/5xx the client honours `retry-after`, else waits 5 s
+  doubling (±20% jitter) up to 60 s. `max_tokens` stays 4096, not the context size, so it does not
+  reserve TPM; the miner sends 8 traces per extraction request.
+- **Cross-vendor auditor.** `llm.auditor_model()` picks the auditor/council model
+  (`NMT_LLM_AUDITOR_MODEL`, else Kimi for a GLM producer and GLM for any other) and raises if it is
+  from the producer's vendor family (`vendor/` prefix of the model id). `RunManifest.model_vendor`
+  records the producer family.
 - **Edge p_success** = 1 − Wilson 80% interval of the share of a job's traces that report a
   Problem or a workaround. `negative_emotion` and `tax_jobs` costs are the Wilson shares of traces
   with those spans (0–1 scale, weight 1 each); money/time/effort/cognitive are not observable from

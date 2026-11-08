@@ -1,8 +1,10 @@
 """The one LLM client (master prompt rule 9).
 
-Provider-agnostic (Anthropic default, OpenAI optional); model names come from config/env. Every
-call is logged to runs/<id>/llm_log.jsonl with prompt hash, model, tokens and a cost estimate, and
-cached on disk by prompt hash so reruns are free and byte-identical. `no_llm=True` makes every
+Provider-agnostic (Anthropic, or any OpenAI-compatible endpoint such as TensorX via
+NMT_LLM_BASE_URL); model names come from config/env. Every call is logged to
+runs/<id>/llm_log.jsonl with prompt hash, host, model, tokens and a cost estimate, and cached on
+disk by prompt hash so reruns are free and byte-identical (the cache, not a provider `seed`, is
+what makes reruns deterministic). `no_llm=True` makes every
 call raise `LLMDisabled`, which LLM-dependent steps catch to skip cleanly.
 
 LLMs only classify, extract verbatim spans, label clusters and write prose. Callers never take
@@ -13,22 +15,32 @@ from __future__ import annotations
 
 import json
 import os
+import random
 import re
 import time
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
 
 from nmt_engine.config import repo_root
 from nmt_engine.util import canonical_json, sha256_text
 
-ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
-OPENAI_URL = "https://api.openai.com/v1/chat/completions"
+DEFAULT_BASE_URL = {
+    "anthropic": "https://api.anthropic.com/v1",
+    "openai": "https://api.openai.com/v1",
+}
+ENDPOINT = {"anthropic": "/messages", "openai": "/chat/completions"}
 DEFAULT_MODEL = {"anthropic": "claude-haiku-4-5", "openai": "gpt-4o-mini"}
 KEY_ENV = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
+# OpenAI-compatible hosts with their own key variable (checked before KEY_ENV).
+HOST_KEY_ENV = {"api.tensorx.ai": "TENSORX_API_KEY"}
+RETRY_STATUS = (429, 500, 502, 503, 504, 529)
+BACKOFF_START, BACKOFF_MAX = 5.0, 60.0
 # USD per million (input, output) tokens, from the providers' public price pages. A model that is
 # not listed gets cost_usd = null in the log rather than a guess. Override with NMT_LLM_PRICES
 # ('{"model": [in, out]}').
@@ -39,7 +51,16 @@ PRICES: dict[str, tuple[float, float]] = {
     "gpt-4o-mini": (0.15, 0.60),
     "gpt-4o": (2.50, 10.0),
     "gpt-4.1-mini": (0.40, 1.60),
+    # TensorX (tensorx.ai/models, 8 Nov 2026)
+    "z-ai/glm-5.3": (1.75, 4.50),
+    "deepseek/deepseek-v4.1-flash": (0.50, 1.50),
+    "z-ai/glm-5.3-flash": (0.20, 0.50),
+    "moonshotai/kimi-k3.1-pro": (3.00, 15.00),
+    "qwen/qwen3.8-2.4t-a95b": (2.50, 6.00),
 }
+# Auditor/council default for each producer family: always another vendor.
+CROSS_VENDOR_AUDITOR = {"z-ai": "moonshotai/kimi-k3.1-pro"}
+FALLBACK_AUDITOR = "z-ai/glm-5.3"
 
 
 class LLMDisabled(Exception):
@@ -60,6 +81,38 @@ def cost_usd(model: str, tokens_in: int, tokens_out: int) -> float | None:
     return round((tokens_in * p_in + tokens_out * p_out) / 1e6, 6)
 
 
+def model_family(model: str) -> str:
+    """Vendor family of a model id: the `vendor/` prefix, else a known name prefix."""
+    if "/" in model:
+        return model.split("/", 1)[0].lower()
+    for prefix, fam in (("claude", "anthropic"), ("gpt", "openai"), ("o1", "openai")):
+        if model.lower().startswith(prefix):
+            return fam
+    return model.split("-", 1)[0].lower()
+
+
+def auditor_model(producer: str, override: str | None = None) -> str:
+    """Model for an auditor/council step: NMT_LLM_AUDITOR_MODEL or a cross-vendor default. Raises
+    if it is from the producer's family (an auditor must not grade its own vendor's output)."""
+    model = override or os.environ.get("NMT_LLM_AUDITOR_MODEL")
+    if not model:
+        model = CROSS_VENDOR_AUDITOR.get(model_family(producer), FALLBACK_AUDITOR)
+    if model_family(model) == model_family(producer):
+        raise ValueError(f"auditor {model!r} is from the same family as producer {producer!r}")
+    return model
+
+
+def backoff(attempt: int, retry_after: str | None) -> float:
+    """Seconds to wait before retry `attempt` (0-based): `retry-after` if the server sent one,
+    else 5 s doubling (+-20% jitter), capped at 60 s."""
+    if retry_after is not None:
+        try:
+            return max(0.0, float(retry_after))
+        except ValueError:
+            pass
+    return min(BACKOFF_MAX, BACKOFF_START * 2**attempt * random.uniform(0.8, 1.2))
+
+
 def parse_json(text: str) -> Any:
     """The first JSON object/array in a completion (models sometimes wrap it in a fence)."""
     m = re.search(r"[\[{]", text)
@@ -76,11 +129,13 @@ class LLM:
     run_dir: Path
     provider: str = field(default_factory=lambda: os.environ.get("NMT_LLM_PROVIDER", "anthropic"))
     model: str | None = None
+    base_url: str | None = None
     no_llm: bool = False
     cache_dir: Path | None = None
     client: httpx.Client | None = None
     max_tokens: int = 4096
-    retries: int = 4
+    retries: int = 6
+    sleep: Callable[[float], None] = time.sleep
     calls: int = 0
     cost: float = 0.0
     unpriced_calls: int = 0
@@ -89,16 +144,33 @@ class LLM:
         if self.provider not in DEFAULT_MODEL:
             raise ValueError(f"unknown LLM provider {self.provider!r}")
         self.model = self.model or os.environ.get("NMT_LLM_MODEL") or DEFAULT_MODEL[self.provider]
+        base = (
+            self.base_url or os.environ.get("NMT_LLM_BASE_URL") or DEFAULT_BASE_URL[self.provider]
+        )
+        self.base_url = base.rstrip("/")
         self.cache_dir = Path(self.cache_dir or repo_root() / "cache" / "llm")
         self.run_dir = Path(self.run_dir)
 
     @property
-    def enabled(self) -> bool:
-        return not self.no_llm and bool(os.environ.get(KEY_ENV[self.provider]))
+    def host(self) -> str:
+        return urlparse(self.base_url).hostname or ""
 
-    def complete(self, prompt: str, system: str = "", purpose: str = "") -> str:
+    @property
+    def key_env(self) -> str:
+        if self.provider == "openai" and self.host in HOST_KEY_ENV:
+            return HOST_KEY_ENV[self.host]
+        return KEY_ENV[self.provider]
+
+    @property
+    def enabled(self) -> bool:
+        return not self.no_llm and bool(os.environ.get(self.key_env))
+
+    def complete(
+        self, prompt: str, system: str = "", purpose: str = "", json_mode: bool = False
+    ) -> str:
         if self.no_llm:
             raise LLMDisabled("--no-llm")
+        json_mode = json_mode and self.provider == "openai"  # Anthropic has no JSON mode flag
         req = {
             "provider": self.provider,
             "model": self.model,
@@ -106,16 +178,20 @@ class LLM:
             "prompt": prompt,
             "max_tokens": self.max_tokens,
         }
+        if self.base_url != DEFAULT_BASE_URL[self.provider]:
+            req["host"] = self.host
+        if json_mode:
+            req["json_mode"] = True
         phash = sha256_text(canonical_json(req))
         cached = self.cache_dir / f"{phash}.json"
         if cached.is_file():
             hit = json.loads(cached.read_text("utf-8"))
             self._log(purpose, phash, hit["tokens_in"], hit["tokens_out"], cached=True)
             return hit["text"]
-        key = os.environ.get(KEY_ENV[self.provider])
+        key = os.environ.get(self.key_env)
         if not key:
-            raise LLMDisabled(f"${KEY_ENV[self.provider]} is not set")
-        text, t_in, t_out = self._call(key, system, prompt)
+            raise LLMDisabled(f"${self.key_env} is not set")
+        text, t_in, t_out = self._call(key, system, prompt, json_mode)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         hit = {"text": text, "tokens_in": t_in, "tokens_out": t_out, "model": self.model}
         cached.write_text(json.dumps(hit, ensure_ascii=False), "utf-8")
@@ -127,14 +203,14 @@ class LLM:
             self.client.close()
 
     def complete_json(self, prompt: str, system: str = "", purpose: str = "") -> Any:
-        return parse_json(self.complete(prompt, system, purpose))
+        return parse_json(self.complete(prompt, system, purpose, json_mode=True))
 
-    def _call(self, key: str, system: str, prompt: str) -> tuple[str, int, int]:
+    def _call(self, key: str, system: str, prompt: str, json_mode: bool) -> tuple[str, int, int]:
         if self.client is None:
             self.client = httpx.Client(timeout=180)  # one pooled client per LLM, reused
         client = self.client
+        url = self.base_url + ENDPOINT[self.provider]
         if self.provider == "anthropic":
-            url = ANTHROPIC_URL
             headers = {"x-api-key": key, "anthropic-version": "2023-06-01"}
             body: dict[str, Any] = {
                 "model": self.model,
@@ -145,7 +221,6 @@ class LLM:
             if system:
                 body["system"] = system
         else:
-            url = OPENAI_URL
             headers = {"Authorization": f"Bearer {key}"}
             msgs = ([{"role": "system", "content": system}] if system else []) + [
                 {"role": "user", "content": prompt}
@@ -156,13 +231,15 @@ class LLM:
                 "temperature": 0,
                 "messages": msgs,
             }
+            if json_mode:
+                body["response_format"] = {"type": "json_object"}
         for attempt in range(self.retries + 1):
             resp = client.post(url, headers=headers, json=body)
-            if resp.status_code not in (429, 500, 502, 503, 504, 529) or attempt == self.retries:
+            if resp.status_code not in RETRY_STATUS or attempt == self.retries:
                 break
-            time.sleep(float(resp.headers.get("retry-after", 2**attempt)))
+            self.sleep(backoff(attempt, resp.headers.get("retry-after")))
         if resp.status_code != 200:
-            raise LLMError(f"{self.provider} HTTP {resp.status_code}: {resp.text[:300]}")
+            raise LLMError(f"{self.host} HTTP {resp.status_code}: {resp.text[:300]}")
         data = resp.json()
         if self.provider == "anthropic":
             text = "".join(b.get("text", "") for b in data.get("content", []))
@@ -182,6 +259,7 @@ class LLM:
             "purpose": purpose,
             "prompt_hash": phash,
             "provider": self.provider,
+            "host": self.host,
             "model": self.model,
             "tokens_in": t_in,
             "tokens_out": t_out,
