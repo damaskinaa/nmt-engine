@@ -24,7 +24,8 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
             )
     for (geo, base), segs in sorted(groups.items()):
         ids = {s.id for s in segs}
-        total = sum((s.population.share[0] + s.population.share[1]) / 2 for s in segs)
+        # possible double count: shares are ranges, so their upper bounds must fit the base
+        total = sum(s.population.share[1] for s in segs)
         overlap = 0.0
         seen: set[frozenset[str]] = set()
         for s in segs:

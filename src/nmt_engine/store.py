@@ -83,10 +83,15 @@ class Store:
 
     def current(self, type_: str) -> dict[str, Record]:
         latest: dict[str, Record] = {}
+        conflicts: list[str] = []
         for rec in self.history(type_):
             prev = latest.get(rec.id)
-            if prev is None or rec.rev >= prev.rev:
+            if prev is None or rec.rev > prev.rev:
                 latest[rec.id] = rec
+            elif rec.rev == prev.rev and rec != prev:
+                conflicts.append(f"{self.path(type_).name}: {rec.id} rev {rec.rev} written twice")
+        if conflicts:
+            raise SchemaError(conflicts)
         superseded = {r.supersedes for r in latest.values() if r.supersedes}
         return {k: v for k, v in latest.items() if k not in superseded and not v.retracted}
 
@@ -116,7 +121,7 @@ class RunData:
 
     def source_text(self, source: Source) -> str | None:
         path = (self.run_dir / source.text_path).resolve()
-        if not path.is_file() or self.run_dir.resolve() not in path.parents:
+        if not path.is_relative_to(self.run_dir.resolve()) or not path.is_file():
             return None
         return path.read_text(encoding="utf-8")
 
