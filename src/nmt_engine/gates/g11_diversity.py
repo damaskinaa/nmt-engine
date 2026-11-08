@@ -30,8 +30,9 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
     for claim in run.claims.values():
         if claim.status != "PUBLIC_VOICE":
             continue
-        kinds = {s.kind for s in run.claim_sources(claim)}
-        families = voice_families(run.claim_sources(claim))
+        srcs = run.claim_sources(claim)
+        kinds = {s.kind for s in srcs}
+        families = voice_families(srcs)
         authors = distinct_authors(run, claim)
         if set(claim.source_types) - kinds:
             findings.append(

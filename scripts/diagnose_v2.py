@@ -35,6 +35,9 @@ def job_posts(run, job: Job) -> set[str]:
 def diagnose(run_dir: Path) -> dict:
     run = load_run(run_dir)
     summ = json.loads((run_dir / "collect_summary.json").read_text("utf-8"))
+    missing = [k for k in ("category", "adapters") if k not in summ]
+    if missing:
+        raise ValueError(f"collect_summary.json lacks {', '.join(missing)}")
     traces = load_traces(run)
     table = evidence_table(run, {j.id for j in run.jobs.values() if not j.retracted})
     jobs = {j.id: j for j in run.jobs.values() if not j.retracted}

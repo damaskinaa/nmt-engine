@@ -389,3 +389,11 @@ def test_gate11_counts_customer_voice_families_not_kinds(tmp_path):
     assert any(
         f.object_id == "C1" and "single signal not flagged" in f.message for f in g11.findings
     )
+
+
+def test_every_source_kind_has_a_family():
+    from typing import get_args
+
+    from nmt_engine.schema import KIND_FAMILY, SourceKind
+
+    assert set(KIND_FAMILY) == set(get_args(SourceKind))
