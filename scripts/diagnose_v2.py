@@ -10,19 +10,24 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from nmt_engine.miner import prompts
 from nmt_engine.miner.extract import TRACE_KINDS, load_traces
 from nmt_engine.miner.pipeline import KILL_ELEMENTS, KILL_KINDS, evidence_table
+from nmt_engine.schema import Job
 from nmt_engine.store import load_run
 
 BINS = ((1, 1), (2, 2), (3, 3), (4, 5), (6, 10), (11, 10**9))
 
 
-def job_posts(run, job_id: str) -> set[str]:
+def job_posts(run, job: Job) -> set[str]:
+    """Customer posts behind a job's receipts (search proxies and other non-trace sources
+    excluded)."""
     return {
         r.source_id
-        for cid, c in run.claims.items()
-        if cid.startswith(f"c_{job_id}_") and not c.retracted
+        for cid in job.claim_ids + [f"c_{job.id}_{el}" for el in prompts.ELEMENTS]
+        if (c := run.claims.get(cid)) is not None and not c.retracted
         for r in c.source_refs
+        if (s := run.sources.get(r.source_id)) is not None and s.kind in TRACE_KINDS
     }
 
 
@@ -32,7 +37,7 @@ def diagnose(run_dir: Path) -> dict:
     traces = load_traces(run)
     table = evidence_table(run, {j.id for j in run.jobs.values() if not j.retracted})
     jobs = {j.id: j for j in run.jobs.values() if not j.retracted}
-    posts = {jid: len(job_posts(run, jid)) for jid in jobs}
+    posts = {jid: len(job_posts(run, j)) for jid, j in jobs.items()}
     inst = json.loads((run_dir / "extraction.json").read_text("utf-8"))
     fail = Counter()
     for r in table:
@@ -103,7 +108,8 @@ def md(ds: list[dict]) -> str:
     out.append(
         "| mean / max | "
         + " | ".join(
-            f"{sum(d['posts'].values()) / max(len(d['posts']), 1):.2f} / {max(d['posts'].values())}"
+            f"{sum(d['posts'].values()) / max(len(d['posts']), 1):.2f} / "
+            f"{max(d['posts'].values(), default=0)}"
             for d in ds
         )
         + " |"
@@ -132,4 +138,10 @@ def md(ds: list[dict]) -> str:
 
 
 if __name__ == "__main__":
-    print(md([diagnose(Path(p)) for p in sys.argv[1:]]))
+    done = []
+    for p in sys.argv[1:]:
+        try:
+            done.append(diagnose(Path(p)))
+        except (OSError, ValueError, KeyError) as e:
+            print(f"skipped {p}: {type(e).__name__}: {e}", file=sys.stderr)
+    print(md(done))
