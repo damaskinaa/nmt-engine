@@ -64,7 +64,11 @@ def collect_cmd(
     apps: Annotated[str, typer.Option("--apps", help="App Store app names, e.g. Habitica")] = "",
     only: Annotated[
         str,
-        typer.Option("--only", help="run only steps with these name prefixes, e.g. appstore:,web:"),
+        typer.Option(
+            "--only",
+            help="run only steps with these name prefixes, e.g. appstore:,web: (a top-up: run "
+            "it on a copy of the base run dir; summary totals are recomputed from its whole store)",
+        ),
     ] = "",
     as_of: Annotated[
         str, typer.Option("--as-of", help="YYYY-MM-DD cache date; reuse an earlier run's responses")
