@@ -136,6 +136,9 @@ class LLM:
     max_tokens: int = field(
         default_factory=lambda: int(os.environ.get("NMT_LLM_MAX_TOKENS") or 4096)
     )
+    reasoning_effort: str | None = field(
+        default_factory=lambda: os.environ.get("NMT_LLM_REASONING_EFFORT") or None
+    )
     retries: int = 6
     sleep: Callable[[float], None] = time.sleep
     calls: int = 0
@@ -184,6 +187,8 @@ class LLM:
             req["base_url"] = self.base_url
         if json_mode:
             req["json_mode"] = True
+        if self.reasoning_effort and self.provider == "openai":
+            req["reasoning_effort"] = self.reasoning_effort
         phash = sha256_text(canonical_json(req))
         cached = self.cache_dir / f"{phash}.json"
         if cached.is_file():
@@ -240,6 +245,8 @@ class LLM:
             }
             if json_mode:
                 body["response_format"] = {"type": "json_object"}
+            if self.reasoning_effort:
+                body["reasoning_effort"] = self.reasoning_effort
         for attempt in range(self.retries + 1):
             resp = client.post(url, headers=headers, json=body)
             if resp.status_code not in RETRY_STATUS or attempt == self.retries:

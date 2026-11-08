@@ -138,8 +138,11 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   prompt, max_tokens and JSON mode). On 429/5xx the client honours `retry-after`, else waits 5 s
   doubling (±20% jitter) up to 60 s. `max_tokens` defaults to 4096 (`NMT_LLM_MAX_TOKENS`), not the
   context size, so it does not reserve TPM; the miner sends 8 traces per extraction request.
-  Reasoning models (GLM-5.3 returns `reasoning_content`) spend completion tokens on thinking, so
-  they need a larger `NMT_LLM_MAX_TOKENS`. An answer cut off at the limit (`finish_reason=length`)
+  Reasoning models spend completion tokens on thinking: TensorX documents GLM-5.3 as reasoning at
+  maximum depth by default and DeepSeek-V4.1-Flash as reasoning off by default.
+  `NMT_LLM_REASONING_EFFORT` (sent as `reasoning_effort`, part of the cache key) sets the depth;
+  `none` turns GLM-5.3 thinking off. Span extraction is copying, not reasoning, so the live runs
+  compare both models with thinking off. An answer cut off at the limit (`finish_reason=length`)
   is logged and billed with `"truncated": true`, never cached, and raised as `LLMError`, so the
   batch counts as failed instead of being parsed from half a JSON document.
 - **Cross-vendor auditor.** `llm.auditor_model()` picks the auditor/council model

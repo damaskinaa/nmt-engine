@@ -442,6 +442,18 @@ def test_blank_max_tokens_env_uses_default(tmp_path, monkeypatch):
     assert LLM(tmp_path, no_llm=True, cache_dir=tmp_path / "c").max_tokens == 4096
 
 
+def test_reasoning_effort_is_sent_and_keys_the_cache(tmp_path, monkeypatch):
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    seen: list = []
+    kw = dict(provider="openai", model="z-ai/glm-5.3", base_url="https://api.tensorx.ai/v1")
+    c = _openai(seen)
+    LLM(tmp_path, cache_dir=tmp_path / "c", client=c, **kw).complete("p")
+    monkeypatch.setenv("NMT_LLM_REASONING_EFFORT", "none")
+    LLM(tmp_path, cache_dir=tmp_path / "c", client=c, **kw).complete("p")
+    bodies = [json.loads(r.content) for r in seen]
+    assert "reasoning_effort" not in bodies[0] and bodies[1]["reasoning_effort"] == "none"
+
+
 def test_truncated_answer_is_billed_but_not_cached(tmp_path, monkeypatch):
     monkeypatch.setenv("TENSORX_API_KEY", "tx")
     monkeypatch.setenv("NMT_LLM_MAX_TOKENS", "512")
