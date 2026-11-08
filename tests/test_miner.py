@@ -647,6 +647,42 @@ def test_retry_honours_retry_after_else_backs_off(tmp_path, monkeypatch):
     assert backoff(0, "soon") <= 6.0  # unparsable retry-after falls back
 
 
+def test_transport_errors_are_retried_then_raise_llm_error(tmp_path, monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "k")
+    calls = []
+
+    def handler(req):
+        calls.append(req)
+        if len(calls) == 1:
+            raise httpx.ReadTimeout("slow", request=req)
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": '{"ok": true}'}, "finish_reason": "stop"}],
+                "usage": {"prompt_tokens": 1, "completion_tokens": 1},
+            },
+        )
+
+    def make(h, sub):
+        return LLM(
+            tmp_path,
+            provider="openai",
+            model="gpt-4o-mini",
+            cache_dir=tmp_path / sub,
+            client=httpx.Client(transport=httpx.MockTransport(h)),
+            sleep=lambda s: None,
+            retries=2,
+        )
+
+    assert make(handler, "a").complete_json("x") == {"ok": True} and len(calls) == 2
+
+    def down(req):
+        raise httpx.ConnectError("down", request=req)
+
+    with pytest.raises(LLMError, match="ConnectError"):
+        make(down, "b").complete_json("x")
+
+
 def test_auditor_is_always_another_vendor(monkeypatch):
     from nmt_engine.llm import auditor_model, model_family
 

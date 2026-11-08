@@ -73,3 +73,25 @@ def test_embed_needs_key(tmp_path, monkeypatch):
     monkeypatch.delenv("TENSORX_API_KEY", raising=False)
     with pytest.raises(LLMDisabled):
         embedder(tmp_path, fake([])).embed(["x"])
+
+
+def test_transport_error_is_retried(tmp_path, monkeypatch):
+    monkeypatch.setenv("TENSORX_API_KEY", "k")
+    n = []
+
+    def handler(req):
+        n.append(req)
+        if len(n) == 1:
+            raise httpx.ReadTimeout("slow", request=req)
+        return httpx.Response(
+            200,
+            json={"data": [{"index": 0, "embedding": [1.0, 0.0]}], "usage": {"prompt_tokens": 1}},
+        )
+
+    e = Embedder(
+        tmp_path,
+        cache_dir=tmp_path / "c",
+        sleep=lambda s: None,
+        client=httpx.Client(transport=httpx.MockTransport(handler)),
+    )
+    assert e.embed(["a"]).shape == (1, 2) and len(n) == 2

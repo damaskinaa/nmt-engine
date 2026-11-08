@@ -140,6 +140,7 @@ class LLM:
         default_factory=lambda: os.environ.get("NMT_LLM_REASONING_EFFORT") or None
     )
     retries: int = 6
+    timeout: float = 180
     sleep: Callable[[float], None] = time.sleep
     calls: int = 0
     cost: float = 0.0
@@ -232,7 +233,7 @@ class LLM:
         self, key: str, system: str, prompt: str, json_mode: bool
     ) -> tuple[str, int, int, bool]:
         if self.client is None:
-            self.client = httpx.Client(timeout=180)  # one pooled client per LLM, reused
+            self.client = httpx.Client(timeout=self.timeout)  # one pooled client per LLM, reused
         client = self.client
         url = self.base_url + ENDPOINT[self.provider]
         if self.provider == "anthropic":
@@ -261,7 +262,13 @@ class LLM:
             if self.reasoning_effort:
                 body["reasoning_effort"] = self.reasoning_effort
         for attempt in range(self.retries + 1):
-            resp = client.post(url, headers=headers, json=body)
+            try:
+                resp = client.post(url, headers=headers, json=body)
+            except httpx.TransportError as exc:  # timeouts, dropped connections
+                if attempt == self.retries:
+                    raise LLMError(f"{self.host} {type(exc).__name__}") from exc
+                self.sleep(backoff(attempt, None))
+                continue
             if resp.status_code not in RETRY_STATUS or attempt == self.retries:
                 break
             self.sleep(backoff(attempt, resp.headers.get("retry-after")))

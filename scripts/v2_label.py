@@ -31,7 +31,7 @@ SEED = 0
 
 
 def auditor(out: Path) -> LLM:
-    return LLM(out, provider="openai", model=AUDITOR, base_url=BASE, max_tokens=16384)
+    return LLM(out, provider="openai", model=AUDITOR, base_url=BASE, max_tokens=16384, timeout=600)
 
 
 def load_instances(out: Path) -> dict[str, list[JobInstance]]:
