@@ -7,19 +7,24 @@ from nmt_engine.gates.base import Finding, GateConfig, gate
 from nmt_engine.gates.outputs import output_texts
 from nmt_engine.store import RunData
 
-# The spec lexicon (master prompt; ARCHITECTURE section 6 gate 8). A phrase is negated
-# when "not"/"never"/"no" appears within the three preceding words of its sentence.
+# The spec lexicon (master prompt; ARCHITECTURE section 6 gate 8). A phrase is negated only
+# when a negator directly precedes it, skipping auxiliaries/adverbs ("has not yet been validated");
+# a negator elsewhere ("no doubt customers want") does not count.
 BANNED = re.compile(
     r"(?<!un)\b(validated|validation of demand|proven|customers want|confirmed demand)\b", re.I
 )
 _NEGATORS = {"not", "never", "no", "isn't", "wasn't", "hasn't", "haven't", "aren't", "nor"}
+_FILLER = {"yet", "been", "be", "being", "is", "was", "are", "were", "has", "have", "had"}
+_FILLER |= {"really", "fully", "ever", "actually", "truly", "formally", "properly", "so", "far"}
 _WORD = re.compile(r"[\w']+")
 
 
 def _asserted(sent: str) -> bool:
     for m in BANNED.finditer(sent):
-        before = _WORD.findall(sent[: m.start()].lower())[-3:]
-        if not _NEGATORS.intersection(before):
+        before = _WORD.findall(sent[: m.start()].lower())
+        while before and before[-1] in _FILLER:
+            before.pop()
+        if not (before and before[-1] in _NEGATORS):
             return True
     return False
 
