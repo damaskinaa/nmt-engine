@@ -15,6 +15,15 @@ Precedence when documents disagree: master prompt > ARCHITECTURE > PROTOCOL > PR
 | §6 gates 1–14 | `src/nmt_engine/gates/gNN_*.py`, registry in `gates/base.py`, runner/demote in `gates/runner.py` |
 | CLI `nmt gates check / demote` | `src/nmt_engine/cli.py` |
 | Fixtures (clean + one seeded defect per gate) | `tests/fixtures/make_fixtures.py` → `tests/fixtures/runs/` |
+| PROTOCOL §2 log form (μ, σ from median + 80% interval) | `src/nmt_engine/synth/logform.py` |
+| PROTOCOL §3.3 per-family calibration (bias, split-conformal q80, LOO coverage, pass rule) | `src/nmt_engine/synth/calibrate.py` |
+| PROTOCOL §3.2 triangulation (same-family merge, 1/σ² weights, ρ inflation, pairwise z) | `src/nmt_engine/synth/triangulate.py` |
+| PROTOCOL §2 grades S0–S4 | `src/nmt_engine/synth/grade.py`; end-to-end `synth/estimate.py::estimate` |
+| PROTOCOL §2 mandatory citation label | `src/nmt_engine/synth/label.py::citation_label` |
+| PROTOCOL §3.5 forecast registry + scoring (hit, log error, Brier) | `src/nmt_engine/synth/forecast.py` |
+| Leakage guard (as-of T) | `src/nmt_engine/synth/leakage.py` |
+| EVPI on method disagreement (go/no-go) | `src/nmt_engine/synth/evpi.py` |
+| Known-truth worlds | `src/nmt_engine/synth/world.py`; histogram `scripts/coverage_histogram.py` → `docs/img/coverage_histogram.png` |
 
 ## Gate → defect → demote action
 
@@ -52,3 +61,27 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   runs as a test against `forbidden_corpus/` (git-ignored; set `NMT_FORBIDDEN_CORPUS` to move it).
 - **Gate 13 persona-panel monotonicity** is not checked yet: persona panels arrive in PR 9 (calibrated
   synthetic panel), which adds that test.
+- **Joint reference classes.** Each calibration case is estimated by every family (`JointCase`), so
+  `joint_calibration` fits every family on the same truths and records a `JointCalibration`. From it:
+  ρ = max(`DEFAULT_RHO`, clip(mean pairwise correlation of calibrated log errors, 0, 0.95)), and the
+  combined half-width is max(analytic, LOO conformal q80 of the combined estimate), where the LOO
+  re-fits each family's bias/q80 and ρ without the held-out case. The rank is the standard split-conformal
+  ⌈(n+1)·0.8⌉-th *smallest* |log error|. `Synthetic` records `rho`, `combined_conformal_q80` and
+  `joint_calibration_id`.
+- **Failed calibrations never narrow the combined interval.** A family whose calibration did not pass
+  (n < 20 or LOO coverage outside 0.75–0.90) is listed in `Synthetic.methods` with `in_combined=False`
+  but left out of triangulation, ρ and the combined conformal width. If no family passed, all are pooled
+  with ρ = 1 (combining earns no narrowing). Pooled families still get their fitted bias and q80.
+- **S2 needs agreement two ways.** Pairwise z ≤ 1.645 (master prompt) *and* overlapping 80% intervals
+  (PROTOCOL §2). Either failing sets `methods_disagree` and caps the grade at S1.
+- **Same-family merge** takes the mean μ′ and mean σ′ of that family's calcs, so padding a family never
+  narrows the interval beyond its single tightest calc.
+- **Brier score.** For a binary forecast, (p − y)² with the given p. For an interval forecast,
+  (0.8 − hit)², i.e. the nominal 80% coverage claim scored as a probability.
+- **World error model and coverage test.** Family errors share a common market shock with correlation ρ
+  (optionally multivariate Student-t), and stated intervals are `stated_sigma_ratio` × the true noise.
+  The estimator never receives ρ. Test (a) is a misspecification matrix (`world.MATRIX_CELLS`: true
+  ρ ∈ {0, 0.3, 0.6, 0.8} × stated ratio ∈ {0.4, 0.6, 1.0}, plus Student-t df = 3) and the fallback
+  cells (`world.FALLBACK_CELLS`); each must reach 75–90% coverage over 200 worlds
+  (`scripts/coverage_matrix.py` prints the table). The ρ floor makes the true-ρ = 0 cells
+  conservative: with honest stated intervals that cell sits near the 90% ceiling.

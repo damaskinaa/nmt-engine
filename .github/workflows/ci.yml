@@ -16,4 +16,4 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: pip install -c constraints.txt -e ".[dev]"
       - run: ruff check . && ruff format --check .
-      - run: pytest -q --cov=nmt_engine.gates --cov-fail-under=90
+      - run: pytest -q --cov=nmt_engine.gates --cov=nmt_engine.synth --cov-fail-under=90

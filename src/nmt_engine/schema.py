@@ -279,6 +279,7 @@ class SyntheticMethod(BaseModel):
     family: MethodFamily
     calc_id: str
     interval_80: Range
+    in_combined: bool = True  # False: listed, but its calibration failed so it was not pooled
 
 
 class Combined(BaseModel):
@@ -298,6 +299,9 @@ class Synthetic(Record):
     combined: Combined | None = None
     unit: str | None = None
     calibration_ids: list[str] = Field(default_factory=list)
+    joint_calibration_id: str | None = None
+    rho: float | None = None  # error correlation used for the combined interval
+    combined_conformal_q80: float | None = None  # LOO conformal half-width (log units)
     redteam_findings: list[str] = Field(default_factory=list)
     forecast_id: str | None = None
     market_touch_id: str | None = None
@@ -317,6 +321,8 @@ class BacktestCase(BaseModel):
 class Calibration(Record):
     sim_kind: str | None = None
     method_family: MethodFamily
+    method_id: str | None = None
+    quantity: Quantity | None = None
     reference_class: str
     as_of_rule: str
     backtest_cases: list[BacktestCase] = Field(default_factory=list)
@@ -325,6 +331,35 @@ class Calibration(Record):
     coverage_80: float | None = None
     n: int = 0
     passed: bool = False
+
+
+class JointCase(BaseModel):
+    """One reference case with known truth, estimated by every method family."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    case: str
+    as_of: date
+    known_outcome: float
+    predicted: dict[MethodFamily, float]
+    stated_interval_80: dict[MethodFamily, Range] = Field(default_factory=dict)
+
+
+class JointCalibration(Record):
+    """Joint reference class for one quantity: per-family calibrations fitted on the same
+    cases, the error correlation between families, and a conformal combined half-width."""
+
+    quantity: Quantity
+    reference_class: str
+    as_of_rule: str
+    cases: list[JointCase] = Field(default_factory=list)
+    calibration_ids: dict[MethodFamily, str] = Field(default_factory=dict)
+    families: list[MethodFamily] = Field(default_factory=list)  # pooled in the combined stats
+    rho: float
+    rho_estimated: float | None = None  # before the floor; None with < 2 families
+    combined_q80: float | None = None
+    combined_coverage_80: float | None = None
+    n: int = 0
 
 
 class ForecastScore(BaseModel):
@@ -339,6 +374,8 @@ class Forecast(Record):
     synthetic_id: str
     resolution_rule: str
     resolve_by: date
+    median: float | None = None  # frozen at registration
+    interval_80: Range | None = None  # frozen at registration
     outcome: float | None = None
     score: ForecastScore | None = None
 
@@ -413,6 +450,7 @@ RECORD_TYPES: dict[str, type[Record]] = {
     "experiment": Experiment,
     "synthetic": Synthetic,
     "calibration": Calibration,
+    "joint_calibration": JointCalibration,
     "forecast": Forecast,
     "market_touch": MarketTouch,
     "sim_run": SimRun,

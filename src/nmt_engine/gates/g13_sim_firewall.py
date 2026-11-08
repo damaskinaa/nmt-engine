@@ -57,11 +57,12 @@ def check(run: RunData, cfg: GateConfig) -> list[Finding]:
         if rank < 2:
             continue
         problems = []
-        families = {m.family for m in syn.methods}
+        pooled = [m for m in syn.methods if m.in_combined]  # listed-only families earn nothing
+        families = {m.family for m in pooled}
         if len(families) < 3:
             problems.append("fewer than 3 method families")
-        for i, a in enumerate(syn.methods):
-            for b in syn.methods[i + 1 :]:
+        for i, a in enumerate(pooled):
+            for b in pooled[i + 1 :]:
                 if a.family != b.family and (
                     a.interval_80[1] < b.interval_80[0] or b.interval_80[1] < a.interval_80[0]
                 ):
