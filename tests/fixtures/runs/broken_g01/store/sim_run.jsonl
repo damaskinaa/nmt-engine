@@ -1,0 +1,1 @@
+{"id": "SIM1", "inputs": ["C7"], "model": "montecarlo", "n_runs": 10000, "seed": 7}

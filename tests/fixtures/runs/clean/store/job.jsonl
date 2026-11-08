@@ -1,0 +1,2 @@
+{"claim_ids": ["C1"], "id": "J1", "level": "core", "statement": "I want to file VAT returns on time without losing a weekend", "trigger": "VAT deadline"}
+{"claim_ids": ["C2"], "higher_job_id": "J1", "id": "J2", "level": "small", "statement": "I want to reconcile bank transactions without double entry"}

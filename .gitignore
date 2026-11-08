@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.egg-info/
+build/
+dist/
+cache/
+runs/*
+!runs/.gitkeep
+forbidden_corpus/*
+!forbidden_corpus/.gitkeep

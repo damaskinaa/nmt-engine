@@ -1,0 +1,2 @@
+{"claim_ids": ["C1", "C2"], "core_job_ids": ["J1"], "id": "SEG1", "name": "IE micro firms filing their own VAT", "population": {"base_claim_id": "C5", "geography": "IE", "share": [0.4, 0.5]}, "size": "Y1"}
+{"claim_ids": ["C2"], "core_job_ids": ["J2"], "id": "SEG2", "name": "IE firms reconciling banks before handing to accountants", "population": {"base_claim_id": "C5", "geography": "IE", "share": [0.6, 0.7]}}
