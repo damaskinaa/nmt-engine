@@ -109,8 +109,8 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   its `www.` form, via `Collector.extra_hosts`); anything else raises `HostNotAllowedError` before
   a request is sent. Redirects are followed only within the same host (plus the one documented
   hand-off `download.ons.gov.uk` → `static.ons.gov.uk`, `base.REDIRECT_PAIRS`); a redirect to any
-  other host is refused; competitor pages whose apex redirects are requested afresh on the
-  `www.` host, under that host's robots.txt, for `fetch` and `download`. So a hostile DNS answer can only repoint one of
+  other host is refused, for `fetch` and `download`. Competitor pages whose apex redirects
+  elsewhere are requested afresh on the `www.` host, under that host's robots.txt. So a hostile DNS answer can only repoint one of
   these fixed names, never introduce a new one; the opt-in DNS check stays as defence in depth.
   Cassettes are saved without credential headers,
   `Set-Cookie`, secret query values or contact details, and a test checks this.
