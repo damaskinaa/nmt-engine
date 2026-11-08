@@ -47,6 +47,9 @@ def jaccard(a: frozenset[str], b: frozenset[str]) -> float:
 class JobGroup:
     statement: str
     instances: list[JobInstance] = field(default_factory=list)
+    key: str | None = None  # stable id basis when names can repeat (v2 clusters)
+    level: str | None = None  # set by the v2 clusterer (majority with §3 tie order)
+    mixed: bool = False  # members name more than one expected outcome (v2)
 
     @property
     def toks(self) -> frozenset[str]:
@@ -181,7 +184,7 @@ def _refs(
 
 
 def build_job(group: JobGroup, sources: dict[str, Source], geo: str) -> BuiltJob:
-    jid = "job_" + sha256_text(group.statement.lower())[:12]
+    jid = "job_" + sha256_text(group.key or group.statement.lower())[:12]
     insts = group.instances
     per_field: dict[str, list[tuple[str, str]]] = defaultdict(list)
     for inst in insts:
@@ -205,7 +208,7 @@ def build_job(group: JobGroup, sources: dict[str, Source], geo: str) -> BuiltJob
     job = Job(
         id=jid,
         statement=group.statement,
-        level=Counter(i.level for i in insts).most_common(1)[0][0],
+        level=group.level or Counter(i.level for i in insts).most_common(1)[0][0],
         context=first["context"],
         trigger=first["trigger"],
         negative_emotions=[s for _, s in per_field.get("negative_emotions", [])][:5],

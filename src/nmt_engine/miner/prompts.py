@@ -75,3 +75,28 @@ Job statements (id: statement):
 Return {{"groups": [{{"ids": [<ids of statements that are the same job>], "statement": "I want \
 to ..."}}]}}. Every id must appear in exactly one group; a job that matches no other is its own \
 group."""
+
+CONFIRM_SYSTEM = """You decide which job statements describe the same job: the same goal and the \
+same expected outcome, maybe worded differently. Statements that only share a topic, a tool or a \
+feature are different jobs. Output JSON only."""
+
+CONFIRM_PROMPT = """Category: {category}
+
+Each line is one cluster of posts, shown by a representative job statement (id: statement):
+{items}
+
+Return {{"groups": [{{"ids": [<ids that are the same job>]}}]}}. List only groups of 2 or more \
+ids; ids you leave out stay on their own. When unsure, keep them apart."""
+
+NAME_SYSTEM = """You name clusters of customer job statements and check whether each cluster is \
+one job. Output JSON only."""
+
+NAME_PROMPT = """Category: {category}
+
+{clusters}
+
+For each cluster return a name of the form "I want to <verb> ..." that fits every member, and \
+"mixed": true if the members name more than one distinct expected outcome (they want different \
+end results), else false.
+Return {{"clusters": [{{"id": <cluster number>, "name": "I want to ...", \
+"mixed": <true|false>}}]}}."""
