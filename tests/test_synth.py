@@ -24,15 +24,21 @@ from nmt_engine.synth import (
     to_log,
     triangulate,
 )
-from nmt_engine.synth.calibrate import calibration_record
+from nmt_engine.synth.calibrate import calibration_record, joint_calibration
 from nmt_engine.synth.estimate import calibrated_estimate
 from nmt_engine.synth.estimate import estimate as _estimate
+from nmt_engine.synth.triangulate import DEFAULT_RHO
 from nmt_engine.synth.world import (
     AS_OF,
+    FALLBACK_CELLS,
+    FAMILIES,
+    MATRIX_CELLS,
     WorldConfig,
     calibrations_for,
     coverage,
     generate_world,
+    joint_calibrations_for,
+    mean_coverage,
 )
 
 F3 = frozenset({"statistical", "supply", "revealed_price"})
@@ -72,12 +78,71 @@ def test_calibrated_interval_uses_wider_of_q80_and_stated():
     assert calibrated_interval(1.0, 0.5) == pytest.approx((1.0, 1.2816 * 0.5))
 
 
-# --- (a) coverage over 200 worlds ----------------------------------------------------------
+# --- (a) coverage under misspecification, 200 worlds per cell ------------------------------
 
 
-def test_a_coverage_200_worlds_within_75_85():
-    cov = np.mean([coverage(generate_world(WorldConfig(seed=s))) for s in range(200)])
-    assert 0.75 <= cov <= 0.85
+@pytest.mark.parametrize("cell", [*MATRIX_CELLS, *FALLBACK_CELLS], ids=str)
+def test_a_coverage_matrix_200_worlds_within_75_90(cell):
+    assert 0.75 <= mean_coverage(cell, 200) <= 0.90
+
+
+def test_estimator_never_sees_world_rho():
+    w = generate_world(WorldConfig(seed=5, rho=0.8))
+    blind = dataclasses.replace(w, config=dataclasses.replace(w.config, rho=0.0))
+    assert coverage(blind) == coverage(w)
+
+
+def test_joint_reference_is_joint_and_rho_is_estimated():
+    w = generate_world(WorldConfig(seed=4, rho=0.8, n_reference=200))
+    for cases in w.reference.values():
+        assert all(set(c.predicted) == set(w.config.families) for c in cases)
+    rhos = [j.rho_estimated for j, _ in joint_calibrations_for(w).values()]
+    assert all(0.6 < r < 0.95 for r in rhos)
+    low = generate_world(WorldConfig(seed=4, rho=0.0, n_reference=200))
+    js = [j for j, _ in joint_calibrations_for(low).values()]
+    assert all(j.rho_estimated < 0.2 and j.rho == DEFAULT_RHO for j in js)  # floor
+
+
+def test_combined_interval_is_conformalised_and_recorded():
+    w = generate_world(WorldConfig(seed=3))
+    joint, cals = joint_calibrations_for(w)["Q4"]
+    assert joint.combined_q80 is not None and joint.families == sorted(F3)
+    syn, tri = estimate("Y", "Q4", "WORLD", w.methods[("SEG1", "Q4")], cals, joint=joint)
+    assert syn.joint_calibration_id == joint.id and syn.rho == joint.rho
+    assert syn.combined_conformal_q80 == joint.combined_q80
+    lo, hi = syn.combined.interval_80
+    half = (math.log(hi) - math.log(lo)) / 2
+    assert half == pytest.approx(max(tri.half_width, joint.combined_q80))
+    other = joint.model_copy(update={"calibration_ids": {}})
+    assert (
+        estimate("Y", "Q4", "WORLD", w.methods[("SEG1", "Q4")], cals, joint=other)[
+            0
+        ].joint_calibration_id
+        is None
+    )
+
+
+def test_failed_family_is_listed_but_not_pooled():
+    w = generate_world(
+        WorldConfig(seed=3, families=FAMILIES, partial_reference={"behavioural": 12})
+    )
+    joint, cals = joint_calibrations_for(w)["Q1"]
+    assert not cals["behavioural"].passed and "behavioural" not in joint.families
+    syn, tri = estimate("Y", "Q1", "WORLD", w.methods[("SEG1", "Q1")], cals, joint=joint)
+    listed = {m.family: m.in_combined for m in syn.methods}
+    assert listed == {**dict.fromkeys(F3, True), "behavioural": False}
+    assert {e.family for e in tri.families} == F3
+    assert all(not c.endswith("behavioural") for c in syn.calibration_ids)
+
+
+def test_no_passed_family_pools_all_with_rho_one():
+    w = generate_world(WorldConfig(seed=3, n_reference=15))
+    joint, cals = joint_calibrations_for(w)["Q4"]
+    assert not any(c.passed for c in cals.values()) and joint.rho == 1.0
+    syn, _ = estimate("Y", "Q4", "WORLD", w.methods[("SEG1", "Q4")], cals, joint=joint)
+    assert syn.rho == 1.0 and all(m.in_combined for m in syn.methods)
+    with pytest.raises(ValueError, match="unique"):
+        joint_calibration("J", "Q4", "r", "<=T", [joint.cases[0], joint.cases[0]])
 
 
 # --- (b) seeded family bias detected and corrected -----------------------------------------

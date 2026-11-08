@@ -1,6 +1,12 @@
 """Synthetic evidence core (docs/PROTOCOL.md §2-§3): calibrate, triangulate, grade, label."""
 
-from nmt_engine.synth.calibrate import CalibrationStats, calibrate, calibrated_interval
+from nmt_engine.synth.calibrate import (
+    CalibrationStats,
+    calibrate,
+    calibrated_interval,
+    combined_stats,
+    joint_calibration,
+)
 from nmt_engine.synth.estimate import MethodInput, estimate
 from nmt_engine.synth.evpi import evpi_go_no_go
 from nmt_engine.synth.forecast import ForecastRegistry
@@ -23,10 +29,12 @@ __all__ = [
     "calibrate",
     "calibrated_interval",
     "citation_label",
+    "combined_stats",
     "estimate",
     "evpi_go_no_go",
     "from_log",
     "grade",
+    "joint_calibration",
     "to_log",
     "triangulate",
 ]

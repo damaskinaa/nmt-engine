@@ -9,15 +9,22 @@ from nmt_engine.schema import (
     Calibration,
     Combined,
     Forecast,
+    JointCalibration,
     MarketTouch,
     Quantity,
     Synthetic,
     SyntheticMethod,
 )
-from nmt_engine.synth.calibrate import calibrated_interval
+from nmt_engine.synth.calibrate import calibrated_interval, combined_stats
 from nmt_engine.synth.grade import GradeInputs, grade
 from nmt_engine.synth.logform import Z80, from_log, to_log
-from nmt_engine.synth.triangulate import DEFAULT_RHO, MethodEstimate, Triangulation, triangulate
+from nmt_engine.synth.triangulate import (
+    DEFAULT_RHO,
+    MethodEstimate,
+    Triangulation,
+    merge_same_family,
+    triangulate,
+)
 
 
 @dataclass(frozen=True)
@@ -34,8 +41,7 @@ class MethodInput:
 def calibrated_estimate(m: MethodInput, cal: Calibration | None) -> MethodEstimate:
     """Apply the family's calibration (bias, conformal q80) if any; else use as stated.
 
-    The correction applies even when the calibration did not pass (it is still the best
-    available error model); `passed` only gates the S3 grade."""
+    `estimate` leaves families whose calibration did not pass out of the combination."""
     mu, sigma = to_log(m.median, m.lo, m.hi)
     if cal is not None and cal.conformal_q80 is not None:
         mu, h = calibrated_interval(mu, sigma, cal.bias_log_ratio or 0.0, cal.conformal_q80)
@@ -77,6 +83,20 @@ def _intervals_overlap(fams: Sequence[MethodEstimate]) -> bool:
     )
 
 
+def _usable_joint(
+    joint: JointCalibration | None,
+    quantity: Quantity,
+    calibrations: Mapping[str, Calibration],
+    families: set[str],
+) -> JointCalibration | None:
+    if joint is None or joint.quantity != quantity:
+        return None
+    ok = all(
+        f in calibrations and joint.calibration_ids.get(f) == calibrations[f].id for f in families
+    )
+    return joint if ok else None
+
+
 def estimate(
     id: str,
     quantity: Quantity,
@@ -89,9 +109,16 @@ def estimate(
     market_touch: MarketTouch | None = None,
     segment_id: str | None = None,
     unit: str | None = None,
-    rho: float = DEFAULT_RHO,
+    rho: float | None = None,
+    joint: JointCalibration | None = None,
 ) -> tuple[Synthetic, Triangulation]:
     """Calibrate each method, triangulate across families, grade, and return the Synthetic.
+
+    Only families with a passed calibration are pooled; the rest stay listed with
+    `in_combined=False`. If none passed, every family is pooled with rho = 1 so combining earns
+    no narrowing. With a matching `joint` calibration, rho is estimated from its residuals
+    (floored at DEFAULT_RHO) and the combined half-width is max(analytic, LOO conformal q80);
+    without one rho = DEFAULT_RHO. An explicit `rho` overrides either.
 
     Grade inputs are checked, not trusted: methods are anchored only if each `calc_id` is in
     `calcs` with receipts on every input; a Calibration counts only for its own family and
@@ -109,24 +136,41 @@ def estimate(
     if market_touch is not None and market_touch.synthetic_id != id:
         market_touch = None
     ests = [calibrated_estimate(m, calibrations.get(m.family)) for m in methods]
-    tri = triangulate(ests, rho)
-    median, lo, hi = from_log(tri.mu, tri.half_width)
+    passed = {f for f, c in calibrations.items() if c.passed}
+    pooled = [e for e in ests if e.family in passed]
+    if not pooled:
+        pooled, rho_default = ests, 1.0
+    else:
+        rho_default = DEFAULT_RHO
+    fams = {e.family for e in pooled}
+    joint = _usable_joint(joint, quantity, calibrations, fams)
+    q80: float | None = None
+    if joint is not None and rho is None and sorted(fams) == sorted(joint.families):
+        rho_used, q80 = joint.rho, joint.combined_q80
+    elif joint is not None:
+        override = rho if rho is not None else (1.0 if rho_default == 1.0 else None)
+        stats = combined_stats(joint.cases, sorted(fams), DEFAULT_RHO, override)
+        rho_used, q80 = stats.rho, stats.q80
+    else:
+        rho_used = rho if rho is not None else rho_default
+    tri = triangulate(pooled, rho_used)
+    median, lo, hi = from_log(tri.mu, max(tri.half_width, q80 or 0.0))
     disagree = tri.methods_disagree or not _intervals_overlap(tri.families)
     if forecast is not None and not _same_prediction(forecast, median, lo, hi):
         forecast = None  # registered for an earlier revision of this estimate
-    calibrated = frozenset(f for f, c in calibrations.items() if c.passed)
+    calibrated = frozenset(passed & fams)
     touched = market_touch is not None and lo <= market_touch.value <= hi
     g = grade(
         GradeInputs(
             anchored=is_anchored(methods, calcs or {}, quantity),
-            families=frozenset(e.family for e in tri.families),
+            families=frozenset(fams),
             methods_disagree=disagree,
             calibrated_families=calibrated,
             forecast_registered=forecast is not None,
             market_touch_in_interval=touched,
         )
     )
-    used = {e.family for e in tri.families}
+    dropped = merge_same_family([e for e in ests if e.family not in fams])
     syn = Synthetic(
         id=id,
         quantity=quantity,
@@ -138,12 +182,16 @@ def estimate(
                 family=e.family,
                 calc_id=",".join(e.calc_ids),
                 interval_80=(math.exp(e.mu - Z80 * e.sigma), math.exp(e.mu + Z80 * e.sigma)),
+                in_combined=e.family in fams,
             )
-            for e in tri.families
+            for e in sorted((*tri.families, *dropped), key=lambda e: e.family)
         ],
         combined=Combined(median=median, interval_80=(lo, hi)),
         unit=unit,
-        calibration_ids=[c.id for f, c in sorted(calibrations.items()) if f in used],
+        calibration_ids=[c.id for f, c in sorted(calibrations.items()) if f in fams],
+        joint_calibration_id=joint.id if joint else None,
+        rho=rho_used,
+        combined_conformal_q80=q80,
         forecast_id=forecast.id if forecast else None,
         market_touch_id=market_touch.id if touched and market_touch else None,
         methods_disagree=disagree,
