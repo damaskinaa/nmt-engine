@@ -3,6 +3,7 @@
   v2_label.py extract OUT R3_DIR:R0_DIR:CATEGORY ...   producer extraction of the R3 traces
   v2_label.py pairs OUT        embed, sample 200 pairs, auditor labels, t*, blind pair packet
   v2_label.py spans OUT        sample 400 spans, auditor audit, Wilson rates, blind span packet
+  v2_label.py roles OUT        diagnostic only: share of audited spans whose author builds a product
   v2_label.py agree OUT        compare operator answers (human_*.answers.json) with the auditor
 
 Producer settings come from NMT_LLM_* (as in Session A, so extraction replays from the cache);
@@ -196,6 +197,54 @@ def stage_spans(out: Path) -> None:
         print(e, r)
 
 
+def stage_roles(out: Path) -> None:
+    """Builder-vs-user author share over the audited spans; reported, never part of the verdict."""
+    t0 = time.monotonic()
+    spans = [json.loads(x) for x in (out / "spans.jsonl").read_text("utf-8").splitlines()]
+    stats = json.loads((out / "extraction.json").read_text("utf-8"))["stats"]
+    runs = {cat: load_run(Path(s["run_dir"])) for cat, s in stats.items()}
+    keys = sorted({(s["category"], s["source_id"]) for s in spans})
+    texts = {(c, t.source.id): t.prompt_text for c, run in runs.items() for t in load_traces(run)}
+    llm = auditor(out)
+    roles = dict(
+        zip(keys, audit.author_roles(llm, [(c, texts[(c, s)]) for c, s in keys]), strict=True)
+    )
+    llm.close()
+    per_span = [roles[(s["category"], s["source_id"])] for s in spans]
+
+    def share(vals: list) -> dict:
+        known = [v for v in vals if v is not None]
+        return {
+            "n": len(known),
+            "builder": sum(known),
+            "share": round(sum(known) / len(known), 4) if known else None,
+        }
+
+    res = {
+        "spans": share(per_span),
+        "posts": share(list(roles.values())),
+        "by_category": {
+            c: share([v for s, v in zip(spans, per_span, strict=True) if s["category"] == c])
+            for c in stats
+        },
+        "by_element": {
+            e: share([v for s, v in zip(spans, per_span, strict=True) if s["element"] == e])
+            for e in sorted({s["element"] for s in spans})
+        },
+        "auditor": AUDITOR,
+        "auditor_cost_usd": round(llm.cost, 4),
+        "auditor_calls": llm.calls,
+        "runtime_s": round(time.monotonic() - t0, 1),
+    }
+    with (out / "roles.jsonl").open("w", encoding="utf-8") as f:
+        for (c, s), v in roles.items():
+            f.write(
+                json.dumps({"category": c, "source_id": s, "builder": v}, sort_keys=True) + "\n"
+            )
+    (out / "roles.json").write_text(json.dumps(res, indent=1), "utf-8")
+    print(json.dumps(res, indent=1))
+
+
 def stage_agree(out: Path) -> None:
     """human_pairs.answers.json / human_spans.answers.json: lists of booleans in packet order."""
     res = {}
@@ -232,5 +281,6 @@ if __name__ == "__main__":
         "extract": lambda: stage_extract(out, sys.argv[3:]),
         "pairs": lambda: stage_pairs(out),
         "spans": lambda: stage_spans(out),
+        "roles": lambda: stage_roles(out),
         "agree": lambda: stage_agree(out),
     }[stage]()

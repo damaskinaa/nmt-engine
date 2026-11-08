@@ -92,3 +92,10 @@ def test_unanswered_items_are_asked_again(tmp_path):
     assert audit.label_pairs(stubborn, pairs[:1]) == [None]
     assert len(stubborn.prompts) == audit.ROUNDS
     assert len(set(stubborn.prompts)) == audit.ROUNDS  # retries never hit the cache key
+
+
+def test_author_roles_batches_by_category(tmp_path):
+    llm = Scripted(tmp_path, lambda p: {"posts": [{"id": 0, "builder": "I built" in p}]})
+    posts = [("a", "I built this app"), ("b", "looking for an app")]
+    assert audit.author_roles(llm, posts) == [True, False]
+    assert len(llm.prompts) == 2 and "Category: a" in llm.prompts[0]

@@ -139,3 +139,19 @@ Each item gives a job, an element and a verbatim quote labelled as that element:
 For each item answer: is this quote evidence of the element for the job?
 Return {{"items": [{{"id": <item number>, "correct": <true|false>}}, ...]}} with one entry per \
 item."""
+
+
+ROLE_SYSTEM = """You judge who wrote a public post: someone building a product in the given \
+category, or someone using or looking for one. Output JSON only."""
+
+ROLE_PROMPT = """Category: {category}
+
+Each item is a public post (possibly cut short):
+
+{posts}
+
+For each post answer: is the author building, selling or maintaining a product in this category \
+(e.g. its developer, founder or vendor, or someone writing their own tool for it), rather than \
+using or looking for one?
+Return {{"posts": [{{"id": <post number>, "builder": <true|false>}}, ...]}} with one entry per \
+post."""

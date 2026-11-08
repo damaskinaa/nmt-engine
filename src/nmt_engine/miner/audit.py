@@ -155,6 +155,35 @@ def audit_spans(
     return out
 
 
+def author_roles(
+    llm: LLM, posts: Sequence[tuple[str, str]], batch: int = 10, rounds: int = ROUNDS
+) -> list[bool | None]:
+    """Auditor verdict per (category, text) post: True = author builds a product in the category.
+    A diagnostic only; it never enters the pass rule."""
+    out: list[bool | None] = [None] * len(posts)
+    for round_ in range(rounds):
+        by_cat: dict[str, list[int]] = {}
+        for k, (cat, _) in enumerate(posts):
+            if out[k] is None:
+                by_cat.setdefault(cat, []).append(k)
+        for cat, idx in by_cat.items():
+            for chunk in _batched(idx, batch):
+                body = "\n\n".join(f"{n}.\n{posts[k][1]}" for n, k in enumerate(chunk))
+                ans = _answers(
+                    llm,
+                    prompts.ROLE_PROMPT.format(category=cat, posts=body),
+                    prompts.ROLE_SYSTEM,
+                    "audit.roles",
+                    "posts",
+                    "builder",
+                    len(chunk),
+                    round_,
+                )
+                for n, k in enumerate(chunk):
+                    out[k] = ans.get(n)
+    return out
+
+
 def mislabel_rates(spans: Sequence[Span], verdicts: Sequence[bool | None]) -> dict[str, dict]:
     """Per element: audited n, mislabelled k, rate, 95% Wilson interval, excluded flag.
     Spans without an auditor answer are left out of n."""
