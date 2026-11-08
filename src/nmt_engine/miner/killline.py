@@ -77,10 +77,15 @@ def score_v2(run_dir: Path, excluded: frozenset[str] = frozenset()) -> dict:
     for r in table:
         c = clusters.get(r["job_id"], {})
         r["cluster_posts"] = c.get("posts", r["posts"])
+        r["source_ids"] = c.get("source_ids", r["post_ids"])
         r["instances"] = c.get("instances")
     denom = [r for r in table if r["level"] in V2_LEVELS]
     passing = [r for r in denom if r["passes_v2"]]
-    posts_all = sum(r["cluster_posts"] for r in denom)
+
+    def ids(rows: list[dict]) -> set[str]:
+        """Distinct posts behind the rows' clusters (a post can feed several clusters)."""
+        return {s for r in rows for s in r["source_ids"]}
+
     sizes = [r["instances"] for r in table if r["instances"] is not None]
     n_inst = sum(sizes)
     largest = max(sizes, default=0)
@@ -101,9 +106,7 @@ def score_v2(run_dir: Path, excluded: frozenset[str] = frozenset()) -> dict:
         "v2_kinds_share": round(sum(r["passes_v2_kinds"] for r in denom) / len(denom), 4)
         if denom
         else 0.0,
-        "v2_weighted_share": round(sum(r["cluster_posts"] for r in passing) / posts_all, 4)
-        if posts_all
-        else 0.0,
+        "v2_weighted_share": round(len(ids(passing)) / len(ids(denom)), 4) if ids(denom) else 0.0,
         "mixed": len(mixed),
         "levels": dict(sorted(levels.items())),
         "instances": n_inst or None,

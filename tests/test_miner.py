@@ -790,9 +790,15 @@ def test_mine_v2_grouper_writes_clusters_and_v2_scores(tmp_path, monkeypatch):
     assert s["status"] == "ok" and s["grouping"]["method"] == "v2"
     clusters = json.loads((run_dir / "clusters.json").read_text())
     assert sum(c["instances"] for c in clusters) == s["instances"]
+    assert all(len(c["source_ids"]) == c["posts"] for c in clusters)
     v2 = score_v2(run_dir)
     assert v2["jobs"] == len(clusters) and v2["v1_share"] == s["share_passing"]
     assert s["v2"]["v2_share"] == v2["v2_share"] and v2["sizes"] is not None
+    # weighted share counts distinct posts even when one post feeds several clusters
+    for c in clusters:
+        c["source_ids"] = sorted(set(c["source_ids"]) | {"shared"})
+    (run_dir / "clusters.json").write_text(json.dumps(clusters))
+    assert 0.0 <= score_v2(run_dir)["v2_weighted_share"] <= 1.0
     # excluding every element makes nothing pass v2, and leaves v1 untouched
     none = score_v2(run_dir, frozenset(prompts.ELEMENTS))
     assert none["v2_passing"] == 0 and none["v1_share"] == v2["v1_share"]
