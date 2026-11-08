@@ -139,3 +139,17 @@ def test_demote_retracts_calcs_on_dropped_sources(tmp_path):
     assert "S-f1" not in data.sources
     assert all(i.source_id != "S-f1" for c in data.calcs.values() for i in c.inputs)
     assert 7 not in run_gates(run, CFG).failed_gates()
+
+
+def test_demote_composes_simultaneous_defects(tmp_path):
+    import copy
+
+    from tests.fixtures.make_fixtures import clean, d01, d12, d14, write
+
+    fx = copy.deepcopy(clean())
+    for defect in (d01, d12, d14):
+        defect(fx)
+    run = write(fx, tmp_path / "multi", "multi")
+    assert set(run_gates(run, CFG).failed_gates()) >= {1, 12, 14}
+    demote(run, CFG)
+    assert run_gates(run, CFG).passed, run_gates(run, CFG).to_markdown()
