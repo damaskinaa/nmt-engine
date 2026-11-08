@@ -24,7 +24,8 @@ def job_posts(run, job: Job) -> set[str]:
     excluded)."""
     return {
         r.source_id
-        for cid in job.claim_ids + [f"c_{job.id}_{el}" for el in prompts.ELEMENTS]
+        for cid in job.claim_ids
+        + [f"c_{job.id}_{el}" for el in (*prompts.ELEMENTS, *prompts.VALUE_MARKERS)]
         if (c := run.claims.get(cid)) is not None and not c.retracted
         for r in c.source_refs
         if (s := run.sources.get(r.source_id)) is not None and s.kind in TRACE_KINDS
@@ -144,4 +145,6 @@ if __name__ == "__main__":
             done.append(diagnose(Path(p)))
         except (OSError, ValueError, KeyError) as e:
             print(f"skipped {p}: {type(e).__name__}: {e}", file=sys.stderr)
+    if not done:
+        sys.exit("no readable run directories")
     print(md(done))
