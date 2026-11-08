@@ -137,7 +137,8 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
 - **Segments** cluster jobs (average linkage) on 0.5 × statement Jaccard + 0.5 × agreement of the
   top-3 success-criteria priority orders; thin = < 2 voices or < 2 source kinds.
 - **Kill-line metric** is computed after gates: a job counts if ≥ 4 of its 8 element claims are
-  still live PUBLIC_VOICE with a live source, and those sources span ≥ 2 source kinds.
+  still live PUBLIC_VOICE with a live source, and those sources span ≥ 2 source kinds. The denominator
+  is every extracted job, thin ones included (they cannot pass); `thin_jobs` is reported beside it.
 - **Reports** quote only displayable claims (live, evidential status, no gate flag or finding) and
   omit quotes that would trip the validation-language lint rather than rewording them. Cytoscape.js
   3.30.2 (MIT) is vendored in `graph/static/` and inlined, so `graph.html` works offline.

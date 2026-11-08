@@ -10,8 +10,11 @@ from nmt_engine.miner.pipeline import KILL_LINE
 
 
 def killline(run_dirs: list[Path]) -> tuple[str, str]:
-    rows = ["| category | traces | jobs | jobs meeting bar | share | cost (USD) | run time (s) |"]
-    rows.append("|---|---:|---:|---:|---:|---:|---:|")
+    rows = [
+        "| category | traces | jobs | thin jobs | jobs meeting bar | share | cost (USD) "
+        "| run time (s) |"
+    ]
+    rows.append("|---|---:|---:|---:|---:|---:|---:|---:|")
     below = done = 0
     for d in run_dirs:
         p = Path(d) / "mine_summary.json"
@@ -19,13 +22,15 @@ def killline(run_dirs: list[Path]) -> tuple[str, str]:
         cat = s.get("category", Path(d).name)
         if s.get("status") != "ok":
             rows.append(
-                f"| {cat} | {s.get('traces', '-')} | - | - | not run ({s.get('status')}) | - | - |"
+                f"| {cat} | {s.get('traces', '-')} | - | - | - "
+                f"| not run ({s.get('status')}) | - | - |"
             )
             continue
         done += 1
         below += s["share_passing"] < KILL_LINE
         rows.append(
-            f"| {cat} | {s['traces']} | {s['jobs']} | {s['jobs_passing']} | "
+            f"| {cat} | {s['traces']} | {s['jobs']} | {s.get('thin_jobs', '-')} | "
+            f"{s['jobs_passing']} | "
             f"{100 * s['share_passing']:.1f}% | {s['cost_usd']:.2f} | {s['runtime_s']:.0f} |"
         )
     if done < 3:

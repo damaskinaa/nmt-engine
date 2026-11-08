@@ -248,7 +248,10 @@ def mine(
         instances=len(ex.instances),
         jobs=len(table),
         jobs_passing=passing,
+        # PRODUCT.md D1: denominator is every extracted job, thin ones included (a thin job has
+        # < 2 voices or < 2 source kinds, so it can never pass); thin_jobs shows how many.
         share_passing=round(passing / len(table), 4) if table else 0.0,
+        thin_jobs=sum(r["thin"] for r in table),
         segments=len(segs),
         thin_segments=sum(s.thin for s in segs),
         edges=len(parts.edges),

@@ -151,6 +151,7 @@ def test_mine_end_to_end(mined):
     inv = jobs["I want to send invoices to clients"]
     assert not inv.thin and set(inv.consideration_set) >= {"FreshBooks", "Invoice Ninja"}
     assert s["jobs"] == 2 and s["jobs_passing"] == 1 and s["share_passing"] == 0.5
+    assert s["thin_jobs"] == 1
     # sequence edge from the narrated order, product-layer edges from the consideration set
     kinds = {(e.kind, e.layer) for e in run.edges.values()}
     assert ("sequence", "customer") in kinds and ("performs", "product") in kinds
@@ -342,12 +343,13 @@ def test_killline_table(tmp_path):
             "jobs_passing": int(share * 10),
             "share_passing": share,
             "runtime_s": 60,
+            "thin_jobs": 3,
         }
         (d / "mine_summary.json").write_text(json.dumps(s))
         return d
 
     table, verdict = killline([run("a", 0.2), run("b", 0.1), run("c", 0.5)])
-    assert "| a | 500 | 10 | 2 | 20.0% |" in table and verdict.startswith("KILL LINE HIT")
+    assert "| a | 500 | 10 | 3 | 2 | 20.0% |" in table and verdict.startswith("KILL LINE HIT")
     _, verdict = killline([run("d", 0.4), run("e", 0.1), run("f", 0.5)])
     assert verdict.startswith("Kill line passed")
     _, verdict = killline([tmp_path / "missing"])
