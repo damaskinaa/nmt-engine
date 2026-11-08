@@ -408,6 +408,8 @@ def test_graph_json_cannot_break_out_of_script(tmp_path: Path) -> None:
 
     evil = "</SCRIPT><script>alert(1)</script><!--<script>"
     assert "<" not in _script_json({"label": evil})
+    assert "\u2028" not in _script_json({"q": "a\u2028b\u2029c"})
+    assert json.loads(_script_json({"q": "a\u2028b"}))["q"] == "a\u2028b"
     assert json.loads(_script_json({"label": evil}))["label"] == evil
     html = write_graph_html(
         {"nodes": [{"data": {"id": "j", "label": evil}}], "edges": []}, tmp_path / "g.html"

@@ -30,7 +30,13 @@ def cytoscape_js() -> str:
 def _script_json(data: object) -> str:
     """JSON safe to embed in a <script> element."""
     text = json.dumps(data, sort_keys=True)
-    for ch, esc in (("<", "\\u003c"), (">", "\\u003e"), ("&", "\\u0026")):
+    for ch, esc in (
+        ("<", "\\u003c"),
+        (">", "\\u003e"),
+        ("&", "\\u0026"),
+        ("\u2028", "\\u2028"),
+        ("\u2029", "\\u2029"),
+    ):
         text = text.replace(ch, esc)
     return text
 
