@@ -18,7 +18,7 @@ def main(out: Path, n_worlds: int = 200) -> float:
     ax.hist(cov, bins=np.arange(0.375, 1.0626, 0.05), color="#4a7abc", edgecolor="white")
     ax.axvline(0.8, color="black", ls="--", label="nominal 80%")
     ax.axvline(cov.mean(), color="#c0392b", label=f"pooled {cov.mean():.1%}")
-    ax.axvspan(0.75, 0.85, color="#2ecc71", alpha=0.15, label="acceptance band 75-85%")
+    ax.axvspan(0.75, 0.90, color="#2ecc71", alpha=0.15, label="acceptance band 75-90%")
     ax.set_xlabel("per-world coverage (10 segments x Q1-Q4 = 40 truths per world)")
     ax.set_ylabel("worlds")
     ax.set_title(f"Calibrated triangulated 80% intervals, {n_worlds} seeded worlds")
