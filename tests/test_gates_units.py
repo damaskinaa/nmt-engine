@@ -246,12 +246,74 @@ def test_demote_recount_to_one_voice_thins_job(tmp_path):
 
     fx = copy.deepcopy(clean())
     c9 = copy.deepcopy(_by_id(fx["claims"], "C1"))
-    c9.update(id="C9", voices=2, source_refs=c9["source_refs"][:1])
+    c9.update(id="C99", voices=2, source_refs=c9["source_refs"][:1])
     fx["claims"].append(c9)
-    _by_id(fx["jobs"], "J2")["claim_ids"].append("C9")
+    _by_id(fx["jobs"], "J2")["claim_ids"].append("C99")
     run = write(fx, tmp_path / "run", "t")
     assert 2 in run_gates(run, CFG).failed_gates()
     demote(run, CFG)
     data = load_run(run)
-    assert data.claims["C9"].voices == 1 and data.claims["C9"].single_signal
+    assert data.claims["C99"].voices == 1 and data.claims["C99"].single_signal
     assert data.jobs["J2"].thin
+
+
+def test_calc_input_missing_its_period_fails(tmp_path):
+    def m(fx):
+        _by_id(fx["calcs"], "K1")["inputs"][1]["period"] = None
+
+    g4 = next(x for x in failed(tmp_path, m).results if x.gate.number == 4)
+    assert any("unit/period mismatch" in f.message for f in g4.findings)
+
+
+def test_double_count_uses_share_upper_bounds(tmp_path):
+    def m(fx):
+        _by_id(fx["segments"], "SEG1")["population"]["share"] = [0.3, 0.6]
+        _by_id(fx["segments"], "SEG2")["population"]["share"] = [0.2, 0.5]
+
+    assert 6 in failed(tmp_path, m).failed_gates()
+
+
+def test_validation_lint_negation_window():
+    from nmt_engine.gates.g08_validation_lint import offending_sentences
+
+    ok = ["Demand is not yet validated.", "This was never really proven.", "Unvalidated idea."]
+    bad = ["Demand is validated.", "Not cheap, but customers want it and it is proven."]
+    assert all(offending_sentences(s, set()) == [] for s in ok)
+    assert all(offending_sentences(s, set()) for s in bad)
+
+
+def test_store_rejects_conflicting_duplicate_revision(tmp_path):
+    from nmt_engine.store import SchemaError
+
+    store = Store(tmp_path)
+    c = Claim.model_validate(copy.deepcopy(_by_id(clean()["claims"], "C1")))
+    store.append(c)
+    store.append(c)
+    assert store.current("claim")["C1"] == c
+    store.append(c.model_copy(update={"voices": c.voices + 1}))
+    with pytest.raises(SchemaError):
+        store.current("claim")
+
+
+def test_store_keeps_max_revision_regardless_of_order(tmp_path):
+    store = Store(tmp_path)
+    c = Claim.model_validate(copy.deepcopy(_by_id(clean()["claims"], "C1")))
+    store.append(c.model_copy(update={"rev": 2, "voices": 7}))
+    store.append(c.model_copy(update={"rev": 1}))
+    assert store.current("claim")["C1"].voices == 7
+
+
+@pytest.mark.parametrize("kind", ["absolute", "dotdot", "symlink"])
+def test_source_text_stays_inside_run(tmp_path, kind):
+    from nmt_engine.store import load_run
+
+    run = write(copy.deepcopy(clean()), tmp_path / "run", "t")
+    secret = tmp_path / "secret.txt"
+    secret.write_text("private")
+    data = load_run(run)
+    src = next(iter(data.sources.values()))
+    path = {"absolute": str(secret), "dotdot": "../secret.txt", "symlink": "sources/link.txt"}
+    if kind == "symlink":
+        (run / "sources" / "link.txt").symlink_to(secret)
+    assert data.source_text(src.model_copy(update={"text_path": path[kind]})) is None
+    assert data.source_text(src) is not None
