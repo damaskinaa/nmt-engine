@@ -89,6 +89,8 @@ def ted(c: Collector, keyword: str, since: date, limit: int = 50, country: str |
     )
     out = []
     for n in data.get("notices", []):
+        if not n.get("publication-number"):
+            continue
         title = n.get("notice-title") or {}
         title = (
             title.get("eng") or next(iter(title.values()), "") if isinstance(title, dict) else title

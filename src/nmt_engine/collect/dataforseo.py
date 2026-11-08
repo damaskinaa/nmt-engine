@@ -63,11 +63,13 @@ def search_volume(c: Collector, keywords: list[str], geo: str = "IE") -> pd.Data
         for m in r.get("monthly_searches") or [{}]:
             rows.append(
                 {
-                    "keyword": r["keyword"],
+                    "keyword": r.get("keyword"),
                     "search_volume": r.get("search_volume"),
                     "cpc": r.get("cpc"),
                     "competition": r.get("competition"),
-                    "month": f"{m.get('year')}-{m.get('month'):02d}" if m.get("year") else None,
+                    "month": f"{m['year']}-{m['month']:02d}"
+                    if isinstance(m.get("year"), int) and isinstance(m.get("month"), int)
+                    else None,
                     "monthly_volume": m.get("search_volume"),
                     "source_id": src.id if src else None,
                 }

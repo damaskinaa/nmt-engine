@@ -432,6 +432,36 @@ def test_keyed_adapters_refuse_without_keys(tmp_path):
             call()
 
 
+def test_malformed_payloads_skipped(tmp_path, monkeypatch):
+    monkeypatch.setenv("PRODUCTHUNT_TOKEN", "t")
+    monkeypatch.setenv("NMT_PRODUCTHUNT_TERMS_OK", "1")
+    monkeypatch.setenv("DATAFORSEO_LOGIN", "l")
+    monkeypatch.setenv("DATAFORSEO_PASSWORD", "p")
+    ph = {
+        "data": {
+            "posts": {
+                "edges": [{"node": {"name": "x"}}, {"node": {"url": "https://a.example.org"}}]
+            }
+        }
+    }
+    assert (
+        datasets.producthunt_posts(make(tmp_path / "ph", _router({"producthunt": ph})), "x") == []
+    )
+    ted = {"notices": [{"notice-title": {"eng": "No id"}}]}
+    assert procurement.ted(make(tmp_path / "ted", _router({"ted": ted})), "x", SINCE, 5) == []
+    vol = {
+        "tasks": [
+            {
+                "result": [
+                    {"keyword": "k", "monthly_searches": [{"year": 2026}, {"month": 3}]},
+                ]
+            }
+        ]
+    }
+    df = dataforseo.search_volume(make(tmp_path / "dfs", _router({"search_volume": vol})), ["k"])
+    assert df["month"].isna().all()
+
+
 def test_producthunt_needs_terms_flag(tmp_path, monkeypatch):
     monkeypatch.setenv("PRODUCTHUNT_TOKEN", "t")
     with pytest.raises(MissingKeyError):

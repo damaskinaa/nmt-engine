@@ -207,7 +207,9 @@ def producthunt_posts(c: Collector, topic: str, limit: int = 20):
     )
     out = []
     for edge in (data.get("data") or {}).get("posts", {}).get("edges", []):
-        n = edge["node"]
+        n = edge.get("node") or {}
+        if not n.get("url") or not n.get("name"):
+            continue
         src = c.add_source(
             adapter=NAME,
             kind="web",
