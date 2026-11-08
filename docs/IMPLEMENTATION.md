@@ -23,6 +23,10 @@ Precedence when documents disagree: master prompt > ARCHITECTURE > PROTOCOL > PR
 | PROTOCOL §3.5 forecast registry + scoring (hit, log error, Brier) | `src/nmt_engine/synth/forecast.py` |
 | Leakage guard (as-of T) | `src/nmt_engine/synth/leakage.py` |
 | EVPI on method disagreement (go/no-go) | `src/nmt_engine/synth/evpi.py` |
+| Collectors: shared plumbing (cache keyed by request + as-of date, per-host rate limit, retries, forbidden-host refusal, secret redaction, PII masking, Source + retrieval log) | `src/nmt_engine/collect/base.py` |
+| Trace adapters (HN, Stack Exchange, App Store, GitHub, Reddit, YouTube, Wayback, public web; Google Play disabled) | `src/nmt_engine/collect/<adapter>.py`; access basis + terms URL in each module docstring |
+| Official/stats, procurement, search, labour, dataset adapters | `collect/{eurostat,cso,ons,companies_house,sec_edgar,procurement,dataforseo,adzuna,datasets}.py` |
+| `nmt collect` orchestration | `src/nmt_engine/collect/run.py`, `cli.py`; VCR cassettes `tests/cassettes/`, tests `tests/test_collect.py` |
 | Known-truth worlds | `src/nmt_engine/synth/world.py`; histogram `scripts/coverage_histogram.py` → `docs/img/coverage_histogram.png` |
 
 ## Gate → defect → demote action
@@ -85,3 +89,37 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   cells (`world.FALLBACK_CELLS`); each must reach 75–90% coverage over 200 worlds
   (`scripts/coverage_matrix.py` prints the table). The ρ floor makes the true-ρ = 0 cells
   conservative: with honest stated intervals that cell sits near the 90% ceiling.
+- **Collector text is PII-masked.** E-mail addresses and phone numbers in public text are replaced by
+  `[email]` / `[phone]` before the source text is stored (and before cassettes are saved), so quotes
+  are verified against the masked text. Author ids are salted hashes; `nmt collect` refuses to run
+  without `NMT_AUTHOR_SALT` so hashes are reproducible across runs.
+  The phone pattern is deliberately broad: any run of 2–5 digit groups with ≥ 9 digits in total is
+  masked, so the odd long numeric span (e.g. a spaced-out ID) can become `[phone]`. ISO dates,
+  versions and money amounts are not touched. We accept slightly lower quote fidelity in exchange
+  for missing fewer phone numbers; quotes are always verified against the masked text, so
+  receipts stay valid.
+- **Egress control.** Besides the platform denylist, `is_forbidden` refuses loopback, private
+  (RFC 1918 / ULA), link-local (incl. `169.254.169.254` metadata), reserved literal IPs and
+  `localhost` / `.local` / `.internal` names. It applies to every request, every redirect hop and
+  streamed downloads (`Collector.download`). Hostnames are DNS-checked only with
+  `NMT_EGRESS_RESOLVE=1` (off by default so tests stay offline); without it a public name that
+  resolves to a private address is not caught.
+- **Default-deny host list.** A collector only fetches hosts in `base.BUILTIN_HOSTS` (the APIs the
+  built-in adapters call) or passed by the operator (`nmt collect --competitors`, each domain plus
+  its `www.` form, via `Collector.extra_hosts`); anything else raises `HostNotAllowedError` before
+  a request is sent. Redirects are followed only within the same host (plus the one documented
+  hand-off `download.ons.gov.uk` → `static.ons.gov.uk`, `base.REDIRECT_PAIRS`); a redirect to any
+  other host is refused, for `fetch` and `download`. Competitor pages whose apex redirects
+  elsewhere are requested afresh on the `www.` twin (or the apex, for a `www.`
+  domain), under that host's robots.txt. So a hostile DNS answer can only repoint one of
+  these fixed names, never introduce a new one; the opt-in DNS check stays as defence in depth.
+  Cassettes are saved without credential headers,
+  `Set-Cookie`, secret query values or contact details, and a test checks this.
+- **Google Play is disabled** (`collect/googleplay.py`): no terms-compliant review source exists.
+- **Product Hunt** needs `PRODUCTHUNT_TOKEN` *and* `NMT_PRODUCTHUNT_TERMS_OK=1`, because its API terms
+  restrict commercial use; the operator confirms the terms before enabling it.
+- **ONS CSVs above 50 MB** (e.g. ASHE table 3, ~760 MB) are refused; use `ons.observations()` with
+  dimension filters instead.
+- **Keyed adapters** (Reddit, YouTube, GitHub discussions, DataForSEO, Companies House, Adzuna,
+  Product Hunt) are skipped when their keys are missing and tested against mock transports built from
+  the documented response shapes; keyless adapters replay real VCR recordings.

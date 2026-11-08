@@ -36,12 +36,27 @@ known truth to test the maths:
 python scripts/coverage_histogram.py   # 200 worlds -> docs/img/coverage_histogram.png
 ```
 
+## Collect (`nmt collect`)
+
+Lawful public traces and official data only (no LinkedIn, Glassdoor, logged-in pages, G2/Capterra/
+Trustpilot scraping). Adapters missing an optional key (see `.env.example`) are skipped.
+
+```bash
+export NMT_AUTHOR_SALT=...   # required: author ids are stored only as salted hashes
+nmt collect --category "invoicing" --competitors freshbooks.com,invoiceninja.com --geo IE --since 2023-01-01
+```
+
+This writes `sources/`, `store/source.jsonl`, `retrieval_log.jsonl`, an HTTP `cache/` and
+`collect_summary.json` (per-adapter status and trace-source counts). Official-data adapters
+(`eurostat`, `cso`, `ons`, `sec_edgar`, `companies_house`) return pandas frames with a `source_id`
+column pointing at the stored raw payload.
+
 ## Run directory layout
 
 ```
 <run_dir>/
   run_manifest.json        # frozen-input hashes + manifest hash (gate 9)
-  retrieval_log.jsonl      # every fetched source (gate 7)
+  retrieval_log.jsonl      # every fetch and stored source (gate 7)
   sources/<id>.txt         # stored source text, quotes are checked against this (gate 1)
   store/<type>.jsonl       # append-only typed objects; highest rev per id is current
   report.md / *.html       # rendered outputs (gates 8, 10)
@@ -53,6 +68,7 @@ python scripts/coverage_histogram.py   # 200 worlds -> docs/img/coverage_histogr
 pytest --cov=nmt_engine.gates --cov=nmt_engine.synth   # never touches the network
 ruff check . && ruff format --check .
 python tests/fixtures/make_fixtures.py   # regenerate fixtures (a test checks they are in sync)
+NMT_VCR_RECORD=1 pytest tests/test_collect.py   # re-record collector cassettes (delete old ones first)
 ```
 
 `forbidden_corpus/` (git-ignored) holds text that must not appear in `src/`; a test fails on any
