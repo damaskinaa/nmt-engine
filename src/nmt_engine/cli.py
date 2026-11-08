@@ -58,6 +58,10 @@ def collect_cmd(
     competitors: Annotated[str, typer.Option("--competitors", help="a.com,b.com")] = "",
     run_dir: Annotated[Path | None, typer.Option("--run-dir")] = None,
     per_adapter: Annotated[int, typer.Option("--per-adapter")] = 200,
+    stack_sites: Annotated[
+        str, typer.Option("--stack-sites", help="Stack Exchange sites, e.g. webapps,money")
+    ] = "",
+    apps: Annotated[str, typer.Option("--apps", help="App Store app names, e.g. Habitica")] = "",
 ) -> None:
     """Collect lawful public traces for a category into a run folder."""
     from datetime import date
@@ -71,7 +75,10 @@ def collect_cmd(
         geo=geo,
         competitors=[d.strip() for d in competitors.split(",") if d.strip()],
         per_adapter=per_adapter,
+        apps=[a.strip() for a in apps.split(",") if a.strip()],
     )
+    if stack_sites.strip():
+        plan.stack_sites = [s.strip() for s in stack_sites.split(",") if s.strip()]
     slug = "".join(ch if ch.isalnum() else "-" for ch in category.lower()).strip("-")
     out = run_dir or Path("runs") / f"{date.today():%Y%m%d}-{slug}"
     try:

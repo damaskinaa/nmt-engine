@@ -974,3 +974,41 @@ def test_turnover_skips_only_http_errors(tmp_path, monkeypatch):
         return httpx.Response(406)
 
     assert companies_house.turnover(make(tmp_path, handler), "01234567") is None
+
+
+def test_named_app_requires_matching_title(tmp_path):
+    feed = {
+        "feed": {
+            "entry": [
+                {
+                    "im:rating": {"label": "4"},
+                    "title": {"label": "Great"},
+                    "content": {"label": "keeps my streaks honest every single morning"},
+                    "id": {"label": "r1"},
+                    "updated": {"label": "2026-05-01T09:00:00-07:00"},
+                    "author": {"name": {"label": "bob"}},
+                }
+            ]
+        }
+    }
+    search = {"results": [{"trackId": 7, "trackName": "Habitica: Gamified Tasks"}]}
+    c = make(tmp_path, _router({"itunes.apple.com/search": search, "customerreviews": feed}))
+    out = appstore.named_app(c, "Habitica", "ie", 1, SINCE)
+    assert len(out) == 1 and out[0].publisher == "Habitica: Gamified Tasks"
+    with pytest.raises(appstore.NoApp):
+        appstore.named_app(c, "Loop Habit Tracker", "ie", 1, SINCE)
+
+
+def test_plan_runs_named_apps_and_operator_stack_sites(tmp_path):
+    seen = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(str(request.url))
+        return httpx.Response(404, json={})
+
+    c = make(tmp_path, handler)
+    plan = CollectPlan("invoicing", SINCE, "IE", stack_sites=["money"], apps=["FreshBooks"])
+    summary = run_collect(plan, c.run_dir, c)
+    assert summary["adapters"]["appstore:FreshBooks"]["status"] in ("none", "error")
+    assert "stackexchange:money" in summary["adapters"]
+    assert "stackexchange:superuser" not in summary["adapters"]

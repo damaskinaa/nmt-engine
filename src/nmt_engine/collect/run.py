@@ -35,6 +35,8 @@ class CollectPlan:
     geo: str = "IE"
     competitors: list[str] = field(default_factory=list)
     per_adapter: int = 200
+    stack_sites: list[str] = field(default_factory=lambda: list(STACK_SITES))
+    apps: list[str] = field(default_factory=list)  # App Store names, e.g. competitors' apps
 
 
 def _steps(p: CollectPlan) -> list[tuple[str, Callable[[Collector], list]]]:
@@ -50,7 +52,14 @@ def _steps(p: CollectPlan) -> list[tuple[str, Callable[[Collector], list]]]:
         ("procurement:contracts_finder", lambda c: procurement.contracts_finder(c, q, p.since)),
         ("dataforseo:autocomplete", lambda c: _dfs(c, q, p.geo)),
     ]
-    for site in STACK_SITES:
+    for name in p.apps:
+        steps.append(
+            (
+                f"appstore:{name}",
+                lambda c, a=name: appstore.named_app(c, a, p.geo.lower(), 2, p.since),
+            )
+        )
+    for site in p.stack_sites:
         steps.append(
             (
                 f"stackexchange:{site}",
@@ -91,6 +100,8 @@ def run_collect(plan: CollectPlan, run_dir: Path, collector: Collector | None = 
             summary["adapters"][name] = {"status": "ok", "sources": len(step(c))}
         except MissingKeyError as exc:
             summary["adapters"][name] = {"status": "skipped", "reason": str(exc)}
+        except appstore.NoApp as exc:
+            summary["adapters"][name] = {"status": "none", "reason": str(exc)}
         except (httpx.HTTPError, ValueError, KeyError, PermissionError) as exc:
             summary["adapters"][name] = {
                 "status": "error",

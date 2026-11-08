@@ -66,7 +66,10 @@ def page(c: Collector, url: str, kind: str = "web", terms_url: str | None = None
     )
 
 
-def competitor_pages(c: Collector, domain: str, paths=("pricing", "changelog")):
+PAGE_KIND = {"pricing": "pricing", "features": "web", "docs": "web", "changelog": "changelog"}
+
+
+def competitor_pages(c: Collector, domain: str, paths=("pricing", "features", "docs", "changelog")):
     """Fetch common public pages for a competitor domain; skips missing or disallowed pages.
 
     Redirects never leave the requested host, so when the apex redirects elsewhere the page is
@@ -75,7 +78,7 @@ def competitor_pages(c: Collector, domain: str, paths=("pricing", "changelog")):
     hosts = [domain, domain[4:] if domain.startswith("www.") else f"www.{domain}"]
     out = []
     for path in paths:
-        kind = "pricing" if path == "pricing" else "changelog"
+        kind = PAGE_KIND[path]  # only pricing, features, docs and changelog pages are fetched
         for host in hosts:
             try:
                 src = page(c, f"https://{host}/{path}", kind=kind)
