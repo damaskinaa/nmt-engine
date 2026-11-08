@@ -660,6 +660,14 @@ def test_download_follows_redirects_with_host_checks(tmp_path):
         c.download("https://evil.example.org/d.zip", "t", tmp_path / "e.zip")
 
 
+def test_redirect_without_location_is_an_http_error(tmp_path):
+    c = make(tmp_path, lambda req: httpx.Response(302))
+    with pytest.raises(httpx.HTTPStatusError):
+        c.fetch("https://a.example.org/x", "t")
+    with pytest.raises(httpx.HTTPStatusError):
+        c.download("https://a.example.org/d.zip", "t", tmp_path / "d.zip")
+
+
 def test_redirect_followed_to_allowed_host(tmp_path):
     def handler(req):
         if req.url.path == "/old":

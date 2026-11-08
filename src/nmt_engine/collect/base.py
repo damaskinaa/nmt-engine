@@ -210,7 +210,7 @@ class Collector:
                     break
                 time.sleep(float(resp.headers.get("Retry-After", 2**attempt)))
             assert resp is not None
-            if not resp.is_redirect:
+            if not resp.has_redirect_location:
                 return resp
             prev = resp.url
             url = str(prev.join(resp.headers["Location"]))
@@ -234,7 +234,7 @@ class Collector:
             host = urlparse(url).hostname or ""
             self._wait(host)
             with self.client.stream("GET", url, follow_redirects=False) as resp:
-                if resp.is_redirect:
+                if resp.has_redirect_location:
                     url = str(resp.url.join(resp.headers["Location"]))
                     continue
                 self._log(url, host, adapter, resp.status_code, None, None)
