@@ -9,6 +9,7 @@ forbidden host.
 from __future__ import annotations
 
 import hashlib
+import ipaddress
 import json
 import os
 import re
@@ -75,9 +76,26 @@ def scrub_payload(text: str) -> str:
     return json.dumps(_scrub_json(data), ensure_ascii=False)
 
 
+_INTERNAL_SUFFIXES = (".localhost", ".local", ".internal", ".home.arpa")
+
+
+def is_internal_host(host: str) -> bool:
+    """Loopback, private, link-local (e.g. cloud metadata) or reserved literal IPs and
+    local-only names. Hostnames are not resolved, so tests stay offline."""
+    host = host.lower().strip("[]").rstrip(".")
+    if not host or host == "localhost" or host.endswith(_INTERNAL_SUFFIXES):
+        return True
+    try:
+        ip = ipaddress.ip_address(host)
+    except ValueError:
+        return False
+    return not ip.is_global or ip.is_multicast
+
+
 def is_forbidden(url: str) -> bool:
+    """Denylisted platforms, and any internal/non-public host (egress control)."""
     host = (urlparse(url).hostname or "").lower()
-    return any(f in host for f in FORBIDDEN_HOSTS)
+    return any(f in host for f in FORBIDDEN_HOSTS) or is_internal_host(host)
 
 
 SECRET_PARAMS = frozenset(

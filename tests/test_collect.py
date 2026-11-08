@@ -584,6 +584,33 @@ def test_redirect_to_forbidden_host_refused(tmp_path):
     assert seen == ["short.example.org"]
 
 
+@pytest.mark.parametrize(
+    "url",
+    [
+        "http://169.254.169.254/latest/meta-data/",
+        "http://localhost:8080/",
+        "http://10.0.0.5/",
+        "http://192.168.1.1/",
+        "http://[::1]/",
+        "http://intranet.internal/",
+    ],
+)
+def test_internal_hosts_refused(tmp_path, url):
+    seen = []
+    c = make(tmp_path, lambda req: seen.append(req) or httpx.Response(200, text="x"))
+    with pytest.raises(ForbiddenHostError):
+        c.fetch(url, "t")
+    assert not seen
+
+
+def test_redirect_to_internal_host_refused(tmp_path):
+    def handler(req):
+        return httpx.Response(302, headers={"Location": "http://169.254.169.254/latest/"})
+
+    with pytest.raises(ForbiddenHostError):
+        make(tmp_path, handler).fetch("https://a.example.org/x", "t")
+
+
 def test_redirect_followed_to_allowed_host(tmp_path):
     def handler(req):
         if req.url.path == "/old":
