@@ -136,8 +136,12 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   `temperature=0`; TensorX does not document `seed`, so none is sent and **reruns are deterministic
   only through the prompt-hash cache** (`cache/llm/`, keyed on provider, base URL, model, system,
   prompt, max_tokens and JSON mode). On 429/5xx the client honours `retry-after`, else waits 5 s
-  doubling (±20% jitter) up to 60 s. `max_tokens` stays 4096, not the context size, so it does not
-  reserve TPM; the miner sends 8 traces per extraction request.
+  doubling (±20% jitter) up to 60 s. `max_tokens` defaults to 4096 (`NMT_LLM_MAX_TOKENS`), not the
+  context size, so it does not reserve TPM; the miner sends 8 traces per extraction request.
+  Reasoning models (GLM-5.3 returns `reasoning_content`) spend completion tokens on thinking, so
+  they need a larger `NMT_LLM_MAX_TOKENS`. An answer cut off at the limit (`finish_reason=length`)
+  is logged and billed with `"truncated": true`, never cached, and raised as `LLMError`, so the
+  batch counts as failed instead of being parsed from half a JSON document.
 - **Cross-vendor auditor.** `llm.auditor_model()` picks the auditor/council model
   (`NMT_LLM_AUDITOR_MODEL`, else Kimi for a GLM producer and GLM for any other) and raises if it is
   from the producer's vendor family (`vendor/` prefix of the model id). `RunManifest.model_vendor`

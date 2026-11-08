@@ -14,7 +14,7 @@ import pytest
 from nmt_engine.collect.base import Collector
 from nmt_engine.gates import GateConfig, run_gates
 from nmt_engine.graph import score
-from nmt_engine.llm import LLM, LLMDisabled
+from nmt_engine.llm import LLM, LLMDisabled, LLMError
 from nmt_engine.miner.graph_build import criteria_similarity, search_queries, wilson
 from nmt_engine.miner.killline import killline
 from nmt_engine.miner.pipeline import mine
@@ -435,6 +435,34 @@ def _openai(log, responses=None):
         )
 
     return httpx.Client(transport=httpx.MockTransport(handler))
+
+
+def test_truncated_answer_is_billed_but_not_cached(tmp_path, monkeypatch):
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    monkeypatch.setenv("NMT_LLM_MAX_TOKENS", "512")
+    cut = httpx.Response(
+        200,
+        json={
+            "choices": [{"message": {"content": '{"jobs": ['}, "finish_reason": "length"}],
+            "usage": {"prompt_tokens": 100, "completion_tokens": 512},
+        },
+    )
+    seen: list = []
+    llm = LLM(
+        tmp_path / "run",
+        provider="openai",
+        model="z-ai/glm-5.3",
+        base_url="https://api.tensorx.ai/v1",
+        cache_dir=tmp_path / "c",
+        client=_openai(seen, [cut]),
+    )
+    with pytest.raises(LLMError, match="max_tokens=512"):
+        llm.complete("p")
+    assert json.loads(seen[0].content)["max_completion_tokens"] == 512
+    assert llm.calls == 1 and llm.cost > 0
+    assert json.loads((tmp_path / "run" / "llm_log.jsonl").read_text())["truncated"] is True
+    assert llm.complete("p") == '{"ok": true}'  # retried, not replayed from cache
+    assert len(seen) == 2
 
 
 def test_tensorx_base_url_key_json_mode_and_log(tmp_path, monkeypatch):

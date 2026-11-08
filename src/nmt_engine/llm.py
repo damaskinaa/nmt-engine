@@ -133,7 +133,7 @@ class LLM:
     no_llm: bool = False
     cache_dir: Path | None = None
     client: httpx.Client | None = None
-    max_tokens: int = 4096
+    max_tokens: int = field(default_factory=lambda: int(os.environ.get("NMT_LLM_MAX_TOKENS", 4096)))
     retries: int = 6
     sleep: Callable[[float], None] = time.sleep
     calls: int = 0
@@ -191,7 +191,10 @@ class LLM:
         key = os.environ.get(self.key_env)
         if not key:
             raise LLMDisabled(f"${self.key_env} is not set")
-        text, t_in, t_out = self._call(key, system, prompt, json_mode)
+        text, t_in, t_out, truncated = self._call(key, system, prompt, json_mode)
+        if truncated:  # billed, never cached: a cut-off answer must not be replayed
+            self._log(purpose, phash, t_in, t_out, cached=False, truncated=True)
+            raise LLMError(f"{self.host} answer cut off at max_tokens={self.max_tokens}")
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         hit = {"text": text, "tokens_in": t_in, "tokens_out": t_out, "model": self.model}
         cached.write_text(json.dumps(hit, ensure_ascii=False), "utf-8")
@@ -205,7 +208,9 @@ class LLM:
     def complete_json(self, prompt: str, system: str = "", purpose: str = "") -> Any:
         return parse_json(self.complete(prompt, system, purpose, json_mode=True))
 
-    def _call(self, key: str, system: str, prompt: str, json_mode: bool) -> tuple[str, int, int]:
+    def _call(
+        self, key: str, system: str, prompt: str, json_mode: bool
+    ) -> tuple[str, int, int, bool]:
         if self.client is None:
             self.client = httpx.Client(timeout=180)  # one pooled client per LLM, reused
         client = self.client
@@ -244,12 +249,17 @@ class LLM:
         if self.provider == "anthropic":
             text = "".join(b.get("text", "") for b in data.get("content", []))
             usage = data.get("usage", {})
-            return text, int(usage.get("input_tokens", 0)), int(usage.get("output_tokens", 0))
+            cut = data.get("stop_reason") == "max_tokens"
+            return text, int(usage.get("input_tokens", 0)), int(usage.get("output_tokens", 0)), cut
         usage = data.get("usage", {})
-        text = data["choices"][0]["message"]["content"] or ""
-        return text, int(usage.get("prompt_tokens", 0)), int(usage.get("completion_tokens", 0))
+        choice = data["choices"][0]
+        text = choice["message"]["content"] or ""
+        cut = choice.get("finish_reason") == "length"
+        return text, int(usage.get("prompt_tokens", 0)), int(usage.get("completion_tokens", 0)), cut
 
-    def _log(self, purpose: str, phash: str, t_in: int, t_out: int, cached: bool) -> None:
+    def _log(
+        self, purpose: str, phash: str, t_in: int, t_out: int, cached: bool, truncated=False
+    ) -> None:
         cost = 0.0 if cached else cost_usd(self.model or "", t_in, t_out)
         self.calls += 0 if cached else 1
         self.cost += cost or 0.0
@@ -266,6 +276,8 @@ class LLM:
             "cost_usd": cost,
             "cached": cached,
         }
+        if truncated:
+            entry["truncated"] = True
         self.run_dir.mkdir(parents=True, exist_ok=True)
         with (self.run_dir / "llm_log.jsonl").open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(entry) + "\n")
