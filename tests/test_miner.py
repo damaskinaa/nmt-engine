@@ -281,6 +281,14 @@ def test_mine_keeps_configured_manifest_metadata(mined, tmp_path):
     assert after.frozen and after.stage == "S4"
 
 
+def test_trace_limit_zero_means_none_and_none_means_all(mined):
+    from nmt_engine.miner.extract import load_traces
+
+    run = load_run(mined[0])
+    assert load_traces(run, limit=0) == []
+    assert len(load_traces(run, limit=None)) > len(load_traces(run, limit=1)) == 1
+
+
 class BrokenLLM(LLM):
     def complete(
         self, prompt: str, system: str = "", purpose: str = "", json_mode=False, check=None

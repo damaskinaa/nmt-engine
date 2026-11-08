@@ -195,4 +195,4 @@ def load_traces(run, kinds: tuple[str, ...] = TRACE_KINDS, limit: int | None = N
         text = run.source_text(src)
         if text and len(text.strip()) >= MIN_CHARS:
             out.append(Trace(src, text))
-    return out[:limit] if limit else out
+    return out if limit is None else out[:limit]
