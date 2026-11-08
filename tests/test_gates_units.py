@@ -277,7 +277,12 @@ def test_validation_lint_negation_window():
     from nmt_engine.gates.g08_validation_lint import offending_sentences
 
     ok = ["Demand is not yet validated.", "This was never really proven.", "Unvalidated idea."]
-    bad = ["Demand is validated.", "Not cheap, but customers want it and it is proven."]
+    ok.append("Demand has not so far been validated.")
+    bad = [
+        "Demand is validated.",
+        "Not cheap, but customers want it and it is proven.",
+        "There is no doubt customers want this.",
+    ]
     assert all(offending_sentences(s, set()) == [] for s in ok)
     assert all(offending_sentences(s, set()) for s in bad)
 
