@@ -260,6 +260,27 @@ def test_rerun_replaces_previous_mine(mined, tmp_path):
     assert again["jobs"] == first["jobs"] and again["share_passing"] == first["share_passing"]
 
 
+def test_mine_keeps_configured_manifest_metadata(mined, tmp_path):
+    from nmt_engine.schema import RunManifest
+
+    run_dir, _ = mined
+    path = run_dir / "run_manifest.json"
+    m = RunManifest.model_validate_json(path.read_text("utf-8"))
+    configured = {
+        "purpose": "own_portfolio",
+        "method_module": "A",
+        "reviewer_vendor": "qwen",
+        "gates": {"g01": "pass"},
+        "outputs": ["report.html"],
+    }
+    path.write_text(m.model_copy(update=configured).model_dump_json(), "utf-8")
+    cfg = GateConfig(forbidden_corpus=None)
+    mine(run_dir, "invoicing", FakeLLM(run_dir, cache_dir=tmp_path / "c2"), cfg=cfg)
+    after = RunManifest.model_validate_json(path.read_text("utf-8"))
+    assert {k: getattr(after, k) for k in configured} == configured
+    assert after.frozen and after.stage == "S4"
+
+
 class BrokenLLM(LLM):
     def complete(
         self, prompt: str, system: str = "", purpose: str = "", json_mode=False, check=None

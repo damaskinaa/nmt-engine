@@ -48,16 +48,20 @@ def write_manifest(run_dir: Path, frozen: list[Path], seed: int, vendor: str | N
     files = [
         FrozenFile(path=str(p.relative_to(run_dir)), sha256=sha256_file(p)) for p in sorted(frozen)
     ]
-    m = RunManifest(
-        run_id=run_dir.name,
-        stage="S4",
-        seed=seed,
-        created_at=datetime.now(UTC),
-        frozen=files,
-        manifest_sha256=manifest_hash(files),
-        model_vendor=vendor,
-    )
-    (run_dir / "run_manifest.json").write_text(m.model_dump_json(indent=2), "utf-8")
+    path = run_dir / "run_manifest.json"
+    mine_owned = {
+        "stage": "S4",
+        "seed": seed,
+        "created_at": datetime.now(UTC),
+        "frozen": files,
+        "manifest_sha256": manifest_hash(files),
+        "model_vendor": vendor,
+    }
+    if path.is_file():
+        m = RunManifest.model_validate_json(path.read_text("utf-8")).model_copy(update=mine_owned)
+    else:
+        m = RunManifest(run_id=run_dir.name, **mine_owned)
+    path.write_text(m.model_dump_json(indent=2), "utf-8")
 
 
 MINED_TYPES = ("claim", "job", "edge", "segment")
