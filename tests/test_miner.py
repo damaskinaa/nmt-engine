@@ -66,7 +66,9 @@ class FakeLLM(LLM):
     """Deterministic stand-in: proposes spans by keyword from each post, plus one invented
     span per job that the verbatim check must reject."""
 
-    def complete(self, prompt: str, system: str = "", purpose: str = "", json_mode=False) -> str:
+    def complete(
+        self, prompt: str, system: str = "", purpose: str = "", json_mode=False, check=None
+    ) -> str:
         if self.no_llm:
             raise LLMDisabled("--no-llm")
         self.calls += 1
@@ -224,7 +226,9 @@ def test_sources_failing_gates_are_dropped_before_mining(tmp_path, monkeypatch):
 
 
 class InvoicesOnlyLLM(FakeLLM):
-    def complete(self, prompt: str, system: str = "", purpose: str = "", json_mode=False) -> str:
+    def complete(
+        self, prompt: str, system: str = "", purpose: str = "", json_mode=False, check=None
+    ) -> str:
         out = json.loads(super().complete(prompt, system, purpose))
         for p in out.get("posts", []):
             p["jobs"] = [j for j in p["jobs"] if "invoices" in j["statement"]]
@@ -257,7 +261,9 @@ def test_rerun_replaces_previous_mine(mined, tmp_path):
 
 
 class BrokenLLM(LLM):
-    def complete(self, prompt: str, system: str = "", purpose: str = "", json_mode=False) -> str:
+    def complete(
+        self, prompt: str, system: str = "", purpose: str = "", json_mode=False, check=None
+    ) -> str:
         from nmt_engine.llm import LLMError
 
         raise LLMError("HTTP 500")
