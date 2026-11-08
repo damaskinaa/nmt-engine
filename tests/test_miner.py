@@ -473,3 +473,16 @@ def test_graph_payload_skips_performs_edges_without_solution(mined):
     shown = {c for e in run.edges.values() for c in e.claim_ids}
     g = graph_payload(run, shown, {}, {}, solutions={})
     assert g["consideration_sets"] == {}
+
+
+def test_higher_job_links_cannot_cycle():
+    from types import SimpleNamespace
+
+    from nmt_engine.miner.graph_build import _reaches
+
+    def bj(higher=None):
+        return SimpleNamespace(job=SimpleNamespace(higher_job_id=higher))
+
+    by_id = {"a": bj("b"), "b": bj("c"), "c": bj()}
+    assert _reaches("b", "a", by_id) is False  # b -> c never returns to a
+    assert _reaches("a", "c", by_id) is True  # so c.higher = a would close a cycle

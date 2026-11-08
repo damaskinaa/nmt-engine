@@ -112,6 +112,18 @@ def edge_costs(bj: BuiltJob) -> tuple[tuple[float, float], EdgeCosts]:
     return (round(1 - hi, 6), round(1 - lo, 6)), EdgeCosts(negative_emotion=neg, tax_jobs=tax)
 
 
+def _reaches(start: str, target: str, by_id: dict[str, BuiltJob]) -> bool:
+    """True if following higher_job_id links from `start` arrives at `target` (would cycle)."""
+    seen: set[str] = set()
+    cur: str | None = start
+    while cur and cur not in seen:
+        if cur == target:
+            return True
+        seen.add(cur)
+        cur = by_id[cur].job.higher_job_id if cur in by_id else None
+    return False
+
+
 def _edge_id(kind: str, a: str, b: str) -> str:
     return f"e_{kind}_" + sha256_text(f"{a}>{b}")[:12]
 
@@ -168,7 +180,7 @@ def build_edges(
             s = max((jaccard(tokens(g), tokens(other.job.statement)) for g in goals), default=0)
             if s >= score:
                 best, score = other, s
-        if best is not None:
+        if best is not None and not _reaches(best.job.id, b.job.id, by_id):
             b.job.higher_job_id = best.job.id
             hc = [b.claims["higher_goal"].id] if "higher_goal" in b.claims else claim(b)
             add("hierarchy", b.job.id, best.job.id, "customer", hc)
