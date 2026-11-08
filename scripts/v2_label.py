@@ -105,10 +105,8 @@ def stage_pairs(out: Path) -> None:
     if len(lab) < len(rows):
         sys.exit(f"{len(rows) - len(lab)} pairs still unlabelled; t* needs all {len(rows)}")
     th = cl.choose_threshold([r["distance"] for r in lab], [r["same"] for r in lab])
-    labelled = [i for i, r in enumerate(rows) if r["same"] is not None]
-    blind = audit.blind_sample(
-        len(rows), 30, SEED + 1, [i for i in range(len(rows)) if i not in labelled]
-    )
+    missing = [i for i, r in enumerate(rows) if r["same"] is None]  # empty past the check above
+    blind = audit.blind_sample(len(rows), 30, SEED + 1, missing)
     summary = {
         "pairs": len(rows),
         "labelled": len(lab),

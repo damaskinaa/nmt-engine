@@ -23,7 +23,10 @@ PREREG = Path(__file__).resolve().parents[1] / "docs" / "PREREG_killline_v2.md"
 
 
 def summary(d: Path) -> dict:
-    return json.loads((d / "mine_summary.json").read_text("utf-8"))
+    f = d / "mine_summary.json"
+    if not f.is_file():
+        sys.exit(f"missing {f}: run scripts/v2_ablate.sh first")
+    return json.loads(f.read_text("utf-8"))
 
 
 def cost(s: dict) -> float:
@@ -77,8 +80,10 @@ def main(labels: Path, abl: Path) -> None:
         ok = lambda v: None if v["over_merged"] else v["v2_share"]  # noqa: E731
         raw[name] = ok(v4)
         r4[name] = None if broad.get(name, 0) > 3 else raw[name]
-        lo[name] = ok(score_v2(abl / f"r34lo-{name}", excluded))
-        hi[name] = ok(score_v2(abl / f"r34hi-{name}", excluded))
+        dlo, dhi = abl / f"r34lo-{name}", abl / f"r34hi-{name}"
+        summary(dlo), summary(dhi)
+        lo[name] = ok(score_v2(dlo, excluded))
+        hi[name] = ok(score_v2(dhi, excluded))
         tops[name] = v4["top"]
         extra.append((name, s34, v4))
     # Robustness compares the three thresholds under one rule (no specificity review, which
