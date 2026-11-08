@@ -467,6 +467,22 @@ def test_tensorx_base_url_key_json_mode_and_log(tmp_path, monkeypatch):
     assert len(seen) == 2 and "response_format" not in json.loads(seen[1].content)
 
 
+def test_cache_is_per_endpoint(tmp_path, monkeypatch):
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    seen: list = []
+    for base in ("https://api.tensorx.ai/v1", "https://api.tensorx.ai/v2"):
+        llm = LLM(
+            tmp_path / "run",
+            provider="openai",
+            model="z-ai/glm-5.3",
+            base_url=base,
+            cache_dir=tmp_path / "c",
+            client=_openai(seen),
+        )
+        llm.complete("same prompt")
+    assert [r.url.path for r in seen] == ["/v1/chat/completions", "/v2/chat/completions"]
+
+
 def test_default_openai_host_still_uses_openai_key(tmp_path, monkeypatch):
     monkeypatch.delenv("NMT_LLM_BASE_URL", raising=False)
     monkeypatch.setenv("TENSORX_API_KEY", "tx")

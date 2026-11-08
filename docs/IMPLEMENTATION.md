@@ -134,7 +134,7 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
   JSON calls send `response_format={"type": "json_object"}` (TensorX documents it; `json_schema`
   is not documented), but `parse_json` and the verbatim-span check remain the real guard.
   `temperature=0`; TensorX does not document `seed`, so none is sent and **reruns are deterministic
-  only through the prompt-hash cache** (`cache/llm/`, keyed on provider, host, model, system,
+  only through the prompt-hash cache** (`cache/llm/`, keyed on provider, base URL, model, system,
   prompt, max_tokens and JSON mode). On 429/5xx the client honours `retry-after`, else waits 5 s
   doubling (±20% jitter) up to 60 s. `max_tokens` stays 4096, not the context size, so it does not
   reserve TPM; the miner sends 8 traces per extraction request.

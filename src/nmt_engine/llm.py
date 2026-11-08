@@ -179,7 +179,7 @@ class LLM:
             "max_tokens": self.max_tokens,
         }
         if self.base_url != DEFAULT_BASE_URL[self.provider]:
-            req["host"] = self.host
+            req["base_url"] = self.base_url
         if json_mode:
             req["json_mode"] = True
         phash = sha256_text(canonical_json(req))
