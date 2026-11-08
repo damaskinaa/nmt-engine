@@ -101,8 +101,9 @@ Demotion never edits a line: it appends a new revision (`rev + 1`) with a `flags
 - **Egress control.** Besides the platform denylist, `is_forbidden` refuses loopback, private
   (RFC 1918 / ULA), link-local (incl. `169.254.169.254` metadata), reserved literal IPs and
   `localhost` / `.local` / `.internal` names. It applies to every request, every redirect hop and
-  streamed downloads (`Collector.download`). Hostnames are not DNS-resolved, so tests stay offline
-  and a public name that resolves to a private address is not caught. Competitor domains are given
+  streamed downloads (`Collector.download`). Hostnames are DNS-checked only with
+  `NMT_EGRESS_RESOLVE=1` (off by default so tests stay offline); without it a public name that
+  resolves to a private address is not caught. Competitor domains are given
   by the operator, not taken from untrusted input. Cassettes are saved without credential headers,
   `Set-Cookie`, secret query values or contact details, and a test checks this.
 - **Google Play is disabled** (`collect/googleplay.py`): no terms-compliant review source exists.
