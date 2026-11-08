@@ -195,6 +195,8 @@ def joint_calibration(
     ids = [c.case for c in cases]
     if len(set(ids)) != len(ids):
         raise ValueError("joint reference cases need unique case ids")
+    if as_of is not None and (late := [c.case for c in cases if c.as_of > as_of]):
+        raise LeakageError(f"backtest cases dated after {as_of}: {late}")
     counts = Counter(f for c in cases for f in c.predicted)
     families = sorted(f for f, k in counts.items() if k >= 2)  # rest: uncalibrated, not pooled
     cals = {

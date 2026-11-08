@@ -151,6 +151,11 @@ def test_sparse_family_is_left_uncalibrated_not_fatal():
     one = cases[0].model_copy(update={"predicted": {**cases[0].predicted, "behavioural": 1.0}})
     joint, cals = joint_calibration("J", "Q1", "r", "<=T", [one, *cases[1:]])
     assert set(cals) == F3 and "behavioural" not in joint.families
+    late = one.model_copy(
+        update={"case": "late", "as_of": date(2030, 1, 1), "predicted": {"behavioural": 1.0}}
+    )
+    with pytest.raises(LeakageError):
+        joint_calibration("J", "Q1", "r", "<=T", [late, *cases], as_of=date(2029, 1, 1))
 
 
 def test_no_passed_family_pools_all_with_rho_one():
