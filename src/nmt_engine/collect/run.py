@@ -119,8 +119,6 @@ def run_collect(plan: CollectPlan, run_dir: Path, collector: Collector | None = 
     kinds = Counter(s.kind for s in live)
     summary["sources_by_kind"] = dict(sorted(kinds.items()))
     summary["sources_by_family"] = dict(sorted(Counter(s.evidence_family for s in live).items()))
-    summary["trace_sources"] = sum(
-        v for k, v in kinds.items() if k in {"review", "forum", "qa", "issue", "web"}
-    )
+    summary["trace_sources"] = sum(1 for s in live if s.customer_voice)
     (Path(run_dir) / "collect_summary.json").write_text(json.dumps(summary, indent=2), "utf-8")
     return summary
