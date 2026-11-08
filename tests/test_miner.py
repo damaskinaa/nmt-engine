@@ -437,6 +437,11 @@ def _openai(log, responses=None):
     return httpx.Client(transport=httpx.MockTransport(handler))
 
 
+def test_blank_max_tokens_env_uses_default(tmp_path, monkeypatch):
+    monkeypatch.setenv("NMT_LLM_MAX_TOKENS", "")
+    assert LLM(tmp_path, no_llm=True, cache_dir=tmp_path / "c").max_tokens == 4096
+
+
 def test_truncated_answer_is_billed_but_not_cached(tmp_path, monkeypatch):
     monkeypatch.setenv("TENSORX_API_KEY", "tx")
     monkeypatch.setenv("NMT_LLM_MAX_TOKENS", "512")

@@ -133,7 +133,9 @@ class LLM:
     no_llm: bool = False
     cache_dir: Path | None = None
     client: httpx.Client | None = None
-    max_tokens: int = field(default_factory=lambda: int(os.environ.get("NMT_LLM_MAX_TOKENS", 4096)))
+    max_tokens: int = field(
+        default_factory=lambda: int(os.environ.get("NMT_LLM_MAX_TOKENS") or 4096)
+    )
     retries: int = 6
     sleep: Callable[[float], None] = time.sleep
     calls: int = 0
