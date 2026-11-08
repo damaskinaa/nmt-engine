@@ -1,0 +1,12 @@
+r12-habit-tracker exit=0 103s
+r12-feature-flags exit=0 104s
+r34-feature-flags exit=0 8s
+r34-habit-tracker exit=0 89s
+r34lo-feature-flags exit=0 96s
+r12-invoicing exit=0 229s
+r34lo-habit-tracker exit=0 43s
+r34-invoicing exit=0 90s
+r34hi-feature-flags exit=0 109s
+r34hi-habit-tracker exit=0 179s
+r34lo-invoicing exit=0 95s
+r34hi-invoicing exit=0 117s

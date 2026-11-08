@@ -1,0 +1,5157 @@
+[
+ {
+  "job_id": "job_b5da2d6a81fe",
+  "name": "I want to toggle features at runtime without redeploying",
+  "instances": 5,
+  "posts": 5,
+  "source_ids": [
+   "S-4efc3786f84b50ab",
+   "S-77820b00a0aba1ae",
+   "S-7ebd7b390d8e75a4",
+   "S-98fcd6b3adef8a34",
+   "S-ccdf438935a9fffb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 5
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_01713c638548",
+  "name": "I want to remove feature flags that are no longer needed",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-09629195f5725c5a",
+   "S-5127658210869f15",
+   "S-a249e6a787fb4201"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2e7204a5eb88",
+  "name": "I want to ship features behind flags",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-1663f74b746912c3",
+   "S-482683365a43b146",
+   "S-5127658210869f15"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2,
+   "big": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_42ee549cc0fa",
+  "name": "I want to use feature flags independently of telemetry",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-40709aaa6344f1ba",
+   "S-51ff6b152a29c534",
+   "S-d5ac614098cf0ae2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_248bc794401a",
+  "name": "I want to run feature flags self-hosted without seat limits or complex infrastructure",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-6642de722e5bde1d",
+   "S-6c80f5b94e498e70",
+   "S-6fbf4cd8c9ce23c0"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "core": 1,
+   "big": 2
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_e7f175653cf0",
+  "name": "I want to automate removal of stale feature flags",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-68c3e464b7657fed",
+   "S-c82a4d26d95ca31c",
+   "S-e54236069d957cdc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2,
+   "big": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_40cca1b88dff",
+  "name": "I want to delete feature flags once their work has shipped",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-0120158567aef37b",
+   "S-300d3ce6b89a0f89"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1d921ee1905d",
+  "name": "I want to avoid per-user or per-MAU feature flag pricing",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-016469c2a9f56dfa",
+   "S-6eb09615d2bbc02c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_355d63de3a9e",
+  "name": "I want to adopt feature flags to release features gradually",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-15dd699cd62116a9",
+   "S-fe8ae6e1bc772a65"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0220e78477ba",
+  "name": "I want to turn features on and off for specific users or tenants",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-1873a47efe643891",
+   "S-8f6a57c1f1e65a58"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ac7ef25656c1",
+  "name": "I want to roll out features progressively to manage risk",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-1873a47efe643891",
+   "S-ccdf438935a9fffb"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_aa7c50285f20",
+  "name": "I want to toggle risky functionality on and off quickly without a restart",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-206ca36dcedd109a",
+   "S-2de9ee30599f668e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b0612d221592",
+  "name": "I want to update mocks to reflect changed feature flag configuration",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-32391465a13e091b",
+   "S-beecb9f3c03e20f3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6d7ecdc3fb04",
+  "name": "I want a UI to manage .NET feature flags",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-3cb5af264686ed2e",
+   "S-417cf65462b2cc46"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_16d72c8eeddf",
+  "name": "I want to remove feature flags once the feature is stable",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-7bb48ee2f949a1ec",
+   "S-ab7a070a6d5a2dfb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1,
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_397e2c22da7c",
+  "name": "I want to toggle flags per organization",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-bc0d7a575cd288b5",
+   "S-d57a29db79149816"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2c352c51b201",
+  "name": "I want to include or exclude a dependency via a feature flag",
+  "instances": 2,
+  "posts": 1,
+  "source_ids": [
+   "S-bedce9d7b4a5bec9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1,
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_edabab980390",
+  "name": "I want to ramp a feature flag gradually to all users",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-d45989814a01c891",
+   "S-f4b39e3e022879b4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "small": 1,
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_980c04b0db3f",
+  "name": "I want to ship unfinished work to main hidden behind flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0120158567aef37b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4a60d02c1f27",
+  "name": "I want to store flags as rows in the settings table",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0120158567aef37b"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_52219051e05e",
+  "name": "I want a flag to hide UI and omit its tools",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0120158567aef37b"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d62eb4738214",
+  "name": "I want to gate paid product features without lockouts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-016469c2a9f56dfa"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a61d7deb6b58",
+  "name": "I want to store config values without breaking on bad schema",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-016469c2a9f56dfa"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_93b615f30137",
+  "name": "I want a spec home for feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-029e7e396406e163"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a75e841ec55a",
+  "name": "I want to record what each flag gates and its options",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-029e7e396406e163"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d992f1d449f6",
+  "name": "I want to keep stale rollout state out of the spec",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-029e7e396406e163"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5925bf715773",
+  "name": "I want lint to warn about flags missing specs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-029e7e396406e163"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0d0bae2919be",
+  "name": "I want an API returning evaluated flags for the caller",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-02adc7865b9e9a73"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_35608409ff38",
+  "name": "I want to target flags by role and percentage",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-02adc7865b9e9a73"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a0aa8e19ea78",
+  "name": "I want flags to only add or remove modules",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-03e76f74e9206a80"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f6bdc1ea8012",
+  "name": "I want CI to catch new feature forks in review",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-03e76f74e9206a80"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_65f4aaea2cd6",
+  "name": "I want to hide a UI element when a feature flag is off",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-04348b5d8caaa444"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4589fe928558",
+  "name": "I want to evaluate a flag for a subject from a snapshot",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-04481c118455e5ca"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5b2a073deafe",
+  "name": "I want to force a flag value in tests",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-04481c118455e5ca"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2e5a341c96f1",
+  "name": "I want to let users turn experimental capabilities on or off",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-05947744e7b7522f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e3164c5bdc04",
+  "name": "I want to disable a feature I don't trust",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-05e48db369652e69"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0d778c0a7541",
+  "name": "I want to identify which flag is causing an issue",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-06a55676b1db178d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_73af3f293a1d",
+  "name": "I want to know which intrinsics need specific CPU flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-06c060967a37fedb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e7738f6c27a9",
+  "name": "I want to test every flag combination before release",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0719d9cf3d9ee03e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d0bc8774bbaf",
+  "name": "I want to set up a feature flag system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-07973d87ddfe9b2d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1434acca4e8f",
+  "name": "I want to learn which flag systems worked for others",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-07973d87ddfe9b2d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_41f02a71b54f",
+  "name": "I want a software recommendation for feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-07973d87ddfe9b2d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b83c67729307",
+  "name": "I want to purge unwanted feature-flagged code from the codebase",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-079afc78dea74f2b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_468ff9f277ab",
+  "name": "I want to decide whether features should be built at all",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-079afc78dea74f2b"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_317c52195a0e",
+  "name": "I want to disable a flag in one environment only",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-07e59da5e4f6b19b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ee08020fda39",
+  "name": "I want to change entity behavior based on feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0886cf7a0358b085"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7f88c6da90cd",
+  "name": "I want to disable WebAuthn via feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0a102738f2477982"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_da11faabdd5d",
+  "name": "I want to define a compile-time feature flag in my bundler config",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-106fccbdf4a7ca33"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8bd3fd7a5dd6",
+  "name": "I want to revert the bookmark UI to choose folder immediately",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1475f420777f4a22"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c9598ff1fd49",
+  "name": "I want to store and toggle feature flags persistently",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-169f77a2d2ca088e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e90e1df19896",
+  "name": "I want to draft and commit an ADR for flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-17da84af803e66e6"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8b8fed697ee5",
+  "name": "I want to pre-seed the flags contract and stubs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-17da84af803e66e6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_11ca738f2a57",
+  "name": "I want to define flag keys and validation rules",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-17da84af803e66e6"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_81aacc1166b5",
+  "name": "I want to add flags to an existing app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-17da84af803e66e6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d72f8be0aa1d",
+  "name": "I want to deploy unfinished code without enabling the feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1873a47efe643891"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0a03cb456367",
+  "name": "I want to enable a feature locally and in CI",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1873a47efe643891"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7835cfc0c8e8",
+  "name": "I want to see Pennant feature flag usage in the app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-198edea52eadf456"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d817e0cc4c0d",
+  "name": "I want to find stale flags that can be removed",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-198edea52eadf456"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c9c10609636d",
+  "name": "I want to be alerted when removed flags are still checked",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-198edea52eadf456"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0e2992b7fdc6",
+  "name": "I want to generate a typed Go file from flag declarations",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1ec34d80b75eb661"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5ea51c8ac208",
+  "name": "I want doctor to report flag drift and expired flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1ec34d80b75eb661"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_588cee4d0353",
+  "name": "I want validation errors to name the key and rule",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1ec34d80b75eb661"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_67be40c4cb41",
+  "name": "I want to start the RabbitMQ server after installing it",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-22781a03aee1cbf4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9a1a2d99fb69",
+  "name": "I want to refresh feature flags on launch and sign-in",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-23436ac704f7d53b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_24341975380c",
+  "name": "I want to see current flag values in settings",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-23436ac704f7d53b"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7697752a72ff",
+  "name": "I want to run two versions side by side for safe deployments",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-269cb5ab479fa9a0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e9d838f58f7f",
+  "name": "I want to merge unfinished work behind an off switch",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-28a0e659ff8082f0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_94f309e53789",
+  "name": "I want to change what the app serves without redeploying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-28a0e659ff8082f0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dcea5dcefdd1",
+  "name": "I want to ramp a change to a slice of users",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-28a0e659ff8082f0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2ed10c978ef2",
+  "name": "I want to review and version flags like infrastructure",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-28a0e659ff8082f0"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b76690361858",
+  "name": "I want to assign flag variations to user segments via API",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-29eea075fd90d7c4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3f9f396bc003",
+  "name": "I want to define multiple user groups as segments",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-29eea075fd90d7c4"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_92cb6aaace86",
+  "name": "I want to gradually migrate users between variations and revert",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-29eea075fd90d7c4"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5fd9bc48e4d6",
+  "name": "I want to compare feature flag providers for production use",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2afebcb4e00ac598"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d65eb984bac7",
+  "name": "I want to upgrade and test the feature flag system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2b3a10cdf9290d88"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5058f19abb04",
+  "name": "I want to dump all feature flags to a JSON file in CI",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2b6d49c6a0680021"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d45182936d87",
+  "name": "I want to call the flags API from inside the pipeline",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2b6d49c6a0680021"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fbda0d5d27e1",
+  "name": "I want to override feature flags at runtime without redeploying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2c8ab0b547e89bc2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_af5f13fdba13",
+  "name": "I want to see which flag source won",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2c8ab0b547e89bc2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a4dfc52f26fc",
+  "name": "I want to clear every runtime override at once",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2c8ab0b547e89bc2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_26657ab10edf",
+  "name": "I want to build only for X11 so Wayland is not used",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2d03384a4d8a6c80"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_91b9a3a8e9ad",
+  "name": "I want to unbreak customers in minutes instead of hours",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2e027f047574dd15"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2bf6ccbd5ca8",
+  "name": "I want source builds to enable GPU acceleration opt-in",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2f9d291bdb5f2db5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_19cd6efd6b40",
+  "name": "I want flag flips to be instantaneous during incidents",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-300d3ce6b89a0f89"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_989669597383",
+  "name": "I want to reduce binary size by dropping unused code",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-304ca95ed61c91ed"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6e3c7f5d77ce",
+  "name": "I want to stop people abusing the flag feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-30e1585e30e375f4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b143db203df9",
+  "name": "I want to direct formatted screen output to a file",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-31155dddc13b4a2f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_618a845da124",
+  "name": "I want to add server locations conditionally based on a flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-334617b1a30a599d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e1fd0cd9c89d",
+  "name": "I want to decide which flag states to cover in e2e tests",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-34dedf6575549f51"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_db134c8cb324",
+  "name": "I want to avoid messy conditionals from many feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3522044b2c1de946"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_08b7fa4c89c2",
+  "name": "I want to add a custom color without heavy approval process",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-365511fae9bbbfd9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ded63f1c65b1",
+  "name": "I want to enable optional code via a git dependency feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-37476a7e3dbb8b22"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3e830eeaa24d",
+  "name": "I want to rebuild my feature flag tool from scratch",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b02e8be0aafefaf"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_626159879369",
+  "name": "I want to use flags and config reliably at boot time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b02e8be0aafefaf"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_822a36935bd9",
+  "name": "I want to see what context is passed to the SDK",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b02e8be0aafefaf"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_496eea0e413b",
+  "name": "I want to target debug log levels for a single org",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b02e8be0aafefaf"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6bde8f6790e2",
+  "name": "I want to get my Vue app to render",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3bb7bfeac86d9638"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_85e6c23696e7",
+  "name": "I want to resolve the feature flag warnings in Vue",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3bb7bfeac86d9638"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9626fcd04721",
+  "name": "I want to avoid getting banned for using a modified client",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3c47b07432d35d02"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bf5bc5e76467",
+  "name": "I want to conditionally set a value at build time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3c65ce3b7b593e00"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d601a14e0930",
+  "name": "I want to decouple deployments from releases",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3f4d9585a89d9dd1"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_41a49ff22d2a",
+  "name": "I want to cut infrastructure costs by disabling a flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4042688da8b1079d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0b7bc041d230",
+  "name": "I want to enable the Product Categories feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4162b39a29011c1d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b52c86d20bce",
+  "name": "I want to enable a browser feature flag to test new APIs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-42148fbff0e4310f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1a31b6fd0ee0",
+  "name": "I want to release changes without fear",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-42dd20950699a8b0"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a310f2753192",
+  "name": "I want to use feature flags in my small personal projects",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-48c02b49655da024"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9bc813505bde",
+  "name": "I want to get more value per time spent out of human code review",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4b5de7531fa97c24"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_39fdcde7d551",
+  "name": "I want to add and cycle out feature flags around a feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4b5de7531fa97c24"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1513c91ff896",
+  "name": "I want to add proper feature flagging without enterprise overhead",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4b7b286b410c3816"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0d5bd570952a",
+  "name": "I want feature flags to keep working when the flag service is down",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4cdca5aa012ee8a6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_07f602f6136b",
+  "name": "I want to avoid paying MAU-based flag bills for all users",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4cdca5aa012ee8a6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1910606a8316",
+  "name": "I want to manage feature flags through Terraform",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4d266bda5f9fc656"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c9561abe9e6a",
+  "name": "I want to check whether my PC supports VT-x and VT-d",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4d6d412b709f1793"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_39e50d7bb5fe",
+  "name": "I want to manage feature flags beyond a single hardcoded file",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4ec5850f2853bb1b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fa18c99ae21d",
+  "name": "I want to break a big feature into small commits",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4efc3786f84b50ab"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4e485aca7afb",
+  "name": "I want the web app to read public flags for the visitor",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-503f90a1f51a1e1f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6526366a1bec",
+  "name": "I want an administrator to read and change every flag over HTTP",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-503f90a1f51a1e1f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_61af7a92db15",
+  "name": "I want typed web calls generated from the OpenAPI document",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-503f90a1f51a1e1f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b37dad632b1b",
+  "name": "I want to deploy without releasing a feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-505c1ed656cd172a"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9dbe0928608f",
+  "name": "I want to target users and do progressive rollouts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-505c1ed656cd172a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1f47a8816070",
+  "name": "I want to test changes in production safely",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-505c1ed656cd172a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8c2ca0a7abcd",
+  "name": "I want to know which flags and experiments a user had",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-509a670ea6d1386c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_017007ab2725",
+  "name": "I want to jump to the Crashlytics crash to reproduce a bug",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-509a670ea6d1386c"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5b4d360f6ce8",
+  "name": "I want to turn a flag on for one test account first",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5127658210869f15"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_aed8ad1f1264",
+  "name": "I want to update feature flags in config without restarting",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5371898bf2e6e67b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_292c8ea91d8a",
+  "name": "I want to control what the agent can and cannot do",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-547cd3dee381eb7b"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_437233ad64d3",
+  "name": "I want to apply sensitive changes myself",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-547cd3dee381eb7b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea5ae83eb8dc",
+  "name": "I want the agent to cover negative cases and security review",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-547cd3dee381eb7b"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_85a97890a287",
+  "name": "I want to design data models carefully",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-554be79ef4e142b5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1dd246fba113",
+  "name": "I want to avoid migrations that can't be rolled back",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-554be79ef4e142b5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8f51a50c4dbc",
+  "name": "I want to reduce the attack surface of my codebase",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-57f94ce703c43024"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e42b33886c43",
+  "name": "I want to let users pick only the capabilities they need",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-57f94ce703c43024"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_820c08deb54d",
+  "name": "I want to audit one capability at a time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-57f94ce703c43024"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f3c7ceba7a72",
+  "name": "I want to trust agentic code more with guardrails",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-582dedc4e633cfc5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_41ec008ba3a7",
+  "name": "I want to link to about: pages from my custom new tab page",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a10e2ebf06bcae5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_049a2f707c56",
+  "name": "I want to allow file links via config policy",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a10e2ebf06bcae5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_74c21464d4a3",
+  "name": "I want a flag to allow extension pages to open about: links",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a10e2ebf06bcae5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_50376f11e7de",
+  "name": "I want to ship to production continuously without big-bang releases",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5b701453514118c2"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e5cec21d2e45",
+  "name": "I want to merge unfinished work without exposing it to users",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5b901b300af00ee8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fdf85cee6854",
+  "name": "I want to turn a feature off faster than a rollback",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5b901b300af00ee8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5d6466c26e0a",
+  "name": "I want to turn a feature on without a deploy",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5b901b300af00ee8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_57c5e2142a18",
+  "name": "I want to change flags without editing config files",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5be213211bdad77b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_00bacf71bbdd",
+  "name": "I want to synchronize configuration across multiple applications",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5be213211bdad77b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c49e64a826ce",
+  "name": "I want to attach custom tags to errors for filtering",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5ca18385f752cae7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d2cae2f4a5d0",
+  "name": "I want to find my custom attribute in the console",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5ca18385f752cae7"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a38f48d435fa",
+  "name": "I want to capture a full page screenshot at full size",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5e8ca53a2e899701"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6de9dc5e4a82",
+  "name": "I want to infer each flag's value type from its default",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5ef7048ddcfde5ba"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3138dc5cc08c",
+  "name": "I want to shrink the default audit surface of the build",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-60a450e5332dd92d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8eff59b4de44",
+  "name": "I want to evaluate a feature flag using my own external service",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-65867c91bf430a20"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4b6c842cbf75",
+  "name": "I want to find an existing integration for my service",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-65867c91bf430a20"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ec8572144367",
+  "name": "I want a feature flag to get enterprise features without VC money",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-668c359569b5aa94"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c96720f8778e",
+  "name": "I want my custom contextual feature filter to evaluate correctly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-67bfbbf1141d3828"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ee876345bfed",
+  "name": "I want to confirm simple on/off flags still work",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-67bfbbf1141d3828"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f32cb0a6a6c3",
+  "name": "I want to slowly roll out a feature flag without extra tooling",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-67e9574611ad8e30"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_96360b5b5cab",
+  "name": "I want to build an editor extension that surfaces feature flag state on hover",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-688b07018d2f6dac"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_29a264393058",
+  "name": "I want to find which extension points can present extra info",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-688b07018d2f6dac"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ba5744e7f852",
+  "name": "I want to stop a background daemon from auto-starting",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-68de4ea7082a08cb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7f68c61a758b",
+  "name": "I want to keep app behavior reliably reasonable rather than dynamically patched",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6a661c0054601f98"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea9d40e5428f",
+  "name": "I want to fetch deployed feature flags once before all tests",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6a6ef7675e7137ae"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9e6f1c46f026",
+  "name": "I want to skip tests for disabled features automatically",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6a6ef7675e7137ae"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c268d2b0142d",
+  "name": "I want to enable a feature flag in self-hosted Sentry",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6baa106cc71352ef"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_77e7a896fa1c",
+  "name": "I want to gate Python dependencies behind install-time features",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6e1fe022df513425"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_718c52e15645",
+  "name": "I want to fix the stable feature flags error after installing RabbitMQ",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6f05328e057e5498"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d0c752a0bf62",
+  "name": "I want to decide where feature flags are resolved in client apps",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7457dce4799c39ed"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c55ca1bef868",
+  "name": "I want to keep my sandbox working across breaking updates",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-77b82a45918ab68d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2fc906b87e97",
+  "name": "I want advance notice before updates break my users",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-77b82a45918ab68d"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_34069dc7605e",
+  "name": "I want to read a local file without depending on a remote flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7a3273fbf5714ffa"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7fa3ba4e3b32",
+  "name": "I want to triage false-positive security bug reports quickly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7b34ae0e0f2bd1c6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_77a41182a11b",
+  "name": "I want to clean up and fully roll out feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7b47d2b21c2aadff"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dda09b8b1721",
+  "name": "I want to implement flag branches without a headache",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7bb48ee2f949a1ec"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e8a4da2b0473",
+  "name": "I want to confirm a runtime feature flag is enabled",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7c202b96cc726736"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a13d9d3ccb8a",
+  "name": "I want to measure the performance improvement of the flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7c202b96cc726736"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f00ac6b26585",
+  "name": "I want to hide unfinished features when they are not needed",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7c3cff1acd0cc6cb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1e53a7b3820f",
+  "name": "I want libraries to work with any async executor",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7d4bad93b1aea81b"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3eb0ea39b0cc",
+  "name": "I want to suppress push notifications for disabled features",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7e114cbf6370c819"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9fcfd83e7a33",
+  "name": "I want to build a feature flag service for coding agents",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7f96c930c97cbb8f"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1dce73804246",
+  "name": "I want to fetch feature flags with user context from my app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7fcb4d064f594613"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_84b87318bd6e",
+  "name": "I want to keep different kinds of feature flags distinct",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8224bb44b06619c3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bc4c49e3a5a3",
+  "name": "I want to run tests with the flag on and off",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-826e8b8d414b9892"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f4d3cc349665",
+  "name": "I want to enable a new prompt version for part of the entries",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83056a24ada78f59"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7d647e5bda15",
+  "name": "I want to pass question marks to the device server",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-85dd63f061946b78"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f08362044310",
+  "name": "I want to express that a child flag depends on a parent flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-87000e24dc8740dc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_903f0fda2002",
+  "name": "I want to toggle a feature flag value programmatically",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-89569b7d59050430"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3755704cc97f",
+  "name": "I want to verify statically disabled code paths still compile",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-896f3e806d45d512"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1016a293b52e",
+  "name": "I want to flag sweeping refactors without mental churn",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8c64ad8bf1036c3a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea6ce7c9153a",
+  "name": "I want to disable default features to use a crate without std",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8cfbdb9de772ca8f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1fe6cc105e83",
+  "name": "I want to understand why a SMART normed value is below worst",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8d33c5c8de913167"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fc8b6ad0e9e5",
+  "name": "I want to know whether the logged errors are concerning",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8d33c5c8de913167"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c300990c435f",
+  "name": "I want to ship risky changes behind a flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8d5e01d50b73bbe0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_761088da96e2",
+  "name": "I want a flags table and typed helper usable from API and web",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8d5e01d50b73bbe0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_746f490a9c41",
+  "name": "I want to gate endpoints on a flag before the handler runs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8f6a57c1f1e65a58"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_14930fc9c974",
+  "name": "I want to manage feature flags in the admin UI without deploying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8fc457b3e35143b0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b84d699a3d87",
+  "name": "I want to create, edit and sort categories comfortably",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8fc457b3e35143b0"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bbb6e0a284a2",
+  "name": "I want to deploy a similar codebase with feature flags for regional variants",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-903cf06802cf285c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_92f82e8301cf",
+  "name": "I want to use feature flags and stats tracking that survive deploys",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-90564b4f2cb2af75"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d35c907704cd",
+  "name": "I want to see how many feature flags exist in my code",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-906db456de5815c5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b710da8755cc",
+  "name": "I want to jump to all code associated with a flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-906db456de5815c5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ba01a2e6aa92",
+  "name": "I want to design safe retries across microservices to avoid retry storms",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-909d27ce988f2820"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b4cee6793669",
+  "name": "I want to release a feature safely to authorized workspaces",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-92e8cad707f6836f"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c2c4ee99fb4b",
+  "name": "I want to add default-off feature controls",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-92e8cad707f6836f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3ecb4a8bca78",
+  "name": "I want to document rollback and credential revocation",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-92e8cad707f6836f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b4c2dcff52c4",
+  "name": "I want to upgrade RabbitMQ to the latest version",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9393a9a4ff2f1ad7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_61502e9f8170",
+  "name": "I want to toggle plugin flows on and off without code changes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-93bd311a2ffaee25"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_60ac72c491cb",
+  "name": "I want to roll out a new model gradually and watch for failures",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-950f3c44e2bc7283"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5436a66fe4ae",
+  "name": "I want to enable risky modules only for the pilot company",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-98903d8f449586d3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_454751b53fc0",
+  "name": "I want to learn how others use this service",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-991c4be9c96a451e"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_286834b5b634",
+  "name": "I want to flag bad submissions and comments to moderators",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-99b09760a207a7fc"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cc82146a3433",
+  "name": "I want to hide unfinished features to reduce beta scope",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-99f9c50be2810f59"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a53c05aa9f3d",
+  "name": "I want to scan an image into Photoshop",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9a472df7139c7c05"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_13618c4926b3",
+  "name": "I want to find a way around the scanning failure",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9a472df7139c7c05"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0c08becb9723",
+  "name": "I want to document feature flag defaults safely",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9bc9f7d5b2f71cc2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c6bfe9f641eb",
+  "name": "I want to make optional features compile-time configurable",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9dd8eb1a908849af"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d0ead1721abe",
+  "name": "I want to define flag logic in code",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9fb8948ae28ee43b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3c16a1438cf5",
+  "name": "I want to stage large features across multiple PRs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9fead05216ae7f73"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_97be1fdf2bfb",
+  "name": "I want to store a simple boolean flag without a SaaS",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a05586bed5d58782"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6641f7df98fe",
+  "name": "I want to toggle a div in my HTML template based on a feature flag",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a20e3b8125d5b7a3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4b40ba0bb634",
+  "name": "I want to find the minimum Node version for a library",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a2437c5a849b7098"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ecb490e616de",
+  "name": "I want to stop Chrome offering to save form data",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a45e57c27a7ba6f9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_acb640749d74",
+  "name": "I want to push feature flag changes to applications in order",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a59fdfe97dfd2c17"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_435876270a42",
+  "name": "I want to choose a feature flags system for my backend",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a68600fdf90509ab"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_117f4e230ea3",
+  "name": "I want to cap the display frame rate at 60",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a6e841a9be602129"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d9e2b1faa888",
+  "name": "I want to change Safari's page rendering refresh preference",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a6e841a9be602129"
+  ],
+  "level": "micro",
+  "instance_levels": {
+   "micro": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f5d63814b8c1",
+  "name": "I want to add red and yellow debris and checker flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a73c2724bc77c9fe"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ac663301877f",
+  "name": "I want to find why my system freezes randomly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a7499b5acffc6094"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1549da1bdb06",
+  "name": "I want to document the feature flags utility fully",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a7accccf8c3bbe48"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a94bb57f0609",
+  "name": "I want to produce an accurate changelog across teams",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a9178a82336837cc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fdd39eb67882",
+  "name": "I want to let admins record which segment their instance runs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aa45efdd605dbbd6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_54110214b379",
+  "name": "I want to create a working create flag endpoint",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aad4f5084a2a8d75"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d8b7eeeed286",
+  "name": "I want to add unit tests for the create flag endpoint",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aad4f5084a2a8d75"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ae63672111ce",
+  "name": "I want to know when a perfume note is restricted or an allergen",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ab27776ce9309934"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8cae56a90e0c",
+  "name": "I want to add a feature flag controlling access to a feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ab7a070a6d5a2dfb"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0d0b0a5085b4",
+  "name": "I want to run feature flag config locally without a server",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-acc56e96ffe453e5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_273b38e2feb3",
+  "name": "I want to use remote config in non-local profiles",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-acc56e96ffe453e5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bbf8b731b092",
+  "name": "I want to enable features per establishment",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ad49add233dae6ad"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fc50c0cfa69c",
+  "name": "I want to consolidate entitlements scattered across systems",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-af2e730b7be2da9e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_839685bffb1b",
+  "name": "I want to unlock hidden features without redeploying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b047db7be5fc9913"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7b30ff5893dd",
+  "name": "I want to understand what dependencies a Rust project actually uses",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b37877d88e940018"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c93b84421e39",
+  "name": "I want flags to keep working when the person database stalls",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b52972e331840a60"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1ba1f773b145",
+  "name": "I want to ship changes behind a config switch safely",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b52972e331840a60"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2808027fadcc",
+  "name": "I want to create AppConfig feature flags with CDK TypeScript",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b581a0f20f435750"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6fa2cc89c863",
+  "name": "I want to find an implementation guide for this construct",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b581a0f20f435750"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3479d7a1d7d6",
+  "name": "I want to turn off a shipped behavior without another cutover",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b728e5a6f8f2ed76"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_37d0253b73c1",
+  "name": "I want to evaluate whether flags are needed at current scale",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b728e5a6f8f2ed76"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ebbbbac8040a",
+  "name": "I want to prevent flags becoming a shadow configuration system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b728e5a6f8f2ed76"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5854aaae0404",
+  "name": "I want to hide internal feature flags from public health endpoint",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b8342cc8cf10ed38"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dcab6f841ad6",
+  "name": "I want to remove stale feature flags from the dev stack",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b8f1969883b4bcde"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_714577ebc480",
+  "name": "I want to inventory which flags actually exist in code",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b8f1969883b4bcde"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f4b2c1c33b78",
+  "name": "I want to define feature flag schema with typed protobufs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ba641373934a7c93"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_62b9087e37c1",
+  "name": "I want clear terminology to distinguish flags from configs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bad34ceb12cbe432"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a445e4e7e8d8",
+  "name": "I want flags initialized consistently during deployment",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bae5a89984bdf7f0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f15a1549241d",
+  "name": "I want to audit existing flags before adding migration",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bae5a89984bdf7f0"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3ce7f31b4b51",
+  "name": "I want to look up all enabled flags for an organization quickly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bc0d7a575cd288b5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2e9862e51295",
+  "name": "I want to store all organization flags in one table",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bc0d7a575cd288b5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e59b9e83f575",
+  "name": "I want to leave room for other targeting rules later",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bc0d7a575cd288b5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b751b3ba8505",
+  "name": "I want to toggle a feature flag in integration tests",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bc2e1138c27ee73c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4b9c6714f90e",
+  "name": "I want to gate features in my new desktop and mobile app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-be9386f89943cd33"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7e284185e440",
+  "name": "I want to understand what each feature flag bit means",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c07162ee9785a606"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_90140de1af75",
+  "name": "I want to configure feature flags in a Blazor WASM project",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c19d777da221d9e4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_da78ae7bcf04",
+  "name": "I want to validate needs before buying a feature flag tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c1cd32f5ccce6c2f"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_55b448c04525",
+  "name": "I want to toggle features without code changes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c3d2cf0498e23b6c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_aea678193267",
+  "name": "I want to test various models quickly with one API",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c544108e3cd83aa1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_088f6151b971",
+  "name": "I want to switch to first-party provider API for production",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c544108e3cd83aa1"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d1f4b187cc6c",
+  "name": "I want to keep prod deployable while features are half finished",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c716d4788ab6f69d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d9c6604cbdd8",
+  "name": "I want to compare implementations with and without a component",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c7c8423506501749"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e53634f0f9b1",
+  "name": "I want to clean up flags that have been on too long",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cbe7ccda0910e695"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_382dc2bff7ec",
+  "name": "I want to implement feature flags in a serverless environment",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cbf7eb9f26e04e53"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9fbb9e147e87",
+  "name": "I want to kill a broken feature quickly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ccdf438935a9fffb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6be79885abd3",
+  "name": "I want to define flags in a typed schema",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ccdf438935a9fffb"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ab90ae7b469e",
+  "name": "I want to test with flags on and off",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ccdf438935a9fffb"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7604b021ebaf",
+  "name": "I want to remove obsolete flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ccdf438935a9fffb"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e67dd4b1c348",
+  "name": "I want a screen to toggle flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ccdf438935a9fffb"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_455b87668385",
+  "name": "I want the project to keep making progress",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cd44d8089fb812f6"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_748c0f59bd20",
+  "name": "I want to test flagged features in e2e tests",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cdc82daae6555855"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1a7a7c059ffd",
+  "name": "I want to learn how others manage flags and rollouts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ce848878e5d3f456"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bce2edab506c",
+  "name": "I want to pick a feature flag platform",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ce848878e5d3f456"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1f75b2ec0cd9",
+  "name": "I want to unblock coworkers while debugging a crash",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cf4ba722908bea80"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c206926797d1",
+  "name": "I want to reproduce a bug despite disabled flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cf4ba722908bea80"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8590ecb8cc9a",
+  "name": "I want to write optimized Cucumber feature files for many test cases",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d0af07539f697444"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f9f2425caf56",
+  "name": "I want a feature flag active only under a specific profile",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d1722679e349b894"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d779f8198a97",
+  "name": "I want to use a feature flag hook in my React component",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d258528bac7e36cb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_51aba63085ef",
+  "name": "I want to deploy the next version gradually to more traffic",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d45989814a01c891"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_46b948c2358d",
+  "name": "I want to keep a canary feature branch up to date with prod",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d45989814a01c891"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4f3a81554fd2",
+  "name": "I want to give a new feature to a few organizations first",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d57a29db79149816"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_68c01d55c2a4",
+  "name": "I want to keep a pilot feature completely hidden from others",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d57a29db79149816"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b76baab0042f",
+  "name": "I want to grant one customer an extra plan feature",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d57a29db79149816"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6ffe5dd1fbdd",
+  "name": "I want to run the port in a browser with JSPI support",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d61ae26fa16ad49f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b623be66bb83",
+  "name": "I want to record supported features in the init entry",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d637f892850cc713"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_95d1b3ef3677",
+  "name": "I want to reject repos that use unknown features",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d637f892850cc713"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e88fc61819fa",
+  "name": "I want to make new repos safer by requiring merge tip hashes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d637f892850cc713"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_876c232725a7",
+  "name": "I want to review a chapter draft end to end",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d655627e0b638069"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b4282438eaad",
+  "name": "I want to build AI features for apps",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d6885102d8a862e6"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_40018299f50d",
+  "name": "I want to take a whole product and run its releases",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d6885102d8a862e6"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d33860e4e74a",
+  "name": "I want to reverse engineer a large enterprise app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d6ca4aa577c1d34d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f931da52d286",
+  "name": "I want to add features that require protocol changes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d7de8c25b5903127"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b92cfece9363",
+  "name": "I want to avoid flag combinations breaking the codebase",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d83425df06b3cbf0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ebb2e05ecbf1",
+  "name": "I want to decode a live H.264 stream from a dashcam",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d8ca6d011805f400"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4cac44396fb6",
+  "name": "I want to get FFmpeg to decode my reassembled files",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d8ca6d011805f400"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2a5add74fa20",
+  "name": "I want to find a way to best-effort decode non-compliant streams",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d8ca6d011805f400"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_423807c6f4bb",
+  "name": "I want to verify all code flows before launch",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d96dac494a7ddeea"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_342923338fe4",
+  "name": "I want to switch features off instantly at runtime",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d96dac494a7ddeea"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5202b49c14c8",
+  "name": "I want to roll back a feature quickly without redeploying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d9e31bbb75033641"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2f3e193364c2",
+  "name": "I want to finalize flagged behaviors as defaults and remove all flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-daf0f75a47a8f6f9"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5897c96cb743",
+  "name": "I want to migrate consumer code away from flag usage",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-daf0f75a47a8f6f9"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_627e87ad534c",
+  "name": "I want to record a live stream to a growing MXF file",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-db231182b73ae111"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6cb5644ec6e2",
+  "name": "I want to keep the source encoder connected independently of recording",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-db231182b73ae111"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ff47434a3678",
+  "name": "I want to plug in debugging processes without disturbing recording",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-db231182b73ae111"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_580aef3ee25e",
+  "name": "I want to ship visible changes dark and toggle them on",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dc4ef32e3a2af030"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a042a8bba7aa",
+  "name": "I want to ship in-progress surfaces hidden behind flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dce9319cda574446"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_64001019ef64",
+  "name": "I want to pass compiler and linker flags to the final exe",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dd36a269158e8d48"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fb8b4d0ee56a",
+  "name": "I want to surface disabled contracts as coming soon in the UI",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-deaff3ff88632a9f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_194c806a631f",
+  "name": "I want to evaluate flags for many organisations in one request",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-df1be7c06585fef3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cde58b9cfce8",
+  "name": "I want to add controller tests verifying guards and DTO validation",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dfa1cc00ab5b5fe7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0b43ca2b3984",
+  "name": "I want to include feature flags in the published Lambda layer",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dfc7a55b745ab998"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a957679726c7",
+  "name": "I want to enable or disable modules with feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e01e61778897f818"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4574b810d030",
+  "name": "I want to release features behind flags and flip them after testing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e165b838d8b4565f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6d9c94440bc9",
+  "name": "I want to roll back or remove the flag after release",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e165b838d8b4565f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ede63395a768",
+  "name": "I want to stop my local sessions being sent to and stored remotely",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e358b7928f4cc2ca"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a5c149faff3d",
+  "name": "I want to disable certain classes of notifications from being sent",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e35c518b94e01b6d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_86f05a104067",
+  "name": "I want to reload settings without restarting the pod",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e46323047d9f23be"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6b10077440a6",
+  "name": "I want to learn how others built feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e6918c08b68d1fdb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8146a64c5b79",
+  "name": "I want to add feature flags to my project without a full service",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e78d9bd27bbcf19d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7f449475ac71",
+  "name": "I want to change flags without deploying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e78d9bd27bbcf19d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2056ec051247",
+  "name": "I want to override feature flag config via environment variables",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e86d3b5b97647a72"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b2b37f24d905",
+  "name": "I want to prevent bugs from mismatched app and DB state",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e965b9083c747ec2"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_565dbf1af13a",
+  "name": "I want feature flags included in monorepo tooling",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e9bb407ebd345a5d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c9c808c4b820",
+  "name": "I want to build a feature flags settings section",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-eaa8b700e480425a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_69e72276ac4e",
+  "name": "I want feature flags across the wider SDLC",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-eadd1a7c68a34eb6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ad253e868582",
+  "name": "I want to set up a release process between DevOps and Databricks",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ec04fd2818c17c97"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a10459b1d57f",
+  "name": "I want to turn a feature on or off per company",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ed3ad9b69ce8a895"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_81eca8f5b916",
+  "name": "I want to centralize server toggles in SQL-backed settings",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f0a3d909be486e6e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_010d47455ce6",
+  "name": "I want to point the tool at an arbitrary config file",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f28c00b1d255ef4f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_66b5a93b0487",
+  "name": "I want to run tests across all feature flag combinations",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f3788aac2b8448a7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c5b5a3a97a46",
+  "name": "I want to split large changes into smaller reviewable PRs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f48d7cd0b3599a1e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f621f06304a1",
+  "name": "I want to deploy new code dark with flags off",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4b39e3e022879b4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d1cc88cc410b",
+  "name": "I want to toggle a feature in production without deploying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4b39e3e022879b4"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1aa849d5b207",
+  "name": "I want to track flag owners and expiry dates",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4b39e3e022879b4"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_71d533221604",
+  "name": "I want to declare which certificate types a connector can issue",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f61b8205eb57d5f7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5ad070f4c16f",
+  "name": "I want to keep existing connectors working without declaring types",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f61b8205eb57d5f7"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_38cff5c8f59b",
+  "name": "I want to review changes for intent, correctness, security and conformity",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f6717b32865157bb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5889113c31fd",
+  "name": "I want to consolidate findings and investigate similar instances",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f6717b32865157bb"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0b714a0b7505",
+  "name": "I want to reduce review noise without exploding change sets",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f6717b32865157bb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cb3f3ba01828",
+  "name": "I want to run locally with built-in flags without configuration",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f7467f15467fbeb8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_70891f7a2fd0",
+  "name": "I want to point to my own flag file and change it live",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f7467f15467fbeb8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_afc0fc893599",
+  "name": "I want a step-by-step plan to test flags in k8s",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f7467f15467fbeb8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_609510fdcf72",
+  "name": "I want to toggle a flag via a PR without asking devops",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f7467f15467fbeb8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_39719c387559",
+  "name": "I want to see what is active per customer in Grafana",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f7467f15467fbeb8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f8f247efeba3",
+  "name": "I want to record the decision to move to Unleash with a trigger",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f7467f15467fbeb8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9463a7d22d55",
+  "name": "I want to enable hyperlinks by default in my terminal multiplexer config",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f80462e3b9d2f088"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1f10a50ace4f",
+  "name": "I want to enable a feature for a list of store IDs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f8cc6120e30b59d8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bdf8538754c0",
+  "name": "I want to interact with a guest shell through my shell",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fa0339e4ede67728"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7d6569b21f14",
+  "name": "I want to see accurate billed costs in my usage export",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fd033865c8df12d4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a994caed81bb",
+  "name": "I want to restrict sensitive OAuth flags to approved apps",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fe0fd158e0bc588e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_517da324f2f4",
+  "name": "I want to toggle multiple feature flags from one input",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ff99d147d29b239e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c2ccc87ae33f",
+  "name": "I want to add new flags without rewriting the toggle logic",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ff99d147d29b239e"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_428d58d781ab",
+  "name": "I want to model hierarchical relationships between many labels",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2865b7caa88e6edd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2018be93ef48",
+  "name": "I want to deploy only features that passed testing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3117477101c93ed3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ef13822e2008",
+  "name": "I want to automate ClickOnce deploys and EF migrations",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3117477101c93ed3"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c7b6d8b28c6c",
+  "name": "I want to adopt trunk-based development for an open source product",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5eeb41af2ffd690a"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4f87b47c6079",
+  "name": "I want to migrate the build system without leaving master messy",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5eeb41af2ffd690a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_39b0a1dff66a",
+  "name": "I want to enable optional modules per client",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6b94cbad68b98714"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9f674b9f2f4f",
+  "name": "I want to decide whether to run migrations for unused modules",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6b94cbad68b98714"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a39c2f9374b4",
+  "name": "I want to apply app and database changes in a sensible order",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8c3d07cb77400ad2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bfed140e5280",
+  "name": "I want to parse chunked transfer-encoding data from Uint8Arrays",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ceb7bde3568104fa"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_90c4d036a1e9",
+  "name": "I want to enable streaming uploads over HTTP/1.1",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ceb7bde3568104fa"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_81c6bc305eb5",
+  "name": "I want to keep a single trunk-based codebase with feature flags",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f3dc6c18b1fdeaa9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9a79d8467c9c",
+  "name": "I want to know whether to split into long-lived branches",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f3dc6c18b1fdeaa9"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ }
+]

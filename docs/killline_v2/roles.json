@@ -1,0 +1,75 @@
+{
+ "spans": {
+  "n": 400,
+  "builder": 161,
+  "share": 0.4025
+ },
+ "posts": {
+  "n": 314,
+  "builder": 121,
+  "share": 0.3854
+ },
+ "by_category": {
+  "feature flags": {
+   "n": 126,
+   "builder": 30,
+   "share": 0.2381
+  },
+  "habit tracker": {
+   "n": 126,
+   "builder": 66,
+   "share": 0.5238
+  },
+  "invoicing": {
+   "n": 148,
+   "builder": 65,
+   "share": 0.4392
+  }
+ },
+ "by_element": {
+  "alternatives": {
+   "n": 50,
+   "builder": 23,
+   "share": 0.46
+  },
+  "context": {
+   "n": 50,
+   "builder": 18,
+   "share": 0.36
+  },
+  "higher_goal": {
+   "n": 50,
+   "builder": 23,
+   "share": 0.46
+  },
+  "job": {
+   "n": 50,
+   "builder": 22,
+   "share": 0.44
+  },
+  "negative_emotions": {
+   "n": 50,
+   "builder": 15,
+   "share": 0.3
+  },
+  "positive_emotions": {
+   "n": 50,
+   "builder": 10,
+   "share": 0.2
+  },
+  "success_criteria": {
+   "n": 50,
+   "builder": 30,
+   "share": 0.6
+  },
+  "trigger": {
+   "n": 50,
+   "builder": 20,
+   "share": 0.4
+  }
+ },
+ "auditor": "moonshotai/kimi-k3.1-pro",
+ "auditor_cost_usd": 1.0023,
+ "auditor_calls": 34,
+ "runtime_s": 748.0
+}

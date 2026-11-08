@@ -1,0 +1,4591 @@
+[
+ {
+  "job_id": "job_eb5d0244038a",
+  "name": "I want to issue compliant electronic invoices through a provider or platform",
+  "instances": 5,
+  "posts": 5,
+  "source_ids": [
+   "S-0661f0ee51613df2",
+   "S-15b88ae004cc4df8",
+   "S-dced865303de310d",
+   "S-e8f080e0eb8d00db",
+   "S-f20f85d0c8076a22"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 4,
+   "big": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_bf4ee3afebba",
+  "name": "I want to handle my own invoicing and tax admin",
+  "instances": 4,
+  "posts": 4,
+  "source_ids": [
+   "S-14a183a3e2783f72",
+   "S-18af5ad0266d4346",
+   "S-a5e99d0eafba838e",
+   "S-d89b94c9e8d8fa5f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 4
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_90d94e479814",
+  "name": "I want to create and send invoices to clients",
+  "instances": 4,
+  "posts": 4,
+  "source_ids": [
+   "S-15fe76bcc4503bb9",
+   "S-50d09e6c2977c568",
+   "S-9c02889f535f43c5",
+   "S-a10e027de6f29c0f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3,
+   "small": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_2efda54a2114",
+  "name": "I want to track time and invoice clients",
+  "instances": 4,
+  "posts": 4,
+  "source_ids": [
+   "S-423eed0efa5a8bf2",
+   "S-4de6e8560db65837",
+   "S-aaa4983dfacd7777",
+   "S-e478f427e06d3346"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3,
+   "big": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_3613abf760a8",
+  "name": "I want to create and send invoices quickly and easily",
+  "instances": 4,
+  "posts": 4,
+  "source_ids": [
+   "S-50d09e6c2977c568",
+   "S-536aaa17b99541c2",
+   "S-ca4b4dafdd4e41f5",
+   "S-e73c8cc19a3e6b77"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 4
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_f0a66ea92c29",
+  "name": "I want to generate invoices from work orders, time, or fees",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-164fa2c74d7daa1a",
+   "S-6d008c48d81152ee",
+   "S-f22eb31c2567bf7e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_53ecd1a707de",
+  "name": "I want to create and send professional invoices easily",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-4d646777243b754f",
+   "S-a968fb45214bbdff",
+   "S-e4ec9ac563f72ffb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_434b847cf43f",
+  "name": "I want to generate professional PDF invoices",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-528846affff14895",
+   "S-76fd0625827cf71e",
+   "S-988a0a1f428d5e5f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_306941084d31",
+  "name": "I want to track invoice payment status",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-164fa2c74d7daa1a",
+   "S-50d09e6c2977c568"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_796ca05b9111",
+  "name": "I want to handle invoicing and sales in one place",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-5f7a44c03ec6dc77",
+   "S-965e21514906108a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1,
+   "big": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_c8bcfce760e3",
+  "name": "I want to correct the payment terms in an invoicing draft",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-66c1aadf1147ac5c",
+   "S-752cf8cb0acaad7f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_695bdaeb38b4",
+  "name": "I want to avoid subscription fees for invoicing software",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-6e115fa8274c5f66",
+   "S-9c02889f535f43c5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1,
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_52e2efb65c5a",
+  "name": "I want to manage client billing and track hours without manual work",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-836154d2cd57772c",
+   "S-986a8f09ed4461c3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_05b0c371a9e1",
+  "name": "I want to track time, expenses, and invoice customers",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-88ee5a98d8c2bcc1",
+   "S-c21ca84997ceec40"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "big": 1,
+   "core": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_70c9b85a7bdc",
+  "name": "I want to link and upload invoices to the tax authority system",
+  "instances": 2,
+  "posts": 1,
+  "source_ids": [
+   "S-88fa6ec17601e877"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1,
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_488492875dae",
+  "name": "I want to send invoices without a monthly subscription or SaaS lock-in",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-a894213b9694108f",
+   "S-f8a3309c3e2d4b52"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_88ce296e5fc6",
+  "name": "I want to let customers pay invoices online",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-c063b6bb95b50327",
+   "S-cb38e14fa9275771"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_45b57acb4acd",
+  "name": "I want to invoice travel time for on-site client work",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-5cacd6454cf7e27c",
+   "S-f780372f0190aec0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "small": 1,
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f0d150e4ed9c",
+  "name": "I want to find similar values in a spreadsheet column",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-00e571a789b94e06"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a97f182b9353",
+  "name": "I want to manage inventory and issue invoices for my store",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-02270ca6ca4b7b7f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_aff38cef630e",
+  "name": "I want to move away from a time tracking and invoicing tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-064beb6c99f78a03"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cfbf974ba306",
+  "name": "I want to set up a legal entity able to send invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0661f0ee51613df2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0111747dc7cd",
+  "name": "I want to keep business and private banking separate",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0661f0ee51613df2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ab587275908c",
+  "name": "I want to outsource VAT declarations and accounting",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0661f0ee51613df2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ba259c7070a3",
+  "name": "I want to become an approved vendor to a big corporation",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-074ad4795ce9460e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3342b4faff2c",
+  "name": "I want to invoice clients while they profit from my work",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-074ad4795ce9460e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b89a39f21bae",
+  "name": "I want to negotiate fees directly with the corporate client",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-074ad4795ce9460e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f56691ae6f39",
+  "name": "I want to report sales as official electronic invoices per country",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0751f79ccf18b624"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f29cf7d3f619",
+  "name": "I want to validate invoices and sync provider state",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0837196b6f36855a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b450c9d350e0",
+  "name": "I want to find invoicing software with the right must-have features",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-085fd12bee01aa76"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_997df625c079",
+  "name": "I want to replace paid time tracking and invoicing software with my own",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0b68172b30f9f88c"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4809dc5690a9",
+  "name": "I want to find an existing invoice by its number before updating",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0c939bc7fff68135"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_09981ec8537b",
+  "name": "I want to send clients invoices for record keeping",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0d344c23f0627904"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_03d0eb2aa3cd",
+  "name": "I want to look up past client information without digging through email",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0d344c23f0627904"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8db9633c9d5f",
+  "name": "I want to stop paying monthly for basic invoicing software",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0f8c6a1d0bd88d13"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8ee1c394f635",
+  "name": "I want to run core business operations on a text-based system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0ff12f33a2cfc465"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_42cde9cfc1d1",
+  "name": "I want to migrate old automation scripts to a modern framework",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0ff12f33a2cfc465"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_84234cd0f35b",
+  "name": "I want to find clients or positions for my design and build work",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-106248724f2ed6df"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_96f7089c3c94",
+  "name": "I want to handle invoicing and fiscal submissions through an accounting firm's API",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-10ea5497bdf03f25"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_231dd7d9d19d",
+  "name": "I want to automate recurring month-end accounting tasks",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-10ea5497bdf03f25"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d5cd5e1410e8",
+  "name": "I want to generate invoices automatically from customer data",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-111e772dba23ee52"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4c0e1f89c488",
+  "name": "I want to save each invoice PDF into a customer-specific folder path",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-111e772dba23ee52"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dea7ae804bb4",
+  "name": "I want to run time, job management and invoicing in one system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1234212c8d979908"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_231136fc39a9",
+  "name": "I want to learn the new enterprise system after acquisition",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1234212c8d979908"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d8a1718ca70b",
+  "name": "I want to understand when a free trial will start charging me",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-128e3b8bbef856ee"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b60fd89cae3f",
+  "name": "I want to register a sole proprietorship and start invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-12b70fcd6bf8228c"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e6283be16fc8",
+  "name": "I want to total only paid invoices from another sheet",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-12f21652f81ff7f3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_844116a85f52",
+  "name": "I want monthly rent invoices created automatically ahead of time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1411be07a461572c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_43aabc399868",
+  "name": "I want invoicing requirements drafted and reviewed",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1422579917046d5a"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f057e0e4746f",
+  "name": "I want to review code I did not write myself",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-14812d6f26bcbcba"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_57206bd3351d",
+  "name": "I want to track when an invoice gets paid",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-15fe76bcc4503bb9"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b69e16d2a7e5",
+  "name": "I want to export my invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-164fa2c74d7daa1a"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cc64981f9e99",
+  "name": "I want to run small business bookkeeping with automated transaction fetching",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1e23417bf59988ed"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b549100a8bf1",
+  "name": "I want to get invoicing through an extended API",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1e23417bf59988ed"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0e8f51ab82e3",
+  "name": "I want to export an invoice only when one exists",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1e28e628a20d2a44"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_39355eeb02aa",
+  "name": "I want to create a job from a proforma invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1e28e628a20d2a44"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f19dd43f3583",
+  "name": "I want to put the PO number on the invoice template",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1e28e628a20d2a44"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b7ab300b255a",
+  "name": "I want to show the proforma invoice number in the reference",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1e28e628a20d2a44"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a1f06c0636e4",
+  "name": "I want to save job costing only when confirmed",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1e28e628a20d2a44"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4005ffe4c7f9",
+  "name": "I want to find an alternative to my invoicing tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1fc6961994c2395d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_29caa0910eb8",
+  "name": "I want to open and manage electronic invoices in xRechnung format",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-20387a33952dea13"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2709f73213bc",
+  "name": "I want to submit expenses in xRechnung format for tax",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-20387a33952dea13"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3861b527a7da",
+  "name": "I want to integrate with Brazil's e-invoicing webservices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2c1dea50f1bec2b5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_291301faa625",
+  "name": "I want to debug incompatible SOAP envelopes across documents",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2c1dea50f1bec2b5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_15a321016948",
+  "name": "I want to complete modeled invoicing workflows including rectification and staged billing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2df8f5e625c43a9b"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_85b1667fb910",
+  "name": "I want to see invoice and receipt views tied to visits",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-30a699a0b54f9374"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fc3173cd3a9c",
+  "name": "I want to roll up cashflow, tips and revenue from visit facts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-30a699a0b54f9374"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_814434de9d84",
+  "name": "I want to export data for external bookkeeping",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-30a699a0b54f9374"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c61a23cb0118",
+  "name": "I want to automate notes from my previous notes and tasks",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-310c6508d9862951"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e5fa2d53e84c",
+  "name": "I want to automate email migration and get clear reports",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-318f103d140a6fd0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_53d44c0112d3",
+  "name": "I want to write critical invoicing code with LLMs safely",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-318f103d140a6fd0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0d0b389e8124",
+  "name": "I want to build payments and invoicing tooling",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3253bd427d7008a6"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3b2b1fb3d350",
+  "name": "I want to map delivery period to invoicing period in schema",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-33f9d33f4af7d0f2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1d784e34b2d1",
+  "name": "I want to create a history note with an invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-37a640880ae98850"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bbec916b3bb4",
+  "name": "I want to avoid broken state when invoice creation fails",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-37a640880ae98850"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ee2db8a37bbb",
+  "name": "I want to invoice work orders automatically by date range",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-38286e5fb3d3f34a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_21f84247be3c",
+  "name": "I want to group work orders by dentist on invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-38286e5fb3d3f34a"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_36fdf3b13888",
+  "name": "I want a more detailed printable report with less company data",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-38286e5fb3d3f34a"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2cfc41ca03d2",
+  "name": "I want to enforce tenant-aware auth and roles in my app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-39f5cb62ff21cda0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9e9c02f73dc1",
+  "name": "I want to handle large numbers of invoices without slowdown",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3a6081f922e787ac"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3dad421f2cdb",
+  "name": "I want to issue an electronic invoice for each approved settlement",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b882627cda509e9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7d2aae658e70",
+  "name": "I want to build my own business tools without a software team",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3fac5f9d3754fd7a"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9ccbd3b03d6d",
+  "name": "I want to make a custom discount appear on generated invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3fb7f644a0982047"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_45c5b1d23cd0",
+  "name": "I want to merge multiple rows of text based on two columns",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3fdd6a9ab5c4a3f1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0645f8ec9673",
+  "name": "I want to download all invoices in bulk",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4066ebd3741c1e66"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7c2b5eb6e9b4",
+  "name": "I want to turn invoice line items into a supplier shopping list",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-414d2802016506c4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d554fe2e3d8a",
+  "name": "I want to compare invoicing tools for a small crew",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4531a760a45b0724"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b4079aa16fce",
+  "name": "I want to reactivate my invoicing account",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-46d8b566ce06fbee"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_928b6164346d",
+  "name": "I want to manage complex software billing and invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-472d1680d216929e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_728091d64218",
+  "name": "I want to create an invoice from a pre-authorized payment",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-47b57d81e86b5086"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_120924737ff1",
+  "name": "I want to send a clean invoice without signing up",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4c9d9100cc3ff477"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c558ef03307f",
+  "name": "I want to fix a signed properties hashing error",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4dc1f4d4d9527492"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f7799555cf4c",
+  "name": "I want to stop chasing clients for payment",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4fd734974e7b474a"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c7f7f6b79241",
+  "name": "I want to avoid invoicing fees from payment processors",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-50c74a534fa82a4e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e0250b7cc910",
+  "name": "I want to automatically chase unpaid invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-50d09e6c2977c568"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_503d16fc24e9",
+  "name": "I want to know which order quantities are ready to invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-51a0dea89107148d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8484907912ae",
+  "name": "I want to stop thinking about invoicing and chasing late payers",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-52361e6ebb509e61"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8dd5c031cd02",
+  "name": "I want to create an invoice via the API",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-524126bfcf5381f4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f74a98e38952",
+  "name": "I want to auto-increment invoice numbers with a prefix",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-52cdbef3b3590e1a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_53237974ab51",
+  "name": "I want to get paid promptly after invoicing clients",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-52dfabd81742a1a7"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dd3de69125a3",
+  "name": "I want to convert email reading into a document-access system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-52e8e43dbf6eb7dc"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_acd0d42d9f68",
+  "name": "I want to keep track of all received and sent emails",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-52e8e43dbf6eb7dc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_101aba7fb6d0",
+  "name": "I want to match payments to invoices via reference number",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-536aaa17b99541c2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_66b09fe0812d",
+  "name": "I want to remove misleading non-functional placeholder code",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-53932dab63615be8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fe7de21d7b4e",
+  "name": "I want invoices to auto finalize after the set time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-53b0178d38cb38a6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_16dee4260b95",
+  "name": "I want to extract the invoice number from the top of text",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-54114dcc7c7194f7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dad8f19319ec",
+  "name": "I want to send and confirm payments inside my mini app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5487791af2acf938"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a4e46d244f01",
+  "name": "I want to show a payment page when a button is clicked",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5487791af2acf938"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4570030d85ba",
+  "name": "I want to show fractional hourly quantities on invoice lines",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-57138cfc8b91cd8b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_72b9aad1c10b",
+  "name": "I want to invoice clients in other EU countries with correct VAT",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-58505327d50e38df"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bcf8ca764aa6",
+  "name": "I want to keep a clean record of invoices sent and paid",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5863dc7e6e6f85f1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2fda664ffb00",
+  "name": "I want to follow up on overdue invoices and handle renewals",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5863dc7e6e6f85f1"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9cc86938e00f",
+  "name": "I want my paid order routed so a tax invoice is issued",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-586f7d0745d3ad25"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea63f7a8f5ce",
+  "name": "I want to be billed via invoice for a larger contract",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-59c8ec16729ea433"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_97ba0aaa570f",
+  "name": "I want to handle invoicing with a tool I'm happy with",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-59d3bd01b18ba3cb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b8be78805f45",
+  "name": "I want to know when I can start invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a16d146fcd04607"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f57bfe2dcf6c",
+  "name": "I want to hand off my books to my tax advisor quickly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a2b031b89347461"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8e0c8beffbc9",
+  "name": "I want to make all invoices formatted identically across users",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a8620cdb8b126ca"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1cfcd4619ebc",
+  "name": "I want to confirm rates and holiday invoicing with a colleague",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5b9a74e75fc9f671"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e2c2d5ebdd44",
+  "name": "I want to see my invoice history",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5cd949d7c65bf67e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cfbc1a5bb92f",
+  "name": "I want to make an invoice template calculate totals correctly on a client's machine",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5d04fc764e5bd1df"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2e393a25626f",
+  "name": "I want to invoice companies from my terminal",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5d543f7769cdaa03"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8adef480d876",
+  "name": "I want to close clients without quoting and payment friction",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5f7a44c03ec6dc77"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0a42d48104a7",
+  "name": "I want to send professional quotes with detailed breakdowns",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5f7a44c03ec6dc77"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fe22223f237e",
+  "name": "I want to write a multi-line note to the client",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5fe4c72f44765746"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5b664d6119a0",
+  "name": "I want the invoice preview to show a placeholder line item",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5fe4c72f44765746"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_607605a3bf78",
+  "name": "I want selectors to fit the panel without clipping",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5fe4c72f44765746"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5ab17d1f1f6a",
+  "name": "I want the conditions step to look clean and appealing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5fe4c72f44765746"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_11b14cc53b28",
+  "name": "I want to send an e-invoice through the exchange system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6056847dbb595de7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_874863e4b7cd",
+  "name": "I want to decide how money moves for checkout and invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-61caa8346a7401a1"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f53d96ff8b27",
+  "name": "I want to do plain text invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-624b8366a983122c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d5b921fb8a3b",
+  "name": "I want to track income and expenses from bank CSVs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-624b8366a983122c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_809a4387cb5f",
+  "name": "I want to ship a local-first invoicing desktop app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-62bd6d202fb4e711"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_011b06b6536d",
+  "name": "I want to split a multi-invoice PDF into single pages",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-62d30e9f3fc8988c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fb01f025655f",
+  "name": "I want to extract the invoice number from each page",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-62d30e9f3fc8988c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f0176f5b0328",
+  "name": "I want to calculate overtime pay automatically on my invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-646ce9576507a046"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4e660c749ddd",
+  "name": "I want to generate invoices automatically",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-66bd29fec0cfffd1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6ea83f37f8f0",
+  "name": "I want to prove quote sending and invoicing in the browser",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6810bbec03c0825e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a251fd8697d2",
+  "name": "I want to calculate the last payday for regular invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-695d0bd93a9ea50d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d8300dd15d65",
+  "name": "I want to validate the current balance of partial amounts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-695d0bd93a9ea50d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c4120e2be51b",
+  "name": "I want to fix debit account heads at the GRN level",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-69fdef4dff563372"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2f84ded6d909",
+  "name": "I want to ensure my invoices meet EU billing format requirements",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6b67e27063fe7ccc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a6824157863d",
+  "name": "I want to run my whole service business workflow in one tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6c3f82e3dbd4379d"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3180271090ac",
+  "name": "I want to find a reasonably priced invoicing product that works",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6d008c48d81152ee"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2587f311bac7",
+  "name": "I want invoicing software with only the features freelancers need",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6df603d01aa8f50c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d5fee7ddfe02",
+  "name": "I want to extract structured data from dense documents reliably",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6f3c1480a21ff631"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f9cf189a02c8",
+  "name": "I want to see margin and invoicing status per time log",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6fa745047adbe3ee"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1142daa8da4c",
+  "name": "I want to assign a new category per bill based on date and duplicate bill numbers",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-71c52279f7c38f39"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8bbec89551c8",
+  "name": "I want to programmatically find which invoices are unpaid",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-74d9e031cf46071c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b627099f8cee",
+  "name": "I want to retrieve order invoices as PDF files",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-76d03775dabd6756"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b7e64772ccd7",
+  "name": "I want to organize team building activities without back and forth",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-77209e6a2374c077"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bf3264d09e79",
+  "name": "I want to set the invoice sales tax percentage in code",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-81bc364bd75560cd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ddfc64b22ba2",
+  "name": "I want to run my business finances offline in a file I control",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8303cae2ac23373a"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dc6d348d8f93",
+  "name": "I want to show invoice list for a chosen year without timeouts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83cc4faca288324f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e78a29803bd0",
+  "name": "I want to create and manage quotations, invoices and contracts in one place",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-843eb31e8475820c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cf20f6e899ba",
+  "name": "I want to submit a simplified invoice to ZATCA reporting successfully",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-85436d4296cbf6bd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b413549deb7f",
+  "name": "I want to export updated invoices to accounting software that rejects updates",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-858e5569ec7ebaa5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_774c7f12a688",
+  "name": "I want to show invoicing minus retailing as the pivot total",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-86a3e09ab54e025d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_27e5e614e847",
+  "name": "I want the trial subscription to generate a real invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-873d60de07efd906"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_711678cead28",
+  "name": "I want to find the VBA bug that crashes Excel after invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8780d66e232e1323"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1f4318c486f4",
+  "name": "I want to replace expensive proprietary ordering software with a custom system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-885d628bbb1cb6cf"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5618d28740c3",
+  "name": "I want my invoicing system to just work reliably",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-885d628bbb1cb6cf"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_355d83e908bf",
+  "name": "I want to show page numbers next to hyperlinks for print readers",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8b10efd695d2b3b0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_67ac7d994743",
+  "name": "I want to calculate the next future invoicing date from a start date",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8eafa4af7a764603"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_da68f70412e6",
+  "name": "I want to apply one payment across multiple invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8f657ba7de498065"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2d7591e41b60",
+  "name": "I want to sell software license codes online with VAT handled",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-91f59e5037eeb591"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_05c980d98fe7",
+  "name": "I want to change the sender name on automated invoice emails",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9246501d710da799"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_41bbfd4e3694",
+  "name": "I want to post a UBL invoice to an e-invoicing system without errors",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-925b43dcd68de921"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bc5afac2e982",
+  "name": "I want to get due date and discount to populate automatically on new invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-942ae0be493aa9e8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3fe133a8d3db",
+  "name": "I want to extract invoice numbers from invoices with varying layouts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-96553ddab7d96748"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5a8f26d478bf",
+  "name": "I want invoicing systems to store data reliably on the server",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9658b25249ffc97c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_be77346553fd",
+  "name": "I want to bill my clients without high processing fees",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9687101839e61ae8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_27f7a9cf8c18",
+  "name": "I want to own all my client and invoice data",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9687101839e61ae8"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ac873968a606",
+  "name": "I want to invoice clients through a French company",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-96c53e1e650d0f19"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6011c592b6f0",
+  "name": "I want to invoice regularly and clearly with itemized milestones",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-96d9cbc24fdd54ae"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_85985c5e49c8",
+  "name": "I want to set up monthly invoicing to avoid spending caps",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-97bcef1af83b99df"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_011e4b562d96",
+  "name": "I want to track my hours in the background",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-986a8f09ed4461c3"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_64ed03b2232b",
+  "name": "I want to stop paying monthly for time tracking tools",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-988a0a1f428d5e5f"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9d40cab9763b",
+  "name": "I want to recreate my invoicing SaaS myself to avoid a price increase",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-992ac1dad86799d6"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a891456888a8",
+  "name": "I want to remove refunded invoices from customer invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-99ae1a49b7bda048"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2a6ada5d05b2",
+  "name": "I want to generate a DOCX invoice dynamically without a template",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9a55841b1f44f20d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_becc632174be",
+  "name": "I want to create PDF invoices for clients from an Excel template",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9b79b67f67be93b8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8223bddad076",
+  "name": "I want to remove my name from PDF document properties",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9b79b67f67be93b8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a73b5a95f97a",
+  "name": "I want to create a standard invoice view resource in Nova",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9c45527d8a555327"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6a2090208d6d",
+  "name": "I want to capture check data from scans to rename files",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9e6e7e73b2fb7f70"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d5588e7a70ef",
+  "name": "I want to find a flexible OCR system that is essentially free",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9e6e7e73b2fb7f70"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bb4d55b542cd",
+  "name": "I want a self-hosted portal handling file sharing, tracking and invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9f1995095713cdfe"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fab5e2f6077b",
+  "name": "I want to buy a pallet load of solar panels",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9f6606e1c940f881"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bb9c33d9c9b7",
+  "name": "I want to avoid paying huge amounts just to invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a26904b1dd304103"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1a6434d20143",
+  "name": "I want to run parallel batch jobs for each invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a2b45ccc26c1c6af"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_15ecff60e6f3",
+  "name": "I want to log in receipts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a3c4f05c87748256"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_540b6d3eaebf",
+  "name": "I want to log work quickly and draft invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a423ef76d4e79bcb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6669ec4fdef7",
+  "name": "I want to start invoicing immediately before registering for GST",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a7602f295922fd65"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bd649d262d28",
+  "name": "I want to generate editable invoices from my Stripe accounts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a95ead2b480dca81"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2e21906669ef",
+  "name": "I want my customers to generate their own invoices on demand",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a95ead2b480dca81"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_98bc36fc991b",
+  "name": "I want to generate invoices from usage in Stripe test mode",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a982b678dc7b509e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_845896379bb5",
+  "name": "I want a good invoicing app for my work",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aa9eebac0f86636c"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea72175b28c4",
+  "name": "I want to install and maintain a self-hosted invoicing app quickly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aa9f4b6e09715ce5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_580da99d7a9a",
+  "name": "I want to set a tax rate per client",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aadcabb4625d254e"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b2dd0c1d1133",
+  "name": "I want to pay a lower rate for payments",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ab4592e6cfccdb7a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_eae3e7c65e5b",
+  "name": "I want to capture charges and generate compliant invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aba1509b5080b6a7"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_43ba0f29064b",
+  "name": "I want to build a receipt invoicing app step by step",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-abb04a305268d01f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_eb257d5ca5d1",
+  "name": "I want to download a PayPal invoice as PDF",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ac0aa9a4b77e0c68"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0295d432f6f0",
+  "name": "I want to run an agent for ordering and invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-acf03145eee6a6ff"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8317820510a3",
+  "name": "I want to extract Danish payment details from invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b09ed13093833aa2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e947dcfb0f48",
+  "name": "I want to combine a custom model with the prebuilt model",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b09ed13093833aa2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fe8a7ad00dab",
+  "name": "I want to avoid paying for two model requests",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b09ed13093833aa2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fc43cf785a2a",
+  "name": "I want to edit authorised zero-dollar invoices via API",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b3b4b95f4fbf6774"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8c6dfe553f14",
+  "name": "I want to avoid zero-dollar invoice edit failures",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b3b4b95f4fbf6774"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d543fbed0a88",
+  "name": "I want to set accurate subscription expiration dates from invoice events",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b3f205a7c12bfc87"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1e2475dcd598",
+  "name": "I want to distinguish trial end from payment period end",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b3f205a7c12bfc87"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_df580bfb0bbf",
+  "name": "I want to verify invoice amounts in generated PDFs match entered data",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b62eaea89b103497"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cc73eea272cb",
+  "name": "I want complaint refunds documented consistently before and after invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b632137ed8a7c3c7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_20870b1769dc",
+  "name": "I want the money-in loop working end to end in production",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b699eade6e7707ed"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_746a604a5096",
+  "name": "I want to add compliance and reporting polish",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b699eade6e7707ed"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1d3c0bcc785b",
+  "name": "I want to count preliminary and final invoices per customer",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b70abd39295145e3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ba17a8292748",
+  "name": "I want to track partner usage against a free allowance",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b85d52274c9fd573"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_53abf0f7a9b4",
+  "name": "I want to invoice a partner once they hit a usage threshold",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b85d52274c9fd573"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e3d86de8c506",
+  "name": "I want to sync customer data and job status automatically",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b97ab41653b90d9b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0253041ded19",
+  "name": "I want to keep tabs on job status and invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b97ab41653b90d9b"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e72d8b35d8f3",
+  "name": "I want to build proposals quickly to win clients",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b97ab41653b90d9b"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_01f78af726b2",
+  "name": "I want to count how many days an invoice applies in a month",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bc2f27fed27d58dc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1c569256c508",
+  "name": "I want to read and understand e-invoice XML field meanings",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-be2749e24984ee66"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8b1ce5eb24a0",
+  "name": "I want to search saved bills by invoice number",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bf481c85a695aafd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2688b0d3aa21",
+  "name": "I want to understand how I am being billed and VATed",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bfa2d4e2a4d7fb84"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d8d54d616b1a",
+  "name": "I want to find time from first to last invoice entry",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c0a5f50dcb40bd3a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_40d44aa93100",
+  "name": "I want to find a different time-tracking and invoicing system",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c21ca84997ceec40"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8ce8e29751b8",
+  "name": "I want to prepare my business for mandatory PEPPOL e-invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c35067ace9053b6d"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fe9a8dfa5ab6",
+  "name": "I want to create a Stripe invoice in open status",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c35a498f8072d7a9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_63a7b3b4cb1f",
+  "name": "I want to bill customers clearly without confusing multiple charges",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c50aece9569a6769"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a6eb0f107c81",
+  "name": "I want to generate an invoice from a booking",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c51c836bbdaafc56"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_de1356136ab5",
+  "name": "I want to pull booking, client and vehicle data into the invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c51c836bbdaafc56"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_82b3a46fc9c8",
+  "name": "I want to deploy invoicing code as a scheduled job",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c55ba0680da72a65"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5a0cf5465726",
+  "name": "I want to avoid paying per-invoice fees to my payment processor",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c5bf1e41a1f1f860"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ab38288cf341",
+  "name": "I want to attach a generated invoice PDF to the invoice record",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c63e16baf15e7d8b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9c6fdec45b94",
+  "name": "I want to email the customer automatically when an invoice is created",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c63e16baf15e7d8b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0de158c9cdc0",
+  "name": "I want to run projects, invoicing and time tracking in one connected tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c6724069c7288846"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1e051558c53e",
+  "name": "I want to send simple invoices without clutter for solo work",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c77a4f217cd80a18"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_459b7e2daa09",
+  "name": "I want invoices to show correct GST breakdown per shop",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c7e734f7e60f94c3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2d02d2ba74b8",
+  "name": "I want invoice numbers to restart each financial year per shop",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c7e734f7e60f94c3"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_38a589174ca6",
+  "name": "I want to collect payment from pilot clients without billing software",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c80aa8cff59c64bb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_907c9b7f3bc7",
+  "name": "I want to compare shipped versus received invoice quantities to spot variances",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c96a3255319fe2be"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e6401d37f52f",
+  "name": "I want to match products across two invoice lists despite naming differences",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c96a3255319fe2be"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_04845a9d540b",
+  "name": "I want to show users the after-tax price including coupons",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cb0be7581a564a37"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f69eac12d840",
+  "name": "I want to keep invoice data immutable when source data changes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cbaa1d4b7d8987d4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b5f1dd0db478",
+  "name": "I want to verify whether a vendor's invoice email was faked",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cc37aaaf5c5fa0d6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_eb98561d167b",
+  "name": "I want to issue and collect payment on a correct test invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ce6dc365bf20bd16"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a2469c56fe96",
+  "name": "I want to confirm GST treatment with a chartered accountant",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ce6dc365bf20bd16"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5c10a64f69f6",
+  "name": "I want to change invoice total calculation to include custom business rules",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d0ab4958fb1ae0f1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c73d2985b671",
+  "name": "I want to get my client script running on invoice records",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d131eab1b945029c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4f9f88334b20",
+  "name": "I want to implement reverse invoicing integrated with supplier and purchase workflows",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d13a0445569c491e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_19cf2615414c",
+  "name": "I want to create and send invoices without spreadsheets",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d394afdf992a5b04"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d0cdfa0e4a21",
+  "name": "I want to track what I billed and received",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d394afdf992a5b04"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b09e09fe10d4",
+  "name": "I want to share invoices with my accountant",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d394afdf992a5b04"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ff5f6cc3c8d7",
+  "name": "I want to customize invoice printing per item group",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d41eb599970cb03f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1923354aa453",
+  "name": "I want to hide a field from one supplier's invoice",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d41eb599970cb03f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f81c93ff44da",
+  "name": "I want to save time and money on invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d4c5a61c5ac6a082"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4716c233f3b1",
+  "name": "I want to get an invoice's status via the API",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d5214adbc5605be4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_509e17edfc9a",
+  "name": "I want to send orders as invoices with payment terms",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d64205dd122a90be"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bbfdacbfd17a",
+  "name": "I want invoice payment state synced to orders",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d64205dd122a90be"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_811a3f5832e4",
+  "name": "I want to create invoices and proposals",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-da782ae33cae8fe2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9bbbfe2fe943",
+  "name": "I want to invoice a client for a new environment",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dbcce3e30286aefe"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_942163b8138b",
+  "name": "I want to gather invoicing information and costs from client",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dbcce3e30286aefe"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_23c3fc6e5f4a",
+  "name": "I want to generate PDFs reliably without breaking in production",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dc1b7ed0553966fc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cf6da4945925",
+  "name": "I want to send invoices to companies as a freelancer",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dc1d12927b68f778"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1d470e0cebbf",
+  "name": "I want to fix incorrect invoice formats quickly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dc1d12927b68f778"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1d5cb84ea5f9",
+  "name": "I want to comply with each country's invoicing rules",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dc1d12927b68f778"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7256391dfa55",
+  "name": "I want page breaks to work in generated invoice documents",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dc649ed1ef090952"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_da52d96c0c1a",
+  "name": "I want to issue quotes, invoices and credit notes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dced865303de310d"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d210bb208511",
+  "name": "I want to send automatic payment reminders to clients",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dced865303de310d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4dea71671392",
+  "name": "I want to track time spent working for client invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-de802e30eb476638"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5b24c09c8cc7",
+  "name": "I want to set a next invoice date without a subscription",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e0160272b7c54fb1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_21ad482fcb7d",
+  "name": "I want to grow my home improvement business",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e56a0ac495891c6f"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ca285dbb035c",
+  "name": "I want to find an invoicing app for my small business on Linux",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e5c61936ecf4949a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2b8ead9337ee",
+  "name": "I want to have integrations ready before the customer's invoicing switch date",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ea7bc9e107e724ce"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_66de305d6e92",
+  "name": "I want to delete my unused invoicing service account",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ebc1fe1a30f49deb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_31ba91540d49",
+  "name": "I want to configure school installment plan settings",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ed0723d11cf004c0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_41fe44ff24ef",
+  "name": "I want to stop invoice posting when certification fails",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f3f765231c081a69"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ebb53005463f",
+  "name": "I want to find software to run my music group bookings end to end",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4782dc41adaaeb8"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_69e092c9dd3c",
+  "name": "I want to check musicians' availability before confirming a booking",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4782dc41adaaeb8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ae7a4f7d1a46",
+  "name": "I want to send reminders to venue and performers before the show",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4782dc41adaaeb8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a5db713f2f65",
+  "name": "I want the macro to run automatically when I hit send",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4932f6b01da44d9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b99410fe3027",
+  "name": "I want to send each company's invoices from the right email account",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4932f6b01da44d9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_761b48c82125",
+  "name": "I want to suggest adding a free invoicing tool to the list",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f4c820f9ef9fcbac"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_78dcd1c3d70b",
+  "name": "I want to correct a closed metering day after invoicing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f61676066763d020"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a75070cf912e",
+  "name": "I want to push booked hours into the invoicing system automatically",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fd1b1a6759eee0fe"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fbca4a530085",
+  "name": "I want to set rates and pricing for tutoring sessions",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fdaa7ae88b352129"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_def132459ee9",
+  "name": "I want to invoice my subcontractor days to get paid",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-058af9d404ca373e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ca796b5d928d",
+  "name": "I want to keep my small business books organised",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-09991062baede31d"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_18f175cc5791",
+  "name": "I want to create recurring invoices without looking up how",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-09991062baede31d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e6fee9c5abf6",
+  "name": "I want to lift my payment service ban by submitting documentation",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0d7c99ace0166bb7"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a6683879e02f",
+  "name": "I want to create formal invoices for my tutoring payments",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0d7c99ace0166bb7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f48aa20174b2",
+  "name": "I want to get an explanation of alleged unpaid fees before paying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1561119de0498865"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e663ab5505ab",
+  "name": "I want to remove a wrong invoice from my books",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2fb73c801dd2aa45"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0066545ed10a",
+  "name": "I want to get paid the second installment without breaking my records",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-308c4e4a5260d42a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b0c8ce79f89d",
+  "name": "I want to determine correct VAT treatment for bank fees without invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-396ee940601269ab"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_66ec34a037f4",
+  "name": "I want to know whether I must file a self-assessment to HMRC",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3bd9db2871462708"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9f411c57c259",
+  "name": "I want to schedule all my company work in one app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3c7bcabfb02985bb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5a7d4282a97d",
+  "name": "I want to get paid for completed freelance work",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-45482d23a86e64a6"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fb377b636cdb",
+  "name": "I want to collect payment owed for my invoiced services",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4f9a7be025566f96"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_30a306856559",
+  "name": "I want to avoid a negative credit score entry over disputed fees",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-566acc912494d927"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1071e809edeb",
+  "name": "I want to know if cross-border LLC invoicing creates tax obligations",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-569455474d57cf6c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_510ad25dae61",
+  "name": "I want to invoice time spent on unreachable client calls",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5cacd6454cf7e27c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f87a148788da",
+  "name": "I want to invoice onboarding and setup tasks",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5cacd6454cf7e27c"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f34cc334f0ea",
+  "name": "I want to track expenses across multiple currency accounts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6b211bdb00a5baae"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f8177304c9da",
+  "name": "I want to automatically collect and organize billing emails",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-79db0b4c9b3bf64f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_08edbd29c311",
+  "name": "I want to stop chasing clients for small payments",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-84dadf55032f1c84"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9b15caf17cb1",
+  "name": "I want to report amount paid so far per donor",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8e146075dc7db88b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bc41445d48e6",
+  "name": "I want to know how invoice totals are calculated",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9795100e2493e555"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2232b116371f",
+  "name": "I want to generate a cash based PNL from my invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9f6ed35b7d92320a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e8a226cdd865",
+  "name": "I want to invoice for fixed dollar amounts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aa292e88fa790595"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2e6166e6508b",
+  "name": "I want to get paid on time without damaging the client relationship",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b7fe86f3f674eb79"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_30e6ea41ae42",
+  "name": "I want to split one deposit across several customers' invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ba2973ee92f13229"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0b9161a9611f",
+  "name": "I want my bank to refund premiums I paid without coverage",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ccc699267952bc8b"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_047aaf74dfa2",
+  "name": "I want to manage my business from pc or phone",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cfe8c44bac2bd0c1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6342acc00628",
+  "name": "I want to understand why enterprise value excludes other liabilities",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d0834a0a0a6b31cc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_30a62c7f6a50",
+  "name": "I want to know if safekeeping money is taxable",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d305323b1d25d475"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_06c76ea2548e",
+  "name": "I want to add a dedicated VAT tax line to invoices",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e5552f178e306dd5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_97d8d1c00c2b",
+  "name": "I want to cancel my subscription and get a refund",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e5552f178e306dd5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cd326c7debcc",
+  "name": "I want to know if de minimis safe harbor has overall limits",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e59780ca325f9c14"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_333381355346",
+  "name": "I want to record opening accounts receivable balances in accounting software",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ebe18cc4a8c27b86"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_14cb9bc89d32",
+  "name": "I want to add bills without bugs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f3c63329f4a244e8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_39a007413b17",
+  "name": "I want to invoice standby hours even without work",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f780372f0190aec0"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3645ec09dc3e",
+  "name": "I want invoicing terms agreed in writing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f780372f0190aec0"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7e5d2f1a37b3",
+  "name": "I want to calculate the correct amount to add to an invoice to cover credit card fee and tax",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ff73cd668edca8a2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ }
+]

@@ -1,0 +1,3601 @@
+[
+ {
+  "job_id": "job_06abad66b398",
+  "name": "I want to track and build my habits simply and consistently",
+  "instances": 32,
+  "posts": 32,
+  "source_ids": [
+   "S-00064c4d84e356ae",
+   "S-039ddeb75bb86f37",
+   "S-18308034d95df068",
+   "S-1997fcb4c184c179",
+   "S-1d90ccb532cf3d8d",
+   "S-20b9fc0991637a54",
+   "S-33a191fed39446c2",
+   "S-3723406014671681",
+   "S-399ab2c2024bef05",
+   "S-41adc8d25f9ffc08",
+   "S-4c3643b1c43a8c77",
+   "S-573f95861738333a",
+   "S-62fef60679481e70",
+   "S-6460c6a773dd183c",
+   "S-7b97edf45d5cd8ed",
+   "S-8808910893f105f1",
+   "S-8c4e0ddbc188b31e",
+   "S-95708daaae1cf781",
+   "S-9b4bf7bcb6cd5e24",
+   "S-a3ee980923e9f8d2",
+   "S-a66ac6bce406d461",
+   "S-c151fa97c56654b2",
+   "S-c818f8999c1a25a1",
+   "S-c849c4e5599f5521",
+   "S-c9f505b19407165a",
+   "S-ce3ff03f25cb5a2b",
+   "S-d8228bf26cd9108e",
+   "S-dab38d91607c8d34",
+   "S-e67c9f49412c1609",
+   "S-f2ab903f185a605c",
+   "S-f2f86b01f374f673",
+   "S-ff7177261d387910"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 27,
+   "big": 4,
+   "small": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_2628bbd49fbc",
+  "name": "I want to visualize my habit progress and completion data",
+  "instances": 14,
+  "posts": 12,
+  "source_ids": [
+   "S-2e9199bc55ff3d56",
+   "S-3278fedb76c0183f",
+   "S-338baada3a0a4cc2",
+   "S-3490bdc7587b2da9",
+   "S-45c92ecba26d536c",
+   "S-5aad524ef09a5cb0",
+   "S-62cf8fa62dc06636",
+   "S-6df9e499c3a4d4e6",
+   "S-c2ead8ccae2a5f35",
+   "S-c9f505b19407165a",
+   "S-f6ad2cb0a5133a94",
+   "S-f9a97dcbfd655383"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "small": 6,
+   "core": 8
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_e33430e86d62",
+  "name": "I want a simple and clean habit tracker",
+  "instances": 8,
+  "posts": 8,
+  "source_ids": [
+   "S-074794a50254e541",
+   "S-113e03031133a927",
+   "S-1c5514302ddd8059",
+   "S-8ab22f5ea09ab663",
+   "S-9acb98d6c2b9975c",
+   "S-9d7a26bd37e6a3ab",
+   "S-b46b6e5d045a58e2",
+   "S-fda26cc51121649e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 8
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_753028b74eb1",
+  "name": "I want to be reminded to check in on my habits daily",
+  "instances": 8,
+  "posts": 8,
+  "source_ids": [
+   "S-4099612684737d7f",
+   "S-9900f6e6ab5350de",
+   "S-c2ead8ccae2a5f35",
+   "S-c9f505b19407165a",
+   "S-e2a6af28fb9c86fa",
+   "S-e8591ddfaae7bab1",
+   "S-e9aede59a042869d",
+   "S-ffcb140ffcb1fa90"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 6,
+   "small": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_573ca52bfa8e",
+  "name": "I want to see my habit streaks to stay motivated",
+  "instances": 8,
+  "posts": 8,
+  "source_ids": [
+   "S-59fc002206c22161",
+   "S-6460c6a773dd183c",
+   "S-80e4587d592df05e",
+   "S-8ab22f5ea09ab663",
+   "S-a366445e1c1f2318",
+   "S-a6698edb86c08da0",
+   "S-d99e57d6abc51cc2",
+   "S-e648c6895e3e5082"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 4,
+   "small": 4
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_afba438f2713",
+  "name": "I want to build a habit tracker with CRUD, dashboard, and insights",
+  "instances": 6,
+  "posts": 4,
+  "source_ids": [
+   "S-2a279a8c9f878ebc",
+   "S-53827c4b0f2531bb",
+   "S-b7b82b82c0d67df0",
+   "S-e648c6895e3e5082"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "big": 1,
+   "core": 4,
+   "small": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_c7b8cc6ea7ae",
+  "name": "I want to track habits and routines in an engaging, gamified way",
+  "instances": 5,
+  "posts": 5,
+  "source_ids": [
+   "S-065095615e7c25c2",
+   "S-2e9199bc55ff3d56",
+   "S-8f09a6afc35847b0",
+   "S-9a4ec4dca49789aa",
+   "S-c9f505b19407165a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 4,
+   "small": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_d04967d03829",
+  "name": "I want to check off daily habits and have it persist",
+  "instances": 5,
+  "posts": 5,
+  "source_ids": [
+   "S-29792431fe404187",
+   "S-3d242ef06b02cd87",
+   "S-59fc002206c22161",
+   "S-62cf8fa62dc06636",
+   "S-a366445e1c1f2318"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 5
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5b4c72d15b6a",
+  "name": "I want a habit tracker that fits exactly how I like things",
+  "instances": 5,
+  "posts": 5,
+  "source_ids": [
+   "S-396d0584fd91fdaf",
+   "S-46e41ab521b02752",
+   "S-8b697d4e3bdcd968",
+   "S-a33b8e9a8e0faf6b",
+   "S-baa9eb2ff53c306b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 5
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8f89dd5011f2",
+  "name": "I want to track habits without losing progress when I miss a day",
+  "instances": 4,
+  "posts": 4,
+  "source_ids": [
+   "S-00064c4d84e356ae",
+   "S-218e3e0cddef1c6e",
+   "S-5781d02e378e39eb",
+   "S-5d7989f2ecffa7b1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 4
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9c58e3a59e05",
+  "name": "I want to track habits with a free, private, premium-feeling app",
+  "instances": 4,
+  "posts": 4,
+  "source_ids": [
+   "S-0dcdf04ce3e2a3c9",
+   "S-1bd40e9de9c34e94",
+   "S-846c03d5320bc458",
+   "S-db62a8b8fc835a99"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3,
+   "big": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_4ae45f6c63f6",
+  "name": "I want to use a habit tracker on iOS",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-33a191fed39446c2",
+   "S-c895131816a204b4",
+   "S-d7768db47334e927"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "small": 1,
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_37681a95ee6e",
+  "name": "I want to log daily habits, health, and diary in one place",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-3409c90a1ae093c3",
+   "S-606dc9718777e069",
+   "S-c8b1a60d4a405937"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2,
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e75803decf29",
+  "name": "I want to track many and irregular habits easily",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-3723406014671681",
+   "S-4b802daa795383a2",
+   "S-6df9e499c3a4d4e6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "small": 1,
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_156e1faf722c",
+  "name": "I want to keep my habit data private and offline",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-5d7989f2ecffa7b1",
+   "S-9acc106a7b56579a",
+   "S-fe2020549c481aca"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "small": 1,
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_32bd9340de66",
+  "name": "I want to track goals and habits with customization",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-9106d33e1683ac75",
+   "S-aa0a50aa9cf7395b",
+   "S-d6c43da816842f54"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_22ee7d16dc83",
+  "name": "I want to access and sync my habit tracker across devices",
+  "instances": 3,
+  "posts": 3,
+  "source_ids": [
+   "S-afc5ac5dff489ab6",
+   "S-e6d5e7b76c71b7e6",
+   "S-edb04ecbae11807d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 3
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_616763c950e7",
+  "name": "I want to build good habits and break bad ones",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-0ca5e7ffcb5846fd",
+   "S-4a06cea5c34bb0a1"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1,
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4a8261601636",
+  "name": "I want to plan and keep everything in one app across devices",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-1b2e02f6229a0ebb",
+   "S-de1d6bf050b6bed1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "big": 1,
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_882ff5ede8d8",
+  "name": "I want to analyze how habits affect my health over time",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-22a6a63ca34ab24e",
+   "S-41edf3e6de5db87e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "big": 1,
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_abe9e96f03be",
+  "name": "I want a habit tracker with cloud sync and customization",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-48d95efc5e36e053",
+   "S-a3ee980923e9f8d2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d3d7a6e01467",
+  "name": "I want to mark habits done quickly without opening the app",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-5145fb9b71c961b0",
+   "S-f48994f534e93284"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "small": 1,
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4a2658fd6825",
+  "name": "I want to set recurring tasks without paying a subscription",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-5440071dfa12ccf1",
+   "S-bd6645da8bf7f4a4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cef1746786d3",
+  "name": "I want to track habits in a terminal-style local interface",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-5a30d43303842c6f",
+   "S-df251af7768b906e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3a7eb6d17362",
+  "name": "I want to automatically generate habit instances for upcoming days",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-620ed10f6c491998",
+   "S-7d2aa20a24686fc1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9cc2ff86e06f",
+  "name": "I want to build and maintain a new habit consistently",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-6eb0d968f8cb8242",
+   "S-8d789e1d41ef6ac5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9d3cb3559a53",
+  "name": "I want to compare and differentiate a habit tracker from alternatives",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-705992d37f9c163a",
+   "S-88de8fa86be3129d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4d1b0cb66eb6",
+  "name": "I want to track habits in plain markdown without a separate database",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-8692fb05d2ed354e",
+   "S-d99e57d6abc51cc2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e7247eaed5ec",
+  "name": "I want to gamify exercise to build a habit",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-c2f5eaa1567f54e0",
+   "S-f424ad5be27f1e35"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 2
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_97626d7f9a84",
+  "name": "I want to stay organized with my habits and get feedback",
+  "instances": 2,
+  "posts": 2,
+  "source_ids": [
+   "S-eaa281ab17d0a57d",
+   "S-fda26cc51121649e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1,
+   "small": 1
+  },
+  "mixed": true
+ },
+ {
+  "job_id": "job_1055a3d0432e",
+  "name": "I want my data to stay private on my device",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-00064c4d84e356ae"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ccffd2667f9f",
+  "name": "I want to save time using the app's AI features",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0028c6d9e3c6a1ad"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_32b8a6b56ab3",
+  "name": "I want to restore my purchase after changing phones",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-00d688f5450bdb14"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_335923391d37",
+  "name": "I want to track something without adding a manual step",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0187c2ad51f275a3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2ec9b372f1ec",
+  "name": "I want to quantify how much I slip on a habit",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-029a08c80400a649"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b3d8818febb9",
+  "name": "I want to stay productive despite ADHD or anxiety",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-042689cbce9b6ad4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fdd06a579a6e",
+  "name": "I want to build a habit tracker app with multiple windows",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0a262b88eca2bf02"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1b5a8a32b253",
+  "name": "I want to block distracting apps during working hours",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0ca5e7ffcb5846fd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5b73ed9beca5",
+  "name": "I want to see my daily screen time to stay accountable",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0ca5e7ffcb5846fd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_da50bdd6d002",
+  "name": "I want to form habits that survive disruptions",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0cb6a14a9475f285"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_90d340530734",
+  "name": "I want to track calories consistently without breaking my streak",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0cb6a14a9475f285"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b987af33a3ac",
+  "name": "I want to add habits with recurrence options in my app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0d20c2165c58cca6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_840fa1961c82",
+  "name": "I want to build apps on top of Reminders",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0dd26d9e775fe7d2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a681577d8a21",
+  "name": "I want to create and organize tasks without linking a calendar",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-0e9f70e533bb5a7d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7a707cb4d8e8",
+  "name": "I want to delete all my habits at once and start fresh",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-100043f7cb22d422"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5496fc7b8c59",
+  "name": "I want to track habits without feeling shamed for missing a day",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-11d13817d305e9bf"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_13cde99295f2",
+  "name": "I want to build myself up to doing more",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-11d841b4e931c501"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_be9af69ddb4f",
+  "name": "I want to remember whether I took my daily supplements",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-145f40fc08cdf023"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_00cb3fe0af6e",
+  "name": "I want to see and update my app's database file",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-15550be9ed2aeb7f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_48096b15b84f",
+  "name": "I want to track recurring habits and tasks in one file",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-18de86958ed6f253"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_628155a67254",
+  "name": "I want to continue working seamlessly on my smartphone",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1b2e02f6229a0ebb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b86e21c73b49",
+  "name": "I want to replace separate services with one tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1b2e02f6229a0ebb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3b55fcc13dae",
+  "name": "I want to stay organized with a study plan",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-1d27f2cebca2fbe0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_432e207db234",
+  "name": "I want to track things I want to do regularly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-25b1ef7a63097745"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7442b2a86731",
+  "name": "I want to move my budget to a new tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-271f4f1d46b9da06"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3aa766a3ac9c",
+  "name": "I want to create and archive habits while keeping past check history",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-29792431fe404187"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_66c0e3bfc387",
+  "name": "I want to carry forward last month's habit selection and edit it freely",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-29792431fe404187"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ecc21245d76a",
+  "name": "I want to open a window to create a new habit",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-29f9ab4e3c741a1d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b68b7733d99a",
+  "name": "I want to know roughly where my daily energy comes from",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2aced8d9af478c97"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_15b5e4052b26",
+  "name": "I want to plan my week visually as a daily disability aid",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2b17f3b6ed97d183"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d75689c20e74",
+  "name": "I want to decorate and share journal pages with friends",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-2e9199bc55ff3d56"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_376dc92c29a1",
+  "name": "I want to timestamp when a bad habit is triggered",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-30090d9872d2e2dd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_39d5ed5a1a2b",
+  "name": "I want to see when in the day I doomscroll",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-30090d9872d2e2dd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e76ba7d9d749",
+  "name": "I want to pivot to alternative behaviours instead of doomscrolling",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-30090d9872d2e2dd"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1ab5f36d8095",
+  "name": "I want to make daily manual entries efficient and worthwhile",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-31694d58ba1de841"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d5c7c92c32d1",
+  "name": "I want to focus on the moment and follow my instincts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3359e8de5230d4fa"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8f990ed87131",
+  "name": "I want to mark sessions as habit trackers",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-338baada3a0a4cc2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_feacb8c041aa",
+  "name": "I want to form a habit I have wanted for decades",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-33a191fed39446c2"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_17d486597db3",
+  "name": "I want a daily checklist instead of scanning grids",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3490bdc7587b2da9"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea16a920dffc",
+  "name": "I want to build my own life OS app for my needs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-37f4628d00b5fdd0"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2829140987ca",
+  "name": "I want to cancel subscriptions by replacing tools I pay for",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-37f4628d00b5fdd0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d0678aea3c0d",
+  "name": "I want to track my habits with less effort",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-39256b7b865a6ea7"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_471e42d4531c",
+  "name": "I want to see the correct progress value when switching dates",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-399ab2c2024bef05"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4b36df914d9c",
+  "name": "I want to label my own custom trackers meaningfully",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b71e3e2c39f519f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c40ef5a9dff2",
+  "name": "I want to reset my counter after a slip while keeping past streaks",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b71e3e2c39f519f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c02a54b4d63d",
+  "name": "I want to count daily uses to aim for fewer next time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3b71e3e2c39f519f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0d97bdac0bc9",
+  "name": "I want to find a past event by searching a word",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3d62425c3a1c7874"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8050224c4e39",
+  "name": "I want to create an event in fewer steps",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3d62425c3a1c7874"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_356a4fee68f2",
+  "name": "I want a daily view of habits with streaks",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3df9b9509d223483"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_703c3ab8d63c",
+  "name": "I want a 35-day grid showing completion like contributions",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3df9b9509d223483"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b9a8c98c22f9",
+  "name": "I want to track habits without relying on an internet connection",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-3f7d2a623af66ad3"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e0d986720ac2",
+  "name": "I want to track my habits in one notebook",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-40ed35846281beaf"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_24ea8007fcbd",
+  "name": "I want to journal in a way that fits my needs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-41edf3e6de5db87e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_024c98214043",
+  "name": "I want to move closer toward achieving my goals",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-41edf3e6de5db87e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8fa0557b375e",
+  "name": "I want positive social pressure to stick to good habits",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-427a3800870335b2"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_90e1af891a45",
+  "name": "I want to fill out habit widgets quickly during the week",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-42b3ee34ad74500c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ca5f0116d4b5",
+  "name": "I want to register an account to access habit tracking",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-45c92ecba26d536c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e6f74b9ecade",
+  "name": "I want to log in to access my account and habits",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-45c92ecba26d536c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f28d10d8f5b8",
+  "name": "I want to know when my login attempt fails",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-45c92ecba26d536c"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_aa430f522350",
+  "name": "I want my credentials to persist after logout",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-45c92ecba26d536c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d9946ba0bcd4",
+  "name": "I want to edit and save my personal information",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-45c92ecba26d536c"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ef49de38f439",
+  "name": "I want to split a large component into testable modules",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-460b1203e8665086"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bf2ae84556a3",
+  "name": "I want to show completed habits as a fraction of applicable habits",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-47b3e7169ea293a5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_368e4a7914fb",
+  "name": "I want my planned tasks to block time in my calendar",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-49d5034f498aa121"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c6219c57180b",
+  "name": "I want to get into a habit of writing and publishing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4a0a603d5f360384"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_25fb93bc2a7a",
+  "name": "I want to track a habit that happens more than once a day",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4b7e5958db69bdbc"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8bd6dda09263",
+  "name": "I want to record what I actually did rather than follow a rigid plan",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4b802daa795383a2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0cba2d2529e9",
+  "name": "I want to track focused work time and journal as I go",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4b802daa795383a2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_97dbe43ffc6e",
+  "name": "I want to avoid distractions while searching email and video",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-4b802daa795383a2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_84a36b2edccb",
+  "name": "I want to build a consistent habit without tracking minute details",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-50255996ad5a2de9"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0c5f223c5aef",
+  "name": "I want to track time spent reading books",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-50326737cc4ce446"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a5e239ae7bcc",
+  "name": "I want to organize my books into bookshelves",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-50326737cc4ce446"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_96febc8c392e",
+  "name": "I want to see my reading progress",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-50326737cc4ce446"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9224015f5702",
+  "name": "I want a quick overview of my entire daily routine",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5145fb9b71c961b0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2a9d850533be",
+  "name": "I want to keep myself on task after motivation fades",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-515416b4947eaa0a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2f64f4356f2b",
+  "name": "I want to check boxes each morning and see how I am doing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-515416b4947eaa0a"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8bba2b7c9821",
+  "name": "I want to build a habit tracking app without starting from scratch",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-518d3495a9b810a0"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a1eee3e946b1",
+  "name": "I want to reuse an existing app's data model",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-518d3495a9b810a0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4667396c305c",
+  "name": "I want AI to study the data model and plan changes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-518d3495a9b810a0"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6347f1e6ce69",
+  "name": "I want AI to build, test and iterate the app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-518d3495a9b810a0"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c75c4a455740",
+  "name": "I want a full DevOps pipeline for the habit tracker app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-567e44370473917e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f17ae5f3c01f",
+  "name": "I want to start my day at 3 am in a tracker",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-56833fa1dcaf5991"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7ddf09ced8a8",
+  "name": "I want to log a mood together with a thought in one entry",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-56c6f8ea37e2ccbf"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_cbd9c30ffba8",
+  "name": "I want to prevent accidental duplicate mood submissions",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-56c6f8ea37e2ccbf"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ae89fd41a12f",
+  "name": "I want to find where my tracker data files are saved",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-56c6f8ea37e2ccbf"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_aff77d99085b",
+  "name": "I want to track meals without feeling judged or pressured",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5714e362f01255eb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a6d6d6216eb4",
+  "name": "I want to calculate how unbilled change orders erode my hourly profit",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5927237d2473c53d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a333080b9f5a",
+  "name": "I want to sign up and start using the app without friction",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-59fc002206c22161"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e4756de91ce4",
+  "name": "I want to remember birthdays with yearly repeating tasks",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a0a24a836e8c553"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6f43c38ba055",
+  "name": "I want to add many trackers and arrange them on screen",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5a30d43303842c6f"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6263630b4c96",
+  "name": "I want to notice when I slack on habits without tedious tracking",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-5da7dfa4051609e4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6cd414d15adb",
+  "name": "I want to reflect on my past life and achievements",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-606dc9718777e069"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5a078ce977d0",
+  "name": "I want to track my family's daily activities",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6123f8e221baecaf"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c670f53edf14",
+  "name": "I want to time-track a habit easily",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-62cf8fa62dc06636"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_90c17fcaf84c",
+  "name": "I want to check off a habit after midnight before bed",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-62d2af45e7477dc5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1f4cb01be2be",
+  "name": "I want to see basic stats about my missed days",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6460c6a773dd183c"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_656a91a7cc56",
+  "name": "I want to see my progress over time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6460c6a773dd183c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_68b0aa69b7a2",
+  "name": "I want to see nested habits in the example vault",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-661941447b2df7f6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_dade17428076",
+  "name": "I want trackers to show correct rows at each level",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-661941447b2df7f6"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_915a2414f062",
+  "name": "I want documentation explaining category versus habit folders",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-661941447b2df7f6"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e7c792c4ee00",
+  "name": "I want a reminder that forces me to stop and interact",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-66b1738f94c2ab32"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e3844caf1a41",
+  "name": "I want reminders at set times to not lose track of time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-66b1738f94c2ab32"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6513a5733a33",
+  "name": "I want to form habits deliberately to free my time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-66f5ff6f437e6dd2"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_05c7d9f43433",
+  "name": "I want to record habits as prompts rather than a scoreboard",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-66f5ff6f437e6dd2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_73d005030f22",
+  "name": "I want to gamify work goals without clutter",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-674a9c8152345d0d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_297b3704899c",
+  "name": "I want to see daily ticks turned into a picture over time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6e2cff7bb04aaaca"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_83042529bcbe",
+  "name": "I want to open a day's note by clicking a square",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6e2cff7bb04aaaca"
+  ],
+  "level": "micro",
+  "instance_levels": {
+   "micro": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4b01d710d8dd",
+  "name": "I want to tick or untick a habit directly from the grid",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6e2cff7bb04aaaca"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_af3fa27ffa09",
+  "name": "I want to chain child habits so completing one jumps to the next",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6eb0d968f8cb8242"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_97e876b7c8b7",
+  "name": "I want to move and delete items listed in habit tracker views",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6ebf062e3f1b3b0d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7abfe0fd7d2a",
+  "name": "I want to track my budget at the end of the day",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-6fe06318c32f3bc1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d56426ee55a6",
+  "name": "I want to count calories as part of my weight loss journey",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-70ada665c96d962e"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_569536313427",
+  "name": "I want to be reminded before meetings start",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-771fdaa117ef1c18"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7ba4c0159b79",
+  "name": "I want to weight habit categories so scores stay between zero and full",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-780d599ded60becd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_247ab060a677",
+  "name": "I want to build small personal tools like a habit tracker",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-7c1c40dfcaf533bd"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_92d97ea1d44b",
+  "name": "I want to complete a timed reading habit reliably",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-80c78cfe1eab7b82"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_222308081e88",
+  "name": "I want to log daily habit check-offs in a plain file",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-80e4587d592df05e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ab15d9d95863",
+  "name": "I want a simple easy-to-use app to organize my day",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-80f5a55cb9070823"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c6a45e521404",
+  "name": "I want my habit tracker component to re-render on state change",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8282ae25320e8ca0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2bfc8a911003",
+  "name": "I want to reuse a packing checklist instead of remembering everything",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83bf310ee7889e0e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b32c80f4c667",
+  "name": "I want to update a checklist mid-trip with missing items",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83bf310ee7889e0e"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1a65f7eb50d6",
+  "name": "I want to track repeatable habits on my phone",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83bf310ee7889e0e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a7de3135a1ae",
+  "name": "I want to display all habits in my app without UI exceptions",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83c4fd2fc7029087"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2afb79690bd6",
+  "name": "I want to avoid excessive rebuilds for better performance",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83c4fd2fc7029087"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d560c5b49a7c",
+  "name": "I want to stack multiple lists on top of each other",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-83c4fd2fc7029087"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_d701a0c8f22d",
+  "name": "I want streaks and rates computed deterministically from files",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8692fb05d2ed354e"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1a8c5cd46370",
+  "name": "I want to backfill missed days and retroactive check-ins",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8692fb05d2ed354e"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4fdb010dfa83",
+  "name": "I want to build a consistent prayer habit",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8a106dabd3177d14"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5218651f3faf",
+  "name": "I want to pause before opening distracting apps",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8a106dabd3177d14"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8faf5079f85b",
+  "name": "I want to track start and end time of any event",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8a9faac08a595003"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0bde8d01b7a8",
+  "name": "I want to pause tracking when taking a break",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8ab22f5ea09ab663"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0ef7a04b7fc2",
+  "name": "I want to re-implement my tracker in several frameworks to learn them",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8b697d4e3bdcd968"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e9bdaf6fb92b",
+  "name": "I want to make myself accountable for my habits",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8b95cef870bd66fe"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_09075fc415cf",
+  "name": "I want to mark a habit complete with photo proof",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8b95cef870bd66fe"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e5df087f82ee",
+  "name": "I want my habit table to not fully re-render on checkbox change",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8c2c4027035adad8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_7842b6bb2ed0",
+  "name": "I want to shift my whole day's schedule forward easily",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8d77aef13e89ffd0"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_baadc9e0e405",
+  "name": "I want to stop using my phone at night so I sleep more",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8fbdea89ff1c8fc5"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1932b700e9f8",
+  "name": "I want to read a book until I get tired",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-8fbdea89ff1c8fc5"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_fcc42d42a40f",
+  "name": "I want to get focused and stay consistent on my progress",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9106d33e1683ac75"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_29461fad5fe3",
+  "name": "I want to change the icon of my habit",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-91cbe4350aa5f471"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_becc554a9b53",
+  "name": "I want to track my habits month by month",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-928b242caeedb5cd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_193d412aab2e",
+  "name": "I want to exercise without relying on motivation or discipline",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-92ecc99ea16ed966"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea72ce764473",
+  "name": "I want to be reminded when to start my next set",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-92ecc99ea16ed966"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8b08a9db4a56",
+  "name": "I want to track habits without filling out rigid grids",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9407398c9165dfc1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e47006b284b2",
+  "name": "I want to build apps for my own backlog ideas",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-95708daaae1cf781"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5fa261c8884b",
+  "name": "I want to unlock pro features in the app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-964d37dfa263fc74"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_041ecfebb6f9",
+  "name": "I want to make family expectations and progress visible",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9a4ec4dca49789aa"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1630d72c7a12",
+  "name": "I want to track assignments and generate reports for students",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9a4ec4dca49789aa"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b762867fa71e",
+  "name": "I want a system simple enough that it actually gets used",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9a4ec4dca49789aa"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8b0d1b1d6d2a",
+  "name": "I want to set up repeating events and import my calendar",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9a5d690c869f409b"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9da3e3726ca6",
+  "name": "I want to add notes to each task about how it went",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9acb98d6c2b9975c"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bad55800ca13",
+  "name": "I want to create a new habit in my app's database",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9ba65e0e1847456d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a34883df971d",
+  "name": "I want to tag an instant quickly when creating it",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9bcc63bcd622b66f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_05298df48216",
+  "name": "I want to see daily whether I did the thing",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9bcc63bcd622b66f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2d20050867ef",
+  "name": "I want to set how often a task repeats weekly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9d1b019e532f04e6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_471c1554c1f0",
+  "name": "I want the right plant image to show for each percentage",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9fbe56f1d81d0c6c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9875c8a10ffe",
+  "name": "I want to hide checkbox true/false text on hover",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-9fbe56f1d81d0c6c"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_247faa5429b2",
+  "name": "I want to share a habit app with my family members",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a13976d330fd7876"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_382bae37c2f9",
+  "name": "I want to track my workouts without worrying about charging",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a23ed02472b6d04e"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8283c8a641c2",
+  "name": "I want to prevent ticking future days",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a366445e1c1f2318"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_03167a3a4cb4",
+  "name": "I want to buy a subscription without being blocked",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a4a9b0f6ac7206ec"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_be3c3c86debc",
+  "name": "I want to simulate seven-segment displays for my habit tracker device",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a604ff9fea8a2f25"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_8d78f5440372",
+  "name": "I want a todo or habit app matching my particular needs",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-a9e86111999df1ba"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c4aa661a51f2",
+  "name": "I want to stay organized and motivated as a writer",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ac59ec0638339326"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9e557256be7b",
+  "name": "I want to keep a streak going to stay in a habit rhythm",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aee3606a52dd7d66"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_6fc38810896d",
+  "name": "I want to track workout and food intensity over time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-aee3606a52dd7d66"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_9e172c9d1cca",
+  "name": "I want to share a grocery list with my household",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-afc5ac5dff489ab6"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_13c683b1c2c6",
+  "name": "I want to track habits on paper instead of an app",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b690870616d150e4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ed5fbe6318e3",
+  "name": "I want fasting reminders to update immediately when I log a fast",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b9424136176d2314"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_841e905b7c2e",
+  "name": "I want to log a fast for tomorrow",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b9424136176d2314"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f518af1ffd96",
+  "name": "I want to try learning the app without being interrupted",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-b9e9d78404deb261"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f121eb15f315",
+  "name": "I want to form habits intentionally for my health",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-baa9eb2ff53c306b"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ea28f5389eeb",
+  "name": "I want to see accurate habit and milestone stats even when weekly score is zero",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bcc08fdc857b7d7c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0d4d5e85b328",
+  "name": "I want to visually track no-spend days on a calendar",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-bf43508d8454a4dd"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_bf14f83f7d41",
+  "name": "I want to verify my habit tracker works end to end before selling",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c2334b7e80ed2d03"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3018dd62c88e",
+  "name": "I want to find users who fit my habit tracker",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-c3efa72a8f33e434"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_31a103691efd",
+  "name": "I want to capture objective facts about my daily actions",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-cc3bc0a1279ded2a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ef433dd9e792",
+  "name": "I want to protect my habit data from loss automatically",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d258ac7b6ed6592f"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_97f3694e4300",
+  "name": "I want to choose where my backups are saved",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d258ac7b6ed6592f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c550035da4e6",
+  "name": "I want to restore my data reliably after reinstalling",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d258ac7b6ed6592f"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f47c9c05aebe",
+  "name": "I want to keep up with hobbies and passions without fading out",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d49edf052901b340"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_24254512e4c8",
+  "name": "I want to regularly reflect on my day",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d6c43da816842f54"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_85e30d7ed032",
+  "name": "I want to build the habit of using the app regularly",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d971cd91bc66f355"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_01ad512324df",
+  "name": "I want to increment and decrement habit progress with buttons",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d99e57d6abc51cc2"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_3dbcc4244523",
+  "name": "I want to correlate daily behaviors with mood outcomes",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-d9dcb2f8230329ff"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_093e7f7e51c7",
+  "name": "I want habit tracking to require real evidence",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dddcedbfafea7687"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b5830723ae88",
+  "name": "I want to verify habit evidence privately",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-dddcedbfafea7687"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0df24adf763f",
+  "name": "I want to track actual effort, not just done/not done",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-df18bf02e0da56a8"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_873b4ba937b3",
+  "name": "I want to skip days without losing my streak",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-df18bf02e0da56a8"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_25ce6e2fc9c6",
+  "name": "I want to manage tasks, subscriptions and links in one place",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-df8ec3cbb64765ba"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e03692ad7627",
+  "name": "I want to print a yearly habit tracker without page overruns",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e2aeca81db6e97ab"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_5d47eb656bca",
+  "name": "I want to mark a habit done by clicking a cell",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e4792c7da44cec57"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_abfd91fceff2",
+  "name": "I want to view habit stats on my phone",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e4792c7da44cec57"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_a0a54a7ca587",
+  "name": "I want my habit data readable outside the tool",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e4792c7da44cec57"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_58ec0954d169",
+  "name": "I want to see my completion history in a calendar",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e648c6895e3e5082"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_b2666ff8ee9f",
+  "name": "I want to pair habit tracking with task tracking",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e774c339c70cad5c"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_ac0c65374063",
+  "name": "I want to see habit records as a dot matrix in month view",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-e8591ddfaae7bab1"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1129aa2f4927",
+  "name": "I want to quit social media",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ea22da4e33b1ac19"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_29fd0755c5e8",
+  "name": "I want to use basic features without paying",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-eaab24f6d5aa5ca5"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_37605c04ab3c",
+  "name": "I want to view my mood history reliably",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-eadfac73ad2948de"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c99080305a92",
+  "name": "I want to go to the gym consistently",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-eb1a2350ac50c8da"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_4f005e60bab8",
+  "name": "I want someone to check in on my goal daily",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-eb1a2350ac50c8da"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_02b07270d028",
+  "name": "I want to rebuild my own task and habit tools",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ee2daa9790a129b0"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_951df8880b81",
+  "name": "I want habits to auto-generate tasks on my board",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f0e02eb08813cb4d"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_e60463db8f7e",
+  "name": "I want to see pending habit tasks on my calendar",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f0e02eb08813cb4d"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_0c52edf01e4f",
+  "name": "I want help doing repetitive tasks when routines are hard",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f24038420bd201b4"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1766d43d8f6c",
+  "name": "I want to stop engaging with a community I behave worst in",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f49cb11f31d0180a"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_91e7cddf363e",
+  "name": "I want to block a site I keep returning to",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f49cb11f31d0180a"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2e2899817af2",
+  "name": "I want to use a tool daily with friends' support",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-f724c1d6cb7e63fb"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_f9753378801b",
+  "name": "I want to break a bad habit like quitting junk food",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fa6bbc282e018695"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_afc1071d050f",
+  "name": "I want to focus on the general trend instead of daily failures",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fa6bbc282e018695"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1069fff3768f",
+  "name": "I want to create or edit my habits in settings",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fd893f7c76314919"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c4d46ed3bc85",
+  "name": "I want to build the habit of entering and categorizing spending",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fe2020549c481aca"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_2ac51cde68a8",
+  "name": "I want to mark past days as done retroactively",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-fed726c9991a5a43"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_1941f912fb69",
+  "name": "I want to track progress toward learning goals with charts",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ffb72c9717e8b4b2"
+  ],
+  "level": "core",
+  "instance_levels": {
+   "core": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_c4d03013eb23",
+  "name": "I want to journal alongside logging my habit",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ffcb140ffcb1fa90"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_46335ac65c29",
+  "name": "I want to be rewarded for exceeding my habit goal",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ffcb140ffcb1fa90"
+  ],
+  "level": "small",
+  "instance_levels": {
+   "small": 1
+  },
+  "mixed": false
+ },
+ {
+  "job_id": "job_db096e33249f",
+  "name": "I want to focus on mastering one habit at a time",
+  "instances": 1,
+  "posts": 1,
+  "source_ids": [
+   "S-ffcb140ffcb1fa90"
+  ],
+  "level": "big",
+  "instance_levels": {
+   "big": 1
+  },
+  "mixed": false
+ }
+]
