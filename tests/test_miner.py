@@ -445,3 +445,13 @@ def test_search_proxies_fall_back_without_full_credentials(tmp_path: Path, monke
     monkeypatch.setattr(dataforseo, "search_volume", boom)
     with pytest.warns(UserWarning, match="search proxies skipped"):
         assert search_proxies(tmp_path, [], "IE") == []
+
+
+def test_graph_payload_skips_performs_edges_without_solution(mined):
+    from nmt_engine.miner.pipeline import graph_payload
+
+    run_dir, _ = mined
+    run = load_run(run_dir)
+    shown = {c for e in run.edges.values() for c in e.claim_ids}
+    g = graph_payload(run, shown, {}, {}, solutions={})
+    assert g["consideration_sets"] == {}

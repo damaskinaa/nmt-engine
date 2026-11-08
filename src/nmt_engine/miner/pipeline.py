@@ -336,9 +336,13 @@ def graph_payload(
         )
     consideration = {}
     for j in jobs.values():
-        alts = [e for e in edges if e.to_job == j.id and e.kind == "performs"]
-        if alts:
-            consideration[j.id] = sorted(solutions[e.from_job] for e in alts)
+        names = sorted(
+            solutions[e.from_job]
+            for e in edges
+            if e.to_job == j.id and e.kind == "performs" and e.from_job in solutions
+        )
+        if names:
+            consideration[j.id] = names
     return {
         "status": score.STATUS,
         "nodes": nodes,
