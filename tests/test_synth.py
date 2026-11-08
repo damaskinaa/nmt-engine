@@ -5,8 +5,10 @@ from datetime import date
 import numpy as np
 import pytest
 
+from nmt_engine.gates import g13_sim_firewall as g13
+from nmt_engine.gates.base import GateConfig
 from nmt_engine.schema import BacktestCase, Calc, CalcInput, Forecast, MarketTouch, Source
-from nmt_engine.store import Store
+from nmt_engine.store import RunData, Store
 from nmt_engine.synth import (
     ForecastRegistry,
     GradeInputs,
@@ -122,7 +124,7 @@ def test_combined_interval_is_conformalised_and_recorded():
     )
 
 
-def test_failed_family_is_listed_but_not_pooled():
+def test_failed_family_is_listed_but_not_pooled(tmp_path):
     w = generate_world(
         WorldConfig(seed=3, families=FAMILIES, partial_reference={"behavioural": 12})
     )
@@ -133,6 +135,22 @@ def test_failed_family_is_listed_but_not_pooled():
     assert listed == {**dict.fromkeys(F3, True), "behavioural": False}
     assert {e.family for e in tri.families} == F3
     assert all(not c.endswith("behavioural") for c in syn.calibration_ids)
+    run = RunData(
+        tmp_path,
+        None,
+        [],
+        synthetics={syn.id: syn.model_copy(update={"grade": "S3"})},
+        calibrations={c.id: c for c in cals.values()},
+    )
+    assert [f.message for f in g13.check(run, GateConfig())] == ["grade S3: no registered Forecast"]
+
+
+def test_sparse_family_is_left_uncalibrated_not_fatal():
+    w = generate_world(WorldConfig(seed=3))
+    cases = w.reference["Q1"]
+    one = cases[0].model_copy(update={"predicted": {**cases[0].predicted, "behavioural": 1.0}})
+    joint, cals = joint_calibration("J", "Q1", "r", "<=T", [one, *cases[1:]])
+    assert set(cals) == F3 and "behavioural" not in joint.families
 
 
 def test_no_passed_family_pools_all_with_rho_one():
