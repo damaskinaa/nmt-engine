@@ -454,6 +454,30 @@ def test_reasoning_effort_is_sent_and_keys_the_cache(tmp_path, monkeypatch):
     assert "reasoning_effort" not in bodies[0] and bodies[1]["reasoning_effort"] == "none"
 
 
+def test_malformed_json_is_billed_but_not_cached(tmp_path, monkeypatch):
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    bad = httpx.Response(
+        200,
+        json={
+            "choices": [{"message": {"content": '{"posts": [}'}}],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 5},
+        },
+    )
+    seen: list = []
+    llm = LLM(
+        tmp_path / "run",
+        provider="openai",
+        model="z-ai/glm-5.3",
+        base_url="https://api.tensorx.ai/v1",
+        cache_dir=tmp_path / "c",
+        client=_openai(seen, [bad]),
+    )
+    with pytest.raises(LLMError):
+        llm.complete_json("p")
+    assert llm.calls == 1 and not list((tmp_path / "c").glob("*.json"))
+    assert llm.complete_json("p") == {"ok": True} and len(seen) == 2
+
+
 def test_truncated_answer_is_billed_but_not_cached(tmp_path, monkeypatch):
     monkeypatch.setenv("TENSORX_API_KEY", "tx")
     monkeypatch.setenv("NMT_LLM_MAX_TOKENS", "512")

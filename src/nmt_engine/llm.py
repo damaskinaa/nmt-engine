@@ -171,8 +171,15 @@ class LLM:
         return not self.no_llm and bool(os.environ.get(self.key_env))
 
     def complete(
-        self, prompt: str, system: str = "", purpose: str = "", json_mode: bool = False
+        self,
+        prompt: str,
+        system: str = "",
+        purpose: str = "",
+        json_mode: bool = False,
+        check: Callable[[str], Any] | None = None,
     ) -> str:
+        """`check` runs on a fresh answer before it is cached; an `LLMError` from it is billed
+        and logged but leaves the cache empty so a rerun asks again."""
         if self.no_llm:
             raise LLMDisabled("--no-llm")
         json_mode = json_mode and self.provider == "openai"  # Anthropic has no JSON mode flag
@@ -202,6 +209,12 @@ class LLM:
         if truncated:  # billed, never cached: a cut-off answer must not be replayed
             self._log(purpose, phash, t_in, t_out, cached=False, truncated=True)
             raise LLMError(f"{self.host} answer cut off at max_tokens={self.max_tokens}")
+        if check is not None:
+            try:
+                check(text)
+            except LLMError:
+                self._log(purpose, phash, t_in, t_out, cached=False)
+                raise
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         hit = {"text": text, "tokens_in": t_in, "tokens_out": t_out, "model": self.model}
         cached.write_text(json.dumps(hit, ensure_ascii=False), "utf-8")
@@ -213,7 +226,7 @@ class LLM:
             self.client.close()
 
     def complete_json(self, prompt: str, system: str = "", purpose: str = "") -> Any:
-        return parse_json(self.complete(prompt, system, purpose, json_mode=True))
+        return parse_json(self.complete(prompt, system, purpose, json_mode=True, check=parse_json))
 
     def _call(
         self, key: str, system: str, prompt: str, json_mode: bool
