@@ -98,7 +98,9 @@ def search_proxies(run_dir: Path, built: list[BuiltJob], geo: str) -> list[Claim
     queries: dict[str, str] = {}
     for b in built:
         qs = [i.search_query for i in b.group.instances if i.search_query]
-        queries[b.job.id] = (max(set(qs), key=qs.count) if qs else b.job.statement)[:80].lower()
+        queries[b.job.id] = (max(sorted(set(qs)), key=qs.count) if qs else b.job.statement)[
+            :80
+        ].lower()
     c = Collector(run_dir, geo=geo, salt=env("NMT_AUTHOR_SALT"))
     try:
         df = dataforseo.search_volume(c, sorted(set(queries.values())), geo)

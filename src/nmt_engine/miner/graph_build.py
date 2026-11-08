@@ -170,7 +170,8 @@ def build_edges(
         for (_, a), (_, z) in zip(seq, seq[1:], strict=False):
             if a != z:
                 add("sequence", a, z, "customer", claim(by_id[a]) + claim(by_id[z]))
-    # hierarchy edges: a job's higher-goal span names another job
+    # hierarchy edges: a job's higher-goal span names another job. Links are set in order and a
+    # candidate whose current chain reaches back to b is skipped, so the relation stays acyclic.
     for b in built:
         goals = [s for i in b.group.instances for s in i.spans.get("higher_goal", [])]
         best, score = None, 0.4
