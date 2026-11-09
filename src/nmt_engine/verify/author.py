@@ -43,20 +43,21 @@ def verbatim(quote: object, text: str) -> bool:
 
 
 def parse_author(row: dict, text: str) -> AuthorVerdict | None:
-    role = row.get("role")
-    if role not in prompts.ROLES or not verbatim(row.get("role_quote"), text):
+    role, role_quote = row.get("role"), row.get("role_quote")
+    if role not in prompts.ROLES or not verbatim(role_quote, text):
         return None
     names = row.get("names_solution")
     if not isinstance(names, bool):
         return None
-    if names and not verbatim(row.get("solution_quote"), text):
+    sol_quote = row.get("solution_quote") if names else None
+    if names and not verbatim(sol_quote, text):
         return None
     return AuthorVerdict(
         role,
-        normalize_ws(row["role_quote"]),
+        normalize_ws(role_quote),
         names,
         str(row.get("solution")) if names and row.get("solution") else None,
-        normalize_ws(row["solution_quote"]) if names else None,
+        normalize_ws(sol_quote) if sol_quote is not None else None,
     )
 
 
@@ -83,7 +84,9 @@ def _ask(
 ) -> list:
     out: list = [None] * len(posts)
 
-    def one(cat: str, chunk: list[int], round_: int) -> None:
+    def one(cat: str, chunk: list[int], round_: int) -> dict[int, object]:
+        """Answers for one batch; workers return them and only the main thread writes `out`."""
+        got: dict[int, object] = {}
         body = "\n\n".join(f"{n}.\n{posts[k].text}" for n, k in enumerate(chunk))
         prompt = build(cat, body)
         if round_:  # a changed prompt, so the cache cannot replay an unusable answer
@@ -91,7 +94,7 @@ def _ask(
         try:
             data = llm.complete_json(prompt, system, purpose)
         except (LLMError, ValueError):
-            return
+            return got
         rows = data.get("posts") if isinstance(data, dict) else None
         for row in rows if isinstance(rows, list) else []:
             if not isinstance(row, dict):
@@ -100,8 +103,9 @@ def _ask(
                 n = int(row.get("id"))
             except (TypeError, ValueError):
                 continue
-            if 0 <= n < len(chunk) and out[chunk[n]] is None:
-                out[chunk[n]] = parse(row, posts[chunk[n]].text)
+            if 0 <= n < len(chunk) and got.get(chunk[n]) is None:
+                got[chunk[n]] = parse(row, posts[chunk[n]].text)
+        return got
 
     for round_ in range(rounds):
         by_cat: dict[str, list[int]] = {}
@@ -114,7 +118,9 @@ def _ask(
             for i in range(0, len(idx), batch)
         ]
         with ThreadPoolExecutor(max(1, min(workers, len(jobs)))) as pool:
-            list(pool.map(lambda j: one(*j), jobs))  # BudgetExceeded propagates
+            for got in pool.map(lambda j: one(*j), jobs):  # BudgetExceeded propagates
+                for k, v in got.items():
+                    out[k] = v
     return out
 
 

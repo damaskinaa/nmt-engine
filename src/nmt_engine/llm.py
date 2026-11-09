@@ -92,7 +92,8 @@ class Budget:
     """Spend shared by every model client of one run. A call is refused before it is sent when
     its worst case (prompt plus a full `max_tokens` answer) would cross the run or step cap;
     calls to a model without a known price are refused outright. The worst case stays reserved
-    until the call is logged, so concurrent calls cannot overshoot a cap together."""
+    until the call is logged. The input bound is the prompt's UTF-8 byte count, so concurrent
+    calls cannot overshoot a cap together."""
 
     run_cap: float = RUN_BUDGET_USD
     step_caps: dict[str, float] = field(default_factory=lambda: dict(STEP_CAPS))

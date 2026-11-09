@@ -87,15 +87,15 @@ class Embedder:
             self.client = httpx.Client(timeout=180)
         body = {"model": self.model, "input": texts}
         headers = {"Authorization": f"Bearer {key}"}
-        for attempt in range(self.retries + 1):
+        for attempt in range(max(self.retries, 0) + 1):
             try:
                 resp = self.client.post(self.base_url + "/embeddings", headers=headers, json=body)
             except httpx.TransportError as exc:  # timeouts, dropped connections
-                if attempt == self.retries:
+                if attempt >= self.retries:
                     raise LLMError(f"embeddings {type(exc).__name__}") from exc
                 self.sleep(backoff(attempt, None))
                 continue
-            if resp.status_code not in RETRY_STATUS or attempt == self.retries:
+            if resp.status_code not in RETRY_STATUS or attempt >= self.retries:
                 break
             self.sleep(backoff(attempt, resp.headers.get("retry-after")))
         if resp.status_code != 200:

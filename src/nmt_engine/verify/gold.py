@@ -39,6 +39,10 @@ MIN_CALLS = 20  # fewer positive calls on test: NOT MEASURED, never a pass
 QUOTE_CHARS = 120
 BATCH = 8
 PRODUCER_REASONING = "none"
+GOLD_PROVENANCE = (
+    "model-labelled (Kimi), not human-verified; precision against model labels; "
+    "cross-model agreement with GLM-5.3 91.3% (kappa 0.88); human check NOT DONE"
+)
 
 
 def prompt_hash(model: str = PRODUCER, reasoning: str | None = PRODUCER_REASONING) -> str:
@@ -189,10 +193,18 @@ def check(out: Path = GOLD_DIR, phash: str | None = None) -> dict:
     phash = phash or prompt_hash()
     path = out / "recorded" / f"{phash}.json"
     if not path.is_file():
-        return {"prompt_hash": phash, "passed": False, "error": f"no recording for {phash}"}
+        return {
+            "prompt_hash": phash,
+            "gold_provenance": GOLD_PROVENANCE,
+            "classes": {},
+            "t1_passed_for": [],
+            "not_measured": [],
+            "passed": False,
+            "error": f"no recording for {phash}",
+        }
     rec = json.loads(path.read_text("utf-8"))["answers"]
     gold = _read_jsonl(out / "gold.jsonl")
-    res: dict = {"prompt_hash": phash, "classes": {}}
+    res: dict = {"prompt_hash": phash, "gold_provenance": GOLD_PROVENANCE, "classes": {}}
     for split in ("dev", "test"):
         rows = [g for g in gold if g["split"] == split and g["role"] is not None]
         pred = [rec.get(g["id"], {}).get("role") for g in rows]
