@@ -44,3 +44,11 @@ families, collector fixes, graph viewer and statistics.
   posts) were written by people building a product in the category rather than using one
   (habit tracker 52%, invoicing 44%, feature flags 24%). This motivated the v3 author gate (L3a).
 - Full report: `docs/REPORT_killline_v2.md` on that branch.
+
+## Known weaknesses carried forward
+
+- **L3 author gate: low USER recall (B1 gold set, invoicing).** The producer
+  (`deepseek/deepseek-v4.1-flash`, prompt hash `86a3b79a44cbc70a`) tags 13 of the 31 held-out
+  posts that Kimi calls USER as USER (42% recall; 29 of 51 = 57% on dev). Most real customer
+  voices are lost at the gate. **Owner: B3.** Target: USER recall ≥ 60% at USER precision ≥ 85%
+  on the held-out split. B1 is not blocked on it.

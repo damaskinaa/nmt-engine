@@ -106,3 +106,11 @@ def test_prompt_change_changes_hash(monkeypatch):
     assert gold.prompt_hash() != h
     with pytest.raises(AssertionError):
         assert "error" not in gold.check()
+
+
+def test_small_counts_are_not_measured_not_passed():
+    res = gold.check()
+    for name, c in res["classes"].items():
+        t = c["test"]
+        assert (t["status"] == "NOT MEASURED") == (t["called"] < gold.MIN_CALLS), name
+        assert (name in res["t1_passed_for"]) == (t["status"] == "PASS")

@@ -32,7 +32,7 @@ CACHE_DIR = repo_root() / "cache" / "gold" / "invoicing"
 MAX_CHARS = 1000
 N_GOLD, N_TEST = 300, 100
 PRECISION_MIN = 0.85
-FEW = 10  # fewer positive calls than this: precision reported but flagged
+MIN_CALLS = 20  # fewer positive calls on test: NOT MEASURED, never a pass
 QUOTE_CHARS = 120
 BATCH = 8
 PRODUCER_REASONING = "none"
@@ -177,7 +177,9 @@ def record(llm: LLM, out: Path = GOLD_DIR) -> Path:
 
 def check(out: Path = GOLD_DIR, phash: str | None = None) -> dict:
     """Per-class producer precision against gold on dev and test, with 95% Wilson intervals.
-    Classes (§8 A3): USER in the author gate; each element tag, scored on posts gold calls USER."""
+    Classes (§8 A3): USER in the author gate; each element tag, scored on posts gold calls USER.
+    A class with fewer than MIN_CALLS positive calls on test is NOT MEASURED, which is not a pass:
+    T1 counts as passed only for the classes in `t1_passed_for`."""
     phash = phash or prompt_hash()
     path = out / "recorded" / f"{phash}.json"
     if not path.is_file():
@@ -197,11 +199,17 @@ def check(out: Path = GOLD_DIR, phash: str | None = None) -> dict:
             res["classes"].setdefault(el, {})[split] = _prec(
                 p, [g["elements"][el] for g in users], True
             )
-    for c in res["classes"].values():  # no positive calls means no false positives to count
+    for c in res["classes"].values():
         t = c["test"]
-        t["passed"] = t["precision"] is None or t["precision"] >= PRECISION_MIN
-        t["note"] = "no calls" if not t["called"] else ("few calls" if t["called"] < FEW else "")
-    res["passed"] = all(c["test"]["passed"] for c in res["classes"].values())
+        if t["called"] < MIN_CALLS:
+            t["status"] = "NOT MEASURED"
+        else:
+            t["status"] = "PASS" if t["precision"] >= PRECISION_MIN else "FAIL"
+    status = {k: c["test"]["status"] for k, c in res["classes"].items()}
+    res["t1_passed_for"] = sorted(k for k, v in status.items() if v == "PASS")
+    res["not_measured"] = sorted(k for k, v in status.items() if v == "NOT MEASURED")
+    # CI fails on a missing recording or on any measured class below 85%
+    res["passed"] = "FAIL" not in status.values()
     return res
 
 
