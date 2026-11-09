@@ -247,3 +247,12 @@ def test_l2_collector_returns_already_stored_sources(tmp_path):
     assert c.add_source(**kw) is None
     c.return_existing = True
     assert c.add_source(**kw).id == first.id
+
+
+def test_new_plans_weight_review_sites_and_communities():
+    old = harvest.HarvestPlan("b", ["J2"], [harvest.Query("q", ("J2",), "t")], ["Wave"])
+    assert "source_weights" not in old.as_dict()
+    new = harvest.HarvestPlan(**{**old.__dict__, "source_weights": dict(harvest.SOURCE_WEIGHTS)})
+    assert new.hash != old.hash
+    w = harvest.SOURCE_WEIGHTS
+    assert w["appstore"] > w["hackernews"] > w["github"] and w["stackexchange"] < 1

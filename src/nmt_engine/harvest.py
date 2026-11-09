@@ -131,6 +131,8 @@ class HarvestPlan:
     since: str = "2023-01-01"
     geo: str = "IE"
     per_query: int = 30
+    # multipliers on each adapter's result limit; None (plans made before weighting) means 1.0
+    source_weights: dict[str, float] | None = None
 
     @property
     def hash(self) -> str:
@@ -138,6 +140,8 @@ class HarvestPlan:
 
     def as_dict(self) -> dict:
         d = asdict(self)
+        if d["source_weights"] is None:  # keeps the hash of plans made before weighting
+            del d["source_weights"]
         d["queries"] = [
             {"text": q.text, "nodes": list(q.nodes), "origin": q.origin} for q in self.queries
         ]
@@ -167,12 +171,33 @@ def plan(
     named = {x for n in g.nodes if n.type == "solution" for x in solution_names(n.text)}
     apps = sorted(named | set(apps))
     return HarvestPlan(
-        brief_hash, list(riskiest), merge(qs), apps, competitors=list(competitors), since=since
+        brief_hash,
+        list(riskiest),
+        merge(qs),
+        apps,
+        competitors=list(competitors),
+        since=since,
+        source_weights=dict(SOURCE_WEIGHTS),
     )
 
 
+# B3 finding: query sources skew to BUILDER (GitHub) and OTHER (Stack Exchange tax questions), so
+# new plans weight results toward review sites and user communities.
+SOURCE_WEIGHTS = {"hackernews": 1.0, "stackexchange": 0.3, "github": 0.3, "appstore": 2.0}
+
+
 def _steps(p: HarvestPlan) -> list[tuple[str, tuple[str, ...], Callable[[Collector], list]]]:
-    since, n = date.fromisoformat(p.since), p.per_query
+    since, w = date.fromisoformat(p.since), p.source_weights or {}
+
+    def lim(adapter: str, base: int) -> int:
+        return max(1, round(base * w.get(adapter, 1.0)))
+
+    n, se, gh, ap = (
+        lim("hackernews", p.per_query),
+        lim("stackexchange", p.per_query // 3),
+        lim("github", p.per_query // 3),
+        lim("appstore", 10),
+    )
     steps = []
     for q in p.queries:
         t = q.text
@@ -184,19 +209,17 @@ def _steps(p: HarvestPlan) -> list[tuple[str, tuple[str, ...], Callable[[Collect
                 (
                     f"stackexchange:{site}:{t}",
                     q.nodes,
-                    lambda c, t=t, s=site: stackexchange.collect(
-                        c, t, since, s, n // 3, similar=True
-                    ),
+                    lambda c, t=t, s=site: stackexchange.collect(c, t, since, s, se, similar=True),
                 )
             )
-        steps.append((f"github:{t}", q.nodes, lambda c, t=t: github.issues(c, t, since, n // 3)))
+        steps.append((f"github:{t}", q.nodes, lambda c, t=t: github.issues(c, t, since, gh)))
     for a in p.apps:
         for cc in p.app_countries:
             steps.append(
                 (
                     f"appstore:{cc}:{a}",
                     (),
-                    lambda c, a=a, cc=cc: appstore.named_app(c, a, cc, 10, since),
+                    lambda c, a=a, cc=cc: appstore.named_app(c, a, cc, ap, since),
                 )
             )
     for d in p.competitors:
