@@ -280,10 +280,38 @@ def test_auditor_is_always_another_vendor(monkeypatch):
     assert model_family("z-ai/glm-5.3-flash") == model_family("z-ai/glm-5.3") == "z-ai"
     assert model_family("claude-haiku-4-5") == "anthropic"
     assert auditor_model("z-ai/glm-5.3") == "moonshotai/kimi-k3.1-pro"
-    assert auditor_model("deepseek/deepseek-v4.1-flash") == "z-ai/glm-5.3"
+    assert auditor_model("deepseek/deepseek-v4.1-flash") == "moonshotai/kimi-k3.1-pro"
     assert auditor_model("z-ai/glm-5.3", "qwen/qwen3.8-2.4t-a95b") == "qwen/qwen3.8-2.4t-a95b"
     with pytest.raises(ValueError):
         auditor_model("z-ai/glm-5.3", "z-ai/glm-5.3-flash")
     monkeypatch.setenv("NMT_LLM_AUDITOR_MODEL", "z-ai/glm-5.3-flash")
     with pytest.raises(ValueError):
         auditor_model("z-ai/glm-5.3")
+
+
+def test_budget_refuses_calls_over_run_or_step_cap(tmp_path, monkeypatch):
+    from nmt_engine.llm import PRODUCER, TENSORX_URL, Budget, BudgetExceeded
+
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    monkeypatch.delenv("NMT_LLM_PRICES", raising=False)
+    seen: list = []
+    budget = Budget(run_cap=0.01, step_caps={"gold": 0.006})
+    kw = dict(provider="openai", model=PRODUCER, base_url=TENSORX_URL, budget=budget)
+    llm = LLM(tmp_path, cache_dir=tmp_path / "c", client=_openai(seen), max_tokens=1000, **kw)
+    llm.complete("a", purpose="gold.label")  # worst case $0.0015, actual $0.0008
+    assert budget.by_step["gold"] == pytest.approx(0.0008)
+    for i in range(5):
+        llm.complete(f"b{i}", purpose="gold.label")
+    with pytest.raises(BudgetExceeded, match="step 'gold'"):
+        llm.complete("c", purpose="gold.label")
+    for i in range(5):
+        llm.complete(f"d{i}", purpose="verify.author")
+    with pytest.raises(BudgetExceeded, match="run budget"):
+        llm.complete("e", purpose="verify.author")
+    assert len(seen) == 11
+    llm.complete("a", purpose="gold.label")  # cache hits cost nothing and are never refused
+    unpriced = LLM(
+        tmp_path, cache_dir=tmp_path / "c", client=_openai(seen), **{**kw, "model": "x/y"}
+    )
+    with pytest.raises(BudgetExceeded, match="no known price"):
+        unpriced.complete("f", purpose="l1.draft")

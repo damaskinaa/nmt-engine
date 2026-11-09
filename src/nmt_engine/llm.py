@@ -59,8 +59,70 @@ PRICES: dict[str, tuple[float, float]] = {
     "qwen/qwen3.8-2.4t-a95b": (2.50, 6.00),
 }
 # Auditor/council default for each producer family: always another vendor.
-CROSS_VENDOR_AUDITOR = {"z-ai": "moonshotai/kimi-k3.1-pro"}
+CROSS_VENDOR_AUDITOR = {
+    "z-ai": "moonshotai/kimi-k3.1-pro",
+    "deepseek": "moonshotai/kimi-k3.1-pro",
+}
 FALLBACK_AUDITOR = "z-ai/glm-5.3"
+
+# ARCHITECTURE_v3 pins (§4.8, §8 A7): TensorX only.
+TENSORX_URL = "https://api.tensorx.ai/v1"
+PRODUCER = "deepseek/deepseek-v4.1-flash"
+AUDITOR = "moonshotai/kimi-k3.1-pro"
+THIRD_MODEL = "z-ai/glm-5.3"  # cross-model stability only, thinking off
+RUN_BUDGET_USD = 20.0
+# Per-step caps (USD); the step is the `purpose` prefix before the first ".".
+STEP_CAPS: dict[str, float] = {
+    "gold": 6.0,
+    "l1": 2.0,
+    "verify": 10.0,
+    "sim": 8.0,
+    "redteam": 2.0,
+    "report": 2.0,
+}
+
+
+class BudgetExceeded(Exception):
+    """A call would take a run or one of its steps over its USD cap (ARCHITECTURE_v3 §4.6)."""
+
+
+@dataclass
+class Budget:
+    """Spend shared by every model client of one run. A call is refused before it is sent when
+    its worst case (prompt plus a full `max_tokens` answer) would cross the run or step cap;
+    calls to a model without a known price are refused outright."""
+
+    run_cap: float = RUN_BUDGET_USD
+    step_caps: dict[str, float] = field(default_factory=lambda: dict(STEP_CAPS))
+    spent: float = 0.0
+    by_step: dict[str, float] = field(default_factory=dict)
+
+    @staticmethod
+    def step(purpose: str) -> str:
+        return purpose.split(".", 1)[0]
+
+    def check(self, purpose: str, worst_case: float | None) -> None:
+        if worst_case is None:
+            raise BudgetExceeded(f"{purpose}: model has no known price, so no budget check")
+        step = self.step(purpose)
+        if self.spent + worst_case > self.run_cap:
+            raise BudgetExceeded(f"run budget ${self.run_cap:.2f} reached (${self.spent:.4f})")
+        cap = self.step_caps.get(step)
+        used = self.by_step.get(step, 0.0)
+        if cap is not None and used + worst_case > cap:
+            raise BudgetExceeded(f"step {step!r} budget ${cap:.2f} reached (${used:.4f})")
+
+    def add(self, purpose: str, cost: float | None) -> None:
+        step = self.step(purpose)
+        self.spent += cost or 0.0
+        self.by_step[step] = self.by_step.get(step, 0.0) + (cost or 0.0)
+
+    def as_dict(self) -> dict:
+        return {
+            "run_cap_usd": self.run_cap,
+            "spent_usd": round(self.spent, 6),
+            "by_step_usd": {k: round(v, 6) for k, v in sorted(self.by_step.items())},
+        }
 
 
 class LLMDisabled(Exception):
@@ -142,6 +204,7 @@ class LLM:
     retries: int = 6
     timeout: float = 180
     sleep: Callable[[float], None] = time.sleep
+    budget: Budget | None = None
     calls: int = 0
     cost: float = 0.0
     unpriced_calls: int = 0
@@ -206,6 +269,9 @@ class LLM:
         key = os.environ.get(self.key_env)
         if not key:
             raise LLMDisabled(f"${self.key_env} is not set")
+        if self.budget is not None:  # rough token count: 3 characters per token, rounded up
+            est_in = (len(system) + len(prompt)) // 3 + 1
+            self.budget.check(purpose, cost_usd(self.model or "", est_in, self.max_tokens))
         text, t_in, t_out, truncated = self._call(key, system, prompt, json_mode)
         if truncated:  # billed, never cached: a cut-off answer must not be replayed
             self._log(purpose, phash, t_in, t_out, cached=False, truncated=True)
@@ -290,6 +356,8 @@ class LLM:
         self, purpose: str, phash: str, t_in: int, t_out: int, cached: bool, truncated=False
     ) -> None:
         cost = 0.0 if cached else cost_usd(self.model or "", t_in, t_out)
+        if self.budget is not None and not cached:
+            self.budget.add(purpose, cost)
         self.calls += 0 if cached else 1
         self.cost += cost or 0.0
         self.unpriced_calls += cost is None
