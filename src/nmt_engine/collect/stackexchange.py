@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from datetime import UTC, date, datetime, time
 
+import httpx
+
 from nmt_engine.collect.base import Collector, env, ts
 from nmt_engine.collect.text import html_to_text
 
@@ -41,7 +43,13 @@ def collect(
     if key := env("STACKEXCHANGE_KEY"):
         params["key"] = key
     while len(out) < limit:
-        data = c.fetch_json(SIMILAR if similar else API, NAME, params={**params, "page": page})
+        try:
+            data = c.fetch_json(SIMILAR if similar else API, NAME, params={**params, "page": page})
+        except httpx.HTTPStatusError as exc:
+            # keyless /similar refuses deep pages with 400; keep what earlier pages returned
+            if page > 1 and exc.response.status_code == 400:
+                break
+            raise
         for q in data.get("items", []):
             src = c.add_source(
                 adapter=NAME,

@@ -213,3 +213,25 @@ def test_ranks_and_designated_pairs(tmp_path, monkeypatch):
     pn = node_gold.per_node(out)
     assert pn["J3"]["supports"] == 1 and "finding" not in pn["J3"]
     assert pn["J4"]["finding"] == "no public evidence in this harvest"
+
+
+def test_stackexchange_keeps_earlier_pages_when_a_deep_page_is_refused():
+    from datetime import date
+
+    import httpx
+
+    from nmt_engine.collect import stackexchange
+
+    class C:
+        def fetch_json(self, url, name, params):
+            if params["page"] == 1:
+                return {"items": [{"link": "u1", "title": "t", "body": "b"}], "has_more": True}
+            req = httpx.Request("GET", url)
+            raise httpx.HTTPStatusError(
+                "400", request=req, response=httpx.Response(400, request=req)
+            )
+
+        def add_source(self, **kw):
+            return kw["url"]
+
+    assert stackexchange.collect(C(), "q", date(2023, 1, 1), similar=True) == ["u1"]
