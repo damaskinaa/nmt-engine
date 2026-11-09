@@ -54,6 +54,7 @@ def test_committed_plan_hash_matches():
     d = json.loads(path.read_text("utf-8"))
     assert harvest.HarvestPlan.from_dict(d).hash == d["hash"]
     assert d["riskiest"] == RISKY
+    assert d["app_countries"] == ["us", "gb", "ie"] and d["since"] == "2023-01-01"
 
 
 def test_node_check_needs_every_node_and_verbatim_quotes(tmp_path):

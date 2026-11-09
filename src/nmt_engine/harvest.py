@@ -166,7 +166,9 @@ def plan(
         qs += producer_queries(llm, g, riskiest, stmts)
     named = {x for n in g.nodes if n.type == "solution" for x in solution_names(n.text)}
     apps = sorted(named | set(apps))
-    return HarvestPlan(brief_hash, list(riskiest), merge(qs), apps, list(competitors), since)
+    return HarvestPlan(
+        brief_hash, list(riskiest), merge(qs), apps, competitors=list(competitors), since=since
+    )
 
 
 def _steps(p: HarvestPlan) -> list[tuple[str, tuple[str, ...], Callable[[Collector], list]]]:

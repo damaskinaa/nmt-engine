@@ -307,9 +307,13 @@
   "getharvest.com",
   "invoiceninja.com"
  ],
- "app_countries": "2023-01-01",
+ "app_countries": [
+  "us",
+  "gb",
+  "ie"
+ ],
  "since": "2023-01-01",
  "geo": "IE",
  "per_query": 30,
- "hash": "314ab7327edaf8b5"
+ "hash": "6c40fe13abf722e7"
 }
