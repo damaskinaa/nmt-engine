@@ -205,6 +205,9 @@ def _steps(p: HarvestPlan) -> list[tuple[str, tuple[str, ...], Callable[[Collect
     return steps
 
 
+BREAKER = 3  # consecutive errors (e.g. an exhausted daily quota) before an adapter is skipped
+
+
 def run(p: HarvestPlan, run_dir: Path, collector: Collector | None = None) -> dict:
     """Run every step; failures are recorded, not fatal. Writes `harvest_summary.json` and
     `harvest_hits.jsonl` (source id -> the queries and nodes that found it)."""
@@ -222,7 +225,12 @@ def run(p: HarvestPlan, run_dir: Path, collector: Collector | None = None) -> di
     )
     hits: dict[str, dict] = {}
     steps: dict[str, dict] = {}
+    fails: dict[str, int] = {}
     for name, nodes, step in _steps(p):
+        adapter = name.split(":", 1)[0]
+        if fails.get(adapter, 0) >= BREAKER:
+            steps[name] = {"status": "skipped", "reason": f"{adapter}: {BREAKER} errors in a row"}
+            continue
         try:
             found = step(c)
             steps[name] = {"status": "ok", "sources": len(found)}
@@ -232,6 +240,7 @@ def run(p: HarvestPlan, run_dir: Path, collector: Collector | None = None) -> di
             steps[name], found = {"status": "none", "reason": str(exc)}, []
         except (httpx.HTTPError, ValueError, KeyError, PermissionError) as exc:
             steps[name], found = {"status": "error", "reason": f"{type(exc).__name__}: {exc}"}, []
+        fails[adapter] = fails.get(adapter, 0) + 1 if steps[name]["status"] == "error" else 0
         for s in found:
             h = hits.setdefault(s.id, {"source_id": s.id, "queries": [], "nodes": []})
             h["queries"].append(name)

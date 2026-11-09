@@ -38,6 +38,7 @@ USER_AGENT = "nmt-engine/0.1 (outside-in research; +https://github.com/damaskina
 # Hosts the built-in adapters call. Anything else must be passed by the operator
 # (`nmt collect --competitors`); a default-deny list means a hostile DNS answer can only ever
 # point one of these names somewhere else, never introduce a new name.
+MAX_RETRY_AFTER_S = 30.0
 # documented per-host limits: GitHub search allows 10 unauthenticated requests a minute
 HOST_MIN_INTERVAL_S: dict[str, float] = {"api.github.com": 6.5}
 
@@ -289,7 +290,9 @@ class Collector:
                 )
                 if resp.status_code not in (429, 500, 502, 503, 504) or attempt == self.retries:
                     break
-                time.sleep(float(resp.headers.get("Retry-After", 2**attempt)))
+                time.sleep(
+                    min(MAX_RETRY_AFTER_S, float(resp.headers.get("Retry-After", 2**attempt)))
+                )
             assert resp is not None
             if not resp.has_redirect_location:
                 return resp

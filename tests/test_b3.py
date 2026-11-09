@@ -131,3 +131,32 @@ def test_t1_reports_model_label_basis_and_t2_gate():
     for c in res["classes"].values():
         if c["test"]["called"] < 20:
             assert c["test"]["status"] == "NOT MEASURED"
+
+
+def test_harvest_skips_an_adapter_after_repeated_errors(tmp_path, monkeypatch):
+    import httpx
+
+    calls = []
+
+    def boom(c, *a, **k):
+        calls.append(a[0] if a else None)
+        raise httpx.HTTPStatusError("quota", request=None, response=None)
+
+    monkeypatch.setattr(harvest.hackernews, "collect", boom)
+    monkeypatch.setattr(harvest.stackexchange, "collect", lambda *a, **k: [])
+    monkeypatch.setattr(harvest.github, "issues", lambda *a, **k: [])
+    monkeypatch.setattr(harvest.appstore, "named_app", lambda *a, **k: [])
+    qs = [harvest.Query(f"q{i}", ("J2",), "template") for i in range(6)]
+    p = harvest.HarvestPlan("h", RISKY, qs, apps=[])
+
+    class FakeStore:
+        def current(self, kind):
+            return {}
+
+    class FakeCollector:
+        store = FakeStore()
+
+    out = harvest.run(p, tmp_path, collector=FakeCollector())
+    hn = {k: v["status"] for k, v in out["steps"].items() if k.startswith("hackernews:")}
+    assert len(calls) == harvest.BREAKER
+    assert list(hn.values()).count("skipped") == len(qs) - harvest.BREAKER
