@@ -289,9 +289,15 @@
  ],
  "apps": [
   "Bonsai",
+  "FreshBooks",
+  "Harvest",
+  "Invoice Ninja",
+  "Invoice Simple",
+  "Invoice2go",
   "QuickBooks",
   "Wave",
-  "Xero"
+  "Xero",
+  "Zoho Invoice"
  ],
  "competitors": [
   "xero.com",
@@ -301,8 +307,9 @@
   "getharvest.com",
   "invoiceninja.com"
  ],
+ "app_countries": "2023-01-01",
  "since": "2023-01-01",
  "geo": "IE",
  "per_query": 30,
- "hash": "d5c627f0bc1659be"
+ "hash": "314ab7327edaf8b5"
 }

@@ -354,6 +354,9 @@ def l2_plan(
     brief_path: Annotated[Path, BRIEF_OPT] = Path("briefs/invoicing.json"),
     competitors: Annotated[str, typer.Option("--competitors", help="a.com,b.com")] = "",
     since: Annotated[str, typer.Option("--since")] = "2023-01-01",
+    apps: Annotated[
+        str, typer.Option("--apps", help="extra App Store names, comma-separated")
+    ] = "",
     run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/l2"),
 ) -> None:
     """Template + producer queries for the 10 riskiest nodes; written next to the brief."""
@@ -372,6 +375,7 @@ def l2_plan(
             node.statements(g, risky),
             [d.strip() for d in competitors.split(",") if d.strip()],
             since,
+            [a.strip() for a in apps.split(",") if a.strip()],
         )
     finally:
         llm.close()
@@ -394,6 +398,47 @@ def l2_harvest(
         raise typer.BadParameter("plan file was edited after planning (hash mismatch)")
     s = harvest.run(p, run_dir)
     typer.echo(json.dumps({k: v for k, v in s.items() if k != "steps"}, indent=2))
+
+
+l4_app = typer.Typer(help="L3 on the harvest + L4 node status and T2 (ARCHITECTURE_v3 §3, §5)")
+app.add_typer(l4_app, name="l4")
+
+
+@l4_app.command("run")
+def l4_run(
+    brief_path: Annotated[Path, BRIEF_OPT] = Path("briefs/invoicing.json"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/l2"),
+    force: Annotated[bool, typer.Option("--force", help="run even if T1 blocks T2")] = False,
+) -> None:
+    """Producer author gate + node check on the harvest, then node status and T2. Refuses to run
+    unless T1 passed for USER, supports and contradicts (PREREG_v3 §3)."""
+    from nmt_engine import ledger
+    from nmt_engine.llm import PRODUCER
+    from nmt_engine.verify import gold, node, node_gold
+
+    t1 = node_gold.t1()
+    if not t1["t2_may_run"] and not force:
+        typer.echo(json.dumps({"t2": "NOT RUN", "reason": "T1 blocks T2", **t1}, indent=2))
+        raise typer.Exit(1)
+    g, _, risky = _riskiest(brief_path)
+    llm = _tensorx(PRODUCER, run_dir, gold.PRODUCER_REASONING)
+    try:
+        records = ledger.verify_run(llm, run_dir, node.statements(g, risky))
+    finally:
+        llm.close()
+    statuses = ledger.node_status(records, risky)
+    res = {
+        "t1_t2_may_run": t1["t2_may_run"],
+        "forced": force and not t1["t2_may_run"],
+        "posts": len(records),
+        "user_naming_solution": sum(1 for r in records if r["nodes"] is not None),
+        "t2": ledger.t2(statuses),
+        "nodes": [ledger.public(s) for s in statuses],
+        "budget": llm.budget.as_dict(),
+    }
+    brief_path.with_suffix(".l4.json").write_text(json.dumps(res, indent=1) + "\n", "utf-8")
+    typer.echo(json.dumps({k: v for k, v in res.items() if k != "nodes"}, indent=2))
+    raise typer.Exit(0 if res["t2"]["passed"] else 1)
 
 
 if __name__ == "__main__":

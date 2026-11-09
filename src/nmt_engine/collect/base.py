@@ -38,6 +38,9 @@ USER_AGENT = "nmt-engine/0.1 (outside-in research; +https://github.com/damaskina
 # Hosts the built-in adapters call. Anything else must be passed by the operator
 # (`nmt collect --competitors`); a default-deny list means a hostile DNS answer can only ever
 # point one of these names somewhere else, never introduce a new name.
+# documented per-host limits: GitHub search allows 10 unauthenticated requests a minute
+HOST_MIN_INTERVAL_S: dict[str, float] = {"api.github.com": 6.5}
+
 BUILTIN_HOSTS: frozenset[str] = frozenset(
     {
         "hn.algolia.com",
@@ -236,7 +239,8 @@ class Collector:
     def _wait(self, host: str) -> None:
         last = self._last.get(host)
         if last is not None:
-            delay = self.min_interval_s - (time.monotonic() - last)
+            gap = max(self.min_interval_s, HOST_MIN_INTERVAL_S.get(host, 0.0))
+            delay = gap - (time.monotonic() - last)
             if delay > 0:
                 time.sleep(delay)
         self._last[host] = time.monotonic()

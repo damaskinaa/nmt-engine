@@ -22,7 +22,7 @@ from nmt_engine.hypothesis.schema import HypothesisGraph
 from nmt_engine.llm import LLM, LLMError
 from nmt_engine.util import canonical_json, sha256_text
 
-STACK_SITES = ("softwarerecs", "webapps", "freelancing", "money")
+STACK_SITES = ("freelancing", "money", "webapps")  # keyless quota: 300 requests a day
 QUERY_WORDS = (2, 7)
 QUERIES_PER_NODE = 3
 
@@ -127,6 +127,7 @@ class HarvestPlan:
     queries: list[Query]
     apps: list[str]
     competitors: list[str] = field(default_factory=list)
+    app_countries: list[str] = field(default_factory=lambda: ["us", "gb", "ie"])
     since: str = "2023-01-01"
     geo: str = "IE"
     per_query: int = 30
@@ -158,11 +159,13 @@ def plan(
     stmts: dict[str, str],
     competitors: list[str] = (),
     since: str = "2023-01-01",
+    apps: list[str] = (),
 ) -> HarvestPlan:
     qs = template_queries(g, riskiest)
     if llm is not None:
         qs += producer_queries(llm, g, riskiest, stmts)
-    apps = sorted({x for n in g.nodes if n.type == "solution" for x in solution_names(n.text)})
+    named = {x for n in g.nodes if n.type == "solution" for x in solution_names(n.text)}
+    apps = sorted(named | set(apps))
     return HarvestPlan(brief_hash, list(riskiest), merge(qs), apps, list(competitors), since)
 
 
@@ -179,14 +182,21 @@ def _steps(p: HarvestPlan) -> list[tuple[str, tuple[str, ...], Callable[[Collect
                 (
                     f"stackexchange:{site}:{t}",
                     q.nodes,
-                    lambda c, t=t, s=site: stackexchange.collect(c, t, since, s, n // 3),
+                    lambda c, t=t, s=site: stackexchange.collect(
+                        c, t, since, s, n // 3, similar=True
+                    ),
                 )
             )
         steps.append((f"github:{t}", q.nodes, lambda c, t=t: github.issues(c, t, since, n // 3)))
     for a in p.apps:
-        steps.append(
-            (f"appstore:{a}", (), lambda c, a=a: appstore.named_app(c, a, p.geo.lower(), 10, since))
-        )
+        for cc in p.app_countries:
+            steps.append(
+                (
+                    f"appstore:{cc}:{a}",
+                    (),
+                    lambda c, a=a, cc=cc: appstore.named_app(c, a, cc, 10, since),
+                )
+            )
     for d in p.competitors:
         steps.append((f"web:{d}", (), lambda c, d=d: web.competitor_pages(c, d)))
         steps.append(

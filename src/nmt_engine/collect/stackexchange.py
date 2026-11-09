@@ -15,12 +15,22 @@ NAME = "stackexchange"
 ACCESS_BASIS = "public_api_terms_ok"
 TERMS_URL = "https://stackexchange.com/legal/api-terms-of-use"
 API = "https://api.stackexchange.com/2.3/search/advanced"
+SIMILAR = "https://api.stackexchange.com/2.3/similar"
 
 
-def collect(c: Collector, query: str, since: date, site: str = "stackoverflow", limit: int = 100):
+def collect(
+    c: Collector,
+    query: str,
+    since: date,
+    site: str = "stackoverflow",
+    limit: int = 100,
+    similar: bool = False,
+):
+    """`similar=True` uses /similar, which ranks questions by a natural-language title; the
+    default /search/advanced needs every word to match, so long customer phrasings find little."""
     out, page = [], 1
     params = {
-        "q": query,
+        ("title" if similar else "q"): query,
         "site": site,
         "fromdate": int(datetime.combine(since, time(), UTC).timestamp()),
         "order": "desc",
@@ -31,7 +41,7 @@ def collect(c: Collector, query: str, since: date, site: str = "stackoverflow", 
     if key := env("STACKEXCHANGE_KEY"):
         params["key"] = key
     while len(out) < limit:
-        data = c.fetch_json(API, NAME, params={**params, "page": page})
+        data = c.fetch_json(SIMILAR if similar else API, NAME, params={**params, "page": page})
         for q in data.get("items", []):
             src = c.add_source(
                 adapter=NAME,
