@@ -286,8 +286,8 @@ class LLM:
         if not key:
             raise LLMDisabled(f"${self.key_env} is not set")
         worst = 0.0
-        if self.budget is not None:  # rough token count: 3 characters per token, rounded up
-            est_in = (len(system) + len(prompt)) // 3 + 1
+        if self.budget is not None:  # upper bound: a byte-level BPE token is at least one byte
+            est_in = len((system + prompt).encode("utf-8"))
             price = cost_usd(self.model or "", est_in, self.max_tokens)
             self.budget.reserve(purpose, price)
             worst = price or 0.0
@@ -367,13 +367,18 @@ class LLM:
             self.sleep(backoff(attempt, resp.headers.get("retry-after")))
         if resp.status_code != 200:
             raise LLMError(f"{self.host} HTTP {resp.status_code}: {resp.text[:300]}")
-        data = resp.json()
+        try:
+            return self._read(resp.json())
+        except (ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
+            raise LLMError(f"{self.host} malformed response: {type(exc).__name__}") from exc
+
+    def _read(self, data: dict) -> tuple[str, int, int, bool]:
         if self.provider == "anthropic":
             text = "".join(b.get("text", "") for b in data.get("content", []))
             usage = data.get("usage", {})
             cut = data.get("stop_reason") == "max_tokens"
             return text, int(usage.get("input_tokens", 0)), int(usage.get("output_tokens", 0)), cut
-        usage = data.get("usage", {})
+        usage = data.get("usage") or {}
         choice = data["choices"][0]
         text = choice["message"]["content"] or ""
         cut = choice.get("finish_reason") == "length"

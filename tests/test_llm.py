@@ -328,3 +328,35 @@ def test_budget_reservations_block_concurrent_overshoot():
     b.release("gold.a", 0.6)
     b.reserve("gold.b", 0.6)
     assert b.spent == pytest.approx(0.1)
+
+
+@pytest.mark.parametrize("body", [{"choices": []}, {"error": "x"}, {"choices": [{}]}])
+def test_malformed_200_response_raises_llm_error(tmp_path, monkeypatch, body):
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    llm = LLM(
+        tmp_path / "run",
+        provider="openai",
+        model="z-ai/glm-5.3",
+        base_url="https://api.tensorx.ai/v1",
+        cache_dir=tmp_path / "c",
+        client=_openai([], [httpx.Response(200, json=body)]),
+        retries=0,
+    )
+    with pytest.raises(LLMError, match="malformed response"):
+        llm.complete("p")
+
+
+def test_budget_reserves_an_upper_bound_for_dense_prompts(tmp_path, monkeypatch):
+    from nmt_engine.llm import PRODUCER, TENSORX_URL, Budget, cost_usd
+
+    monkeypatch.setenv("TENSORX_API_KEY", "tx")
+    monkeypatch.delenv("NMT_LLM_PRICES", raising=False)
+    budget = Budget()
+    held: list[float] = []
+    real = budget.reserve
+    budget.reserve = lambda step, usd: (held.append(usd), real(step, usd))[1]
+    kw = dict(provider="openai", model=PRODUCER, base_url=TENSORX_URL, budget=budget)
+    llm = LLM(tmp_path, cache_dir=tmp_path / "c", client=_openai([]), max_tokens=100, **kw)
+    prompt = "請求書" * 300  # 900 characters, 2,700 UTF-8 bytes
+    llm.complete(prompt, purpose="gold.label")
+    assert held[0] >= cost_usd(PRODUCER, 2700, 100)
