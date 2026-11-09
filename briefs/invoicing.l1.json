@@ -1,0 +1,888 @@
+{
+ "brief": "invoicing",
+ "brief_hash": "fe3d09b3e2071bbe",
+ "l1_status": "passed",
+ "nodes": [
+  {
+   "id": "J1",
+   "type": "job",
+   "text": "I want to get paid in full and on time for work I have done for clients",
+   "rationale": "This is the market Job as stated in the brief, reworded as a customer outcome.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "low",
+    "reason": "The brief states this Job directly, so it is unlikely to be wrong, but a product built on a wrong Big Job would lose heavily, and public sources can confirm it cheaply."
+   },
+   "level": "big",
+   "status": "assumed",
+   "rat_priority": 1.8,
+   "importance": 0.2732
+  },
+  {
+   "id": "J2",
+   "type": "job",
+   "text": "I want to send a clear, correct invoice to the client as soon as the work is done",
+   "rationale": "Getting paid starts with issuing an invoice that the client accepts without dispute.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "low",
+    "reason": "Invoicing is the visible first step of the payment cycle, so it is unlikely to be wrong, but missing it would break the product, and public sources describe it widely."
+   },
+   "level": "core",
+   "parent": "J1",
+   "status": "assumed",
+   "rat_priority": 1.8,
+   "importance": 0.10007
+  },
+  {
+   "id": "J3",
+   "type": "job",
+   "text": "I want to know which invoices are unpaid and how late they are",
+   "rationale": "Freelancers and small businesses need a reliable view of what is outstanding to act on it.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "low",
+    "reason": "Tracking unpaid invoices is a standard pain in public freelancer forums, so it is unlikely to be wrong, but a product that cannot show this would fail, and public evidence is easy to find."
+   },
+   "level": "core",
+   "parent": "J1",
+   "status": "assumed",
+   "rat_priority": 1.8,
+   "importance": 0.06997
+  },
+  {
+   "id": "J4",
+   "type": "job",
+   "text": "I want to remind clients to pay without damaging the relationship",
+   "rationale": "Chasing payment is emotionally difficult and is where many small businesses lose money or goodwill.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "high",
+    "cost_to_check": "medium",
+    "reason": "Some businesses may delegate chasing or avoid it entirely, so the belief could be wrong, but a product built on it would lose heavily if chasing is not a real job, and public evidence on chasing behaviour is only partly available."
+   },
+   "level": "core",
+   "parent": "J1",
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.08007
+  },
+  {
+   "id": "J5",
+   "type": "job",
+   "text": "I want to keep a record of what was agreed and billed so I can prove what is owed",
+   "rationale": "Disputes and late payment often hinge on being able to show the agreement and the invoice trail.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Not every small business keeps formal records, so the belief could be wrong, but the loss would be moderate, and public sources on invoicing and record-keeping are easy to check."
+   },
+   "level": "core",
+   "parent": "J1",
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.06058
+  },
+  {
+   "id": "J6",
+   "type": "job",
+   "text": "I want to create an invoice from the work I actually did",
+   "rationale": "Invoices must reflect time, expenses or deliverables, and building them from scratch is error-prone.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Creating invoices from work records is a common need, so it is unlikely to be wrong, the loss would be moderate, and public sources describe it."
+   },
+   "level": "small",
+   "parent": "J2",
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.02457
+  },
+  {
+   "id": "J7",
+   "type": "job",
+   "text": "I want to include the tax and legal details the client and the law require",
+   "rationale": "Invoices missing VAT or legal identifiers get rejected or delayed, especially across Ireland, the UK and the EU.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "medium",
+    "reason": "Tax and legal invoice requirements are real, so it is unlikely to be wrong, but getting them wrong would lose the product heavily, and public sources exist but vary by country."
+   },
+   "level": "small",
+   "parent": "J2",
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.0091
+  },
+  {
+   "id": "J8",
+   "type": "job",
+   "text": "I want to deliver the invoice to the client in the way they will act on it",
+   "rationale": "An invoice that is not received or not routed to the payer does not get paid.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Delivery preferences vary, so the belief could be wrong, the loss would be moderate, and public sources on invoicing channels are easy to check."
+   },
+   "level": "small",
+   "parent": "J2",
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "J9",
+   "type": "job",
+   "text": "I want to turn my logged hours into invoice lines",
+   "rationale": "Time-based freelancers need hours to become billable lines without re-typing.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "Not all freelancers bill by time, so the belief could be wrong, the loss would be small, and public sources on time-based billing are easy to check."
+   },
+   "level": "micro",
+   "parent": "J6",
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "J10",
+   "type": "job",
+   "text": "I want to reuse a template so I do not rebuild the same invoice each time",
+   "rationale": "Repeat clients and recurring work make templates a time-saver.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "Templates are a widely observed invoicing habit, so it is unlikely to be wrong, the loss would be small, and public sources are easy to check."
+   },
+   "level": "micro",
+   "parent": "J6",
+   "status": "assumed",
+   "rat_priority": 0.2,
+   "importance": 0.0091
+  },
+  {
+   "id": "J11",
+   "type": "job",
+   "text": "I want to see at a glance which clients owe me money and for how long",
+   "rationale": "Aging of receivables is the core signal for deciding who to chase.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "low",
+    "reason": "Receivables aging is a standard small-business need, so it is unlikely to be wrong, but missing it would lose the product heavily, and public sources describe it."
+   },
+   "level": "small",
+   "parent": "J3",
+   "status": "assumed",
+   "rat_priority": 1.8,
+   "importance": 0.0091
+  },
+  {
+   "id": "J12",
+   "type": "job",
+   "text": "I want to be warned when an invoice is about to become overdue",
+   "rationale": "Acting before the due date is easier than recovering after it.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Some businesses only review receivables monthly, so the belief could be wrong, the loss would be moderate, and public sources on payment reminders are easy to check."
+   },
+   "level": "small",
+   "parent": "J3",
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "J13",
+   "type": "job",
+   "text": "I want to send a polite first reminder that does not sound aggressive",
+   "rationale": "The first nudge is the most relationship-sensitive and the most commonly needed.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Polite first reminders are widely discussed by freelancers, so it is unlikely to be wrong, the loss would be moderate, and public sources are easy to check."
+   },
+   "level": "small",
+   "parent": "J4",
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.01684
+  },
+  {
+   "id": "J14",
+   "type": "job",
+   "text": "I want to escalate firmly when a client keeps ignoring reminders",
+   "rationale": "Repeated non-payment needs a firmer step, and people want help with the wording and timing.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "medium",
+    "reason": "Some businesses escalate through lawyers or debt collectors, so the belief could be wrong, the loss would be moderate, and public evidence on escalation behaviour is only partly available."
+   },
+   "level": "small",
+   "parent": "J4",
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "J15",
+   "type": "job",
+   "text": "I want to know the right moment to send the first reminder",
+   "rationale": "Timing the nudge after the due date but before the relationship sours matters.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "Timing preferences vary, so the belief could be wrong, the loss would be small, and public sources on payment terms are easy to check."
+   },
+   "level": "micro",
+   "parent": "J13",
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "J16",
+   "type": "job",
+   "text": "I want to find the agreement, quote or email that proves what was ordered",
+   "rationale": "Disputes are settled by showing what was agreed, and that evidence is scattered.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "medium",
+    "reason": "Not every business keeps quotes linked to invoices, so the belief could be wrong, the loss would be moderate, and public evidence on record-keeping is only partly available."
+   },
+   "level": "small",
+   "parent": "J5",
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "J17",
+   "type": "job",
+   "text": "I want to show a client a full history of what they were billed and what they paid",
+   "rationale": "A clear statement of account resolves disputes and supports collection.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Statements of account are a standard billing need, so it is unlikely to be wrong, the loss would be moderate, and public sources describe it."
+   },
+   "level": "small",
+   "parent": "J5",
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.0091
+  },
+  {
+   "id": "S1",
+   "type": "solution",
+   "text": "Accounting software such as QuickBooks or Xero",
+   "rationale": "These are the most commonly named tools for invoicing and receivables among small businesses in Ireland, the UK and the EU.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "These products are widely documented, so it is unlikely to be wrong, the loss would be moderate, and public sources are easy to check."
+   },
+   "kind": "product",
+   "serves": [
+    "J2",
+    "J3",
+    "J5"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.01168
+  },
+  {
+   "id": "S2",
+   "type": "solution",
+   "text": "Freelancer invoicing apps such as Bonsai or Wave",
+   "rationale": "Freelancer-focused tools are commonly hired for invoicing and tracking.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Adoption among the target group is uncertain, so the belief could be wrong, the loss would be moderate, and public sources on these tools are easy to check."
+   },
+   "kind": "product",
+   "serves": [
+    "J2",
+    "J3"
+   ],
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.01103
+  },
+  {
+   "id": "S3",
+   "type": "solution",
+   "text": "A spreadsheet invoice and receivables tracker",
+   "rationale": "Many very small businesses still run invoicing and receivables on spreadsheets.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Spreadsheet use is widely reported among small businesses, so it is unlikely to be wrong, the loss would be moderate, and public sources are easy to check."
+   },
+   "kind": "spreadsheet",
+   "serves": [
+    "J2",
+    "J3",
+    "J5"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.01168
+  },
+  {
+   "id": "S4",
+   "type": "solution",
+   "text": "Writing and sending invoices by hand from a word processor and email",
+   "rationale": "Sole traders often produce invoices manually and chase by email.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "Manual invoicing is common but hard to size, so the belief could be wrong, the loss would be small, and public sources are easy to check."
+   },
+   "kind": "manual",
+   "serves": [
+    "J2",
+    "J4"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.01103
+  },
+  {
+   "id": "S5",
+   "type": "solution",
+   "text": "An accountant or bookkeeper who issues invoices and chases payment",
+   "rationale": "Small businesses often delegate billing and credit control to an accountant or bookkeeper.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "medium",
+    "reason": "Delegation varies by business size, so the belief could be wrong, the loss would be moderate, and public evidence on accountant roles is only partly available."
+   },
+   "kind": "service",
+   "serves": [
+    "J2",
+    "J3",
+    "J4",
+    "J5"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.01168
+  },
+  {
+   "id": "S6",
+   "type": "solution",
+   "text": "A home-made reminder email template kept in a notes app",
+   "rationale": "People often keep a saved reminder email they copy and adapt.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "This habit is plausible but not well documented, so the belief could be wrong, the loss would be small, and public sources are easy to check."
+   },
+   "kind": "diy",
+   "serves": [
+    "J4"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.01103
+  },
+  {
+   "id": "C1",
+   "type": "criterion",
+   "text": "The client accepts the invoice without questions or corrections",
+   "rationale": "A clean invoice is the sign that the invoicing job went well.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Acceptance without query is a natural success signal, so it is unlikely to be wrong, the loss would be moderate, and public sources describe invoice disputes."
+   },
+   "job": "J2",
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.01441
+  },
+  {
+   "id": "C2",
+   "type": "criterion",
+   "text": "The invoice is out the same day the work is finished",
+   "rationale": "Speed of invoicing is a common measure of a good billing process.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "Some businesses batch invoices, so the belief could be wrong, the loss would be small, and public sources on invoicing habits are easy to check."
+   },
+   "job": "J2",
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0158
+  },
+  {
+   "id": "C3",
+   "type": "criterion",
+   "text": "I can see the true unpaid balance without adding anything up myself",
+   "rationale": "Trust in the receivables figure is the point of tracking.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "low",
+    "reason": "Accurate receivables is a core expectation, so it is unlikely to be wrong, but missing it would lose the product heavily, and public sources describe it."
+   },
+   "job": "J3",
+   "status": "assumed",
+   "rat_priority": 1.8,
+   "importance": 0.01415
+  },
+  {
+   "id": "C4",
+   "type": "criterion",
+   "text": "Nothing falls through the cracks because an invoice was forgotten",
+   "rationale": "The main failure of tracking is a missed overdue invoice.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "low",
+    "reason": "Missed invoices are a widely reported pain, so it is unlikely to be wrong, but missing it would lose the product heavily, and public sources are easy to check."
+   },
+   "job": "J3",
+   "status": "assumed",
+   "rat_priority": 1.8,
+   "importance": 0.01407
+  },
+  {
+   "id": "C5",
+   "type": "criterion",
+   "text": "The client pays after the reminder without the relationship being damaged",
+   "rationale": "The point of chasing is payment without losing the client.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "medium",
+    "reason": "Relationship-preserving chasing is a stated freelancer concern, so it is unlikely to be wrong, but missing it would lose the product heavily, and public evidence on outcomes is only partly available."
+   },
+   "job": "J4",
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.01536
+  },
+  {
+   "id": "C6",
+   "type": "criterion",
+   "text": "I do not have to write the reminder from scratch each time",
+   "rationale": "Effort saved on wording is a common reason people want help chasing.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "Some people prefer to write their own reminders, so the belief could be wrong, the loss would be small, and public sources are easy to check."
+   },
+   "job": "J4",
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.01536
+  },
+  {
+   "id": "C7",
+   "type": "criterion",
+   "text": "I can find the proof of what was agreed in one place when a client disputes",
+   "rationale": "Dispute resolution depends on fast access to evidence.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "medium",
+    "reason": "Not every business faces disputes often, so the belief could be wrong, the loss would be moderate, and public evidence on dispute frequency is only partly available."
+   },
+   "job": "J5",
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.01258
+  },
+  {
+   "id": "C8",
+   "type": "criterion",
+   "text": "The record is complete enough that I would trust it in front of a client or adviser",
+   "rationale": "Records only help if they are credible and complete.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Credible records are a standard expectation, so it is unlikely to be wrong, the loss would be moderate, and public sources describe record-keeping needs."
+   },
+   "job": "J5",
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.01369
+  },
+  {
+   "id": "G1",
+   "type": "segment",
+   "text": "Solo freelancers who bill by time and value getting paid without awkward chasing",
+   "rationale": "Time-based solo freelancers feel the chasing burden most and prioritise relationship-safe payment.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "high",
+    "cost_to_check": "medium",
+    "reason": "The size and priorities of this group are uncertain, so the belief could be wrong, a product aimed at it would lose heavily if wrong, and public evidence is only partly available."
+   },
+   "core_jobs": [
+    "J2",
+    "J3",
+    "J4"
+   ],
+   "criteria_order": [
+    "C5",
+    "C3",
+    "C1",
+    "C6"
+   ],
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "G2",
+   "type": "segment",
+   "text": "Small service businesses with repeat clients who value a clean, fast invoice and a reliable receivables view",
+   "rationale": "Repeat-client businesses care most about accurate tracking and clean invoicing.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "high",
+    "cost_to_check": "medium",
+    "reason": "Priorities within this group vary, so the belief could be wrong, a product aimed at it would lose heavily if wrong, and public evidence is only partly available."
+   },
+   "core_jobs": [
+    "J2",
+    "J3",
+    "J5"
+   ],
+   "criteria_order": [
+    "C3",
+    "C1",
+    "C4",
+    "C8"
+   ],
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "G3",
+   "type": "segment",
+   "text": "Businesses that delegate billing to an accountant and value complete records over speed",
+   "rationale": "Where billing is delegated, record completeness and acceptance matter more than same-day invoicing.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "medium",
+    "reason": "Delegation patterns are uncertain, so the belief could be wrong, the loss would be moderate, and public evidence is only partly available."
+   },
+   "core_jobs": [
+    "J2",
+    "J5"
+   ],
+   "criteria_order": [
+    "C8",
+    "C1",
+    "C7"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "G4",
+   "type": "segment",
+   "text": "Freelancers who have been burned by late payers and value never missing an overdue invoice",
+   "rationale": "A bad late-payment experience shifts priority to vigilance and firm chasing.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "medium",
+    "reason": "The prevalence of this mindset is uncertain, so the belief could be wrong, the loss would be moderate, and public evidence is only partly available."
+   },
+   "core_jobs": [
+    "J3",
+    "J4"
+   ],
+   "criteria_order": [
+    "C4",
+    "C5",
+    "C3",
+    "C6"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "G5",
+   "type": "segment",
+   "text": "Very small businesses still on spreadsheets who value speed and low effort over completeness",
+   "rationale": "Spreadsheet users often prioritise getting the invoice out fast over formal records.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Spreadsheet users' priorities are uncertain, so the belief could be wrong, the loss would be moderate, and public sources on small-business behaviour are easy to check."
+   },
+   "core_jobs": [
+    "J2",
+    "J3"
+   ],
+   "criteria_order": [
+    "C2",
+    "C1",
+    "C3"
+   ],
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "P1",
+   "type": "problem",
+   "text": "The accounting software makes me set up a full chart of accounts before I can send a simple invoice",
+   "rationale": "Full accounting tools are often reported as heavy for simple invoicing needs.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Setup burden varies by product and user, so the belief could be wrong, the loss would be moderate, and public reviews are easy to check."
+   },
+   "job": "J2",
+   "solution": "S1",
+   "criteria": [
+    "C2"
+   ],
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "P2",
+   "type": "problem",
+   "text": "The spreadsheet does not warn me when an invoice goes past its due date, so overdue invoices get forgotten",
+   "rationale": "Spreadsheets only show what is typed and do not prompt action.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Spreadsheets lack built-in reminders by nature, so it is unlikely to be wrong, the loss would be moderate, and public sources describe this limitation."
+   },
+   "job": "J3",
+   "solution": "S3",
+   "criteria": [
+    "C4"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.6,
+   "importance": 0.0091
+  },
+  {
+   "id": "P3",
+   "type": "problem",
+   "text": "I still have to write and send the reminder myself, so I put it off",
+   "rationale": "Manual chasing depends on the person's willingness to confront the client.",
+   "rat": {
+    "p_wrong": "low",
+    "cost_if_wrong": "high",
+    "cost_to_check": "low",
+    "reason": "Chasing avoidance is widely reported, so it is unlikely to be wrong, but missing it would lose the product heavily, and public sources are easy to check."
+   },
+   "job": "J4",
+   "solution": "S4",
+   "criteria": [
+    "C5",
+    "C6"
+   ],
+   "status": "assumed",
+   "rat_priority": 1.8,
+   "importance": 0.0091
+  },
+  {
+   "id": "P4",
+   "type": "problem",
+   "text": "My accountant sends invoices on a schedule that is slower than my work",
+   "rationale": "Delegated billing can lag behind the work being finished.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "medium",
+    "reason": "Some accountants invoice promptly, so the belief could be wrong, the loss would be small, and public evidence on accountant turnaround is only partly available."
+   },
+   "job": "J2",
+   "solution": "S5",
+   "criteria": [
+    "C2"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.1667,
+   "importance": 0.0091
+  },
+  {
+   "id": "P5",
+   "type": "problem",
+   "text": "The freelancer app tracks invoices but does not help me prove what was agreed when a client disputes",
+   "rationale": "Freelancer invoicing apps focus on billing, not on linking quotes and agreements to invoices.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "medium",
+    "cost_to_check": "low",
+    "reason": "Feature sets vary, so the belief could be wrong, the loss would be moderate, and public product documentation is easy to check."
+   },
+   "job": "J5",
+   "solution": "S2",
+   "criteria": [
+    "C7",
+    "C8"
+   ],
+   "status": "assumed",
+   "rat_priority": 1.5,
+   "importance": 0.0091
+  },
+  {
+   "id": "P6",
+   "type": "problem",
+   "text": "My saved reminder template sounds wrong for a long-standing client, so I rewrite it every time",
+   "rationale": "One fixed template does not fit different client relationships.",
+   "rat": {
+    "p_wrong": "medium",
+    "cost_if_wrong": "low",
+    "cost_to_check": "low",
+    "reason": "Some people reuse one template happily, so the belief could be wrong, the loss would be small, and public sources are easy to check."
+   },
+   "job": "J4",
+   "solution": "S6",
+   "criteria": [
+    "C5",
+    "C6"
+   ],
+   "status": "assumed",
+   "rat_priority": 0.5,
+   "importance": 0.0091
+  }
+ ],
+ "riskiest": [
+  {
+   "id": "J2",
+   "type": "job",
+   "text": "I want to send a clear, correct invoice to the client as soon as the work is done",
+   "priority": 1.8,
+   "importance": 0.10007
+  },
+  {
+   "id": "J3",
+   "type": "job",
+   "text": "I want to know which invoices are unpaid and how late they are",
+   "priority": 1.8,
+   "importance": 0.06997
+  },
+  {
+   "id": "C3",
+   "type": "criterion",
+   "text": "I can see the true unpaid balance without adding anything up myself",
+   "priority": 1.8,
+   "importance": 0.01415
+  },
+  {
+   "id": "C4",
+   "type": "criterion",
+   "text": "Nothing falls through the cracks because an invoice was forgotten",
+   "priority": 1.8,
+   "importance": 0.01407
+  },
+  {
+   "id": "J11",
+   "type": "job",
+   "text": "I want to see at a glance which clients owe me money and for how long",
+   "priority": 1.8,
+   "importance": 0.0091
+  },
+  {
+   "id": "P3",
+   "type": "problem",
+   "text": "I still have to write and send the reminder myself, so I put it off",
+   "priority": 1.8,
+   "importance": 0.0091
+  },
+  {
+   "id": "J4",
+   "type": "job",
+   "text": "I want to remind clients to pay without damaging the relationship",
+   "priority": 1.5,
+   "importance": 0.08007
+  },
+  {
+   "id": "J5",
+   "type": "job",
+   "text": "I want to keep a record of what was agreed and billed so I can prove what is owed",
+   "priority": 1.5,
+   "importance": 0.06058
+  },
+  {
+   "id": "S2",
+   "type": "solution",
+   "text": "Freelancer invoicing apps such as Bonsai or Wave",
+   "priority": 1.5,
+   "importance": 0.01103
+  },
+  {
+   "id": "J12",
+   "type": "job",
+   "text": "I want to be warned when an invoice is about to become overdue",
+   "priority": 1.5,
+   "importance": 0.0091
+  }
+ ],
+ "attempts": [
+  {
+   "attempt": 1,
+   "schema": "valid",
+   "links": 50,
+   "inconsistent": [
+    {
+     "link": "P2>S3",
+     "statement": "\"The spreadsheet does not warn me when an invoice goes past its due date\" is a way \"A spreadsheet invoice and receivables tracker\" falls short on \"Nothing falls through the cracks because an invoice was forgotten\" and \"I can see the true unpaid balance without adding anything up myself\" when used to know which invoices are unpaid and how late they are.",
+     "reason": "A missing past-due warning can cause overdue invoices to be forgotten, but it does not explain why the true unpaid balance would require manual addition."
+    }
+   ],
+   "consistent": false
+  },
+  {
+   "attempt": 2,
+   "schema": "valid",
+   "links": 50,
+   "inconsistent": [],
+   "consistent": true
+  }
+ ]
+}
