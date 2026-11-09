@@ -129,7 +129,7 @@ def _items(out: Path) -> list[dict]:
 
 
 def record(llm: LLM, market_job: str, out: Path = L1_GOLD_DIR) -> Path:
-    items = _items(out)
+    h, items = items_hash(out), _items(out)  # hash what is asked, before the slow calls
     answers = consistency.ask(llm, market_job, items, purpose="l1.gold")
     path = out / "recorded" / f"{prompt_hash()}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -138,7 +138,7 @@ def record(llm: LLM, market_job: str, out: Path = L1_GOLD_DIR) -> Path:
         "model": llm.model,
         "host": llm.host,
         "market_job": market_job,
-        "items_hash": items_hash(out),
+        "items_hash": h,
         "answers": {it["id"]: a for it, a in zip(items, answers, strict=True)},
     }
     path.write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False) + "\n", "utf-8")
