@@ -13,11 +13,12 @@ from collections import Counter
 from pathlib import Path
 
 from nmt_engine.collect.run import collector_on
+from nmt_engine.config import repo_root
 from nmt_engine.hypothesis import generate
 from nmt_engine.hypothesis.schema import HypothesisGraph
 from nmt_engine.llm import LLM, PRODUCER
 from nmt_engine.store import load_run
-from nmt_engine.util import canonical_json, repo_root, sha256_text
+from nmt_engine.util import canonical_json, sha256_text
 from nmt_engine.verify import gold, node, prompts
 from nmt_engine.verify.author import ROUNDS, Post
 from nmt_engine.verify.gold import (
