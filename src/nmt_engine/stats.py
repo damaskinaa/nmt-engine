@@ -32,3 +32,13 @@ def precision(pred: Sequence, gold: Sequence, positive) -> tuple[int, int]:
     pairs = [(p, g) for p, g in zip(pred, gold, strict=True) if p is not None and g is not None]
     called = [g for p, g in pairs if p == positive]
     return sum(g == positive for g in called), len(called)
+
+
+def cohen_kappa(a: Sequence, b: Sequence) -> float | None:
+    """Cohen's kappa for two raters over the same items; None when chance agreement is 1."""
+    n = len(a)
+    if not n:
+        return None
+    po = sum(x == y for x, y in zip(a, b, strict=True)) / n
+    pe = sum((list(a).count(c) / n) * (list(b).count(c) / n) for c in set(a) | set(b))
+    return None if pe == 1 else round((po - pe) / (1 - pe), 4)

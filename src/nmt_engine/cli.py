@@ -160,6 +160,23 @@ def gold_record(run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs
     typer.echo(json.dumps({"recorded": str(path), "budget": llm.budget.as_dict()}, indent=2))
 
 
+@gold_app.command("cross")
+def gold_cross(run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold")) -> None:
+    """Third model (GLM-5.3, thinking off) labels the gold posts blind; cross-model agreement."""
+    from nmt_engine.llm import THIRD_MODEL
+    from nmt_engine.verify import gold
+
+    llm = _tensorx(THIRD_MODEL, run_dir, "none", max_tokens=8000)
+    try:
+        path = gold.cross_label(llm)
+    finally:
+        llm.close()
+    res = gold.cross_agreement(path)
+    (gold.GOLD_DIR / "cross_agreement.json").write_text(json.dumps(res, indent=1) + "\n", "utf-8")
+    typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)
+
+
 @gold_app.command("check")
 def gold_check() -> None:
     """Producer precision vs gold; exit 1 below 85% on the held-out test split."""

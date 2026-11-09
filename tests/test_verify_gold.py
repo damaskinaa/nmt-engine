@@ -114,3 +114,19 @@ def test_small_counts_are_not_measured_not_passed():
         t = c["test"]
         assert (t["status"] == "NOT MEASURED") == (t["called"] < gold.MIN_CALLS), name
         assert (name in res["t1_passed_for"]) == (t["status"] == "PASS")
+
+
+def test_cross_agreement_is_reported_per_class(tmp_path):
+    rec = {
+        "model": "z-ai/glm-5.3",
+        "answers": {
+            g["id"]: {k: g[k] for k in ("role", "names_solution", "elements")}
+            for g in gold._read_jsonl(gold.GOLD_DIR / "gold.jsonl")
+        },
+    }
+    path = tmp_path / "cross.json"
+    path.write_text(json.dumps(rec), "utf-8")
+    res = gold.cross_agreement(path)
+    assert res["kind"].startswith("cross-model agreement")
+    assert res["role"]["agreement"] == 1.0 and res["role"]["kappa"] == 1.0 and res["passed"]
+    assert set(res["classes"]) >= {"USER", "BUILDER", "VENDOR", "OTHER", "problem", "aha"}

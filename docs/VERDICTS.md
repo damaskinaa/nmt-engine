@@ -45,6 +45,19 @@ families, collector fixes, graph viewer and statistics.
   (habit tracker 52%, invoicing 44%, feature flags 24%). This motivated the v3 author gate (L3a).
 - Full report: `docs/REPORT_killline_v2.md` on that branch.
 
+## B1: L3 gold set (invoicing, PR #7)
+
+- **Gold labels:** model-labelled (Kimi, `moonshotai/kimi-k3.1-pro`), **not human-verified**.
+- **Human check (§8 A2, 30 blind labels): NOT DONE.** The labels were skipped by decision.
+- **Weaker substitute, cross-model agreement:** `z-ai/glm-5.3` (thinking off) labelled the same
+  300 posts blind with the same frozen prompts (`tests/gold/invoicing/cross_agreement.json`).
+  - **Author role:** 223 of 288 posts agree (77.4%), Cohen's kappa 0.68. GLM left 12 posts
+    unanswered. This is **below the 80% bar**, so B1 is stopped pending a decision.
+  - **Where they disagree:** GLM calls 26 of Kimi's 77 USER posts BUILDER (13) or OTHER (13).
+    It also calls 13 of Kimi's 114 BUILDER posts VENDOR.
+- **T1:** every T1 number from this gold set is **precision against model labels**, not against
+  human labels.
+
 ## Known weaknesses carried forward
 
 - **L3 author gate: low USER recall (B1 gold set, invoicing).** The producer

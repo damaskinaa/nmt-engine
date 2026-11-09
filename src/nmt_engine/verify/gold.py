@@ -6,6 +6,9 @@
   source ids, URLs and labels only; quotes stay in the cache).
 - `record`: the producer (DeepSeek) answers the same closed questions; its answers are committed
   under `recorded/<prompt hash>.json`.
+- `cross_label` / `cross_agreement`: a second model (GLM-5.3) labels the same posts blind with
+  the same frozen prompts. This is cross-model agreement, a weaker substitute for the skipped
+  human check: the gold labels stay model-labelled (Kimi), not human-verified.
 - `check`: precision of the producer against gold, per class (§8 A3), on dev and held-out test.
   CI fails when no recording matches the current prompt hash, or when a test precision is < 85%.
 """
@@ -20,7 +23,7 @@ from pathlib import Path
 from nmt_engine.collect.base import scrub_pii
 from nmt_engine.config import repo_root
 from nmt_engine.llm import LLM, PRODUCER
-from nmt_engine.stats import Z95, agreement, precision, wilson
+from nmt_engine.stats import Z95, agreement, cohen_kappa, precision, wilson
 from nmt_engine.store import load_run
 from nmt_engine.subtraction import collector_on
 from nmt_engine.util import canonical_json, normalize_ws, sha256_text
@@ -213,6 +216,80 @@ def check(out: Path = GOLD_DIR, phash: str | None = None) -> dict:
     return res
 
 
+CROSS_MIN = 0.80
+ROLES = ("USER", "BUILDER", "VENDOR", "OTHER")
+
+
+def cross_label(llm: LLM, out: Path = GOLD_DIR) -> Path:
+    """A second model labels every gold post blind (it never sees the gold labels)."""
+    ans = _answers(llm, load_posts(), "gold.cross", gold=True)
+    path = out / f"cross_{llm.model.split('/')[-1]}.json"
+    body = {
+        "model": llm.model,
+        "host": llm.host,
+        "reasoning_effort": llm.reasoning_effort,
+        "label_prompt_hash": label_prompt_hash(),
+        "answers": {
+            k: {f: v[f] for f in ("role", "names_solution", "elements")} for k, v in ans.items()
+        },
+    }
+    path.write_text(json.dumps(body, indent=1, sort_keys=True) + "\n", "utf-8")
+    return path
+
+
+def cross_agreement(path: Path, out: Path = GOLD_DIR) -> dict:
+    """Cross-model agreement between gold (Kimi) and a second model, overall and per class.
+    Items either model left unanswered are not scored. Agreement < CROSS_MIN stops."""
+    other = json.loads(path.read_text("utf-8"))
+    rec = other["answers"]
+    gold = _read_jsonl(out / "gold.jsonl")
+    pairs = [(g, rec.get(g["id"], {})) for g in gold]
+    rp = [(g["role"], r.get("role")) for g, r in pairs if g["role"] and r.get("role")]
+    a, b = [x for x, _ in rp], [y for _, y in rp]
+    classes = {}
+    for role in ROLES:
+        classes[role] = _binary([x == role for x in a], [y == role for y in b])
+    for k in ("names_solution",):
+        ns = [(g[k], r.get(k)) for g, r in pairs if g[k] is not None and r.get(k) is not None]
+        classes[k] = _binary([x for x, _ in ns], [y for _, y in ns])
+    for el in prompts.ELEMENTS:
+        ep = [
+            (g["elements"][el], r["elements"][el])
+            for g, r in pairs
+            if g["elements"] is not None and r.get("elements") is not None
+        ]
+        classes[el] = _binary([x for x, _ in ep], [y for _, y in ep])
+    agree = agreement(a, b)
+    return {
+        "kind": "cross-model agreement (not human-verified)",
+        "gold_labeller": gold[0]["labeller"],
+        "second_labeller": other["model"],
+        "n_posts": len(gold),
+        "role": {
+            "n": len(a),
+            "agree": sum(x == y for x, y in rp),
+            "agreement": agree,
+            "kappa": cohen_kappa(a, b),
+            "confusion": {
+                ga: {sb: sum(x == ga and y == sb for x, y in rp) for sb in ROLES} for ga in ROLES
+            },
+        },
+        "classes": classes,
+        "passed": agree >= CROSS_MIN,
+    }
+
+
+def _binary(a: list[bool], b: list[bool]) -> dict:
+    return {
+        "n": len(a),
+        "gold_pos": sum(a),
+        "second_pos": sum(b),
+        "both_pos": sum(x and y for x, y in zip(a, b, strict=True)),
+        "agreement": agreement(a, b),
+        "kappa": cohen_kappa(a, b),
+    }
+
+
 def _prec(pred, gold, positive) -> dict:
     tp, called = precision(pred, gold, positive)
     lo, hi = wilson(tp, called, Z95)
@@ -265,4 +342,13 @@ def _read_jsonl(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text("utf-8").splitlines() if line.strip()]
 
 
-__all__ = ["build", "check", "human_agreement", "label", "packet", "record"]
+__all__ = [
+    "build",
+    "check",
+    "cross_agreement",
+    "cross_label",
+    "human_agreement",
+    "label",
+    "packet",
+    "record",
+]
