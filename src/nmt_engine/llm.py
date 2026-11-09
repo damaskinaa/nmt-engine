@@ -73,7 +73,7 @@ THIRD_MODEL = "z-ai/glm-5.3"  # cross-model stability only, thinking off
 RUN_BUDGET_USD = 20.0
 # Per-step caps (USD); the step is the `purpose` prefix before the first ".".
 STEP_CAPS: dict[str, float] = {
-    "gold": 6.0,
+    "gold": 12.0,
     "l1": 2.0,
     "verify": 10.0,
     "sim": 8.0,

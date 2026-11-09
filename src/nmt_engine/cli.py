@@ -101,5 +101,86 @@ def collect_cmd(
     typer.echo(json.dumps(summary, indent=2))
 
 
+gold_app = typer.Typer(help="L3 gold set and precision gate (ARCHITECTURE_v3 §4.3, §8 A1-A3)")
+app.add_typer(gold_app, name="gold")
+
+
+def _tensorx(model: str, run_dir: Path, reasoning: str | None = None, max_tokens: int = 4096):
+    from nmt_engine.llm import LLM, TENSORX_URL, Budget
+
+    return LLM(
+        run_dir,
+        provider="openai",
+        model=model,
+        base_url=TENSORX_URL,
+        reasoning_effort=reasoning,
+        timeout=600,
+        max_tokens=max_tokens,
+        budget=Budget(),
+    )
+
+
+@gold_app.command("build")
+def gold_build(
+    run_dirs: list[Path],
+    category: Annotated[str, typer.Option("--category")] = "invoicing",
+    seed: Annotated[int, typer.Option("--seed")] = 0,
+) -> None:
+    """Sample the gold posts from collected runs (text goes to the gitignored cache)."""
+    from nmt_engine.verify import gold
+
+    typer.echo(json.dumps(gold.build(run_dirs, category, seed), indent=2))
+
+
+@gold_app.command("label")
+def gold_label(run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold")) -> None:
+    """Auditor (Kimi) gold labels."""
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.verify import gold
+
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=16000)  # Kimi reasons before it answers
+    try:
+        res = gold.label(llm)
+    finally:
+        llm.close()
+    typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
+
+
+@gold_app.command("record")
+def gold_record(run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold")) -> None:
+    """Producer (DeepSeek) answers on the gold posts, saved under the current prompt hash."""
+    from nmt_engine.llm import PRODUCER
+    from nmt_engine.verify import gold
+
+    llm = _tensorx(PRODUCER, run_dir, gold.PRODUCER_REASONING)
+    try:
+        path = gold.record(llm)
+    finally:
+        llm.close()
+    typer.echo(json.dumps({"recorded": str(path), "budget": llm.budget.as_dict()}, indent=2))
+
+
+@gold_app.command("check")
+def gold_check() -> None:
+    """Producer precision vs gold; exit 1 below 85% on the held-out test split."""
+    from nmt_engine.verify import gold
+
+    res = gold.check()
+    typer.echo(json.dumps(res, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)
+
+
+@gold_app.command("agree")
+def gold_agree(answers: str) -> None:
+    """Human blind labels (30 letters U/B/V/O) vs auditor gold; fewer than 24 agreeing stops."""
+    from nmt_engine.verify import gold
+
+    res = gold.human_agreement(answers)
+    path = gold.GOLD_DIR / "human_agreement.json"
+    path.write_text(json.dumps(res, indent=1) + "\n", "utf-8")
+    typer.echo(json.dumps({k: v for k, v in res.items() if k != "items"}, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)
+
+
 if __name__ == "__main__":
     app()
