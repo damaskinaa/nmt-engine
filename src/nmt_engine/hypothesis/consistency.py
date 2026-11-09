@@ -50,7 +50,10 @@ def _parse(raw: object, n: int) -> list[dict]:
     got = {}
     for a in raw["answers"]:
         if isinstance(a, dict) and a.get("consistent") in ("yes", "no"):
-            got[int(a.get("n", 0))] = a
+            try:
+                got[int(a.get("n", 0))] = a
+            except (TypeError, ValueError):  # e.g. n="one": leave it missing, so ask() retries
+                continue
     if sorted(got) != list(range(1, n + 1)):
         raise LLMError(f"expected answers 1..{n}, got {sorted(got)}")
     return [got[i] for i in range(1, n + 1)]
