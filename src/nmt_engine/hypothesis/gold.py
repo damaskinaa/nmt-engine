@@ -120,7 +120,6 @@ def build(g: HypothesisGraph, seed: int = 0, out: Path = L1_GOLD_DIR) -> dict:
         "inconsistent": sum(it["truth"] == "no" for it in uniq),
         "test": sum(it["split"] == "test" for it in uniq),
         "test_by_truth": by_truth,
-        "test_measurable": all(v >= MIN_CALLS for v in by_truth.values()),
     }
 
 
