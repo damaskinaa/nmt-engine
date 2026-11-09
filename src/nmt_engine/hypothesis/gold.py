@@ -5,6 +5,7 @@ committed under the prompt hash; CI scores them with no API key."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 import random
 from pathlib import Path
@@ -118,6 +119,11 @@ def build(g: HypothesisGraph, seed: int = 0, out: Path = L1_GOLD_DIR) -> dict:
     }
 
 
+def items_hash(out: Path) -> str:
+    """Ties a recording to the exact items it answered; item ids are reused after a rebuild."""
+    return hashlib.sha256((out / "items.jsonl").read_bytes()).hexdigest()[:16]
+
+
 def _items(out: Path) -> list[dict]:
     return [json.loads(x) for x in (out / "items.jsonl").read_text("utf-8").splitlines() if x]
 
@@ -132,6 +138,7 @@ def record(llm: LLM, market_job: str, out: Path = L1_GOLD_DIR) -> Path:
         "model": llm.model,
         "host": llm.host,
         "market_job": market_job,
+        "items_hash": items_hash(out),
         "answers": {it["id"]: a for it, a in zip(items, answers, strict=True)},
     }
     path.write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False) + "\n", "utf-8")
@@ -140,7 +147,8 @@ def record(llm: LLM, market_job: str, out: Path = L1_GOLD_DIR) -> Path:
 
 def check(out: Path = L1_GOLD_DIR, phash: str | None = None) -> dict:
     """Precision of Kimi's "yes" (consistent) and "no" (inconsistent) calls against constructed
-    truth, dev and test. Same rule as the L3 gate: < MIN_CALLS test calls is NOT MEASURED."""
+    truth, dev and test. < MIN_CALLS test calls is NOT MEASURED, and the L1 gate passes only
+    when both classes are measured and pass."""
     phash = phash or prompt_hash()
     path = out / "recorded" / f"{phash}.json"
     if not path.is_file():
@@ -151,7 +159,16 @@ def check(out: Path = L1_GOLD_DIR, phash: str | None = None) -> dict:
             "passed": False,
             "error": f"no recording for {phash}",
         }
-    rec = json.loads(path.read_text("utf-8"))["answers"]
+    body = json.loads(path.read_text("utf-8"))
+    if body.get("items_hash") != items_hash(out):
+        return {
+            "prompt_hash": phash,
+            "classes": {},
+            "passed_for": [],
+            "passed": False,
+            "error": f"recording {phash} answered other items; re-record",
+        }
+    rec = body["answers"]
     items = _items(out)
     res: dict = {"prompt_hash": phash, "classes": {}}
     for split in ("dev", "test"):
@@ -168,5 +185,5 @@ def check(out: Path = L1_GOLD_DIR, phash: str | None = None) -> dict:
             t["status"] = "PASS" if t["precision"] >= PRECISION_MIN else "FAIL"
     status = {k: c["test"]["status"] for k, c in res["classes"].items()}
     res["passed_for"] = sorted(k for k, v in status.items() if v == "PASS")
-    res["passed"] = "FAIL" not in status.values()
+    res["passed"] = bool(status) and all(v == "PASS" for v in status.values())
     return res

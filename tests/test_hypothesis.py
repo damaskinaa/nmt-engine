@@ -192,15 +192,17 @@ def test_gold_build_split_by_origin_and_check(tmp_path):
     rec = tmp_path / "recorded" / "h.json"
     rec.parent.mkdir()
     answers = {it["id"]: {"consistent": it["truth"]} for it in items}
-    rec.write_text(json.dumps({"answers": answers}))
+    rec.write_text(json.dumps({"answers": answers, "items_hash": "stale"}))
+    assert "answered other items" in gold.check(tmp_path, phash="h")["error"]
+    rec.write_text(json.dumps({"answers": answers, "items_hash": gold.items_hash(tmp_path)}))
     res = gold.check(tmp_path, phash="h")
-    assert res["passed"] is True  # perfect but few calls: NOT MEASURED, never PASS
+    assert res["passed"] is False  # perfect but few calls: NOT MEASURED, never PASS
     assert all(c["test"]["status"] == "NOT MEASURED" for c in res["classes"].values())
     assert res["passed_for"] == []
 
 
 def test_l1_ci_consistency_gate_on_current_prompt():
-    """Committed Kimi answers for the current check prompt; CI fails on a measured class < 85%."""
+    """Committed Kimi answers for the current check prompt and items; both classes must PASS."""
     res = gold.check()
     assert "error" not in res, res.get("error")
     assert res["passed"], res
