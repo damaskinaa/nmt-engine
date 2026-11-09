@@ -65,11 +65,14 @@ def _clip(text: str, n: int = MAX_CHARS) -> str:
 
 def build(run_dirs: list[Path], category: str, seed: int = 0, out: Path = GOLD_DIR) -> dict:
     """Sample N_GOLD posts, stratified by evidence family, from L2-collector customer voice."""
-    pool = []
-    for rd in run_dirs:
+    pool, seen = [], set()
+    for rd in run_dirs:  # runs can share sources: keep one copy, so no post straddles splits
         for s in load_run(rd).sources.values():
             if s.retracted or not s.customer_voice or not collector_on(s.platform, {}):
                 continue
+            if s.id in seen:
+                continue
+            seen.add(s.id)
             pool.append((s, rd))
     pool.sort(key=lambda p: p[0].id)
     rng = random.Random(seed)

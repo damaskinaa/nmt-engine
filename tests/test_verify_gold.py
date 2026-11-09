@@ -130,3 +130,32 @@ def test_cross_agreement_is_reported_per_class(tmp_path):
     assert res["kind"].startswith("cross-model agreement")
     assert res["role"]["agreement"] == 1.0 and res["role"]["kappa"] == 1.0 and res["passed"]
     assert set(res["classes"]) >= {"USER", "BUILDER", "VENDOR", "OTHER", "problem", "aha"}
+
+
+def test_build_keeps_one_copy_of_a_source_shared_by_two_runs(tmp_path, monkeypatch):
+    from types import SimpleNamespace as NS
+
+    runs = {}
+    for name in ("r1", "r2"):
+        rd = tmp_path / name
+        (rd / "t").mkdir(parents=True)
+        srcs = {}
+        for i in range(6):
+            (rd / "t" / f"s{i}.txt").write_text(f"post {i}")
+            srcs[f"s{i}"] = NS(
+                id=f"s{i}",
+                retracted=False,
+                customer_voice=True,
+                platform="hackernews",
+                evidence_family="discussion",
+                url=f"https://x/{i}",
+                text_path=f"t/s{i}.txt",
+            )
+        runs[rd] = NS(sources=srcs)
+    monkeypatch.setattr(gold, "load_run", lambda rd: runs[rd])
+    monkeypatch.setattr(gold, "N_GOLD", 6)
+    monkeypatch.setattr(gold, "N_TEST", 3)
+    monkeypatch.setattr(gold, "CACHE_DIR", tmp_path / "cache")
+    gold.build(list(runs), "invoicing", out=tmp_path / "gold")
+    rows = [json.loads(x) for x in (tmp_path / "gold" / "items.jsonl").read_text().splitlines()]
+    assert sorted(r["source_id"] for r in rows) == [f"s{i}" for i in range(6)]
