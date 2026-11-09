@@ -137,3 +137,48 @@ tuned on the 200 dev posts.
 - **Then:** each class is scored once on test (§3). A class still under 20 calls is NOT
   MEASURED. For USER, supports or contradicts, that means T2 does not run, and the build stops
   for the user.
+
+## 9. Amendment 2 (2026-11-09, B3, before any node-check T1 is scored)
+
+Reason: the project owner's decision after the first node gold (19 random gold USER posts × 10
+nodes) came back 190/190 unrelated. Random posts are unrelated to a given node almost by design,
+so that design could not measure supports or contradicts. That first node gold is kept as a record
+(`node_gold_amend1.jsonl`) and is never scored. This amendment replaces amendment 1's "Gold items"
+and its growth rule for the node classes only. Thresholds and the USER rules are unchanged.
+
+Pool. Customer-voice posts from the L2 harvest (`runs/l2`, the plan hash committed in
+`briefs/invoicing.l2.json`) that are not already node items. A post's rank for node n is the best
+(lowest) position at which any query listed for n returned it, counting from 0 within each step.
+Ties are broken by source id.
+
+Who counts as USER. Kimi labels author role with the frozen gold author prompt (one try plus one
+shorter-quote retry), working through each node's candidates in rank order. A post qualifies if
+it is USER and names a Solution (§8 A4). For each node, labelling stops when 8 qualifying posts are
+found, after 60 candidates, or when the candidates run out, whichever comes first.
+
+Pairs. For each node: its top 8 qualifying posts by rank, plus 2 qualifying posts drawn at random
+(seed `"<round>:<node>"`) from the qualifying posts not retrieved for that node at all, or failing
+that, from the qualifying posts outside that node's top 8. A (post, node) pair is a designated pair.
+Each node item is checked against all 10 statements in one call (same frozen prompts as
+amendment 1), but only designated pairs are scored.
+
+Split. Fixed by post before any labelling: `test` if `int(sha256(source_id), 16)` is odd, else
+`dev`. All pairs of a post share its split.
+
+Growth. If supports or contradicts has fewer than 20 producer calls on test, each growth round r
+(1 to 6) adds, per node, the next 8 qualifying posts by rank plus 2 random negatives. Only posts not
+yet node items are eligible, and every growth post goes to `test`. The USER test split still grows
+by the amendment 1 rule (150 random posts per round, stratified by family).
+
+Canary. Before any node-gold labelling, 6 synthetic pairs (2 obvious supports, 2 obvious
+contradicts, 2 unrelated) run through the frozen gold node prompt. If Kimi gets an obvious supports
+or contradicts wrong, the prompt is broken and gets fixed on dev before any gold labelling. Canaries
+never count toward T1.
+
+Cross-model check. GLM-5.3 (thinking off) labels every node item blind with the same prompt.
+Agreement and Cohen's kappa are computed over designated pairs. At 80% or above, gold stays Kimi.
+Below 80% the work stops and the owner is told. This is called cross-model agreement, never
+human-verified.
+
+Reporting. Any node with 0 supports and 0 contradicts in node gold is reported per node as "no
+public evidence in this harvest". It is not padded.
