@@ -103,3 +103,41 @@ is not a problem with a product they use.",
     1,
 )
 assert ELEMENT_PROMPT != GOLD_ELEMENT_PROMPT
+
+# --- step b: node check (PREREG_v3 amendment 1) -------------------------------------------------
+
+VERDICTS = ("supports", "contradicts", "unrelated")
+
+GOLD_NODE_SYSTEM = (
+    "You check what authors of public posts say about their own experience against fixed "
+    "statements. You answer closed questions only and back every supports or contradicts with a "
+    "quote copied exactly from the post. Unrelated is the default. Output JSON only."
+)
+
+GOLD_NODE_PROMPT = """Category: {category}
+
+Each post below was written by someone describing their own experience with a {category} \
+Solution. Check each statement against what the author says about their OWN experience.
+- supports: the post shows the statement is true for the author (they do it, use it, judge by it \
+or have that problem).
+- contradicts: the post shows the statement is false for the author (they do the opposite, do not \
+need it, judge by something else instead, or say the Solution does what the statement says it \
+fails at).
+- unrelated: anything else, including posts that do not touch the statement. When unsure, answer \
+unrelated.
+Every supports or contradicts needs a quote copied exactly from the post.
+
+Statements:
+{statements}
+
+Posts (possibly cut short):
+
+{posts}
+
+For each post answer every statement.
+Return {{"posts": [{{"id": <post number>, "answers": [{{"node": "<statement id>", \
+"verdict": "supports|contradicts|unrelated", "quote": <string|null>}}, ...]}}, ...]}} with one \
+entry per post."""
+
+NODE_SYSTEM = GOLD_NODE_SYSTEM
+NODE_PROMPT = GOLD_NODE_PROMPT

@@ -150,26 +150,30 @@ def _short(q: str | None) -> str | None:
 
 
 def label(llm: LLM, out: Path = GOLD_DIR) -> dict:
-    """Auditor gold labels for every item; unanswered items stay null and are not scored."""
-    ans = _answers(llm, load_posts(), "gold.label", gold=True)
-    rows = []
-    for item in _read_jsonl(out / "items.jsonl"):
-        meta = {"labeller": llm.model, "label_prompt_hash": label_prompt_hash()}
-        rows.append({**item, **ans[item["id"]], **meta})
+    """Auditor gold labels for items not labelled yet (test growth adds items; earlier labels
+    are kept as they are). Unanswered items stay null and are not scored."""
+    gold_f, quotes_f = out / "gold.jsonl", CACHE_DIR / "gold_quotes.jsonl"
+    done = {r["id"]: r for r in _read_jsonl(gold_f)} if gold_f.is_file() else {}
+    quotes = _read_jsonl(quotes_f) if quotes_f.is_file() and done else []
+    items = _read_jsonl(out / "items.jsonl")
+    todo = {it["id"] for it in items if it["id"] not in done}
+    ans = _answers(llm, [p for p in load_posts() if p.id in todo], "gold.label", gold=True)
+    meta = {"labeller": llm.model, "label_prompt_hash": label_prompt_hash()}
+    rows = [done.get(it["id"]) or {**it, **ans[it["id"]], **meta} for it in items]
     # quotes can carry names or handles, so they stay in the gitignored cache (§8 A9)
-    _write_jsonl(
-        CACHE_DIR / "gold_quotes.jsonl", [{k: r[k] for k in ("id", "role_quote")} for r in rows]
-    )
-    _write_jsonl(
-        out / "gold.jsonl", [{k: v for k, v in r.items() if k != "role_quote"} for r in rows]
-    )
-    return {"labelled": sum(r["role"] is not None for r in rows), "n": len(rows)}
+    quotes += [{"id": r["id"], "role_quote": r["role_quote"]} for r in rows if r["id"] in todo]
+    _write_jsonl(quotes_f, quotes)
+    _write_jsonl(gold_f, [{k: v for k, v in r.items() if k != "role_quote"} for r in rows])
+    return {"labelled": sum(r["role"] is not None for r in rows), "n": len(rows), "new": len(todo)}
 
 
 def record(llm: LLM, out: Path = GOLD_DIR) -> Path:
-    """Producer answers on the gold posts, committed under the current prompt hash."""
-    ans = _answers(llm, load_posts(), "gold.record")
+    """Producer answers on the gold posts, committed under the current prompt hash. Posts already
+    recorded under this hash keep their answers, so test growth only adds new posts."""
     path = out / "recorded" / f"{prompt_hash(llm.model, llm.reasoning_effort)}.json"
+    old = json.loads(path.read_text("utf-8"))["answers"] if path.is_file() else {}
+    ans = _answers(llm, [p for p in load_posts() if p.id not in old], "gold.record")
+    ans = {**old, **ans}
     path.parent.mkdir(parents=True, exist_ok=True)
     body = {
         "prompt_hash": path.stem,
@@ -177,7 +181,8 @@ def record(llm: LLM, out: Path = GOLD_DIR) -> Path:
         "host": llm.host,
         "reasoning_effort": llm.reasoning_effort,
         "answers": {
-            k: {f: v[f] for f in ("role", "names_solution", "elements")} for k, v in ans.items()
+            k: {f: v[f] for f in ("role", "names_solution", "elements")}
+            for k, v in sorted(ans.items())
         },
     }
     path.write_text(json.dumps(body, indent=1, sort_keys=True) + "\n", "utf-8")
@@ -244,7 +249,8 @@ def cross_label(llm: LLM, out: Path = GOLD_DIR) -> Path:
         "reasoning_effort": llm.reasoning_effort,
         "label_prompt_hash": label_prompt_hash(),
         "answers": {
-            k: {f: v[f] for f in ("role", "names_solution", "elements")} for k, v in ans.items()
+            k: {f: v[f] for f in ("role", "names_solution", "elements")}
+            for k, v in sorted(ans.items())
         },
     }
     path.write_text(json.dumps(body, indent=1, sort_keys=True) + "\n", "utf-8")

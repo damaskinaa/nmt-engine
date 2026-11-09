@@ -189,6 +189,59 @@ def gold_check() -> None:
     raise typer.Exit(0 if res["passed"] else 1)
 
 
+@gold_app.command("node-label")
+def gold_node_label(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
+) -> None:
+    """Kimi node-check gold: USER posts naming a Solution x the 10 riskiest nodes."""
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.verify import node_gold
+
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=16000)
+    try:
+        res = node_gold.label(llm)
+    finally:
+        llm.close()
+    typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
+
+
+@gold_app.command("node-record")
+def gold_node_record(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
+) -> None:
+    """Producer node-check answers on the node gold posts, saved under the node prompt hash."""
+    from nmt_engine.llm import PRODUCER
+    from nmt_engine.verify import gold, node_gold
+
+    llm = _tensorx(PRODUCER, run_dir, gold.PRODUCER_REASONING)
+    try:
+        path = node_gold.record(llm)
+    finally:
+        llm.close()
+    typer.echo(json.dumps({"recorded": str(path), "budget": llm.budget.as_dict()}, indent=2))
+
+
+@gold_app.command("grow")
+def gold_grow(
+    round_: Annotated[int, typer.Option("--round")],
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/l2"),
+) -> None:
+    """Add 150 L2 posts to the held-out test split (PREREG_v3 amendment 1); no model calls."""
+    from nmt_engine.verify import node_gold
+
+    typer.echo(json.dumps(node_gold.grow(run_dir, round_), indent=2))
+
+
+@gold_app.command("t1")
+def gold_t1() -> None:
+    """T1: per-class precision against model labels; says whether T2 may run."""
+    from nmt_engine.verify import node_gold
+
+    res = node_gold.t1()
+    typer.echo(json.dumps(res, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)
+
+
 @gold_app.command("agree")
 def gold_agree(answers: str) -> None:
     """Human blind labels (30 letters U/B/V/O) vs auditor gold; fewer than 24 agreeing stops."""
@@ -282,6 +335,65 @@ def l1_gold_check() -> None:
     res = gold.check()
     typer.echo(json.dumps(res, indent=2))
     raise typer.Exit(0 if res["passed"] else 1)
+
+
+l2_app = typer.Typer(help="L2 targeted harvest from the 10 riskiest nodes (ARCHITECTURE_v3 §3)")
+app.add_typer(l2_app, name="l2")
+
+
+def _riskiest(brief_path: Path):
+    from nmt_engine.hypothesis import generate
+
+    path = _graph_path(brief_path)
+    frozen = json.loads(path.read_text("utf-8"))
+    return generate.load(path), frozen["brief_hash"], [r["id"] for r in frozen["riskiest"]]
+
+
+@l2_app.command("plan")
+def l2_plan(
+    brief_path: Annotated[Path, BRIEF_OPT] = Path("briefs/invoicing.json"),
+    competitors: Annotated[str, typer.Option("--competitors", help="a.com,b.com")] = "",
+    since: Annotated[str, typer.Option("--since")] = "2023-01-01",
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/l2"),
+) -> None:
+    """Template + producer queries for the 10 riskiest nodes; written next to the brief."""
+    from nmt_engine import harvest
+    from nmt_engine.llm import PRODUCER
+    from nmt_engine.verify import node
+
+    g, bhash, risky = _riskiest(brief_path)
+    llm = _tensorx(PRODUCER, run_dir, "none")
+    try:
+        p = harvest.plan(
+            llm,
+            g,
+            bhash,
+            risky,
+            node.statements(g, risky),
+            [d.strip() for d in competitors.split(",") if d.strip()],
+            since,
+        )
+    finally:
+        llm.close()
+    out = brief_path.with_suffix(".l2.json")
+    out.write_text(json.dumps({**p.as_dict(), "hash": p.hash}, indent=1) + "\n", "utf-8")
+    typer.echo(json.dumps({"plan": str(out), "queries": len(p.queries), "hash": p.hash}))
+
+
+@l2_app.command("harvest")
+def l2_harvest(
+    brief_path: Annotated[Path, BRIEF_OPT] = Path("briefs/invoicing.json"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/l2"),
+) -> None:
+    """Run the committed plan through the six L2 collectors."""
+    from nmt_engine import harvest
+
+    d = json.loads(brief_path.with_suffix(".l2.json").read_text("utf-8"))
+    p = harvest.HarvestPlan.from_dict(d)
+    if p.hash != d["hash"]:
+        raise typer.BadParameter("plan file was edited after planning (hash mismatch)")
+    s = harvest.run(p, run_dir)
+    typer.echo(json.dumps({k: v for k, v in s.items() if k != "steps"}, indent=2))
 
 
 if __name__ == "__main__":
