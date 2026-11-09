@@ -297,3 +297,20 @@ events and the simulator beats the baseline on at least 2/3 of them. With fewer 
 events, T3 is undecidable (A6) and the simulation ships as "exploratory, unvalidated".
 
 Budget. The $20 run cap and the step caps (`sim` $8) apply. B4 as a whole stays at or under $20.
+
+## 12. Amendment 5 (2026-11-09, B4, SSR aggregation; before any world run)
+
+Reason. On the SSR-gold **dev** split, summing P over the five switch outcomes made "switch" the
+top class for 74 of 78 dev answers, whatever the answer said: each outcome keeps at least the
+floor mass, and five switch outcomes face one stay and one consider. The first recording also
+printed the test split (switch 26/72, stay and consider 0 calls); that run is on record as failed
+and this amendment was written from dev numbers only. Separately, and within the amendment-4
+rule (anchors may change on dev), the stay and consider anchors now name the incumbent, as the
+switch anchors name the destination.
+
+Rule. With s_stay and s_consider the mean anchor similarities and s_switch the highest switch
+outcome's (best destination), P over {stay, consider, switch} is p_i ∝ s_i − min_j s_j + 0.01.
+Within switch, P(switch to X) = P(switch) · q_X, with q_X ∝ s_X − min_Y s_Y + 0.01 over the
+switch outcomes (q = 1 with a single offer). Everything else in amendment 4 is unchanged: the
+top class is the largest of P(stay), P(consider), P(switch); each class needs ≥ 20 test calls and
+≥ 85% precision; the T3 prediction is the highest mean P(switch to X).
