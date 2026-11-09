@@ -1,0 +1,23 @@
+{
+ "model": "z-ai/glm-5.3",
+ "pairs": 38,
+ "unanswered_items": 0,
+ "agreement": 1.0,
+ "kappa": null,
+ "per_class": {
+  "supports": {
+   "n": 0,
+   "agree": null
+  },
+  "contradicts": {
+   "n": 0,
+   "agree": null
+  },
+  "unrelated": {
+   "n": 38,
+   "agree": 1.0
+  }
+ },
+ "passed": true,
+ "basis": "cross-model agreement, not human-verified"
+}

@@ -1,0 +1,152 @@
+{
+ "answers": {
+  "N001": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N002": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N003": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N004": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N005": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N006": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N007": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N008": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N009": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N010": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N011": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  },
+  "N012": {
+   "C3": "unrelated",
+   "C4": "unrelated",
+   "J11": "unrelated",
+   "J12": "unrelated",
+   "J2": "unrelated",
+   "J3": "unrelated",
+   "J4": "unrelated",
+   "J5": "unrelated",
+   "P3": "unrelated",
+   "S2": "unrelated"
+  }
+ },
+ "host": "api.tensorx.ai",
+ "label_prompt_hash": "bb2a8247225ef6cd",
+ "model": "z-ai/glm-5.3",
+ "reasoning_effort": "none"
+}

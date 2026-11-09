@@ -216,7 +216,12 @@ def pick(
     _, node_ids = candidates(path)
     run = load_run(Path(run_dir))
     allranked = ranks(run_dir, node_ids)
-    order = {n: [s for s in v if s not in used][:PICK_DEPTH] for n, v in allranked.items()}
+    # posts already labelled and not qualifying were examined in an earlier round; growth goes on
+    # to the next PICK_DEPTH unexamined candidates
+    order = {
+        n: [s for s in v if s not in used and (s not in auth or _qualifies(auth[s]))][:PICK_DEPTH]
+        for n, v in allranked.items()
+    }
     cat = _category()
 
     def post(sid: str) -> Post:
