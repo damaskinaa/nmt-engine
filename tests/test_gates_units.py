@@ -7,10 +7,12 @@ from pydantic import ValidationError
 from nmt_engine.gates import GateConfig, run_gates
 from nmt_engine.schema import Claim, Source
 from nmt_engine.store import Store
+from nmt_engine.subtraction import GATES_OFF
 from nmt_engine.util import author_hash
 from tests.fixtures.make_fixtures import CORPUS, _by_id, clean, write
 
-CFG = GateConfig(forbidden_corpus=CORPUS)
+# These fixtures test every gate, including those v3 switches off (subtraction.py).
+CFG = GateConfig(forbidden_corpus=CORPUS, reenable={n: "gate unit test" for n in GATES_OFF})
 
 
 def failed(tmp_path, mutate, post=None):
@@ -357,3 +359,43 @@ def test_unreadable_source_is_dropped_by_gate7_before_gate12_counts_it(tmp_path)
     demote(run, CFG)
     assert "S-r1" not in load_run(run).sources
     assert run_gates(run, CFG).passed
+
+
+def test_source_family_defaults_from_kind_and_old_records_load():
+    base = dict(
+        id="s",
+        platform="p",
+        url="https://x",
+        retrieved_at="2026-01-01T00:00:00Z",
+        as_of_date="2026-01-01",
+        geography="IE",
+        text_path="sources/s.txt",
+        sha256="0",
+    )
+    assert Source(kind="forum", **base).evidence_family == "discussion"
+    assert Source(kind="issue", **base).customer_voice
+    assert not Source(kind="changelog", **base).customer_voice
+    vid = Source(kind="web", evidence_family="market_record", **base)
+    assert vid.evidence_family == "market_record" and not vid.customer_voice
+    with pytest.raises(ValidationError):
+        Source(kind="forum", evidence_family="gossip", **base)
+
+
+def test_gate11_counts_customer_voice_families_not_kinds(tmp_path):
+    # S-q1 is re-tagged as a vendor's own answer: C1 still has two kinds (review, qa) and two
+    # authors, but only one customer-voice family, so it must be flagged single-signal.
+    def m(fx):
+        _by_id(fx["sources"], "S-q1")["evidence_family"] = "vendor_page"
+
+    g11 = next(x for x in failed(tmp_path, m).results if x.gate.number == 11)
+    assert any(
+        f.object_id == "C1" and "single signal not flagged" in f.message for f in g11.findings
+    )
+
+
+def test_every_source_kind_has_a_family():
+    from typing import get_args
+
+    from nmt_engine.schema import KIND_FAMILY, SourceKind
+
+    assert set(KIND_FAMILY) == set(get_args(SourceKind))

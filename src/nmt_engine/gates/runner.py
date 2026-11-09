@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from nmt_engine.gates.base import REGISTRY, GateConfig, GateResult
 from nmt_engine.schema import Record
 from nmt_engine.store import RunData, SchemaError, load_run
+from nmt_engine.subtraction import GATES_OFF, active_gates
 
 
 @dataclass
@@ -16,6 +17,7 @@ class GateReport:
     run_dir: Path
     results: list[GateResult]
     schema_errors: list[str]
+    off: dict[int, str] = field(default_factory=dict)  # gates skipped by subtraction, with reason
 
     @property
     def passed(self) -> bool:
@@ -29,6 +31,7 @@ class GateReport:
             "run_dir": self.run_dir.name,
             "passed": self.passed,
             "schema_errors": self.schema_errors,
+            "off": {str(k): v for k, v in sorted(self.off.items())},
             "gates": [r.as_dict() for r in self.results],
         }
 
@@ -45,6 +48,8 @@ class GateReport:
         for r in self.results:
             res = "pass" if r.passed else "FAIL"
             lines.append(f"| {r.gate.number} | {r.gate.title} | {res} | {len(r.findings)} |")
+        for num, why in sorted(self.off.items()):
+            lines.append(f"| {num} | {REGISTRY[num].title} | off | {why} |")
         for r in self.results:
             if r.findings:
                 lines += ["", f"## Gate {r.gate.number}: {r.gate.title}", ""]
@@ -63,13 +68,18 @@ def run_gates(
     try:
         run = load_run(run_dir)
     except SchemaError as exc:
-        return GateReport(run_dir, [], exc.errors)
-    return GateReport(run_dir, evaluate(run, cfg, only), [])
+        return GateReport(run_dir, [], exc.errors, off_gates(cfg))
+    return GateReport(run_dir, evaluate(run, cfg, only), [], off_gates(cfg))
+
+
+def off_gates(cfg: GateConfig) -> dict[int, str]:
+    on = set(active_gates(list(REGISTRY), cfg.reenable))
+    return {n: GATES_OFF[n] for n in sorted(REGISTRY) if n not in on}
 
 
 def evaluate(run: RunData, cfg: GateConfig, only: list[int] | None = None) -> list[GateResult]:
     results = []
-    for num in sorted(REGISTRY):
+    for num in active_gates(list(REGISTRY), cfg.reenable):
         if only and num not in only:
             continue
         g = REGISTRY[num]
