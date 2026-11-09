@@ -105,7 +105,9 @@ gold_app = typer.Typer(help="L3 gold set and precision gate (ARCHITECTURE_v3 §4
 app.add_typer(gold_app, name="gold")
 
 
-def _tensorx(model: str, run_dir: Path, reasoning: str | None = None, max_tokens: int = 4096):
+def _tensorx(
+    model: str, run_dir: Path, reasoning: str | None = None, max_tokens: int = 4096, budget=None
+):
     from nmt_engine.llm import LLM, TENSORX_URL, Budget
 
     return LLM(
@@ -116,7 +118,7 @@ def _tensorx(model: str, run_dir: Path, reasoning: str | None = None, max_tokens
         reasoning_effort=reasoning,
         timeout=600,
         max_tokens=max_tokens,
-        budget=Budget(),
+        budget=budget or Budget(),  # share one Budget across models in the same run
     )
 
 
@@ -201,3 +203,86 @@ def gold_agree(answers: str) -> None:
 
 if __name__ == "__main__":
     app()
+
+
+l1_app = typer.Typer(help="L0 brief + L1 hypothesis Job Graph (ARCHITECTURE_v3 §3, §8 C3)")
+app.add_typer(l1_app, name="l1")
+BRIEF_OPT = typer.Option("--brief")
+
+
+def _graph_path(brief_path: Path) -> Path:
+    return brief_path.with_suffix(".l1.json")
+
+
+@l1_app.command("build")
+def l1_build(
+    brief_path: Annotated[Path, BRIEF_OPT] = Path("briefs/invoicing.json"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/l1"),
+) -> None:
+    """Producer drafts the graph; schema + Kimi link check decide (max 2 regenerations)."""
+    from nmt_engine.brief import load_brief
+    from nmt_engine.hypothesis import generate
+    from nmt_engine.llm import AUDITOR, PRODUCER, Budget
+
+    brief = load_brief(brief_path)
+    budget = Budget()
+    producer = _tensorx(PRODUCER, run_dir, "none", max_tokens=16000, budget=budget)
+    auditor = _tensorx(AUDITOR, run_dir, max_tokens=16000, budget=budget)
+    try:
+        res = generate.build(producer, auditor, brief)
+    finally:
+        producer.close()
+        auditor.close()
+    out = generate.to_json(res["graph"], brief, res["status"])
+    out["attempts"] = res["attempts"]
+    _graph_path(brief_path).write_text(
+        json.dumps(out, indent=1, ensure_ascii=False) + "\n", "utf-8"
+    )
+    typer.echo(
+        json.dumps(
+            {
+                "status": res["status"],
+                "attempts": res["attempts"],
+                "riskiest": out["riskiest"],
+                "budget": budget.as_dict(),
+            },
+            indent=2,
+        )
+    )
+    raise typer.Exit(0 if res["status"] == "passed" else 1)
+
+
+@l1_app.command("gold-build")
+def l1_gold_build(brief_path: Annotated[Path, BRIEF_OPT] = Path("briefs/invoicing.json")) -> None:
+    """Consistency gold: real links (consistent) + code-corrupted links (inconsistent)."""
+    from nmt_engine.hypothesis import generate, gold
+
+    typer.echo(json.dumps(gold.build(generate.load(_graph_path(brief_path))), indent=2))
+
+
+@l1_app.command("gold-record")
+def l1_gold_record(
+    brief_path: Annotated[Path, BRIEF_OPT] = Path("briefs/invoicing.json"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/l1"),
+) -> None:
+    """Kimi answers the consistency gold; committed under the check prompt hash."""
+    from nmt_engine.brief import load_brief
+    from nmt_engine.hypothesis import gold
+    from nmt_engine.llm import AUDITOR
+
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=16000)
+    try:
+        path = gold.record(llm, load_brief(brief_path).market_job)
+    finally:
+        llm.close()
+    typer.echo(json.dumps({"recorded": str(path), "budget": llm.budget.as_dict()}, indent=2))
+
+
+@l1_app.command("gold-check")
+def l1_gold_check() -> None:
+    """Consistency-check precision vs constructed truth; exit 1 if a measured class < 85%."""
+    from nmt_engine.hypothesis import gold
+
+    res = gold.check()
+    typer.echo(json.dumps(res, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)

@@ -1,0 +1,472 @@
+{
+ "answers": {
+  "l000": {
+   "consistent": "no",
+   "reason": "Chart-of-accounts setup friction concerns invoice creation and sending, not whether a client pays after a reminder with the relationship intact."
+  },
+  "l001": {
+   "consistent": "no",
+   "reason": "Reminder-writing effort judges the reminder job, not visibility into unpaid and overdue invoices."
+  },
+  "l002": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l003": {
+   "consistent": "no",
+   "reason": "Overdue warnings belong to monitoring receivables, not to keeping a record that proves what was agreed and billed."
+  },
+  "l004": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l005": {
+   "consistent": "no",
+   "reason": "Finding proof of an agreement judges record-keeping, not the conversion of logged hours into invoice lines."
+  },
+  "l006": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l007": {
+   "consistent": "no",
+   "reason": "Payment after a reminder judges the reminder job, not an at-a-glance view of outstanding balances and their age."
+  },
+  "l008": {
+   "consistent": "no",
+   "reason": "Same-day invoicing judges prompt invoice sending, not retrieval of the agreement, quote, or email."
+  },
+  "l009": {
+   "consistent": "no",
+   "reason": "Escalating ignored reminders is part of collections and reminders, not record-keeping."
+  },
+  "l010": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l011": {
+   "consistent": "no",
+   "reason": "Choosing when to send the first reminder belongs to the reminder job, not invoice delivery."
+  },
+  "l012": {
+   "consistent": "no",
+   "reason": "Both weighted criteria concern record-keeping and proof retrieval rather than the listed invoicing, tracking, and reminder jobs, so the weighting order does not follow that job sequence."
+  },
+  "l013": {
+   "consistent": "no",
+   "reason": "Sending a polite first reminder is part of reminding clients, not sending the initial invoice promptly."
+  },
+  "l014": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l015": {
+   "consistent": "no",
+   "reason": "Avoiding forgotten invoices judges workflow completeness or tracking, not inclusion of required tax and legal details."
+  },
+  "l016": {
+   "consistent": "no",
+   "reason": "Manually writing and emailing invoices does not itself track unpaid invoices or their aging; it fits invoice creation and sending instead."
+  },
+  "l017": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l018": {
+   "consistent": "no",
+   "reason": "Seeing outstanding client balances is part of receivables tracking, not prompt invoice sending."
+  },
+  "l019": {
+   "consistent": "no",
+   "reason": "Manual reminder effort does not judge whether records are complete and trustworthy; that criterion belongs to record-keeping, not reminders."
+  },
+  "l020": {
+   "consistent": "no",
+   "reason": "The criterion concerns same-day invoicing, while the solution and shortcoming concern the tone and reuse of payment reminders."
+  },
+  "l021": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l022": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l023": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l024": {
+   "consistent": "no",
+   "reason": "This criterion measures invoice-tracking reliability, not whether a first reminder is polite and non-aggressive."
+  },
+  "l025": {
+   "consistent": "no",
+   "reason": "Reusing an invoice template supports invoice creation, not composing a polite first payment reminder."
+  },
+  "l026": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l027": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l028": {
+   "consistent": "no",
+   "reason": "A reminder-email template is for chasing payment, not for delivering the invoice in a way the client will act on."
+  },
+  "l029": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l030": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l031": {
+   "consistent": "no",
+   "reason": "Turning logged hours into invoice lines supports invoice preparation, not escalation when reminders are ignored."
+  },
+  "l032": {
+   "consistent": "no",
+   "reason": "The stated priorities concern record completeness and invoice acceptance, not never missing overdue invoices or managing reminders, so they do not fit the segment's jobs and priority."
+  },
+  "l033": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l034": {
+   "consistent": "no",
+   "reason": "The shortcoming fits overdue-invoice tracking, but the criterion measures payment and relationship outcomes after a reminder."
+  },
+  "l035": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l036": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l037": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l038": {
+   "consistent": "no",
+   "reason": "Invoice acceptance measures invoice clarity and correctness, not whether a full billing and payment history was shown effectively."
+  },
+  "l039": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l040": {
+   "consistent": "no",
+   "reason": "Creating an invoice is part of invoicing, not of reminding a client to pay; invoicing may precede reminders but is not a substep of that job."
+  },
+  "l041": {
+   "consistent": "no",
+   "reason": "Sending a reminder does not determine which invoices are unpaid or late; that tracking information informs the reminder instead."
+  },
+  "l042": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l043": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l044": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l045": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l046": {
+   "consistent": "no",
+   "reason": "Record completeness judges record keeping, not whether the first reminder was sent at the right moment."
+  },
+  "l047": {
+   "consistent": "no",
+   "reason": "Finding proof of the agreement judges record keeping and dispute support, not whether escalation was firm and effective."
+  },
+  "l048": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l049": {
+   "consistent": "no",
+   "reason": "The segment values speed and low effort over completeness, yet prioritizes proof retrieval and record completeness; those criteria also do not match its listed invoicing and receivables-tracking jobs."
+  },
+  "l050": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l051": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l052": {
+   "consistent": "no",
+   "reason": "Seeing the true unpaid balance judges receivables tracking, not the benefit of reusing an invoice template."
+  },
+  "l053": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l054": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l055": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l056": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l057": {
+   "consistent": "no",
+   "reason": "A burdensome chart-of-accounts setup affects invoice setup and speed, not whether reminders must be written from scratch."
+  },
+  "l058": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l059": {
+   "consistent": "no",
+   "reason": "Acceptance without questions or corrections judges invoice clarity and correctness, not the tone or effectiveness of a payment reminder."
+  },
+  "l060": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l061": {
+   "consistent": "no",
+   "reason": "The stated jobs are invoicing and recordkeeping, but the top-ranked criterion concerns drafting reminders. The criteria and ranking do not reflect those jobs or the segment's completeness-over-speed priority."
+  },
+  "l062": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l063": {
+   "consistent": "no",
+   "reason": "Tax and legal details belong to preparing a correct invoice, not to determining which invoices are unpaid or how late they are."
+  },
+  "l064": {
+   "consistent": "no",
+   "reason": "A manual word-processor-and-email invoicing workflow creates and sends invoices; it does not retrieve agreements, quotes, or other proof of what was ordered."
+  },
+  "l065": {
+   "consistent": "no",
+   "reason": "The problem concerns the effort and delay of manually sending reminders, not whether the true unpaid balance is visible without manual calculation."
+  },
+  "l066": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l067": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l068": {
+   "consistent": "no",
+   "reason": "Firm escalation happens during collections after reminders are ignored, not as part of sending the initial invoice promptly."
+  },
+  "l069": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l070": {
+   "consistent": "no",
+   "reason": "Finding proof of what was ordered belongs to keeping evidence and proving what is owed, rather than to the routine job of sending payment reminders."
+  },
+  "l071": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l072": {
+   "consistent": "no",
+   "reason": "Timing the first reminder belongs to the reminder workflow; showing a complete billing and payment history is a recordkeeping and reporting task."
+  },
+  "l073": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l074": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l075": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l076": {
+   "consistent": "no",
+   "reason": "A reminder email template helps draft payment reminders; it cannot convert logged hours into invoice line items."
+  },
+  "l077": {
+   "consistent": "no",
+   "reason": "Turning logged hours into invoice lines is invoice preparation, not part of composing a polite first payment reminder."
+  },
+  "l078": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l079": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l080": {
+   "consistent": "no",
+   "reason": "Invoicing apps create and track invoices; they are not, by themselves, tools for retrieving agreements, quotes, or emails that prove what was ordered."
+  },
+  "l081": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l082": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l083": {
+   "consistent": "no",
+   "reason": "Both weighted criteria concern reminders, but reminding clients is not among the segment's listed jobs."
+  },
+  "l084": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l085": {
+   "consistent": "no",
+   "reason": "The named solution is manual invoice creation and sending, not a process for reminding and chasing clients."
+  },
+  "l086": {
+   "consistent": "no",
+   "reason": "Payment after a reminder without relationship damage judges the reminder job, not the clarity, correctness, or speed of the invoice."
+  },
+  "l087": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l088": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l089": {
+   "consistent": "no",
+   "reason": "Timing the first reminder and sending a polite first reminder are sibling steps under the broader reminder job, so this assigns the wrong parent."
+  },
+  "l090": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l091": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l092": {
+   "consistent": "no",
+   "reason": "Same-day invoice dispatch measures invoicing speed, not visibility of unpaid balances and how long they have been outstanding."
+  },
+  "l093": {
+   "consistent": "no",
+   "reason": "Reversing the two reminder criteria does not fix the mismatch: the reminder job is absent from the segment's listed jobs."
+  },
+  "l094": {
+   "consistent": "no",
+   "reason": "A spreadsheet can identify overdue invoices but cannot itself carry out a firm escalation with the client."
+  },
+  "l095": {
+   "consistent": "no",
+   "reason": "The weighted criteria concern proof and record completeness, but record keeping is not one of the segment's listed jobs."
+  },
+  "l096": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l097": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l098": {
+   "consistent": "no",
+   "reason": "Delivering the invoice in an actionable way belongs to sending the invoice, not to maintaining records that prove what is owed."
+  },
+  "l099": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l100": {
+   "consistent": "no",
+   "reason": "Seeing balances and invoice age supports tracking unpaid invoices, not keeping evidence of what was agreed and billed."
+  },
+  "l101": {
+   "consistent": "no",
+   "reason": "Reusing an invoice template supports invoice preparation, not firm escalation when reminders are ignored."
+  },
+  "l102": {
+   "consistent": "no",
+   "reason": "The segment tracks overdue invoices and sends reminders, but both ranked criteria concern invoice acceptance and invoice speed, so its priorities do not match its stated jobs or focus."
+  },
+  "l103": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l104": {
+   "consistent": "no",
+   "reason": "Delivering the invoice through a channel the client will act on is part of sending the invoice, not sending payment reminders."
+  },
+  "l105": {
+   "consistent": "no",
+   "reason": "Tax and legal details belong to preparing a correct invoice, not to reminding a client to pay."
+  },
+  "l106": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l107": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l108": {
+   "consistent": "no",
+   "reason": "This measures the completeness and trustworthiness of the record, not whether firm escalation succeeded."
+  },
+  "l109": {
+   "consistent": "no",
+   "reason": "Reminder drafting effort judges the reminder job, not whether a clear, correct invoice was sent promptly."
+  },
+  "l110": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l111": {
+   "consistent": "no",
+   "reason": "Rewriting an ill-fitting reminder template shows a reminder tone or reuse problem; it does not measure whether proof of the agreement can be found in one place."
+  },
+  "l112": {
+   "consistent": "no",
+   "reason": "Missing due-date warnings undermines visibility into overdue invoices, not the ability to avoid writing reminders from scratch."
+  },
+  "l113": {
+   "consistent": "yes",
+   "reason": ""
+  },
+  "l114": {
+   "consistent": "no",
+   "reason": "Warnings about approaching due dates belong to tracking unpaid invoices and their lateness, not to issuing an invoice promptly."
+  },
+  "l115": {
+   "consistent": "no",
+   "reason": "A full billing and payment history supports recordkeeping and proving what is owed, not the prompt sending of a clear, correct invoice."
+  }
+ },
+ "host": "api.tensorx.ai",
+ "market_job": "I want to get paid in full and on time for work I have done for clients",
+ "model": "moonshotai/kimi-k3.1-pro",
+ "prompt_hash": "3dd439ba72074469"
+}
