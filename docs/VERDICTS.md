@@ -111,4 +111,9 @@ families, collector fixes, graph viewer and statistics.
 - **Planner finding (affects future harvests, not this test):** the L2 planner retrieved
   BUILDER/OTHER-heavy sources (GitHub issues, tax questions on Stack Exchange). New plans now
   carry `source_weights` (App Store 2.0, HN 1.0, Stack Exchange 0.3, GitHub 0.3).
-
+- **Harvest data-quality finding:** 60 of the 3,343 App Store reviews come from two unrelated
+  listings that share the name "Wave" (Wave Mobile Money 58, a dating app 2). They were in the
+  amendment-3 pool, but none was selected as a node item or labelled. Future App Store harvests need an
+  app-ID allow-list.
+- **Scope after T2:** `docs/RADAR_SCOPE.md` describes the Radar report that B1–B3 can support
+  and which of B4–B7 it still needs. B4 (simulation) is on hold pending the owner's decision.
