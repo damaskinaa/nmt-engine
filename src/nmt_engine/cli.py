@@ -50,10 +50,6 @@ def gates_demote(run_dir: Path, forbidden_corpus: CorpusOpt = None) -> None:
     typer.echo(json.dumps(summary, indent=2, sort_keys=True))
 
 
-if __name__ == "__main__":
-    app()
-
-
 @app.command("collect")
 def collect_cmd(
     category: Annotated[str, typer.Option("--category", help="Category search query")],
@@ -62,12 +58,27 @@ def collect_cmd(
     competitors: Annotated[str, typer.Option("--competitors", help="a.com,b.com")] = "",
     run_dir: Annotated[Path | None, typer.Option("--run-dir")] = None,
     per_adapter: Annotated[int, typer.Option("--per-adapter")] = 200,
+    stack_sites: Annotated[
+        str, typer.Option("--stack-sites", help="Stack Exchange sites, e.g. webapps,money")
+    ] = "",
+    apps: Annotated[str, typer.Option("--apps", help="App Store app names, e.g. Habitica")] = "",
+    only: Annotated[
+        str,
+        typer.Option(
+            "--only",
+            help="run only steps with these name prefixes, e.g. appstore:,web: (a top-up: run "
+            "it on a copy of the base run dir; summary totals are recomputed from its whole store)",
+        ),
+    ] = "",
+    as_of: Annotated[
+        str, typer.Option("--as-of", help="YYYY-MM-DD cache date; reuse an earlier run's responses")
+    ] = "",
 ) -> None:
     """Collect lawful public traces for a category into a run folder."""
     from datetime import date
 
     from nmt_engine.collect.base import MissingKeyError
-    from nmt_engine.collect.run import CollectPlan, run_collect
+    from nmt_engine.collect.run import STACK_SITES, CollectPlan, run_collect
 
     plan = CollectPlan(
         category=category,
@@ -75,6 +86,10 @@ def collect_cmd(
         geo=geo,
         competitors=[d.strip() for d in competitors.split(",") if d.strip()],
         per_adapter=per_adapter,
+        stack_sites=[s.strip() for s in stack_sites.split(",") if s.strip()] or list(STACK_SITES),
+        apps=[a.strip() for a in apps.split(",") if a.strip()],
+        as_of=date.fromisoformat(as_of) if as_of else None,
+        only=[o.strip() for o in only.split(",") if o.strip()],
     )
     slug = "".join(ch if ch.isalnum() else "-" for ch in category.lower()).strip("-")
     out = run_dir or Path("runs") / f"{date.today():%Y%m%d}-{slug}"
@@ -84,3 +99,7 @@ def collect_cmd(
         typer.echo(f"error: {exc}", err=True)
         raise typer.Exit(2) from exc
     typer.echo(json.dumps(summary, indent=2))
+
+
+if __name__ == "__main__":
+    app()

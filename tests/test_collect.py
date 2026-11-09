@@ -44,7 +44,7 @@ from nmt_engine.collect.base import (
 )
 from nmt_engine.collect.run import CollectPlan, run_collect
 from nmt_engine.collect.stats import jsonstat_frame
-from nmt_engine.schema import ALLOWED_ACCESS_BASIS
+from nmt_engine.schema import ALLOWED_ACCESS_BASIS, KIND_FAMILY
 from nmt_engine.store import load_run
 from nmt_engine.util import sha256_text
 from tests.vcr_util import CASSETTES, SECRET_QUERY, cassette
@@ -98,6 +98,67 @@ def log(c: Collector) -> list[dict]:
     return [json.loads(ln) for ln in path.read_text().splitlines()]
 
 
+# Evidence family per platform (and kind, where one platform yields more than one family).
+FAMILY = {
+    "hackernews": "discussion",
+    "reddit": "discussion",
+    "github-discussions": "discussion",
+    "youtube-comments": "discussion",
+    "github": "support_issue",
+    "stackexchange": "qa",
+    "appstore": "review",
+    "youtube": "market_record",
+    ("web", "pricing"): "vendor_page",
+    ("web", "web"): "vendor_page",
+    ("web", "changelog"): "change_history",
+    ("wayback", "pricing"): "vendor_page",
+    ("wayback", "changelog"): "change_history",
+    "producthunt": "vendor_page",
+    "dataforseo": "search_demand",
+    "ted": "market_record",
+    "contracts_finder": "market_record",
+    "eurostat": "market_record",
+    "cso": "market_record",
+    "ons": "market_record",
+    "sec_edgar": "market_record",
+    "companies_house": "market_record",
+    "adzuna": "market_record",
+    "npm": "market_record",
+    "pypi": "market_record",
+    "huggingface": "market_record",
+}
+CUSTOMER = {"discussion", "support_issue", "qa", "review"}
+
+
+def expected_family(s) -> str:
+    base = s.platform.split(":")[0]
+    return FAMILY.get((base, s.kind)) or FAMILY.get(base) or KIND_FAMILY[s.kind]
+
+
+@pytest.fixture(autouse=True)
+def _family_checked(monkeypatch):
+    """Every source any adapter stores in these tests gets the expected evidence family."""
+    seen: list = []
+    orig = Collector.add_source
+
+    def add_source(self, **kw):
+        src = orig(self, **kw)
+        if src is not None:
+            assert src.evidence_family == expected_family(src), (src.platform, src.kind)
+            seen.append(src.platform.split(":")[0])
+        return src
+
+    monkeypatch.setattr(Collector, "add_source", add_source)
+    yield seen
+
+
+def test_every_family_mapping_is_exercised(tmp_path, _family_checked):
+    c = make(tmp_path)
+    with cassette("run_invoicing"):
+        run_collect(CollectPlan("invoicing", SINCE, "IE"), c.run_dir, c)
+    assert {"hackernews", "github", "stackexchange", "appstore"} <= set(_family_checked)
+
+
 def check_sources(c: Collector, minimum: int = 1) -> dict:
     srcs = c.store.current("source")
     assert len(srcs) >= minimum
@@ -109,6 +170,8 @@ def check_sources(c: Collector, minimum: int = 1) -> dict:
         assert s.id in logged
         assert s.author_hash is None or s.author_hash.startswith("a_")
         assert not is_forbidden(s.url)
+        assert s.evidence_family == expected_family(s), (s.platform, s.kind)
+        assert s.customer_voice == (s.evidence_family in CUSTOMER)
     return srcs
 
 
@@ -120,7 +183,7 @@ def test_recorded_run_yields_500_trace_sources(tmp_path):
     with cassette("run_invoicing"):
         summary = run_collect(CollectPlan("invoicing", SINCE, "IE"), c.run_dir, c)
     assert summary["trace_sources"] >= 500, summary
-    assert summary["adapters"]["reddit"]["status"] == "skipped"
+    assert summary["adapters"]["reddit"]["status"] == "off"
     srcs = check_sources(c, 500)
     assert {"review", "forum", "qa", "issue"} <= {s.kind for s in srcs.values()}
     assert (c.run_dir / "collect_summary.json").is_file()
@@ -829,7 +892,7 @@ def test_apex_redirect_is_refused_and_page_fetched_on_www(tmp_path):
 
     c = make(tmp_path, handler)
     c.extra_hosts = operator_hosts(["invoiceninja.com"])
-    srcs = web.competitor_pages(c, "invoiceninja.com")
+    srcs = web.competitor_pages(c, "invoiceninja.com", ("pricing", "changelog"))
     assert [s.url for s in srcs] == ["https://www.invoiceninja.com/pricing"]
     assert "https://www.invoiceninja.com/robots.txt" in hits  # destination robots consulted
     assert "https://www.invoiceninja.com/changelog" not in hits  # www robots forbids it
@@ -849,7 +912,7 @@ def test_www_redirect_to_apex_is_refused_and_page_fetched_on_apex(tmp_path):
 
     c = make(tmp_path, handler)
     c.extra_hosts = operator_hosts(["www.invoiceninja.com"])
-    srcs = web.competitor_pages(c, "www.invoiceninja.com")
+    srcs = web.competitor_pages(c, "www.invoiceninja.com", ("pricing", "changelog"))
     assert [s.url for s in srcs] == [
         "https://invoiceninja.com/pricing",
         "https://invoiceninja.com/changelog",
@@ -911,3 +974,61 @@ def test_turnover_skips_only_http_errors(tmp_path, monkeypatch):
         return httpx.Response(406)
 
     assert companies_house.turnover(make(tmp_path, handler), "01234567") is None
+
+
+def test_named_app_requires_matching_title(tmp_path):
+    feed = {
+        "feed": {
+            "entry": [
+                {
+                    "im:rating": {"label": "4"},
+                    "title": {"label": "Great"},
+                    "content": {"label": "keeps my streaks honest every single morning"},
+                    "id": {"label": "r1"},
+                    "updated": {"label": "2026-05-01T09:00:00-07:00"},
+                    "author": {"name": {"label": "bob"}},
+                }
+            ]
+        }
+    }
+    search = {"results": [{"trackId": 7, "trackName": "Habitica: Gamified Tasks"}]}
+    c = make(tmp_path, _router({"itunes.apple.com/search": search, "customerreviews": feed}))
+    out = appstore.named_app(c, "Habitica", "ie", 1, SINCE)
+    assert len(out) == 1 and out[0].publisher == "Habitica: Gamified Tasks"
+    with pytest.raises(appstore.NoApp):
+        appstore.named_app(c, "Loop Habit Tracker", "ie", 1, SINCE)
+
+
+def test_plan_runs_named_apps_and_operator_stack_sites(tmp_path):
+    seen = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(str(request.url))
+        return httpx.Response(404, json={})
+
+    c = make(tmp_path, handler)
+    plan = CollectPlan("invoicing", SINCE, "IE", stack_sites=["money"], apps=["FreshBooks"])
+    summary = run_collect(plan, c.run_dir, c)
+    assert summary["adapters"]["appstore:FreshBooks"]["status"] in ("none", "error")
+    assert "stackexchange:money" in summary["adapters"]
+    assert "stackexchange:superuser" not in summary["adapters"]
+
+
+def test_plan_only_runs_selected_steps(tmp_path):
+    c = make(tmp_path, lambda r: httpx.Response(404, json={}))
+    plan = CollectPlan("invoicing", SINCE, "IE", stack_sites=["money"], only=["stackexchange:"])
+    summary = run_collect(plan, c.run_dir, c)
+    assert list(summary["adapters"]) == ["stackexchange:money"]
+
+
+def test_competitor_custom_path_is_a_vendor_page(tmp_path):
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(404, text="")
+        return httpx.Response(
+            200, text="<html><body><p>About our invoicing tool.</p></body></html>"
+        )
+
+    c = make(tmp_path, handler, TEST_HOSTS | {"invoiceninja.com"})
+    srcs = web.competitor_pages(c, "invoiceninja.com", ("about",))
+    assert [(s.kind, s.evidence_family) for s in srcs] == [("web", "vendor_page")]

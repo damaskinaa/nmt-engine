@@ -37,7 +37,7 @@ nmt = "nmt_engine.cli:app"
 where = ["src"]
 
 [tool.setuptools.package-data]
-nmt_engine = ["py.typed", "**/*.txt", "**/*.j2", "**/*.json"]
+nmt_engine = ["py.typed", "**/*.txt", "**/*.j2", "**/*.json", "**/*.js"]
 
 [tool.ruff]
 line-length = 100

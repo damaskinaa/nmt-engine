@@ -40,6 +40,7 @@ def collect(c: Collector, query: str, since: date, videos: int = 10, comments: i
             adapter=NAME,
             kind="web",
             platform="youtube",
+            evidence_family="market_record",  # creator's title/description, not a customer
             publisher=sn.get("channelTitle"),
             url=url,
             text=f"{sn.get('title', '')}\n\n{sn.get('description', '')}",
