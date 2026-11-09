@@ -294,6 +294,142 @@ def pick(
     }
 
 
+NODE_AMENDMENT = 3  # node items scored for T1; amendment-2 round 0 stays on record, unscored
+A3_MAX_USD = 5.0  # labelling stops here so amendment 3 stays under $6 with node labels
+
+
+def _a3_pool(run_dir: Path, out: Path, used: set[str]) -> dict[str, dict]:
+    """Amendment 3 pool: App Store reviews in the L2 harvest plus HN posts Kimi labelled USER."""
+    run = load_run(Path(run_dir))
+    pool: dict[str, dict] = {}
+    for s in sorted(run.sources.values(), key=lambda s: s.id):
+        if s.retracted or not s.customer_voice or s.id in used:
+            continue
+        if s.platform.startswith("appstore"):
+            text = (Path(run_dir) / s.text_path).read_text("utf-8")
+            pool[s.id] = {"s": s, "text": _clip(text), "known": None}
+    auth_f = out / AUTHORS
+    for a in _read_jsonl(auth_f) if auth_f.is_file() else []:
+        s = run.sources.get(a["source_id"])
+        if s and s.platform.startswith("hackernews") and a["role"] == "USER" and s.id not in used:
+            text = (Path(run_dir) / s.text_path).read_text("utf-8")
+            pool[s.id] = {"s": s, "text": _clip(text), "known": a}
+    texts = {p.id: p.text for p in gold.load_posts()}
+    for g in _read_jsonl(out / "gold.jsonl"):
+        if g["platform"].startswith("hackernews") and g["role"] == "USER":
+            if g["source_id"] in used or g["source_id"] in pool or g["id"] not in texts:
+                continue
+            meta = {"id": g["source_id"], "url": g["url"], "platform": g["platform"]}
+            meta["evidence_family"] = g.get("family", "discussion")
+            known = {k: g[k] for k in ("role", "names_solution")}
+            pool[g["source_id"]] = {"s": meta, "text": texts[g["id"]], "known": known}
+    return pool
+
+
+def pick_embed(llm: LLM, emb, run_dir: Path, out: Path = GOLD_DIR, path: Path = GRAPH) -> dict:
+    """Amendment 3: rank the customer-voice pool per node by embedding similarity to the node's
+    closed question, then pick, split and label exactly as amendment 2."""
+    items_f, auth_f = out / ITEMS, out / AUTHORS
+    items = _read_jsonl(items_f) if items_f.is_file() else []
+    if any(it.get("amendment") == NODE_AMENDMENT for it in items):
+        raise ValueError("amendment 3 items already picked")
+    used = {it["source_id"] for it in items}
+    auth = {r["source_id"]: r for r in _read_jsonl(auth_f)} if auth_f.is_file() else {}
+    pool = _a3_pool(run_dir, out, used)
+    for sid, p in pool.items():
+        if p["known"] is not None:
+            auth.setdefault(sid, {"source_id": sid, **p["known"]})
+    stmts = _stmts(path)
+    node_ids = list(stmts)
+    sids = sorted(pool)
+    q = emb.embed([stmts[n] for n in node_ids], "gold.node.a3.query")
+    v = emb.embed([pool[s]["text"] for s in sids], "gold.node.a3.pool")
+    sim = q @ v.T
+    order = {
+        n: [sids[j] for j in sorted(range(len(sids)), key=lambda j, i=i: (-sim[i, j], sids[j]))]
+        for i, n in enumerate(node_ids)
+    }
+    order = {n: o[:PICK_DEPTH] for n, o in order.items()}
+    cat = _category()
+    lh = gold.label_prompt_hash()
+    stopped = None
+    while True:
+        want: list[str] = []
+        for n in node_ids:
+            if sum(_qualifies(auth.get(s)) for s in order[n]) >= PICK_TOP:
+                continue
+            want += [s for s in order[n] if s not in auth and s not in want][:PICK_TOP]
+        if not want:
+            break
+        if llm.budget.spent + emb.cost >= A3_MAX_USD:
+            stopped = f"labelling budget {A3_MAX_USD} reached"
+            break
+        posts = [Post(s, cat, pool[s]["text"]) for s in want]
+        ans = author_gate(llm, posts, "gold.node.author", BATCH, rounds=GOLD_ROUNDS, gold=True)
+        for p, a in zip(posts, ans, strict=True):
+            auth[p.id] = {
+                "source_id": p.id,
+                "role": a.role if a else None,
+                "names_solution": a.names_solution if a else None,
+                "labeller": llm.model,
+                "label_prompt_hash": lh,
+            }
+        _write_jsonl(
+            auth_f,
+            sorted((a for s, a in auth.items() if "labeller" in a), key=lambda r: r["source_id"]),
+        )
+    top = {n: [s for s in order[n] if _qualifies(auth.get(s))][:PICK_TOP] for n in node_ids}
+    pairs: dict[str, dict[str, str]] = {}
+    for n, ss in top.items():
+        for s in ss:
+            pairs.setdefault(s, {})[n] = "top"
+    qual = sorted(s for s in pool if _qualifies(auth.get(s)))
+    negs: dict[str, list[str]] = {}
+    for n in node_ids:
+        cand = [s for s in qual if s not in top[n]]
+        negs[n] = random.Random(f"a3:{n}").sample(cand, min(PICK_NEG, len(cand)))
+        for s in negs[n]:
+            pairs.setdefault(s, {}).setdefault(n, "neg")
+    rows, posts_c = [], _read_jsonl(NODE_POSTS) if NODE_POSTS.is_file() else []
+    for i, sid in enumerate(sorted(pairs)):
+        s = pool[sid]["s"]
+        get = (lambda k, s=s: s[k]) if isinstance(s, dict) else (lambda k, s=s: getattr(s, k))
+        nid = f"N{len(items) + i + 1:03d}"
+        rows.append(
+            {
+                "id": nid,
+                "source_id": sid,
+                "url": get("url"),
+                "platform": get("platform"),
+                "family": get("evidence_family"),
+                "split": split_of(sid),
+                "round": 0,
+                "amendment": NODE_AMENDMENT,
+                "pairs": dict(sorted(pairs[sid].items())),
+            }
+        )
+        posts_c.append({"id": nid, "category": cat, "text": pool[sid]["text"]})
+    _write_jsonl(items_f, items + rows)
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    _write_jsonl(NODE_POSTS, posts_c)
+    return {
+        "pool": len(pool),
+        "pool_by_platform": dict(Counter(_plat(pool[s]["s"]) for s in pool)),
+        "items": len(rows),
+        "pairs": sum(len(r["pairs"]) for r in rows),
+        "qualifying": len(qual),
+        "stopped": stopped,
+        "labelling_usd": round(llm.budget.spent, 4),
+        "embed_usd": round(emb.cost, 4),
+        "per_node": {n: {"top": len(top[n]), "neg": len(negs[n])} for n in node_ids},
+    }
+
+
+def _plat(s) -> str:
+    p = s["platform"] if isinstance(s, dict) else s.platform
+    return p.split(":")[0]
+
+
 def _items(out: Path) -> dict[str, dict]:
     f = out / ITEMS
     return {r["id"]: r for r in _read_jsonl(f)} if f.is_file() else {}
@@ -384,7 +520,7 @@ def cross_label(llm: LLM, out: Path = GOLD_DIR, path: Path = GRAPH) -> Path:
     return f
 
 
-def _designated(out: Path) -> list[tuple[str, str, str, str]]:
+def _designated(out: Path, amendment: int = NODE_AMENDMENT) -> list[tuple[str, str, str, str]]:
     """(item id, node, split, gold verdict) for every designated pair Kimi answered."""
     items = _items(out)
     f = out / "node_gold.jsonl"
@@ -392,7 +528,9 @@ def _designated(out: Path) -> list[tuple[str, str, str, str]]:
     return [
         (r["id"], n, r["split"], r["verdicts"][n])
         for r in rows
-        if r["verdicts"] is not None and r["id"] in items
+        if r["verdicts"] is not None
+        and r["id"] in items
+        and items[r["id"]].get("amendment", 2) == amendment
         for n in items[r["id"]]["pairs"]
     ]
 
@@ -428,13 +566,13 @@ def cross_agreement(path: Path, out: Path = GOLD_DIR) -> dict:
     return res
 
 
-def per_node(out: Path = GOLD_DIR) -> dict:
+def per_node(out: Path = GOLD_DIR, amendment: int = NODE_AMENDMENT) -> dict:
     """Gold verdict counts per node over designated pairs; 0 supports and 0 contradicts is
     reported as no public evidence in this harvest (amendment 2), never padded."""
     _, node_ids = candidates()
     res = {}
     for n in node_ids:
-        c = Counter(g for _, m, _, g in _designated(out) if m == n)
+        c = Counter(g for _, m, _, g in _designated(out, amendment) if m == n)
         res[n] = {v: c.get(v, 0) for v in prompts.VERDICTS}
         if not c.get("supports") and not c.get("contradicts"):
             res[n]["finding"] = "no public evidence in this harvest"
@@ -562,6 +700,7 @@ __all__ = [
     "label",
     "per_node",
     "pick",
+    "pick_embed",
     "record",
     "t1",
 ]

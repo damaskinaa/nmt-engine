@@ -204,7 +204,7 @@ def test_ranks_and_designated_pairs(tmp_path, monkeypatch):
 
     out = tmp_path / "gold"
     out.mkdir()
-    items = [{"id": "N001", "split": "test", "pairs": {"J3": "top"}}]
+    items = [{"id": "N001", "split": "test", "amendment": 3, "pairs": {"J3": "top"}}]
     (out / "node_items.jsonl").write_text(json.dumps(items[0]) + "\n")
     g = {"id": "N001", "split": "test", "verdicts": {n: "unrelated" for n in RISKY}}
     g["verdicts"]["J3"] = "supports"

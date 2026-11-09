@@ -224,6 +224,26 @@ def gold_node_pick(
     typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
 
 
+@gold_app.command("node-pick-embed")
+def gold_node_pick_embed(
+    harvest_dir: Annotated[Path, typer.Option("--harvest-dir")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
+) -> None:
+    """Amendment 3: customer-voice pool ranked per node by Qwen3 similarity; top 8 + 2 random."""
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.verify import node_gold
+
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=16000)
+    emb = Embedder(run_dir)
+    try:
+        res = node_gold.pick_embed(llm, emb, harvest_dir)
+    finally:
+        llm.close()
+        emb.close()
+    typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
+
+
 @gold_app.command("node-cross")
 def gold_node_cross(
     run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
