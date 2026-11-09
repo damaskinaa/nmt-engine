@@ -5,76 +5,76 @@
  "n_posts": 300,
  "role": {
   "n": 288,
-  "agree": 223,
-  "agreement": 0.7743,
-  "kappa": 0.6762,
+  "agree": 263,
+  "agreement": 0.9132,
+  "kappa": 0.8798,
   "confusion": {
    "USER": {
-    "USER": 51,
-    "BUILDER": 13,
+    "USER": 39,
+    "BUILDER": 1,
     "VENDOR": 0,
-    "OTHER": 13
+    "OTHER": 4
    },
    "BUILDER": {
-    "USER": 3,
-    "BUILDER": 91,
-    "VENDOR": 13,
-    "OTHER": 7
+    "USER": 4,
+    "BUILDER": 95,
+    "VENDOR": 0,
+    "OTHER": 1
    },
    "VENDOR": {
     "USER": 0,
-    "BUILDER": 3,
-    "VENDOR": 9,
+    "BUILDER": 5,
+    "VENDOR": 46,
     "OTHER": 3
    },
    "OTHER": {
     "USER": 5,
-    "BUILDER": 2,
-    "VENDOR": 3,
-    "OTHER": 72
+    "BUILDER": 1,
+    "VENDOR": 1,
+    "OTHER": 83
    }
   }
  },
  "classes": {
   "USER": {
    "n": 288,
-   "gold_pos": 77,
-   "second_pos": 59,
-   "both_pos": 51,
-   "agreement": 0.8819,
-   "kappa": 0.6745
+   "gold_pos": 44,
+   "second_pos": 48,
+   "both_pos": 39,
+   "agreement": 0.9514,
+   "kappa": 0.819
   },
   "BUILDER": {
    "n": 288,
-   "gold_pos": 114,
-   "second_pos": 109,
-   "both_pos": 91,
-   "agreement": 0.8576,
-   "kappa": 0.7001
+   "gold_pos": 100,
+   "second_pos": 102,
+   "both_pos": 95,
+   "agreement": 0.9583,
+   "kappa": 0.9085
   },
   "VENDOR": {
    "n": 288,
-   "gold_pos": 15,
-   "second_pos": 25,
-   "both_pos": 9,
-   "agreement": 0.9236,
-   "kappa": 0.4117
+   "gold_pos": 54,
+   "second_pos": 47,
+   "both_pos": 46,
+   "agreement": 0.9688,
+   "kappa": 0.8921
   },
   "OTHER": {
    "n": 288,
-   "gold_pos": 82,
-   "second_pos": 95,
-   "both_pos": 72,
-   "agreement": 0.8854,
-   "kappa": 0.7315
+   "gold_pos": 90,
+   "second_pos": 91,
+   "both_pos": 83,
+   "agreement": 0.9479,
+   "kappa": 0.8792
   },
   "names_solution": {
    "n": 288,
-   "gold_pos": 52,
-   "second_pos": 47,
-   "both_pos": 37,
-   "agreement": 0.9132,
-   "kappa": 0.6952
+   "gold_pos": 36,
+   "second_pos": 38,
+   "both_pos": 23,
+   "agreement": 0.9028,
+   "kappa": 0.5659
   },
   "trigger": {
    "n": 299,
@@ -117,5 +117,5 @@
    "kappa": 0.3951
   }
  },
- "passed": false
+ "passed": true
 }

@@ -48,20 +48,31 @@ families, collector fixes, graph viewer and statistics.
 ## B1: L3 gold set (invoicing, PR #7)
 
 - **Gold labels:** model-labelled (Kimi, `moonshotai/kimi-k3.1-pro`), **not human-verified**.
+  Current roles: USER 50, BUILDER 101, OTHER 92, VENDOR 57.
 - **Human check (§8 A2, 30 blind labels): NOT DONE.** The labels were skipped by decision.
-- **Weaker substitute, cross-model agreement:** `z-ai/glm-5.3` (thinking off) labelled the same
+- **Weaker substitute, cross-model agreement:** `z-ai/glm-5.3` (thinking off) labels the same
   300 posts blind with the same frozen prompts (`tests/gold/invoicing/cross_agreement.json`).
-  - **Author role:** 223 of 288 posts agree (77.4%), Cohen's kappa 0.68. GLM left 12 posts
-    unanswered. This is **below the 80% bar**, so B1 is stopped pending a decision.
-  - **Where they disagree:** GLM calls 26 of Kimi's 77 USER posts BUILDER (13) or OTHER (13).
-    It also calls 13 of Kimi's 114 BUILDER posts VENDOR.
+  - **Round 1 (first gold role definitions):** 223 of 288 posts agree (77.4%), kappa 0.68. This
+    is below the 80% bar, so B1 stopped. Disagreements were USER vs BUILDER/OTHER and
+    BUILDER vs VENDOR.
+  - **Round 2 (option A):** the role definitions were sharpened into an ordered rule
+    (VENDOR > BUILDER > USER > OTHER) and committed before any re-run. Both models then
+    relabelled. Result: 263 of 288 posts agree (**91.3%**), kappa **0.88**, which passes. GLM left
+    12 posts unanswered.
+  - **Element tags:** these prompts did not change. Kappa is weak for success_criterion (0.21),
+    alternative (0.47) and aha (0.40).
 - **T1:** every T1 number from this gold set is **precision against model labels**, not against
   human labels.
 
 ## Known weaknesses carried forward
 
-- **L3 author gate: low USER recall (B1 gold set, invoicing).** The producer
-  (`deepseek/deepseek-v4.1-flash`, prompt hash `86a3b79a44cbc70a`) tags 13 of the 31 held-out
-  posts that Kimi calls USER as USER (42% recall; 29 of 51 = 57% on dev). Most real customer
-  voices are lost at the gate. **Owner: B3.** Target: USER recall ≥ 60% at USER precision ≥ 85%
-  on the held-out split. B1 is not blocked on it.
+- **L3 author gate: USER precision below 85% (B1 gold set, invoicing).** The producer
+  (`deepseek/deepseek-v4.1-flash`, prompt hash `ff9227c435465ec4`) is measured against the
+  round-2 Kimi gold:
+  - **Test:** precision 14/19 = 73.7%, recall 14/19 = 73.7%.
+  - **Dev:** precision 24/31 = 77.4%, recall 24/31 = 77.4%.
+  - **Status:** NOT MEASURED (fewer than 20 calls), but the point estimate is below 85%.
+  - **Recall history:** recall was 42% (13/31) against the round-1 gold. That gold had a broader
+    USER definition.
+  - **Owner: B3.** Target: USER recall ≥ 60% at USER precision ≥ 85%, on a test split large
+    enough for 20 or more calls per class. B1 is not blocked on it.
