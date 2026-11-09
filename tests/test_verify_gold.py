@@ -159,3 +159,12 @@ def test_build_keeps_one_copy_of_a_source_shared_by_two_runs(tmp_path, monkeypat
     gold.build(list(runs), "invoicing", out=tmp_path / "gold")
     rows = [json.loads(x) for x in (tmp_path / "gold" / "items.jsonl").read_text().splitlines()]
     assert sorted(r["source_id"] for r in rows) == [f"s{i}" for i in range(6)]
+
+
+def test_provenance_survives_a_malformed_cross_file(tmp_path):
+    from nmt_engine.verify import gold as g
+
+    (tmp_path / "gold.jsonl").write_text('{"id": "a", "labeller": "kimi", "role": "USER"}\n')
+    (tmp_path / "cross_bad.json").write_text("{}")
+    out = g.provenance(tmp_path)
+    assert "cross_bad.json unreadable" in out and "human check NOT DONE" in out

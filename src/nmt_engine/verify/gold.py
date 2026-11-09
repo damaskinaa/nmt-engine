@@ -303,7 +303,11 @@ def provenance(out: Path = GOLD_DIR) -> str:
     for path in sorted(out.glob("cross_*.json")):
         if path.name == "cross_agreement.json" or not gold:
             continue
-        r = cross_agreement(path, out)
+        try:
+            r = cross_agreement(path, out)
+        except (KeyError, TypeError, ValueError) as e:  # a bad file must not abort the gate
+            parts.append(f"{path.name} unreadable ({type(e).__name__})")
+            continue
         parts.append(
             f"cross-model agreement with {r['second_labeller']} {r['role']['agreement']:.1%} "
             f"(kappa {r['role']['kappa']:.2f})"
