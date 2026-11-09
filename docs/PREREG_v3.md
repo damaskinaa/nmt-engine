@@ -92,3 +92,48 @@ T1 is precision against **model labels**. The L3 gold labels are Kimi's (model-l
   - Code-corrupted links are "inconsistent": a link is re-pointed at a node under a different Core Job.
   - Dev and test are split by origin node.
 - **Gate:** the same precision rule as T1, for both classes, with Kimi's answers committed under the check prompt hash.
+
+## 8. Amendment 1 (2026-11-09, B3, before any T1 or T2 run)
+
+Written before the L2 harvest, before the node-check gold exists, and before any test split is
+scored for a T1 verdict. It corrects one stale figure and fills in details §3 left open. It
+changes no threshold and no rule in §2–§7. The PR records the new sha256.
+
+**Correction to §3.** The cross-model figure in §3 (91.3%, kappa 0.88) was from round 2, which
+was superseded. The final round used the project owner's frozen role rules: 262 of 292 posts
+agree (89.7%), Cohen's kappa 0.86, USER-class agreement 93.5%. GLM left 8 posts unlabelled after
+its one shorter-quote retry. The gold set stays model-labelled (Kimi), not human-verified; the
+human check stays NOT DONE.
+
+**Node check (§3, supports and contradicts).**
+- **Candidate nodes:** the 10 riskiest nodes of the frozen graph (§2).
+- **Statements:** code writes one statement per node from the frozen graph, by node type:
+  - job: the author needs to do that Job;
+  - solution: the author uses that Solution for the Jobs it serves;
+  - criterion: the author judges that Job by that criterion;
+  - problem: the author has that problem with that Solution.
+- **Answers:** supports, contradicts or unrelated per post and node, with a verbatim quote for
+  supports and contradicts. Unrelated is the default.
+- **Gold items:** every gold post that Kimi labels USER and naming a Solution (A4), crossed with
+  the 10 candidate nodes. A pair takes its post's split.
+- **Gold labels:** Kimi, with a frozen gold node prompt committed before labelling; one try plus
+  exactly one retry with a shorter quote, as in B1.
+- **Calls:** a class's test calls are the producer's answers of that class on test pairs that
+  Kimi answered.
+
+**Producer prompts.** The producer prompts may be refined on dev only. They are frozen before
+growth round 1 and do not change during growth. The B3 refinement of the author prompt was
+tuned on the 200 dev posts.
+
+**Growing the test split (§3).**
+- **Pool:** customer-voice posts (discussion, support_issue, qa, review) from the one L2 harvest
+  of §5, minus posts already in the gold set (same source id or URL).
+- **Rounds:** 150 posts per round, stratified by evidence family, seeded with the round number.
+  Every new post goes to test.
+- **Labels:** Kimi labels each new post with the frozen author and element prompts, then
+  node-labels the posts it calls USER and naming a Solution.
+- **Stop:** when USER, supports and contradicts each have at least 20 test calls, or after 6
+  rounds (900 posts), or when the pool runs out, whichever comes first.
+- **Then:** each class is scored once on test (§3). A class still under 20 calls is NOT
+  MEASURED. For USER, supports or contradicts, that means T2 does not run, and the build stops
+  for the user.
