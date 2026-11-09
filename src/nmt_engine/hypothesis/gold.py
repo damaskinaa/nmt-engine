@@ -111,11 +111,16 @@ def build(g: HypothesisGraph, seed: int = 0, out: Path = L1_GOLD_DIR) -> dict:
     (out / "items.jsonl").write_text(
         "".join(json.dumps(it, ensure_ascii=False, sort_keys=True) + "\n" for it in uniq), "utf-8"
     )
+    by_truth = {
+        t: sum(it["split"] == "test" and it["truth"] == t for it in uniq) for t in ("yes", "no")
+    }
     return {
         "items": len(uniq),
         "consistent": sum(it["truth"] == "yes" for it in uniq),
         "inconsistent": sum(it["truth"] == "no" for it in uniq),
         "test": sum(it["split"] == "test" for it in uniq),
+        "test_by_truth": by_truth,
+        "test_measurable": all(v >= MIN_CALLS for v in by_truth.values()),
     }
 
 

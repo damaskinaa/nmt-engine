@@ -184,7 +184,11 @@ class HypothesisGraph(BaseModel):
         """Top-k testable nodes by RAT priority, ties broken by importance, then id.
         The Big Job (the brief itself) and segments (tested in L6) are not desk-testable nodes."""
         imp = self.importance()
-        pool = [n for n in self.nodes if n.type != "segment" and n.level != "big"]
+        pool = [
+            n
+            for n in self.nodes
+            if n.type != "segment" and not (n.type == "job" and n.level == "big")
+        ]
         pool.sort(key=lambda n: (-n.rat.priority, -imp[n.id], n.id))
         return [
             {
