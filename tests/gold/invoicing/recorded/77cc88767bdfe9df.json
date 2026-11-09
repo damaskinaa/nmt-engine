@@ -75,7 +75,7 @@
     "trigger": false
    },
    "names_solution": true,
-   "role": "BUILDER"
+   "role": "USER"
   },
   "G008": {
    "elements": {
@@ -239,8 +239,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
-   "role": "VENDOR"
+   "names_solution": false,
+   "role": "OTHER"
   },
   "G023": {
    "elements": {
@@ -250,8 +250,8 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": true,
-   "role": "VENDOR"
+   "names_solution": false,
+   "role": "BUILDER"
   },
   "G024": {
    "elements": {
@@ -382,7 +382,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G036": {
@@ -393,7 +393,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "USER"
   },
   "G037": {
@@ -415,7 +415,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G039": {
@@ -437,7 +437,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "OTHER"
   },
   "G041": {
@@ -537,7 +537,7 @@
     "trigger": false
    },
    "names_solution": true,
-   "role": "USER"
+   "role": "BUILDER"
   },
   "G050": {
    "elements": {
@@ -569,7 +569,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G053": {
@@ -679,8 +679,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
-   "role": "USER"
+   "names_solution": false,
+   "role": "OTHER"
   },
   "G063": {
    "elements": {
@@ -735,7 +735,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G068": {
    "elements": {
@@ -900,7 +900,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G083": {
    "elements": {
@@ -932,7 +932,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "OTHER"
   },
   "G086": {
@@ -999,7 +999,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "OTHER"
   },
   "G092": {
    "elements": {
@@ -1185,8 +1185,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
-   "role": "USER"
+   "names_solution": false,
+   "role": "BUILDER"
   },
   "G109": {
    "elements": {
@@ -1196,8 +1196,8 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": true,
-   "role": "USER"
+   "names_solution": false,
+   "role": "OTHER"
   },
   "G110": {
    "elements": {
@@ -1296,7 +1296,7 @@
     "trigger": false
    },
    "names_solution": true,
-   "role": "VENDOR"
+   "role": "USER"
   },
   "G119": {
    "elements": {
@@ -1307,7 +1307,7 @@
     "trigger": false
    },
    "names_solution": true,
-   "role": "VENDOR"
+   "role": "OTHER"
   },
   "G120": {
    "elements": {
@@ -1504,7 +1504,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G138": {
@@ -1537,7 +1537,7 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G141": {
@@ -1603,7 +1603,7 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "VENDOR"
   },
   "G147": {
@@ -1636,7 +1636,7 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "VENDOR"
   },
   "G150": {
@@ -1824,7 +1824,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "BUILDER"
   },
   "G167": {
    "elements": {
@@ -2241,7 +2241,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "OTHER"
   },
   "G205": {
@@ -2494,7 +2494,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "VENDOR"
   },
   "G228": {
@@ -2505,7 +2505,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "BUILDER"
   },
   "G229": {
@@ -2516,7 +2516,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "VENDOR"
   },
   "G230": {
@@ -2616,7 +2616,7 @@
     "trigger": true
    },
    "names_solution": true,
-   "role": "USER"
+   "role": "VENDOR"
   },
   "G239": {
    "elements": {
@@ -2648,7 +2648,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G242": {
@@ -2692,7 +2692,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "BUILDER"
   },
   "G246": {
@@ -3055,7 +3055,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "USER"
   },
   "G279": {
@@ -3066,8 +3066,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
-   "role": "USER"
+   "names_solution": false,
+   "role": "OTHER"
   },
   "G280": {
    "elements": {
@@ -3121,7 +3121,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "OTHER"
   },
   "G285": {
@@ -3132,7 +3132,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "BUILDER"
   },
   "G286": {
@@ -3198,7 +3198,7 @@
     "success_criterion": true,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "OTHER"
   },
   "G292": {
@@ -3303,6 +3303,6 @@
  },
  "host": "api.tensorx.ai",
  "model": "deepseek/deepseek-v4.1-flash",
- "prompt_hash": "b5b0f532e5df5c5a",
+ "prompt_hash": "77cc88767bdfe9df",
  "reasoning_effort": "none"
 }

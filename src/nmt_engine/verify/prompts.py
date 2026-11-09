@@ -73,7 +73,21 @@ Return {{"posts": [{{"id": <post number>, {fields}}}, ...]}} with one entry per 
 ELEMENT_FIELDS = ", ".join(f'"{e}": <true|false>, "{e}_quote": <string|null>' for e in ELEMENTS)
 
 AUTHOR_SYSTEM = GOLD_AUTHOR_SYSTEM
-AUTHOR_PROMPT = GOLD_AUTHOR_PROMPT  # role rules now live in the frozen gold prompt
+AUTHOR_PROMPT = GOLD_AUTHOR_PROMPT.replace(
+    "Each label must cite the verbatim phrase that decided it.",
+    "Each label must cite the verbatim phrase that decided it.\n"
+    "Checks before answering USER (all must hold, else pick another role):\n"
+    "- OWN: the experience is the author's own work. A spouse's, employer's or client's system \
+the author only describes is OTHER.\n"
+    "- SOLUTION: the post is about a {category} Solution the author relies on, not a passing \
+mention inside commentary on something else (computers, AI, jobs, ERP stories). Passing mentions \
+are OTHER.\n"
+    "- SELF-BUILT: someone who built their own {category} tool is USER only if they name the \
+product they left and why; otherwise a list of their projects or a note about building it is \
+BUILDER.",
+    1,
+)  # producer refinement, tuned on the dev split only
+assert AUTHOR_PROMPT != GOLD_AUTHOR_PROMPT
 ELEMENT_SYSTEM = GOLD_ELEMENT_SYSTEM
 ELEMENT_PROMPT = GOLD_ELEMENT_PROMPT.replace(
     "- alternative: does the post name another product or method the author used, tried or \
