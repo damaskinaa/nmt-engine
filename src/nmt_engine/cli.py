@@ -189,11 +189,64 @@ def gold_check() -> None:
     raise typer.Exit(0 if res["passed"] else 1)
 
 
+@gold_app.command("node-canary")
+def gold_node_canary(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
+) -> None:
+    """Amendment 2 canary: 6 synthetic pairs through the frozen gold node prompt (never T1)."""
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.verify import node_gold
+
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=16000)
+    try:
+        res = node_gold.canary(llm)
+    finally:
+        llm.close()
+    typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
+    raise typer.Exit(0 if res["ok"] else 1)
+
+
+@gold_app.command("node-pick")
+def gold_node_pick(
+    round_: Annotated[int, typer.Option("--round")] = 0,
+    harvest_dir: Annotated[Path, typer.Option("--harvest-dir")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
+) -> None:
+    """Amendment 2: Kimi author roles down each node's ranked harvest posts; top 8 + 2 negatives."""
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.verify import node_gold
+
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=16000)
+    try:
+        res = node_gold.pick(llm, harvest_dir, round_)
+    finally:
+        llm.close()
+    typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
+
+
+@gold_app.command("node-cross")
+def gold_node_cross(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
+) -> None:
+    """GLM-5.3 (thinking off) labels every node item blind; agreement over designated pairs."""
+    from nmt_engine.llm import THIRD_MODEL
+    from nmt_engine.verify import node_gold
+
+    llm = _tensorx(THIRD_MODEL, run_dir, "none", max_tokens=16000)
+    try:
+        path = node_gold.cross_label(llm)
+    finally:
+        llm.close()
+    res = node_gold.cross_agreement(path)
+    typer.echo(json.dumps({**res, "budget": llm.budget.as_dict()}, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)
+
+
 @gold_app.command("node-label")
 def gold_node_label(
     run_dir: Annotated[Path, typer.Option("--run-dir")] = Path("runs/gold"),
 ) -> None:
-    """Kimi node-check gold: USER posts naming a Solution x the 10 riskiest nodes."""
+    """Kimi node-check gold on the amendment-2 node items (all 10 statements per item)."""
     from nmt_engine.llm import AUDITOR
     from nmt_engine.verify import node_gold
 

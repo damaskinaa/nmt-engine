@@ -81,7 +81,11 @@ def test_element_yes_needs_a_quote(tmp_path):
 
 
 def test_committed_gold_has_no_post_text_or_emails():
-    for name in ("items.jsonl", "gold.jsonl", "node_gold.jsonl"):
+    names = ("items.jsonl", "gold.jsonl", "node_gold_amend1.jsonl", "node_gold.jsonl")
+    names += ("node_items.jsonl", "node_authors.jsonl")
+    for name in names:
+        if not (gold.GOLD_DIR / name).is_file():
+            continue
         for line in (gold.GOLD_DIR / name).read_text().splitlines():
             row = json.loads(line)
             assert not {"text", "role_quote", "quotes"} & set(row)

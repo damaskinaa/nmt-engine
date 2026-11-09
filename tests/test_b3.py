@@ -161,3 +161,55 @@ def test_harvest_skips_an_adapter_after_repeated_errors(tmp_path, monkeypatch):
     hn = {k: v["status"] for k, v in out["steps"].items() if k.startswith("hackernews:")}
     assert len(calls) == harvest.BREAKER
     assert list(hn.values()).count("skipped") == len(qs) - harvest.BREAKER
+
+
+def test_canary_passed_and_never_counts_toward_t1():
+    res = json.loads((node_gold.GOLD_DIR / "node_canary.json").read_text("utf-8"))
+    assert res["ok"] and len(res["canaries"]) == 6
+    exp = [c["expected"] for c in res["canaries"]]
+    assert exp.count("supports") == exp.count("contradicts") == exp.count("unrelated") == 2
+    ids = {r["id"] for r in node_gold._items(node_gold.GOLD_DIR).values()}
+    assert not ids & {c["id"] for c in res["canaries"]}
+
+
+def test_node_split_is_fixed_by_post_id():
+    sids = [f"S-{i:016x}" for i in range(200)]
+    splits = [node_gold.split_of(s) for s in sids]
+    assert splits == [node_gold.split_of(s) for s in sids]
+    assert 70 < splits.count("test") < 130
+
+
+def test_ranks_and_designated_pairs(tmp_path, monkeypatch):
+    run = tmp_path / "l2"
+    run.mkdir()
+    qs = [{"text": "late invoices", "nodes": ["J3"], "origin": "template"}]
+    (run / "harvest_plan.json").write_text(json.dumps({"queries": qs}))
+    hits = [
+        {"source_id": "S-b", "ranks": {"hackernews:late invoices": 0}},
+        {"source_id": "S-a", "ranks": {"stackexchange:money:late invoices": 3}},
+        {"source_id": "S-c", "ranks": {"hackernews:other": 0}},
+    ]
+    (run / "harvest_hits.jsonl").write_text("".join(json.dumps(h) + "\n" for h in hits))
+
+    class S:
+        def __init__(self, i):
+            self.id, self.retracted, self.customer_voice, self.platform = i, False, True, "hn"
+
+    class Run:
+        sources = {i: S(i) for i in ("S-a", "S-b", "S-c")}
+
+    monkeypatch.setattr(node_gold, "load_run", lambda d: Run())
+    monkeypatch.setattr(node_gold, "collector_on", lambda p, e: True)
+    assert node_gold.ranks(run, ["J3", "J4"]) == {"J3": ["S-b", "S-a"], "J4": []}
+
+    out = tmp_path / "gold"
+    out.mkdir()
+    items = [{"id": "N001", "split": "test", "pairs": {"J3": "top"}}]
+    (out / "node_items.jsonl").write_text(json.dumps(items[0]) + "\n")
+    g = {"id": "N001", "split": "test", "verdicts": {n: "unrelated" for n in RISKY}}
+    g["verdicts"]["J3"] = "supports"
+    (out / "node_gold.jsonl").write_text(json.dumps(g) + "\n")
+    assert node_gold._designated(out) == [("N001", "J3", "test", "supports")]
+    pn = node_gold.per_node(out)
+    assert pn["J3"]["supports"] == 1 and "finding" not in pn["J3"]
+    assert pn["J4"]["finding"] == "no public evidence in this harvest"

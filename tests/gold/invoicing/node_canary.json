@@ -1,0 +1,43 @@
+{
+ "label_prompt_hash": "bb2a8247225ef6cd",
+ "labeller": "moonshotai/kimi-k3.1-pro",
+ "canaries": [
+  {
+   "id": "C1",
+   "node": "J4",
+   "expected": "supports",
+   "got": "supports"
+  },
+  {
+   "id": "C2",
+   "node": "J12",
+   "expected": "supports",
+   "got": "supports"
+  },
+  {
+   "id": "C3",
+   "node": "S2",
+   "expected": "contradicts",
+   "got": "contradicts"
+  },
+  {
+   "id": "C4",
+   "node": "J5",
+   "expected": "contradicts",
+   "got": "contradicts"
+  },
+  {
+   "id": "C5",
+   "node": "J2",
+   "expected": "unrelated",
+   "got": "unrelated"
+  },
+  {
+   "id": "C6",
+   "node": "J11",
+   "expected": "unrelated",
+   "got": "unrelated"
+  }
+ ],
+ "ok": true
+}

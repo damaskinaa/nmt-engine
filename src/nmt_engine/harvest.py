@@ -243,9 +243,10 @@ def run(p: HarvestPlan, run_dir: Path, collector: Collector | None = None) -> di
         except (httpx.HTTPError, ValueError, KeyError, PermissionError) as exc:
             steps[name], found = {"status": "error", "reason": f"{type(exc).__name__}: {exc}"}, []
         fails[adapter] = fails.get(adapter, 0) + 1 if steps[name]["status"] == "error" else 0
-        for s in found:
-            h = hits.setdefault(s.id, {"source_id": s.id, "queries": [], "nodes": []})
+        for i, s in enumerate(found):
+            h = hits.setdefault(s.id, {"source_id": s.id, "queries": [], "nodes": [], "ranks": {}})
             h["queries"].append(name)
+            h["ranks"][name] = min(i, h["ranks"].get(name, i))
             h["nodes"] += [x for x in nodes if x not in h["nodes"]]
     with (run_dir / "harvest_hits.jsonl").open("w", encoding="utf-8") as f:
         for h in sorted(hits.values(), key=lambda h: h["source_id"]):
