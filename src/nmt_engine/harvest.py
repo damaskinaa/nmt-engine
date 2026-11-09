@@ -25,6 +25,9 @@ from nmt_engine.util import canonical_json, sha256_text
 STACK_SITES = ("freelancing", "money", "webapps")  # keyless quota: 300 requests a day
 QUERY_WORDS = (2, 7)
 QUERIES_PER_NODE = 3
+# B3 finding: query sources skew to BUILDER (GitHub) and OTHER (Stack Exchange tax questions), so
+# new plans weight results toward review sites and user communities.
+SOURCE_WEIGHTS = {"hackernews": 1.0, "stackexchange": 0.3, "github": 0.3, "appstore": 2.0}
 
 QUERY_SYSTEM = (
     "You write short web-forum searches in the words customers use. You never invent product "
@@ -140,7 +143,9 @@ class HarvestPlan:
 
     def as_dict(self) -> dict:
         d = asdict(self)
-        if d["source_weights"] is None:  # keeps the hash of plans made before weighting
+        # Fields added after plans were committed are omitted at their default, so old plan
+        # hashes stay valid (test_committed_plan_hash_matches). New fields need the same guard.
+        if d["source_weights"] is None:
             del d["source_weights"]
         d["queries"] = [
             {"text": q.text, "nodes": list(q.nodes), "origin": q.origin} for q in self.queries
@@ -179,11 +184,6 @@ def plan(
         since=since,
         source_weights=dict(SOURCE_WEIGHTS),
     )
-
-
-# B3 finding: query sources skew to BUILDER (GitHub) and OTHER (Stack Exchange tax questions), so
-# new plans weight results toward review sites and user communities.
-SOURCE_WEIGHTS = {"hackernews": 1.0, "stackexchange": 0.3, "github": 0.3, "appstore": 2.0}
 
 
 def _steps(p: HarvestPlan) -> list[tuple[str, tuple[str, ...], Callable[[Collector], list]]]:
