@@ -1,0 +1,121 @@
+{
+ "kind": "cross-model agreement (not human-verified)",
+ "gold_labeller": "moonshotai/kimi-k3.1-pro",
+ "second_labeller": "z-ai/glm-5.3",
+ "n_posts": 300,
+ "role": {
+  "n": 292,
+  "agree": 262,
+  "agreement": 0.8973,
+  "kappa": 0.8576,
+  "confusion": {
+   "USER": {
+    "USER": 34,
+    "BUILDER": 2,
+    "VENDOR": 0,
+    "OTHER": 7
+   },
+   "BUILDER": {
+    "USER": 2,
+    "BUILDER": 79,
+    "VENDOR": 0,
+    "OTHER": 3
+   },
+   "VENDOR": {
+    "USER": 0,
+    "BUILDER": 2,
+    "VENDOR": 54,
+    "OTHER": 2
+   },
+   "OTHER": {
+    "USER": 8,
+    "BUILDER": 2,
+    "VENDOR": 2,
+    "OTHER": 95
+   }
+  }
+ },
+ "classes": {
+  "USER": {
+   "n": 292,
+   "gold_pos": 43,
+   "second_pos": 44,
+   "both_pos": 34,
+   "agreement": 0.9349,
+   "kappa": 0.7434
+  },
+  "BUILDER": {
+   "n": 292,
+   "gold_pos": 84,
+   "second_pos": 85,
+   "both_pos": 79,
+   "agreement": 0.9623,
+   "kappa": 0.9084
+  },
+  "VENDOR": {
+   "n": 292,
+   "gold_pos": 58,
+   "second_pos": 56,
+   "both_pos": 54,
+   "agreement": 0.9795,
+   "kappa": 0.9346
+  },
+  "OTHER": {
+   "n": 292,
+   "gold_pos": 107,
+   "second_pos": 107,
+   "both_pos": 95,
+   "agreement": 0.9178,
+   "kappa": 0.823
+  },
+  "names_solution": {
+   "n": 292,
+   "gold_pos": 45,
+   "second_pos": 35,
+   "both_pos": 26,
+   "agreement": 0.9041,
+   "kappa": 0.5954
+  },
+  "trigger": {
+   "n": 298,
+   "gold_pos": 39,
+   "second_pos": 30,
+   "both_pos": 24,
+   "agreement": 0.9295,
+   "kappa": 0.6566
+  },
+  "success_criterion": {
+   "n": 298,
+   "gold_pos": 41,
+   "second_pos": 12,
+   "both_pos": 6,
+   "agreement": 0.8624,
+   "kappa": 0.175
+  },
+  "alternative": {
+   "n": 298,
+   "gold_pos": 38,
+   "second_pos": 37,
+   "both_pos": 20,
+   "agreement": 0.8826,
+   "kappa": 0.4662
+  },
+  "problem": {
+   "n": 298,
+   "gold_pos": 75,
+   "second_pos": 58,
+   "both_pos": 50,
+   "agreement": 0.8893,
+   "kappa": 0.6821
+  },
+  "aha": {
+   "n": 298,
+   "gold_pos": 3,
+   "second_pos": 2,
+   "both_pos": 1,
+   "agreement": 0.9899,
+   "kappa": 0.3951
+  }
+ },
+ "passed": true
+}

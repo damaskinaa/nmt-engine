@@ -24,6 +24,7 @@ from nmt_engine.collect import (
     youtube,
 )
 from nmt_engine.collect.base import Collector, MissingKeyError, env, operator_hosts
+from nmt_engine.subtraction import COLLECTOR_OFF_REASON, collector_on
 
 STACK_SITES = ("stackoverflow", "softwarerecs", "webapps", "superuser")
 
@@ -35,6 +36,11 @@ class CollectPlan:
     geo: str = "IE"
     competitors: list[str] = field(default_factory=list)
     per_adapter: int = 200
+    stack_sites: list[str] = field(default_factory=lambda: list(STACK_SITES))
+    apps: list[str] = field(default_factory=list)  # App Store names, e.g. competitors' apps
+    only: list[str] = field(default_factory=list)  # step-name prefixes to run; empty = all
+    as_of: date | None = None  # cache date; an earlier run's date replays its responses
+    reenable: dict[str, str] = field(default_factory=dict)  # collector -> reason (subtraction)
 
 
 def _steps(p: CollectPlan) -> list[tuple[str, Callable[[Collector], list]]]:
@@ -50,7 +56,14 @@ def _steps(p: CollectPlan) -> list[tuple[str, Callable[[Collector], list]]]:
         ("procurement:contracts_finder", lambda c: procurement.contracts_finder(c, q, p.since)),
         ("dataforseo:autocomplete", lambda c: _dfs(c, q, p.geo)),
     ]
-    for site in STACK_SITES:
+    for name in p.apps:
+        steps.append(
+            (
+                f"appstore:{name}",
+                lambda c, a=name: appstore.named_app(c, a, p.geo.lower(), 2, p.since),
+            )
+        )
+    for site in p.stack_sites:
         steps.append(
             (
                 f"stackexchange:{site}",
@@ -82,24 +95,35 @@ def run_collect(plan: CollectPlan, run_dir: Path, collector: Collector | None = 
     c = collector or Collector(
         run_dir,
         geo=plan.geo,
+        **({"as_of": plan.as_of} if plan.as_of else {}),
         salt=env("NMT_AUTHOR_SALT"),
         extra_hosts=operator_hosts(plan.competitors),
     )
     summary: dict = {"category": plan.category, "since": plan.since.isoformat(), "adapters": {}}
+    prior = Path(run_dir) / "collect_summary.json"
+    if plan.only and prior.is_file():  # a top-up run keeps the earlier adapters' record
+        summary["adapters"] = json.loads(prior.read_text("utf-8")).get("adapters", {})
     for name, step in _steps(plan):
+        if plan.only and not name.startswith(tuple(plan.only)):
+            continue
+        if not collector_on(name, plan.reenable):
+            summary["adapters"][name] = {"status": "off", "reason": COLLECTOR_OFF_REASON}
+            continue
         try:
             summary["adapters"][name] = {"status": "ok", "sources": len(step(c))}
         except MissingKeyError as exc:
             summary["adapters"][name] = {"status": "skipped", "reason": str(exc)}
+        except appstore.NoApp as exc:
+            summary["adapters"][name] = {"status": "none", "reason": str(exc)}
         except (httpx.HTTPError, ValueError, KeyError, PermissionError) as exc:
             summary["adapters"][name] = {
                 "status": "error",
                 "reason": f"{type(exc).__name__}: {exc}",
             }
-    kinds = Counter(s.kind for s in c.store.current("source").values())
+    live = [s for s in c.store.current("source").values() if not s.retracted]
+    kinds = Counter(s.kind for s in live)
     summary["sources_by_kind"] = dict(sorted(kinds.items()))
-    summary["trace_sources"] = sum(
-        v for k, v in kinds.items() if k in {"review", "forum", "qa", "issue", "web"}
-    )
+    summary["sources_by_family"] = dict(sorted(Counter(s.evidence_family for s in live).items()))
+    summary["trace_sources"] = sum(1 for s in live if s.customer_voice)
     (Path(run_dir) / "collect_summary.json").write_text(json.dumps(summary, indent=2), "utf-8")
     return summary

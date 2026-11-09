@@ -30,6 +30,20 @@ def find_apps(c: Collector, term: str, country: str = "ie", limit: int = 5) -> l
     ]
 
 
+class NoApp(LookupError):
+    """No App Store app carries the operator's name (e.g. an Android-only product)."""
+
+
+def named_app(
+    c: Collector, name: str, country: str = "ie", pages: int = 2, since: date | None = None
+):
+    """Reviews of the top search hit for `name`, only if that app's title contains `name`."""
+    hits = [a for a in find_apps(c, name, country, 5) if name.lower() in a["name"].lower()]
+    if not hits:
+        raise NoApp(f"no App Store app named {name!r} in {country.upper()}")
+    return reviews(c, hits[0]["id"], country, pages, hits[0]["name"], since)
+
+
 def reviews(
     c: Collector,
     app_id: int,

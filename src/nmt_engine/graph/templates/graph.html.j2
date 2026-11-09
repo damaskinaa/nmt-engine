@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Job graph</title>
+<style>
+  body { margin: 0; font: 13px system-ui, sans-serif; display: flex; height: 100vh; }
+  #cy { flex: 1; }
+  #side { width: 340px; overflow: auto; padding: 10px; border-left: 1px solid #ddd; }
+  .muted { color: #666; }
+  select, label { margin: 2px 0; display: block; }
+</style>
+</head>
+<body>
+<div id="cy"></div>
+<div id="side">
+  <h3>Job graph</h3>
+  <p class="muted">{{ n_nodes }} nodes, {{ n_edges }} edges. All scores are DERIVED
+  (node size = weighted PageRank importance; red edge = critical-chain break,
+  p_success upper bound &lt; 0.5; orange = possible break). Dashed nodes are thin
+  (&lt;2 voices or &lt;2 source types).</p>
+  <label>Layer
+    <select id="layer">
+      <option value="all">all</option>
+      <option>customer</option><option>intermediary</option>
+      <option>business</option><option>product</option>
+    </select>
+  </label>
+  <label><input type="checkbox" id="hidethin"> hide thin jobs</label>
+  <div id="info" class="muted">Click a node or edge.</div>
+</div>
+<script>/* Cytoscape.js {{ version }} (MIT) */
+{{ cytoscape | safe }}
+</script>
+<script>
+const G = {{ graph_json | safe }};
+const maxImp = Math.max(1e-9, ...G.nodes.map(n => n.importance || 0));
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: [
+    ...G.nodes.map(n => ({ data: { ...n, size: 20 + 60 * (n.importance || 0) / maxImp } })),
+    ...G.edges.map(e => ({ data: e })),
+  ],
+  style: [
+    { selector: 'node', style: { label: 'data(label)', 'font-size': 9, width: 'data(size)',
+      height: 'data(size)', 'background-color': '#4a7bd0', 'text-wrap': 'wrap',
+      'text-max-width': 140 } },
+    { selector: 'node[kind = "solution"]', style: { shape: 'round-rectangle',
+      'background-color': '#999', width: 30, height: 18 } },
+    { selector: 'node[?thin]', style: { 'border-style': 'dashed', 'border-width': 2,
+      'background-opacity': 0.4 } },
+    { selector: 'edge', style: { 'curve-style': 'bezier', 'target-arrow-shape': 'triangle',
+      width: 1.5, 'line-color': '#bbb', 'target-arrow-color': '#bbb' } },
+    { selector: 'edge[kind = "hierarchy"]', style: { 'line-style': 'dotted' } },
+    { selector: 'edge[break = "possible"]', style: { 'line-color': '#e69500',
+      'target-arrow-color': '#e69500' } },
+    { selector: 'edge[break = "certain"]', style: { 'line-color': '#d22',
+      'target-arrow-color': '#d22', width: 3 } },
+  ],
+  layout: { name: 'cose', randomize: false, animate: false },
+});
+function esc(s) { const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+function show(d) {
+  const rows = Object.entries(d).filter(([k]) => !['size'].includes(k))
+    .map(([k, v]) => `<b>${esc(k)}</b>: ${esc(JSON.stringify(v))}`);
+  document.getElementById('info').innerHTML = rows.join('<br>');
+}
+cy.on('tap', 'node, edge', ev => show(ev.target.data()));
+function filter() {
+  const layer = document.getElementById('layer').value;
+  const hideThin = document.getElementById('hidethin').checked;
+  const keep = layer === 'all' ? null : new Set(G.layers[layer].edges);
+  const keepN = layer === 'all' ? null : new Set(G.layers[layer].nodes);
+  cy.batch(() => {
+    cy.edges().forEach(e => e.style('display', !keep || keep.has(e.id()) ? 'element' : 'none'));
+    cy.nodes().forEach(n => {
+      const vis = (!keepN || keepN.has(n.id())) && !(hideThin && n.data('thin'));
+      n.style('display', vis ? 'element' : 'none');
+    });
+  });
+}
+document.getElementById('layer').onchange = filter;
+document.getElementById('hidethin').onchange = filter;
+</script>
+</body>
+</html>

@@ -42,6 +42,7 @@ class GateConfig:
         "capterra.",
         "trustpilot.",
     )
+    reenable: dict[int, str] = field(default_factory=dict)  # gate -> reason (subtraction.py)
 
 
 GateFn = Callable[[RunData, GateConfig], list[Finding]]

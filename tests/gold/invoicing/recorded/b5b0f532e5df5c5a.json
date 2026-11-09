@@ -1,0 +1,3308 @@
+{
+ "answers": {
+  "G001": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G002": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G003": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G004": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G005": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G006": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G007": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G008": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G009": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G010": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G011": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G012": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G013": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G014": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G015": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G016": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G017": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G018": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G019": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G020": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G021": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G022": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G023": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G024": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G025": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G026": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G027": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G028": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G029": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G030": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G031": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G032": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G033": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G034": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G035": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G036": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G037": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G038": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G039": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G040": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G041": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G042": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G043": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G044": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G045": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G046": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G047": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G048": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G049": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G050": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G051": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G052": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G053": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G054": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G055": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G056": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G057": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G058": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G059": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G060": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G061": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G062": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G063": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G064": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G065": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G066": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": true,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G067": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G068": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G069": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G070": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G071": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G072": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G073": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G074": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G075": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G076": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G077": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G078": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G079": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G080": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G081": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G082": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G083": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G084": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G085": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G086": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G087": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G088": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G089": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G090": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G091": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G092": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G093": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G094": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G095": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G096": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G097": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G098": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G099": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G100": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G101": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G102": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G103": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G104": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G105": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G106": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G107": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G108": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G109": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G110": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G111": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G112": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G113": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G114": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G115": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G116": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G117": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G118": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G119": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G120": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G121": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G122": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G123": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G124": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G125": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G126": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G127": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G128": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G129": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G130": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G131": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G132": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G133": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G134": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G135": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G136": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G137": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G138": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G139": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G140": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G141": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G142": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G143": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G144": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G145": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G146": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G147": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G148": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G149": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G150": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G151": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G152": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G153": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G154": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G155": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G156": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G157": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G158": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G159": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G160": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G161": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G162": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G163": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G164": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G165": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G166": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G167": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G168": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G169": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G170": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G171": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G172": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G173": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G174": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G175": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G176": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G177": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G178": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G179": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G180": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G181": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G182": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G183": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G184": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G185": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G186": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G187": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G188": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G189": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G190": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G191": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G192": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G193": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G194": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G195": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G196": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G197": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G198": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G199": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G200": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G201": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G202": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G203": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G204": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G205": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G206": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G207": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G208": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G209": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G210": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G211": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G212": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G213": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G214": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G215": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G216": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G217": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G218": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G219": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G220": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G221": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G222": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G223": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G224": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G225": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G226": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G227": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G228": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G229": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G230": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G231": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G232": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G233": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G234": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G235": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G236": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G237": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G238": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G239": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G240": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G241": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G242": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G243": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G244": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G245": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G246": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G247": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G248": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G249": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G250": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G251": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G252": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G253": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G254": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G255": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G256": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G257": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G258": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G259": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G260": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G261": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G262": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G263": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G264": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G265": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G266": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G267": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G268": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G269": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G270": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G271": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G272": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G273": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G274": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G275": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G276": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G277": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G278": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G279": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G280": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G281": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G282": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G283": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G284": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G285": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G286": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G287": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G288": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G289": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G290": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G291": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G292": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G293": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G294": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G295": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G296": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G297": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G298": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G299": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G300": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  }
+ },
+ "host": "api.tensorx.ai",
+ "model": "deepseek/deepseek-v4.1-flash",
+ "prompt_hash": "b5b0f532e5df5c5a",
+ "reasoning_effort": "none"
+}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Job-Graph Miner: {{ s.category }}</title>
+<style>
+  body { font: 14px/1.45 system-ui, sans-serif; max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0 20px; }
+  th, td { border: 1px solid #ddd; padding: 4px 6px; text-align: left; vertical-align: top; }
+  th { background: #f4f4f4; }
+  .ok { color: #176b2c; } .no { color: #a11; } .muted { color: #666; font-size: 12px; }
+  blockquote { margin: 2px 0 2px 8px; padding-left: 8px; border-left: 3px solid #ccc; }
+  details { margin: 6px 0; }
+</style>
+</head>
+<body>
+<h1>Job-Graph Miner: {{ s.category }} ({{ s.geo }})</h1>
+<p class="muted">Desk research from public traces only. Every number below is a count or a
+formula computed from stored sources (status DERIVED) or a proxy metric copied from a source
+(PROXY_METRIC). Quotes are verbatim receipts checked against stored source text.</p>
+
+<h2>Kill-line metric</h2>
+<table>
+  <tr><th>traces</th><th>job instances</th><th>jobs</th><th>jobs with &ge;4 of 8 elements and
+  &ge;2 source types</th><th>share (DERIVED)</th><th>LLM cost (USD)</th></tr>
+  <tr><td>{{ s.traces }}</td><td>{{ s.instances }}</td><td>{{ s.jobs }}</td>
+  <td>{{ s.jobs_passing }}</td>
+  <td class="{{ 'ok' if s.share_passing >= 0.3 else 'no' }}">{{ '%.1f' % (100 * s.share_passing) }}%</td>
+  <td>{{ '%.2f' % s.cost_usd }}</td></tr>
+</table>
+<p class="muted">Spans proposed by the model: {{ s.spans_proposed }}; rejected because they
+were not verbatim in the source: {{ s.spans_rejected }}. Claims shown after gates:
+{{ s.claims_displayed }} of {{ s.claims_total }}. Gate results are in gates/gate_report.md.</p>
+
+<h2>Jobs</h2>
+{% for j in jobs %}
+<details{% if loop.index <= 5 %} open{% endif %}>
+  <summary><b>{{ j.statement }}</b>
+    &mdash; {{ j.elements | length }}/8 elements, kinds: {{ j.source_kinds | join(', ') or 'none' }}
+    {% if j.passes %}<span class="ok">[meets bar]</span>{% else %}<span class="no">[below bar]</span>{% endif %}
+    {% if j.thin %}<span class="muted">[thin]</span>{% endif %}
+    {% if j.importance is not none %}<span class="muted">importance {{ '%.4f' % j.importance }}</span>{% endif %}
+  </summary>
+  {% if j.consideration %}<p>Consideration set: {{ j.consideration | join(', ') }}</p>{% endif %}
+  {% for el, recs in j.receipts.items() if recs %}
+    <div><b>{{ el | replace('_', ' ') }}</b>
+    {% for r in recs %}<blockquote>&ldquo;{{ r.quote }}&rdquo; <a href="{{ r.url }}">{{ r.kind }}</a></blockquote>{% endfor %}
+    </div>
+  {% endfor %}
+</details>
+{% endfor %}
+
+<h2>Segment hypotheses</h2>
+<p class="muted">Clustered by job statement and success-criteria priority order, not by
+platform or demographics. Thin = fewer than 2 voices or 2 source types.</p>
+<table>
+  <tr><th>segment</th><th>jobs</th><th>criteria priority order</th><th>thin</th></tr>
+  {% for seg in segments %}
+  <tr><td>{{ seg.name }}</td><td>{{ seg.core_job_ids | length }}</td>
+  <td>{{ seg.criteria_priority_order[:5] | join(' > ') }}</td><td>{{ 'yes' if seg.thin else 'no' }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Critical-chain breaks</h2>
+<p class="muted">Edges whose p_success range (1 minus the Wilson 80% interval of the share of
+traces reporting a problem or workaround) falls below 0.5.</p>
+<table>
+  <tr><th>from</th><th>to</th><th>kind</th><th>p_success</th><th>break</th></tr>
+  {% for e in breaks %}
+  <tr><td>{{ labels.get(e.source, e.source) }}</td><td>{{ labels.get(e.target, e.target) }}</td>
+  <td>{{ e.kind }}</td><td>{{ '%.2f' % e.p_success[0] }}&ndash;{{ '%.2f' % e.p_success[1] }}</td>
+  <td>{{ e.break }}</td></tr>
+  {% endfor %}
+</table>
+<p class="muted">Interactive graph: graph.html (same folder).</p>
+</body>
+</html>

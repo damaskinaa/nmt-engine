@@ -8,9 +8,11 @@ from typer.testing import CliRunner
 
 from nmt_engine.cli import app
 from nmt_engine.gates import REGISTRY, GateConfig, demote, run_gates
+from nmt_engine.subtraction import GATES_OFF
 from tests.fixtures.make_fixtures import CORPUS, DEFECTS, RUNS, build_all
 
-CFG = GateConfig(forbidden_corpus=CORPUS)
+# These fixtures test every gate, including those v3 switches off (subtraction.py).
+CFG = GateConfig(forbidden_corpus=CORPUS, reenable={n: "gate unit test" for n in GATES_OFF})
 
 
 def test_fourteen_gates_registered():
@@ -56,7 +58,8 @@ def test_cli_check_exit_codes_and_reports(tmp_path):
     )
     assert ok.exit_code == 0, ok.output
     data = json.loads((tmp_path / "ok" / "gate_report.json").read_text())
-    assert data["passed"] is True and len(data["gates"]) == 14
+    assert data["passed"] is True and len(data["gates"]) == 14 - len(GATES_OFF)
+    assert sorted(int(k) for k in data["off"]) == sorted(GATES_OFF)
     assert (tmp_path / "ok" / "gate_report.md").read_text().startswith("# Gate report")
     bad = runner.invoke(
         app,
