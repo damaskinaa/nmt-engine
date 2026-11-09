@@ -258,6 +258,8 @@ def cross_agreement(path: Path, out: Path = GOLD_DIR) -> dict:
     other = json.loads(path.read_text("utf-8"))
     rec = other["answers"]
     gold = _read_jsonl(out / "gold.jsonl")
+    if not gold:
+        raise ValueError(f"{out / 'gold.jsonl'} is empty: run `nmt gold label` first")
     pairs = [(g, rec.get(g["id"], {})) for g in gold]
     rp = [(g["role"], r.get("role")) for g, r in pairs if g["role"] and r.get("role")]
     a, b = [x for x, _ in rp], [y for _, y in rp]
@@ -277,7 +279,7 @@ def cross_agreement(path: Path, out: Path = GOLD_DIR) -> dict:
     agree = agreement(a, b)
     return {
         "kind": "cross-model agreement (not human-verified)",
-        "gold_labeller": gold[0]["labeller"],
+        "gold_labeller": gold[0].get("labeller"),
         "second_labeller": other["model"],
         "n_posts": len(gold),
         "role": {
