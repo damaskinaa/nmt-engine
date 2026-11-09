@@ -4,116 +4,116 @@
  "second_labeller": "z-ai/glm-5.3",
  "n_posts": 300,
  "role": {
-  "n": 288,
-  "agree": 263,
-  "agreement": 0.9132,
-  "kappa": 0.8798,
+  "n": 292,
+  "agree": 262,
+  "agreement": 0.8973,
+  "kappa": 0.8576,
   "confusion": {
    "USER": {
-    "USER": 39,
-    "BUILDER": 1,
+    "USER": 34,
+    "BUILDER": 2,
     "VENDOR": 0,
-    "OTHER": 4
+    "OTHER": 7
    },
    "BUILDER": {
-    "USER": 4,
-    "BUILDER": 95,
+    "USER": 2,
+    "BUILDER": 79,
     "VENDOR": 0,
-    "OTHER": 1
+    "OTHER": 3
    },
    "VENDOR": {
     "USER": 0,
-    "BUILDER": 5,
-    "VENDOR": 46,
-    "OTHER": 3
+    "BUILDER": 2,
+    "VENDOR": 54,
+    "OTHER": 2
    },
    "OTHER": {
-    "USER": 5,
-    "BUILDER": 1,
-    "VENDOR": 1,
-    "OTHER": 83
+    "USER": 8,
+    "BUILDER": 2,
+    "VENDOR": 2,
+    "OTHER": 95
    }
   }
  },
  "classes": {
   "USER": {
-   "n": 288,
-   "gold_pos": 44,
-   "second_pos": 48,
-   "both_pos": 39,
-   "agreement": 0.9514,
-   "kappa": 0.819
+   "n": 292,
+   "gold_pos": 43,
+   "second_pos": 44,
+   "both_pos": 34,
+   "agreement": 0.9349,
+   "kappa": 0.7434
   },
   "BUILDER": {
-   "n": 288,
-   "gold_pos": 100,
-   "second_pos": 102,
-   "both_pos": 95,
-   "agreement": 0.9583,
-   "kappa": 0.9085
+   "n": 292,
+   "gold_pos": 84,
+   "second_pos": 85,
+   "both_pos": 79,
+   "agreement": 0.9623,
+   "kappa": 0.9084
   },
   "VENDOR": {
-   "n": 288,
-   "gold_pos": 54,
-   "second_pos": 47,
-   "both_pos": 46,
-   "agreement": 0.9688,
-   "kappa": 0.8921
+   "n": 292,
+   "gold_pos": 58,
+   "second_pos": 56,
+   "both_pos": 54,
+   "agreement": 0.9795,
+   "kappa": 0.9346
   },
   "OTHER": {
-   "n": 288,
-   "gold_pos": 90,
-   "second_pos": 91,
-   "both_pos": 83,
-   "agreement": 0.9479,
-   "kappa": 0.8792
+   "n": 292,
+   "gold_pos": 107,
+   "second_pos": 107,
+   "both_pos": 95,
+   "agreement": 0.9178,
+   "kappa": 0.823
   },
   "names_solution": {
-   "n": 288,
-   "gold_pos": 36,
-   "second_pos": 38,
-   "both_pos": 23,
-   "agreement": 0.9028,
-   "kappa": 0.5659
+   "n": 292,
+   "gold_pos": 45,
+   "second_pos": 35,
+   "both_pos": 26,
+   "agreement": 0.9041,
+   "kappa": 0.5954
   },
   "trigger": {
-   "n": 299,
-   "gold_pos": 40,
+   "n": 298,
+   "gold_pos": 39,
    "second_pos": 30,
-   "both_pos": 25,
-   "agreement": 0.9331,
-   "kappa": 0.6773
+   "both_pos": 24,
+   "agreement": 0.9295,
+   "kappa": 0.6566
   },
   "success_criterion": {
-   "n": 299,
+   "n": 298,
    "gold_pos": 41,
-   "second_pos": 13,
-   "both_pos": 7,
-   "agreement": 0.8662,
-   "kappa": 0.2069
+   "second_pos": 12,
+   "both_pos": 6,
+   "agreement": 0.8624,
+   "kappa": 0.175
   },
   "alternative": {
-   "n": 299,
-   "gold_pos": 39,
-   "second_pos": 39,
-   "both_pos": 21,
-   "agreement": 0.8796,
-   "kappa": 0.4692
+   "n": 298,
+   "gold_pos": 38,
+   "second_pos": 37,
+   "both_pos": 20,
+   "agreement": 0.8826,
+   "kappa": 0.4662
   },
   "problem": {
-   "n": 299,
-   "gold_pos": 76,
-   "second_pos": 60,
-   "both_pos": 51,
-   "agreement": 0.8863,
-   "kappa": 0.6777
+   "n": 298,
+   "gold_pos": 75,
+   "second_pos": 58,
+   "both_pos": 50,
+   "agreement": 0.8893,
+   "kappa": 0.6821
   },
   "aha": {
-   "n": 299,
+   "n": 298,
    "gold_pos": 3,
    "second_pos": 2,
    "both_pos": 1,
-   "agreement": 0.99,
+   "agreement": 0.9899,
    "kappa": 0.3951
   }
  },

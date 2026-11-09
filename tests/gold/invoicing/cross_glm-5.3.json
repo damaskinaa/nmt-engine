@@ -23,15 +23,9 @@
    "role": "OTHER"
   },
   "G003": {
-   "elements": {
-    "aha": false,
-    "alternative": true,
-    "problem": true,
-    "success_criterion": false,
-    "trigger": false
-   },
-   "names_solution": null,
-   "role": null
+   "elements": null,
+   "names_solution": false,
+   "role": "USER"
   },
   "G004": {
    "elements": {
@@ -86,7 +80,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G009": {
    "elements": {
@@ -141,7 +135,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G014": {
    "elements": {
@@ -229,7 +223,7 @@
     "trigger": false
    },
    "names_solution": true,
-   "role": "USER"
+   "role": "BUILDER"
   },
   "G022": {
    "elements": {
@@ -243,13 +237,7 @@
    "role": "OTHER"
   },
   "G023": {
-   "elements": {
-    "aha": false,
-    "alternative": true,
-    "problem": true,
-    "success_criterion": false,
-    "trigger": true
-   },
+   "elements": null,
    "names_solution": false,
    "role": "BUILDER"
   },
@@ -316,7 +304,7 @@
     "success_criterion": true,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "USER"
   },
   "G030": {
@@ -449,7 +437,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G042": {
    "elements": {
@@ -470,7 +458,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "BUILDER"
   },
   "G044": {
@@ -481,7 +469,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G045": {
@@ -493,7 +481,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G046": {
    "elements": {
@@ -515,7 +503,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G048": {
    "elements": {
@@ -536,7 +524,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "USER"
   },
   "G050": {
@@ -573,8 +561,14 @@
    "role": "VENDOR"
   },
   "G053": {
-   "elements": null,
-   "names_solution": true,
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
    "role": "BUILDER"
   },
   "G054": {
@@ -674,7 +668,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "USER"
   },
   "G063": {
    "elements": {
@@ -729,7 +723,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G068": {
    "elements": {
@@ -740,7 +734,7 @@
     "trigger": true
    },
    "names_solution": true,
-   "role": "BUILDER"
+   "role": "USER"
   },
   "G069": {
    "elements": {
@@ -751,7 +745,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "VENDOR"
   },
   "G070": {
    "elements": {
@@ -816,8 +810,8 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": false,
-   "role": "BUILDER"
+   "names_solution": true,
+   "role": "VENDOR"
   },
   "G076": {
    "elements": {
@@ -871,7 +865,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "BUILDER"
   },
   "G081": {
@@ -926,8 +920,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
-   "role": "USER"
+   "names_solution": false,
+   "role": "OTHER"
   },
   "G086": {
    "elements": {
@@ -938,7 +932,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "OTHER"
+   "role": "VENDOR"
   },
   "G087": {
    "elements": {
@@ -1036,7 +1030,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "USER"
   },
   "G096": {
@@ -1058,7 +1052,7 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "BUILDER"
   },
   "G098": {
@@ -1179,7 +1173,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "BUILDER"
   },
   "G109": {
@@ -1268,7 +1262,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G117": {
    "elements": {
@@ -1433,7 +1427,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G132": {
    "elements": {
@@ -1477,7 +1471,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "OTHER"
   },
   "G136": {
    "elements": {
@@ -1543,7 +1537,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "OTHER"
+   "role": "VENDOR"
   },
   "G142": {
    "elements": {
@@ -1719,7 +1713,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "OTHER"
   },
   "G158": {
    "elements": {
@@ -1818,7 +1812,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "USER"
   },
   "G167": {
    "elements": {
@@ -1840,7 +1834,7 @@
     "trigger": false
    },
    "names_solution": true,
-   "role": "BUILDER"
+   "role": "USER"
   },
   "G169": {
    "elements": {
@@ -1850,7 +1844,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "BUILDER"
   },
   "G170": {
@@ -1862,7 +1856,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G171": {
    "elements": {
@@ -1873,7 +1867,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "VENDOR"
   },
   "G172": {
    "elements": {
@@ -1884,7 +1878,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G173": {
    "elements": {
@@ -1938,7 +1932,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "BUILDER"
   },
   "G178": {
@@ -1956,7 +1950,7 @@
    "elements": {
     "aha": false,
     "alternative": true,
-    "problem": true,
+    "problem": false,
     "success_criterion": false,
     "trigger": false
    },
@@ -2012,7 +2006,7 @@
     "aha": false,
     "alternative": false,
     "problem": false,
-    "success_criterion": true,
+    "success_criterion": false,
     "trigger": false
    },
    "names_solution": false,
@@ -2049,7 +2043,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "VENDOR"
+   "role": "OTHER"
   },
   "G188": {
    "elements": {
@@ -2093,7 +2087,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "VENDOR"
   },
   "G192": {
    "elements": {
@@ -2191,8 +2185,8 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": true,
-   "role": "BUILDER"
+   "names_solution": false,
+   "role": "USER"
   },
   "G201": {
    "elements": {
@@ -2224,8 +2218,8 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": true,
-   "role": "BUILDER"
+   "names_solution": false,
+   "role": "VENDOR"
   },
   "G204": {
    "elements": {
@@ -2235,8 +2229,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": true,
-   "role": "USER"
+   "names_solution": false,
+   "role": "OTHER"
   },
   "G205": {
    "elements": {
@@ -2565,7 +2559,7 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "BUILDER"
   },
   "G235": {
@@ -2632,7 +2626,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "USER"
   },
   "G241": {
    "elements": {
@@ -2642,8 +2636,8 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": false,
-   "role": "BUILDER"
+   "names_solution": true,
+   "role": "VENDOR"
   },
   "G242": {
    "elements": {
@@ -2664,8 +2658,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": null,
-   "role": null
+   "names_solution": false,
+   "role": "OTHER"
   },
   "G244": {
    "elements": {
@@ -2697,8 +2691,8 @@
     "success_criterion": true,
     "trigger": true
    },
-   "names_solution": true,
-   "role": "BUILDER"
+   "names_solution": false,
+   "role": "USER"
   },
   "G247": {
    "elements": {
@@ -2818,7 +2812,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "USER"
   },
   "G258": {
@@ -2906,7 +2900,7 @@
     "success_criterion": false,
     "trigger": true
    },
-   "names_solution": true,
+   "names_solution": false,
    "role": "VENDOR"
   },
   "G266": {
@@ -2962,7 +2956,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G271": {
    "elements": {
@@ -2973,7 +2967,7 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "USER"
+   "role": "OTHER"
   },
   "G272": {
    "elements": {
@@ -3049,8 +3043,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
-   "role": "BUILDER"
+   "names_solution": true,
+   "role": "USER"
   },
   "G279": {
    "elements": {
@@ -3082,8 +3076,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": null,
-   "role": null
+   "names_solution": false,
+   "role": "VENDOR"
   },
   "G282": {
    "elements": {
@@ -3115,7 +3109,7 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
+   "names_solution": true,
    "role": "BUILDER"
   },
   "G285": {
@@ -3148,8 +3142,8 @@
     "success_criterion": false,
     "trigger": false
    },
-   "names_solution": false,
-   "role": "BUILDER"
+   "names_solution": true,
+   "role": "USER"
   },
   "G288": {
    "elements": {
@@ -3168,10 +3162,10 @@
     "alternative": false,
     "problem": true,
     "success_criterion": false,
-    "trigger": false
+    "trigger": true
    },
-   "names_solution": null,
-   "role": null
+   "names_solution": true,
+   "role": "USER"
   },
   "G290": {
    "elements": {
@@ -3292,11 +3286,11 @@
     "trigger": false
    },
    "names_solution": false,
-   "role": "BUILDER"
+   "role": "VENDOR"
   }
  },
  "host": "api.tensorx.ai",
- "label_prompt_hash": "f461e5e56a517605",
+ "label_prompt_hash": "975e43375f1aa3be",
  "model": "z-ai/glm-5.3",
  "reasoning_effort": "none"
 }
