@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Groundwork — market research you can check</title>
+<meta name="description" content="A research report on your market, built from what real users already wrote in public. Every claim links to its source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- Analytics (optional, cookieless, EU-hosted). Replace the domain and uncomment:
+<script defer data-domain="YOUR-DOMAIN" src="https://plausible.io/js/script.tagged-events.js"></script>
+-->
+<style>
+:root{
+  --ground:#EEF0EA;      /* pale lichen paper */
+  --sheet:#FBFCF8;       /* report sheet */
+  --ink:#1B1F2A;         /* body ink */
+  --slate:#59606C;       /* secondary text */
+  --rule:#C9CEC3;        /* hairlines */
+  --cobalt:#2F4BD8;      /* citations, links, action */
+  --mark:#DDF26B;        /* evidence highlighter */
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 18px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--cobalt)}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}body{font-size:17px}}
+
+/* top */
+.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.brand{font:800 22px/1 var(--display);letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.tag{font:600 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--slate);border:1px solid var(--rule);padding:7px 10px;border-radius:999px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:48px 0 88px}
+@media (max-width:900px){.hero{grid-template-columns:1fr;gap:40px;padding:24px 0 64px}}
+h1{font:800 clamp(38px,5.4vw,64px)/1.02 var(--display);letter-spacing:-.035em;margin:0 0 22px}
+h1 mark{background:linear-gradient(transparent 58%,var(--mark) 58%);color:inherit;padding:0 .04em}
+.sub{font-size:20px;color:var(--slate);margin:0 0 32px;max-width:34em}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--cobalt);color:#fff;font:600 17px/1 var(--display);padding:18px 26px;border-radius:10px;border:0;cursor:pointer;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(47,75,216,.28)}
+.btn:disabled{opacity:.6;cursor:wait;transform:none;box-shadow:none}
+.fine{font:400 13px/1.5 var(--mono);color:var(--slate);margin-top:14px}
+
+/* signature: the report entry with receipts */
+.specimen{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;box-shadow:0 1px 0 var(--rule),0 24px 48px -28px rgba(27,31,42,.35);overflow:hidden}
+.spec-head{display:flex;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--rule);font:600 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--slate)}
+.claim{padding:20px 20px 6px}
+.claim p{margin:0 0 14px;font-size:18px}
+.claim .k{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--slate);display:block;margin-bottom:8px}
+sup.cite{font:600 11px/1 var(--mono);color:var(--cobalt);margin-left:2px}
+.receipts{border-top:1px dashed var(--rule)}
+.receipt{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px dashed var(--rule);padding:12px 20px;cursor:pointer;font:400 14px/1.5 var(--mono);color:var(--ink)}
+.receipt:hover{background:#F3F6EC}
+.receipt .meta{display:flex;justify-content:space-between;gap:12px;color:var(--slate)}
+.receipt .meta b{color:var(--cobalt);font-weight:600}
+.receipt .meta span:last-child{white-space:nowrap}
+.receipt .q{display:none;margin-top:10px;font:italic 400 16px/1.5 var(--body);color:var(--ink)}
+.receipt .q mark{background:var(--mark);color:inherit}
+.receipt[aria-expanded="true"] .q{display:block}
+.receipt[aria-expanded="true"]{background:#F3F6EC}
+.unknown{margin:0;padding:16px 20px 18px;background:repeating-linear-gradient(-45deg,#F1F3EC 0 8px,#E6E9E0 8px 9px)}
+.unknown .k{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink);display:block;margin-bottom:6px}
+.unknown p{margin:0;font-size:16px}
+.spec-foot{padding:10px 20px;font:400 12px/1.4 var(--mono);color:var(--slate);border-top:1px solid var(--rule)}
+
+/* sections */
+section{padding:72px 0;border-top:1px solid var(--rule)}
+@media (max-width:600px){section{padding:56px 0}}
+h2{font:700 clamp(28px,3.4vw,40px)/1.1 var(--display);letter-spacing:-.025em;margin:0 0 28px;max-width:22em}
+.lede{font-size:21px;max-width:36em;margin:0}
+.label{font:600 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin:0 0 16px}
+
+.gets{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--rule)}
+@media (max-width:700px){.gets{grid-template-columns:1fr}}
+.get{padding:22px 24px 22px 0;border-bottom:1px solid var(--rule)}
+.get:nth-child(odd){border-right:1px solid var(--rule)}
+.get:nth-child(even){padding-left:24px}
+@media (max-width:700px){.get:nth-child(odd){border-right:0}.get:nth-child(even){padding-left:0}}
+.get .label{margin-bottom:10px}
+.get h3{font:600 21px/1.25 var(--display);margin:0 0 6px;letter-spacing:-.01em}
+.get p{margin:0;color:var(--slate);font-size:17px}
+
+table{width:100%;border-collapse:collapse;font-size:17px}
+th,td{text-align:left;padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:600 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--slate)}
+td.us{font-weight:600}
+td.us span{background:linear-gradient(transparent 60%,var(--mark) 60%)}
+@media (max-width:600px){th,td{padding-right:10px;font-size:15px}}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:0}
+.steps li{counter-increment:s;display:grid;grid-template-columns:56px 1fr;padding:18px 0;border-bottom:1px solid var(--rule)}
+.steps li::before{content:counter(s);font:800 28px/1 var(--display);color:var(--cobalt)}
+.steps li p{margin:0}
+
+.falls{display:grid;gap:0}
+.fall{display:grid;grid-template-columns:220px 1fr;gap:24px;padding:16px 0;border-bottom:1px solid var(--rule)}
+@media (max-width:700px){.fall{grid-template-columns:1fr;gap:4px}}
+.fall b{font:600 18px/1.4 var(--display)}
+.fall span{color:var(--slate)}
+
+details{border-bottom:1px solid var(--rule)}
+summary{cursor:pointer;list-style:none;padding:18px 32px 18px 0;font:600 20px/1.35 var(--display);position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:16px;font:400 26px/1 var(--mono);color:var(--cobalt)}
+details[open] summary::after{content:"–"}
+details p{margin:0 0 20px;max-width:40em}
+
+.stateb{font:700 clamp(26px,3.2vw,38px)/1.2 var(--display);letter-spacing:-.02em;max-width:24em;margin:0}
+
+/* form */
+.ask{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:36px;max-width:680px}
+@media (max-width:600px){.ask{padding:22px}}
+.field{margin-bottom:18px}
+label.l{display:block;font:600 15px/1.3 var(--display);margin-bottom:8px}
+.hint{display:block;font:400 13px/1.4 var(--mono);color:var(--slate);margin-top:6px}
+input[type=email],input[type=text]{width:100%;font:400 17px/1.4 var(--body);padding:14px 14px;border:1px solid #AEB4A8;border-radius:8px;background:#fff;color:var(--ink)}
+input[type=email]:focus,input[type=text]:focus{border-color:var(--cobalt);outline:2px solid rgba(47,75,216,.25);outline-offset:0}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--slate);margin:6px 0 22px}
+.check input{margin-top:4px;width:18px;height:18px;accent-color:var(--cobalt)}
+.err{color:#A1261B;font:400 14px/1.4 var(--mono);margin:0 0 14px;min-height:1em}
+.done:focus{outline:none}
+.done h3{font:700 26px/1.2 var(--display);margin:0 0 10px}
+.price{margin-top:26px;padding-top:22px;border-top:1px dashed var(--rule)}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.opt{font:600 15px/1 var(--display);padding:12px 18px;border-radius:8px;border:1px solid var(--rule);background:#fff;color:var(--ink);cursor:pointer}
+.opt:hover{border-color:var(--cobalt)}
+.opt[aria-pressed="true"]{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+[hidden]{display:none!important}
+
+footer{border-top:1px solid var(--rule);padding:32px 0 48px;font:400 13px/1.6 var(--mono);color:var(--slate)}
+footer details{border:0}
+footer summary{font:600 13px/1.6 var(--mono);padding:0;color:var(--ink)}
+footer summary::after{content:none}
+footer details p{font:400 13px/1.6 var(--mono);margin:10px 0 0;max-width:60em}
+
+@media (prefers-reduced-motion:no-preference){
+  .rise{opacity:0;transform:translateY(10px);animation:rise .6s ease forwards}
+  .rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.3s}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">Groundwork</a>
+    <span class="tag">Early access</span>
+  </header>
+
+  <!-- HERO: three headline variants, one shown at random (or ?v=a|b|c) -->
+  <div class="hero">
+    <div>
+      <div data-variant="a" hidden>
+        <h1 class="rise">Know which customers to build for in 3 days, <mark>before your first interview.</mark></h1>
+        <p class="sub rise d1">A research report on your market, built from what real users already wrote in public. Every claim links to its source.</p>
+      </div>
+      <div data-variant="b" hidden>
+        <h1 class="rise">Market research where every sentence links to <mark>a real customer quote.</mark></h1>
+        <p class="sub rise d1">No invented stats. If the evidence isn't there, the report says “unknown” and tells you how to find out.</p>
+      </div>
+      <div data-variant="c" hidden>
+        <h1 class="rise">Find out what not to build, <mark>before it costs you three months.</mark></h1>
+        <p class="sub rise d1">A report that ranks your riskiest assumptions and gives the cheapest way to test each one, from public evidence.</p>
+      </div>
+      <div class="rise d2">
+        <a class="btn" href="#get" data-cta="hero">Get a sample report <span aria-hidden="true">→</span></a>
+        <p class="fine">Free during early access · first reports prepared with an analyst</p>
+      </div>
+    </div>
+
+    <!-- Signature: one report entry, receipts open on click -->
+    <aside class="specimen rise d3" aria-label="Illustrative report entry">
+      <div class="spec-head"><span>Report entry · invoicing for freelancers</span><span>Illustrative</span></div>
+      <div class="claim">
+        <span class="k">Finding</span>
+        <p>Freelancers who switch invoicing tools most often name a price rise as the reason, and move to a cheaper or self-hosted tool.<sup class="cite">1–3</sup></p>
+      </div>
+      <div class="receipts">
+        <button class="receipt" type="button" aria-expanded="false">
+          <span class="meta"><span><b>[1]</b> forum post · user of tool A</span><span>open ↓</span></span>
+          <span class="q">“…the new pricing <mark>doubled what I pay</mark> for the same features, so I moved my invoices over last weekend.”</span>
+        </button>
+        <button class="receipt" type="button" aria-expanded="false">
+          <span class="meta"><span><b>[2]</b> app review · 2 stars</span><span>open ↓</span></span>
+          <span class="q">“Used it for years. <mark>Price hike pushed me out</mark>, now on a free alternative.”</span>
+        </button>
+        <button class="receipt" type="button" aria-expanded="false">
+          <span class="meta"><span><b>[3]</b> pricing page history · archived snapshot</span><span>open ↓</span></span>
+          <span class="q">Starter plan price changed between two archived snapshots of the vendor's pricing page.</span>
+        </button>
+      </div>
+      <div class="unknown">
+        <span class="k">Unknown</span>
+        <p>Whether agencies, not solo freelancers, react the same way. No public evidence found. Cheapest test: ask 5 agency owners one question.</p>
+      </div>
+      <div class="spec-foot">Example layout. Quotes shortened for display; real reports link every source.</div>
+    </aside>
+  </div>
+</div>
+
+<main class="wrap">
+  <section aria-labelledby="what">
+    <p class="label">What you get</p>
+    <h2 id="what">Name a market. We send you what its users already said, organised.</h2>
+    <div class="gets">
+      <div class="get"><p class="label">Who</p><h3>Who is trying to get what done</h3><p>Grouped by what matters most to them, like price, speed or control. Not by age or job title.</p></div>
+      <div class="get"><p class="label">Switching</p><h3>What they use today, and why they leave</h3><p>Real “I moved from X to Y because…” posts, each one linked.</p></div>
+      <div class="get"><p class="label">Problems</p><h3>The problems that keep coming up</h3><p>With the number of independent people saying each one.</p></div>
+      <div class="get"><p class="label">Risks</p><h3>The 3 riskiest assumptions in your idea</h3><p>And the cheapest way to test each one before you build.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="you">
+    <p class="label">Is this you?</p>
+    <h2 id="you">You're about to commit build time anyway.</h2>
+    <p class="lede">You have an idea or a feature on the roadmap. You know you should talk to customers first, but recruiting interviews takes weeks, and asking an AI chat gives you confident paragraphs you can't check.</p>
+  </section>
+
+  <section aria-labelledby="numbers">
+    <p class="label">In numbers</p>
+    <h2 id="numbers">What changes</h2>
+    <table>
+      <thead><tr><th scope="col"></th><th scope="col">Typical today</th><th scope="col">Groundwork</th></tr></thead>
+      <tbody>
+        <tr><td>Time to first answer</td><td>3–6 weeks of interviews</td><td class="us"><span>3 working days</span></td></tr>
+        <tr><td>Claims you can check</td><td>AI chat: almost none</td><td class="us"><span>Every claim links to a public quote or record</span></td></tr>
+        <tr><td>Cost</td><td>Agency: €5k–20k</td><td class="us"><span>Free during early access</span></td></tr>
+        <tr><td>What isn't known</td><td>Usually hidden</td><td class="us"><span>Listed, with the cheapest way to find out</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section aria-labelledby="how">
+    <p class="label">How it works</p>
+    <h2 id="how">From public posts to a report you can check</h2>
+    <ol class="steps">
+      <li><p>We collect public posts from forums, Q&amp;A sites, app reviews and issue trackers, plus competitors' pricing pages and their history.</p></li>
+      <li><p>We keep only posts from people <em>using</em> a product. Developers building one and vendor marketing are filtered out.</p></li>
+      <li><p>Every claim is checked against the original text. If a quote can't be found word for word, it's removed.</p></li>
+      <li><p>A person reviews every report before it reaches you.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="falls">
+    <p class="label">Why the usual ways fall short</p>
+    <h2 id="falls">Each option costs you something</h2>
+    <div class="falls">
+      <div class="fall"><b>AI chat research</b><span>Reads well, cites nothing, and never says “I don't know”.</span></div>
+      <div class="fall"><b>Interviews</b><span>The gold standard, but slow, and you often don't know who to interview or what to ask yet.</span></div>
+      <div class="fall"><b>Research agencies</b><span>Thorough, but priced for companies with a research budget.</span></div>
+      <div class="fall"><b>Synthetic-user tools</b><span>Quick, but they rarely show what their answers are based on.</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="faq">
+    <p class="label">Fair questions</p>
+    <h2 id="faq">What you're probably wondering</h2>
+    <details><summary>Won't the AI just make things up?</summary><p>Every claim links to its source. If something can't be backed by a public quote or record, it's marked “unknown”, not guessed.</p></details>
+    <details><summary>Will it be generic?</summary><p>It's built from posts about your market, by people using the products you compete with.</p></details>
+    <details><summary>Does this replace talking to customers?</summary><p>No. It tells you who to talk to and the 3 questions your interviews must answer, so the interviews count.</p></details>
+    <details><summary>What if there's not enough public data on my market?</summary><p>Then the report says so, and you've learned that in 3 days instead of 6 weeks.</p></details>
+  </section>
+
+  <section aria-labelledby="stateb">
+    <p class="stateb" id="stateb">Walk into your first customer conversation knowing who they are, what they use now, what annoys them, and the one thing you most need to learn.</p>
+  </section>
+
+  <section id="get" aria-labelledby="gethead">
+    <p class="label">Early access</p>
+    <h2 id="gethead">Get a sample report</h2>
+    <div class="ask">
+      <form id="req" name="sample-request" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
+        <input type="hidden" name="form-name" value="sample-request">
+        <input type="hidden" name="variant">
+        <input type="hidden" name="source">
+        <p hidden><label>Leave empty <input name="company"></label></p>
+        <div class="field">
+          <label class="l" for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label class="l" for="market">Which market do you want researched?</label>
+          <input id="market" name="market" type="text" required>
+          <span class="hint">For example: invoicing for freelancers, feature flags for small dev teams</span>
+        </div>
+        <label class="check"><input type="checkbox" name="consent" value="yes" required> <span>I agree that Groundwork emails me about this report. See the <a href="#privacy">privacy notice</a>.</span></label>
+        <p class="err" id="err" role="alert"></p>
+        <button class="btn" type="submit" id="send">Get a sample report <span aria-hidden="true">→</span></button>
+        <p class="fine">Early access. The first reports are prepared with an analyst. We'll email you once, about your report.</p>
+      </form>
+
+      <div class="done" id="done" hidden tabindex="-1">
+        <h3>Request received</h3>
+        <p>We'll email your report within 3 working days.</p>
+        <div class="price">
+          <label class="l" id="pq">Reports will cost <span id="priceTxt">€49</span> per market. Would you pay that for a report like this?</label>
+          <div class="opts" role="group" aria-labelledby="pq">
+            <button class="opt" type="button" data-answer="yes" aria-pressed="false">Yes</button>
+            <button class="opt" type="button" data-answer="maybe" aria-pressed="false">Maybe</button>
+            <button class="opt" type="button" data-answer="no" aria-pressed="false">No</button>
+          </div>
+          <p class="fine" id="priceThanks" hidden>Thanks, noted. Nobody is charged during early access.</p>
+        </div>
+      </div>
+
+      <!-- Second form, so the price answer is stored next to the request -->
+      <form id="priceForm" name="price-answer" method="POST" data-netlify="true" hidden>
+        <input type="hidden" name="form-name" value="price-answer">
+        <input type="hidden" name="email"><input type="hidden" name="variant">
+        <input type="hidden" name="price"><input type="hidden" name="answer">
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <details id="privacy">
+      <summary>Privacy notice</summary>
+      <p>Who: [Your name or company], [contact email]. What we collect: your email, the market you name, which version of this page you saw, and your answer to the price question. Why: to send you the report you asked for and to learn whether this service is worth building. Legal basis: your consent, which you can withdraw at any time by emailing us. Where it's stored: our form provider ([Netlify / Formspree]). How long: up to 12 months, then deleted. Your rights: access, correction, deletion and complaint to your data protection authority. We don't sell or share your data, and we don't use advertising cookies.</p>
+    </details>
+    <p>© Groundwork · early-access research service</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---- settings ----
+  // Leave empty to use Netlify Forms (host on Netlify). Or paste a Formspree endpoint, e.g. "https://formspree.io/f/xxxx".
+  var FORM_ENDPOINT = "";
+  var PRICES = ["€49","€149"];
+
+  function store(k,v){try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){return null}}
+  function track(name,props){ try{ if(window.plausible) window.plausible(name,{props:props}); }catch(e){} }
+  var params = new URLSearchParams(location.search);
+
+  // variant: ?v=a|b|c wins, else remembered, else random
+  var v = (params.get("v")||"").toLowerCase();
+  if(!/^[abc]$/.test(v)){ v = store("gw_variant"); }
+  if(!/^[abc]$/.test(v||"")){ v = "abc"[Math.floor(Math.random()*3)]; }
+  store("gw_variant", v);
+  document.querySelectorAll("[data-variant]").forEach(function(el){ el.hidden = el.getAttribute("data-variant") !== v; });
+
+  var price = store("gw_price");
+  if(PRICES.indexOf(price)<0){ price = PRICES[Math.floor(Math.random()*PRICES.length)]; store("gw_price", price); }
+  document.getElementById("priceTxt").textContent = price;
+
+  var source = params.get("utm_source") || document.referrer.replace(/^https?:\/\/([^\/]+).*$/,"$1") || "direct";
+  track("Page view variant",{variant:v});
+
+  document.querySelectorAll("[data-cta]").forEach(function(a){
+    a.addEventListener("click",function(){ track("CTA click",{variant:v, place:a.getAttribute("data-cta")}); });
+  });
+
+  // receipts open/close
+  document.querySelectorAll(".receipt").forEach(function(b){
+    b.addEventListener("click",function(){
+      var open = b.getAttribute("aria-expanded")==="true";
+      b.setAttribute("aria-expanded", String(!open));
+      b.querySelector(".meta span:last-child").textContent = open ? "open ↓" : "close ↑";
+    });
+  });
+
+  function send(form){
+    var data = new FormData(form);
+    if(!/^https?:$/.test(location.protocol)){ console.log("[preview] would send", Object.fromEntries(data)); return Promise.resolve(); }
+    if(FORM_ENDPOINT){
+      return fetch(FORM_ENDPOINT,{method:"POST",headers:{"Accept":"application/json"},body:data})
+        .then(function(r){ if(!r.ok) throw new Error(r.status); });
+    }
+    return fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(data).toString()})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); });
+  }
+
+  var form = document.getElementById("req"), err = document.getElementById("err"), btn = document.getElementById("send");
+  form.variant.value = v; form.source.value = source;
+  form.addEventListener("submit",function(e){
+    e.preventDefault(); err.textContent = "";
+    if(!form.email.value || !form.email.checkValidity()){ err.textContent = "Enter an email address, like name@company.com."; form.email.focus(); return; }
+    if(!form.market.value.trim()){ err.textContent = "Name the market you want researched."; form.market.focus(); return; }
+    if(!form.consent.checked){ err.textContent = "Tick the box so we can email you the report."; return; }
+    btn.disabled = true;
+    send(form).then(function(){
+      track("Sample requested",{variant:v});
+      form.hidden = true;
+      var done = document.getElementById("done"); done.hidden = false; done.focus();
+    }).catch(function(){
+      err.textContent = "Your request didn't send. Check your connection and try again.";
+    }).finally(function(){ btn.disabled = false; });
+  });
+
+  var pf = document.getElementById("priceForm");
+  document.querySelectorAll(".opt").forEach(function(o){
+    o.addEventListener("click",function(){
+      document.querySelectorAll(".opt").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      o.setAttribute("aria-pressed","true");
+      pf.email.value = form.email.value; pf.variant.value = v; pf.price.value = price; pf.answer.value = o.getAttribute("data-answer");
+      send(pf).then(function(){ document.getElementById("priceThanks").hidden = false; track("Price answer",{variant:v, price:price, answer:pf.answer.value}); })
+        .catch(function(){ document.getElementById("priceThanks").hidden = false; document.getElementById("priceThanks").textContent = "Your answer didn't send. Try again."; });
+    });
+  });
+})();
+</script>
+</body>
+</html>
