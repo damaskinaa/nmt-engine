@@ -15,13 +15,21 @@ GOLD_AUTHOR_SYSTEM = (
 
 GOLD_AUTHOR_PROMPT = """Category: {category}
 
-Roles:
-- USER: uses, used, pays or paid for, or is looking for a product or method in this category for \
-their own work or life.
-- BUILDER: builds, maintains or is writing their own product or tool in this category.
-- VENDOR: speaks for a company that sells a product in this category (staff, founder, support, \
-marketing).
-- OTHER: anyone else (commentator, journalist, moderator, unclear).
+Roles. Check them in this order and give the first that fits:
+1. VENDOR: the author speaks for a business that sells or offers a product or service in this \
+category: staff, founder, support, marketing, or someone launching or promoting their own product \
+to others ("we built", "try it", "sign up", pricing or vouchers). Promoting a product they built \
+is VENDOR, not BUILDER.
+2. BUILDER: the author builds, codes, maintains or specifies software for this work but is not \
+promoting it for sale: a developer asking how to implement or fix code, an API or formulas; a \
+task, spec or issue written by the team that builds the project; someone who wrote, scripted or \
+"vibecoded" a tool, even only for themselves.
+3. USER: the author personally uses, used, pays or paid for, or is choosing a product, service, \
+spreadsheet or manual method for their own work or life in this category. A bug report or \
+feature request from someone using a product is USER.
+4. OTHER: anyone else: job ads, CVs and "who is hiring" posts; commentary on a company, price, \
+market or news without saying the author uses it; advice, or choosing tools, for someone else; \
+unclear.
 
 Posts (possibly cut short):
 
@@ -66,21 +74,7 @@ Return {{"posts": [{{"id": <post number>, {fields}}}, ...]}} with one entry per 
 ELEMENT_FIELDS = ", ".join(f'"{e}": <true|false>, "{e}_quote": <string|null>' for e in ELEMENTS)
 
 AUTHOR_SYSTEM = GOLD_AUTHOR_SYSTEM
-AUTHOR_PROMPT = GOLD_AUTHOR_PROMPT.replace(
-    "\nPosts (possibly cut short):",
-    """
-Edge cases:
-- Someone who wrote, coded, scripted or "vibecoded" their own tool for this work, even only for \
-themselves, is BUILDER.
-- A developer asking how to implement or fix code or formulas for this work is BUILDER.
-- Job ads, CVs and "who is hiring" posts are OTHER.
-- Opinions about a company, price or market without saying the author uses it are OTHER.
-- Choosing or comparing tools for someone else is OTHER.
-- Answer USER only when the post shows the author's own use; when in doubt, do not answer USER.
-
-Posts (possibly cut short):""",
-    1,
-)
+AUTHOR_PROMPT = GOLD_AUTHOR_PROMPT  # role rules now live in the frozen gold prompt
 ELEMENT_SYSTEM = GOLD_ELEMENT_SYSTEM
 ELEMENT_PROMPT = GOLD_ELEMENT_PROMPT.replace(
     "- alternative: does the post name another product or method the author used, tried or \
@@ -95,4 +89,4 @@ falls short for them? A dispute with a supplier, or a bug report about the autho
 is not a problem with a product they use.",
     1,
 )
-assert AUTHOR_PROMPT != GOLD_AUTHOR_PROMPT and ELEMENT_PROMPT != GOLD_ELEMENT_PROMPT
+assert ELEMENT_PROMPT != GOLD_ELEMENT_PROMPT
