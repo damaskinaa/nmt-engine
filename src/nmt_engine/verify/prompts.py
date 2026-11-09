@@ -15,21 +15,20 @@ GOLD_AUTHOR_SYSTEM = (
 
 GOLD_AUTHOR_PROMPT = """Category: {category}
 
-Roles. Check them in this order and give the first that fits:
-1. VENDOR: the author speaks for a business that sells or offers a product or service in this \
-category: staff, founder, support, marketing, or someone launching or promoting their own product \
-to others ("we built", "try it", "sign up", pricing or vouchers). Promoting a product they built \
-is VENDOR, not BUILDER.
-2. BUILDER: the author builds, codes, maintains or specifies software for this work but is not \
-promoting it for sale: a developer asking how to implement or fix code, an API or formulas; a \
-task, spec or issue written by the team that builds the project; someone who wrote, scripted or \
-"vibecoded" a tool, even only for themselves.
-3. USER: the author personally uses, used, pays or paid for, or is choosing a product, service, \
-spreadsheet or manual method for their own work or life in this category. A bug report or \
-feature request from someone using a product is USER.
-4. OTHER: anyone else: job ads, CVs and "who is hiring" posts; commentary on a company, price, \
-market or news without saying the author uses it; advice, or choosing tools, for someone else; \
-unclear.
+Roles (pre-registered boundary rules, set by the project owner):
+- USER = the author describes their OWN experience with a {category} Solution they use, used, \
+paid for, evaluated or left. This includes someone who replaced a paid tool with a self-built \
+one, if they name what they left and why (it is a switching story, which is user evidence).
+- BUILDER = the author writes code, specs, issues or developer questions for something they are \
+building, and does not promote it to customers. API "how do I" questions count as BUILDER even \
+if the author also invoices.
+- VENDOR = the author promotes or launches their own product to get users: Show HN, links, \
+pricing pitch, vouchers, "try it".
+- OTHER = job ads, CVs, commentary not about their own {category}, and tax or accounting \
+questions that don't involve a {category} tool.
+Tiebreaks, in order: promotes own product -> VENDOR. Otherwise, names a prior Solution and the \
+reason for leaving -> USER. Otherwise, mainly code or specs -> BUILDER.
+Each label must cite the verbatim phrase that decided it.
 
 Posts (possibly cut short):
 
@@ -37,7 +36,7 @@ Posts (possibly cut short):
 
 For each post answer:
 1. role: one of USER, BUILDER, VENDOR, OTHER.
-2. role_quote: the shortest phrase from the post that shows the role, copied exactly.
+2. role_quote: the verbatim phrase from the post that decided the role, copied exactly.
 3. names_solution: true only if the author names a product, service, spreadsheet or manual method \
 that they themselves use or used for this category's work.
 4. solution: that name, or null. solution_quote: the phrase naming it, copied exactly, or null.

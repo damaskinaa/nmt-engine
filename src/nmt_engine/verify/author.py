@@ -90,7 +90,10 @@ def _ask(
         body = "\n\n".join(f"{n}.\n{posts[k].text}" for n, k in enumerate(chunk))
         prompt = build(cat, body)
         if round_:  # a changed prompt, so the cache cannot replay an unusable answer
-            prompt += f"\n\n(Retry {round_}: answer every id from 0 to {len(chunk) - 1}.)"
+            prompt += (
+                f"\n\n(Retry {round_}: answer every id from 0 to {len(chunk) - 1}. Each quote "
+                "must be copied exactly; use a shorter quote of a few words.)"
+            )
         try:
             data = llm.complete_json(prompt, system, purpose)
         except (LLMError, ValueError):

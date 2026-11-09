@@ -28,7 +28,7 @@ from nmt_engine.store import load_run
 from nmt_engine.subtraction import collector_on
 from nmt_engine.util import canonical_json, normalize_ws, sha256_text
 from nmt_engine.verify import prompts
-from nmt_engine.verify.author import Post, author_gate, tag_elements
+from nmt_engine.verify.author import ROUNDS, Post, author_gate, tag_elements
 
 GOLD_DIR = repo_root() / "tests" / "gold" / "invoicing"
 CACHE_DIR = repo_root() / "cache" / "gold" / "invoicing"
@@ -38,6 +38,7 @@ PRECISION_MIN = 0.85
 MIN_CALLS = 20  # fewer positive calls on test: NOT MEASURED, never a pass
 QUOTE_CHARS = 120
 BATCH = 8
+GOLD_ROUNDS = 2  # gold labelling: one try plus exactly one retry with a shorter quote
 PRODUCER_REASONING = "none"
 
 
@@ -123,14 +124,16 @@ def label_prompt_hash() -> str:
                 prompts.ELEMENT_FIELDS,
                 MAX_CHARS,
                 BATCH,
+                GOLD_ROUNDS,
             ]
         )
     )[:16]
 
 
 def _answers(llm: LLM, posts: list[Post], step: str, gold: bool = False) -> dict[str, dict]:
-    authors = author_gate(llm, posts, f"{step}.author", BATCH, gold=gold)
-    tags = tag_elements(llm, posts, f"{step}.elements", BATCH, gold=gold)
+    rounds = GOLD_ROUNDS if gold else ROUNDS
+    authors = author_gate(llm, posts, f"{step}.author", BATCH, rounds=rounds, gold=gold)
+    tags = tag_elements(llm, posts, f"{step}.elements", BATCH, rounds=rounds, gold=gold)
     out = {}
     for p, a, t in zip(posts, authors, tags, strict=True):
         out[p.id] = {
