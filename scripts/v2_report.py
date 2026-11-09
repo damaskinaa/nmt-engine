@@ -3,8 +3,10 @@
 R0 = Session A runs (~/nmt-live); R1 and R2 are one mined copy of R0 with clustering, scored on
 source kinds (R1) and customer-voice families (R2); R3 = clustered mining of the R3 collection;
 R4 = R3 with the label-audit exclusions. Robustness re-mines R3 at t* -/+ 0.05.
-Without agreement.json (pairs_ok) or specificity.json for every category the verdict is
-STOPPED or PENDING by design: the human checkpoint is not done, which is not a kill-line result."""
+agreement.json may instead say {"skipped": "<operator's reason>"}; the verdict then stands
+with that note. Without agreement.json (pairs_ok) or specificity.json for every category that
+has passing clusters, the verdict is STOPPED or PENDING by design: the human checkpoint is not
+done, which is not a kill-line result."""
 
 from __future__ import annotations
 
@@ -105,7 +107,9 @@ def main(labels: Path, abl: Path) -> None:
     final = verdict_v2(r4) if len(set(hit.values())) == 1 else "Kill line v2 UNDECIDABLE"
     # A category with no passing R4 cluster has nothing to review and is already below 30%.
     unreviewed = [name for name, _ in CATS if name not in broad and tops[name]]
-    if not agree.get("pairs_ok"):
+    if agree.get("skipped"):  # operator decision, recorded verbatim in the report
+        final = f"{final} Human checks not done: {agree['skipped']}"
+    elif not agree.get("pairs_ok"):
         got = agree.get("pairs", {}).get("agreement")
         final = f"STOPPED: human pair agreement {got} is not >= 80% (or not recorded); no verdict"
     elif unreviewed:
@@ -125,8 +129,8 @@ def main(labels: Path, abl: Path) -> None:
         "",
         f"Threshold t* = {th['t_star']} (F1 {th['f1']:.3f}, precision {th['precision']:.3f}, "
         f"recall {th['recall']:.3f}) on {th['labelled']} auditor-labelled pairs; "
-        f"human agreement pairs {agree.get('pairs', {}).get('agreement')}, "
-        f"spans {agree.get('spans', {}).get('agreement')}.",
+        f"human agreement pairs {agree.get('pairs', {}).get('agreement', 'not done')}, "
+        f"spans {agree.get('spans', {}).get('agreement', 'not done')}.",
         "",
     ]
     out += [
