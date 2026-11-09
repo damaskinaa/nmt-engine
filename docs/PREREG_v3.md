@@ -182,3 +182,41 @@ human-verified.
 
 Reporting. Any node with 0 supports and 0 contradicts in node gold is reported per node as "no
 public evidence in this harvest". It is not padded.
+
+## 10. Amendment 3 (2026-11-09, B3, before any amendment-3 labelling)
+
+Reason: the project owner's decision after amendment 2 round 0. Of 475 query-retrieved candidates,
+12 were USER posts naming a Solution, and all 38 designated pairs came back unrelated (GLM agreed
+on 38/38). The query-retrieved pool is mostly BUILDER (GitHub issues) and OTHER (tax questions on
+Stack Exchange), and App Store reviews never got a node rank because no query returns them.
+
+Round 0 stays on record as run and failed: "no public evidence in this harvest" for all 10
+nodes. Its items stay in `node_items.jsonl` and are not scored. Amendment 3 changes only the
+candidate pool and its ranking. The labels (frozen gold author and node prompts, one
+shorter-quote retry), the 80% cross-model agreement bar and the 85% precision bar stay as they
+are. The frozen amendment-2 node growth is stopped. The USER test split keeps growing under
+amendment 1.
+
+Pool. Every customer-voice post of these kinds: App Store reviews of the named invoicing apps in
+the L2 harvest (`runs/l2`), plus Hacker News posts that Kimi already labelled USER (in `gold.jsonl`
+or `node_authors.jsonl`). Reddit is not in the first-build collectors, so it adds no posts. Round-0
+node items are left out.
+
+Ranking. For each node, every pool post is ranked by cosine similarity between its Qwen3 embedding
+(`qwen/qwen3-embedding-8b`) and the embedding of the node's closed question (the statement the node
+check asks about). Ties go by source id.
+
+Pick, split and labels. These follow amendment 2. Kimi labels author role down each node's ranking
+until 8 posts qualify (USER and naming a Solution), after 60 candidates, or when the pool runs out.
+HN posts already labelled keep their label. Each node gets its top 8 qualifying posts plus 2
+qualifying posts drawn at random (seed `"a3:<node>"`) from the qualifying posts outside its top 8.
+The split is fixed by post id (`test` if `int(sha256(source_id), 16)` is odd). Kimi labels each
+item against all 10 statements. GLM-5.3 (thinking off) labels them blind, and agreement below
+80% stops the work. Only amendment-3 designated pairs are scored for the node classes.
+
+Budget. Amendment 3 costs at most $6, embeddings included. B3 stays at or under $20 in total.
+
+Pre-registered outcome. If the producer's supports plus contradicts calls on the test split come to
+fewer than 20 in total, node precision is NOT MEASURED and T2 FAILS. Per §5 the product then
+narrows to the Radar (problems + alternatives), which is recorded, and the work goes on to B4
+without stopping. With 20 or more, T1 runs as written, and then T2 runs if T1 allows it.
