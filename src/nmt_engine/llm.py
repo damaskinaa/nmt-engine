@@ -17,6 +17,7 @@ import json
 import os
 import random
 import re
+import threading
 import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -90,32 +91,44 @@ class BudgetExceeded(Exception):
 class Budget:
     """Spend shared by every model client of one run. A call is refused before it is sent when
     its worst case (prompt plus a full `max_tokens` answer) would cross the run or step cap;
-    calls to a model without a known price are refused outright."""
+    calls to a model without a known price are refused outright. The worst case stays reserved
+    until the call is logged, so concurrent calls cannot overshoot a cap together."""
 
     run_cap: float = RUN_BUDGET_USD
     step_caps: dict[str, float] = field(default_factory=lambda: dict(STEP_CAPS))
     spent: float = 0.0
     by_step: dict[str, float] = field(default_factory=dict)
+    reserved: dict[str, float] = field(default_factory=dict)
+    lock: threading.Lock = field(default_factory=threading.Lock, repr=False, compare=False)
 
     @staticmethod
     def step(purpose: str) -> str:
         return purpose.split(".", 1)[0]
 
-    def check(self, purpose: str, worst_case: float | None) -> None:
+    def reserve(self, purpose: str, worst_case: float | None) -> None:
         if worst_case is None:
             raise BudgetExceeded(f"{purpose}: model has no known price, so no budget check")
         step = self.step(purpose)
-        if self.spent + worst_case > self.run_cap:
-            raise BudgetExceeded(f"run budget ${self.run_cap:.2f} reached (${self.spent:.4f})")
-        cap = self.step_caps.get(step)
-        used = self.by_step.get(step, 0.0)
-        if cap is not None and used + worst_case > cap:
-            raise BudgetExceeded(f"step {step!r} budget ${cap:.2f} reached (${used:.4f})")
+        with self.lock:
+            held = sum(self.reserved.values())
+            if self.spent + held + worst_case > self.run_cap:
+                raise BudgetExceeded(f"run budget ${self.run_cap:.2f} reached (${self.spent:.4f})")
+            cap = self.step_caps.get(step)
+            used = self.by_step.get(step, 0.0) + self.reserved.get(step, 0.0)
+            if cap is not None and used + worst_case > cap:
+                raise BudgetExceeded(f"step {step!r} budget ${cap:.2f} reached (${used:.4f})")
+            self.reserved[step] = self.reserved.get(step, 0.0) + worst_case
+
+    def release(self, purpose: str, worst_case: float) -> None:
+        step = self.step(purpose)
+        with self.lock:
+            self.reserved[step] = max(0.0, self.reserved.get(step, 0.0) - worst_case)
 
     def add(self, purpose: str, cost: float | None) -> None:
         step = self.step(purpose)
-        self.spent += cost or 0.0
-        self.by_step[step] = self.by_step.get(step, 0.0) + (cost or 0.0)
+        with self.lock:
+            self.spent += cost or 0.0
+            self.by_step[step] = self.by_step.get(step, 0.0) + (cost or 0.0)
 
     def as_dict(self) -> dict:
         return {
@@ -123,6 +136,9 @@ class Budget:
             "spent_usd": round(self.spent, 6),
             "by_step_usd": {k: round(v, 6) for k, v in sorted(self.by_step.items())},
         }
+
+
+_LOCK = threading.Lock()  # log file, counters and client creation across worker threads
 
 
 class LLMDisabled(Exception):
@@ -269,9 +285,19 @@ class LLM:
         key = os.environ.get(self.key_env)
         if not key:
             raise LLMDisabled(f"${self.key_env} is not set")
+        worst = 0.0
         if self.budget is not None:  # rough token count: 3 characters per token, rounded up
             est_in = (len(system) + len(prompt)) // 3 + 1
-            self.budget.check(purpose, cost_usd(self.model or "", est_in, self.max_tokens))
+            price = cost_usd(self.model or "", est_in, self.max_tokens)
+            self.budget.reserve(purpose, price)
+            worst = price or 0.0
+        try:
+            return self._fresh(key, system, prompt, purpose, json_mode, check, phash, cached)
+        finally:
+            if self.budget is not None:
+                self.budget.release(purpose, worst)
+
+    def _fresh(self, key, system, prompt, purpose, json_mode, check, phash, cached) -> str:
         text, t_in, t_out, truncated = self._call(key, system, prompt, json_mode)
         if truncated:  # billed, never cached: a cut-off answer must not be replayed
             self._log(purpose, phash, t_in, t_out, cached=False, truncated=True)
@@ -298,8 +324,9 @@ class LLM:
     def _call(
         self, key: str, system: str, prompt: str, json_mode: bool
     ) -> tuple[str, int, int, bool]:
-        if self.client is None:
-            self.client = httpx.Client(timeout=self.timeout)  # one pooled client per LLM, reused
+        with _LOCK:
+            if self.client is None:  # one pooled, thread-safe client per LLM, reused
+                self.client = httpx.Client(timeout=self.timeout)
         client = self.client
         url = self.base_url + ENDPOINT[self.provider]
         if self.provider == "anthropic":
@@ -358,9 +385,6 @@ class LLM:
         cost = 0.0 if cached else cost_usd(self.model or "", t_in, t_out)
         if self.budget is not None and not cached:
             self.budget.add(purpose, cost)
-        self.calls += 0 if cached else 1
-        self.cost += cost or 0.0
-        self.unpriced_calls += cost is None
         entry = {
             "at": datetime.now(UTC).isoformat(timespec="seconds"),
             "purpose": purpose,
@@ -376,5 +400,9 @@ class LLM:
         if truncated:
             entry["truncated"] = True
         self.run_dir.mkdir(parents=True, exist_ok=True)
-        with (self.run_dir / "llm_log.jsonl").open("a", encoding="utf-8") as fh:
-            fh.write(json.dumps(entry) + "\n")
+        with _LOCK:
+            self.calls += 0 if cached else 1
+            self.cost += cost or 0.0
+            self.unpriced_calls += cost is None
+            with (self.run_dir / "llm_log.jsonl").open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps(entry) + "\n")

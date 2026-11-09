@@ -315,3 +315,16 @@ def test_budget_refuses_calls_over_run_or_step_cap(tmp_path, monkeypatch):
     )
     with pytest.raises(BudgetExceeded, match="no known price"):
         unpriced.complete("f", purpose="l1.draft")
+
+
+def test_budget_reservations_block_concurrent_overshoot():
+    from nmt_engine.llm import Budget, BudgetExceeded
+
+    b = Budget(run_cap=1.0, step_caps={})
+    b.reserve("gold.a", 0.6)
+    with pytest.raises(BudgetExceeded):
+        b.reserve("gold.b", 0.6)  # the first call's worst case is still held
+    b.add("gold.a", 0.1)
+    b.release("gold.a", 0.6)
+    b.reserve("gold.b", 0.6)
+    assert b.spent == pytest.approx(0.1)

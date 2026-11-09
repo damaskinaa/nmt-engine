@@ -3,7 +3,7 @@
 - `build`: seeded, family-stratified sample of customer-voice posts from L2-collector runs, split
   200 dev / 100 test. Post text goes to the gitignored cache only.
 - `label`: the auditor (Kimi) labels every post; these are the gold labels (`gold.jsonl`, committed:
-  source ids, URLs, labels, short masked quotes).
+  source ids, URLs and labels only; quotes stay in the cache).
 - `record`: the producer (DeepSeek) answers the same closed questions; its answers are committed
   under `recorded/<prompt hash>.json`.
 - `check`: precision of the producer against gold, per class (§8 A3), on dev and held-out test.
@@ -32,6 +32,7 @@ CACHE_DIR = repo_root() / "cache" / "gold" / "invoicing"
 MAX_CHARS = 1000
 N_GOLD, N_TEST = 300, 100
 PRECISION_MIN = 0.85
+FEW = 10  # fewer positive calls than this: precision reported but flagged
 QUOTE_CHARS = 120
 BATCH = 8
 PRODUCER_REASONING = "none"
@@ -104,9 +105,26 @@ def load_posts() -> list[Post]:
     return [Post(**r) for r in _read_jsonl(CACHE_DIR / "posts.jsonl")]
 
 
-def _answers(llm: LLM, posts: list[Post], step: str) -> dict[str, dict]:
-    authors = author_gate(llm, posts, f"{step}.author", BATCH)
-    tags = tag_elements(llm, posts, f"{step}.elements", BATCH)
+def label_prompt_hash() -> str:
+    """Hash of the frozen auditor prompts the gold labels were made with."""
+    return sha256_text(
+        canonical_json(
+            [
+                prompts.GOLD_AUTHOR_SYSTEM,
+                prompts.GOLD_AUTHOR_PROMPT,
+                prompts.GOLD_ELEMENT_SYSTEM,
+                prompts.GOLD_ELEMENT_PROMPT,
+                prompts.ELEMENT_FIELDS,
+                MAX_CHARS,
+                BATCH,
+            ]
+        )
+    )[:16]
+
+
+def _answers(llm: LLM, posts: list[Post], step: str, gold: bool = False) -> dict[str, dict]:
+    authors = author_gate(llm, posts, f"{step}.author", BATCH, gold=gold)
+    tags = tag_elements(llm, posts, f"{step}.elements", BATCH, gold=gold)
     out = {}
     for p, a, t in zip(posts, authors, tags, strict=True):
         out[p.id] = {
@@ -124,11 +142,18 @@ def _short(q: str | None) -> str | None:
 
 def label(llm: LLM, out: Path = GOLD_DIR) -> dict:
     """Auditor gold labels for every item; unanswered items stay null and are not scored."""
-    ans = _answers(llm, load_posts(), "gold.label")
+    ans = _answers(llm, load_posts(), "gold.label", gold=True)
     rows = []
     for item in _read_jsonl(out / "items.jsonl"):
-        rows.append({**item, **ans[item["id"]], "labeller": llm.model})
-    _write_jsonl(out / "gold.jsonl", rows)
+        meta = {"labeller": llm.model, "label_prompt_hash": label_prompt_hash()}
+        rows.append({**item, **ans[item["id"]], **meta})
+    # quotes can carry names or handles, so they stay in the gitignored cache (§8 A9)
+    _write_jsonl(
+        CACHE_DIR / "gold_quotes.jsonl", [{k: r[k] for k in ("id", "role_quote")} for r in rows]
+    )
+    _write_jsonl(
+        out / "gold.jsonl", [{k: v for k, v in r.items() if k != "role_quote"} for r in rows]
+    )
     return {"labelled": sum(r["role"] is not None for r in rows), "n": len(rows)}
 
 
@@ -172,10 +197,11 @@ def check(out: Path = GOLD_DIR, phash: str | None = None) -> dict:
             res["classes"].setdefault(el, {})[split] = _prec(
                 p, [g["elements"][el] for g in users], True
             )
-    res["passed"] = all(
-        c["test"]["precision"] is not None and c["test"]["precision"] >= PRECISION_MIN
-        for c in res["classes"].values()
-    )
+    for c in res["classes"].values():  # no positive calls means no false positives to count
+        t = c["test"]
+        t["passed"] = t["precision"] is None or t["precision"] >= PRECISION_MIN
+        t["note"] = "no calls" if not t["called"] else ("few calls" if t["called"] < FEW else "")
+    res["passed"] = all(c["test"]["passed"] for c in res["classes"].values())
     return res
 
 

@@ -84,8 +84,7 @@ def test_committed_gold_has_no_post_text_or_emails():
     for name in ("items.jsonl", "gold.jsonl"):
         for line in (gold.GOLD_DIR / name).read_text().splitlines():
             row = json.loads(line)
-            assert "text" not in row and "@" not in json.dumps(row)
-            assert len(row.get("role_quote") or "") <= gold.QUOTE_CHARS
+            assert not {"text", "role_quote"} & set(row) and "@" not in json.dumps(row)
 
 
 def test_gold_split_is_200_dev_100_test():

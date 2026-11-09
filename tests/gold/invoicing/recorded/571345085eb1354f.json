@@ -1,0 +1,3308 @@
+{
+ "answers": {
+  "G001": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G002": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G003": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G004": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G005": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G006": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G007": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G008": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G009": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G010": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G011": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G012": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G013": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G014": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G015": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G016": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G017": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G018": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G019": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G020": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G021": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G022": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G023": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G024": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G025": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G026": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G027": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G028": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G029": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G030": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G031": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G032": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G033": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G034": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G035": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G036": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G037": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G038": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G039": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G040": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G041": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G042": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G043": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G044": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G045": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G046": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G047": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G048": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G049": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G050": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G051": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G052": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G053": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G054": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G055": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G056": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G057": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G058": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G059": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G060": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G061": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G062": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G063": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G064": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G065": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G066": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G067": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G068": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G069": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G070": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G071": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G072": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G073": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G074": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G075": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G076": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G077": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G078": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G079": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G080": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G081": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G082": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G083": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G084": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G085": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G086": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G087": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G088": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G089": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G090": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G091": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G092": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G093": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G094": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G095": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G096": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G097": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G098": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G099": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G100": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G101": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G102": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G103": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G104": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G105": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G106": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G107": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G108": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G109": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G110": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G111": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G112": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G113": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G114": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G115": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G116": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G117": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G118": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G119": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G120": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G121": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G122": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G123": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G124": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G125": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G126": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G127": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G128": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G129": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G130": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G131": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G132": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G133": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G134": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G135": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G136": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G137": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G138": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G139": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G140": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G141": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G142": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G143": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G144": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G145": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G146": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G147": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G148": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G149": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G150": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G151": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G152": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G153": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G154": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G155": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G156": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G157": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G158": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G159": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G160": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G161": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G162": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G163": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G164": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G165": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G166": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G167": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G168": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G169": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G170": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G171": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G172": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G173": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G174": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G175": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G176": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G177": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G178": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G179": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G180": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G181": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G182": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G183": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G184": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G185": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G186": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G187": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G188": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G189": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G190": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G191": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G192": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G193": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G194": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G195": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G196": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G197": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G198": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G199": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G200": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G201": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G202": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G203": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G204": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G205": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G206": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G207": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G208": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G209": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G210": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G211": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G212": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G213": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G214": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G215": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G216": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G217": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G218": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G219": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G220": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G221": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G222": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G223": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G224": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G225": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G226": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "VENDOR"
+  },
+  "G227": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G228": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G229": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G230": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G231": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G232": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G233": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G234": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G235": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G236": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G237": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G238": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G239": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G240": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G241": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G242": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G243": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G244": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G245": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G246": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G247": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G248": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G249": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G250": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G251": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G252": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G253": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G254": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G255": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G256": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G257": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G258": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G259": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G260": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G261": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G262": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G263": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G264": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G265": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": true
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G266": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G267": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G268": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "OTHER"
+  },
+  "G269": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G270": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G271": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G272": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G273": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G274": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G275": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G276": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G277": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G278": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G279": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G280": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G281": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G282": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "BUILDER"
+  },
+  "G283": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G284": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G285": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G286": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "VENDOR"
+  },
+  "G287": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G288": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G289": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "USER"
+  },
+  "G290": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G291": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": true,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G292": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G293": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G294": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "USER"
+  },
+  "G295": {
+   "elements": {
+    "aha": false,
+    "alternative": true,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G296": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G297": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G298": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": false,
+   "role": "OTHER"
+  },
+  "G299": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": true,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  },
+  "G300": {
+   "elements": {
+    "aha": false,
+    "alternative": false,
+    "problem": false,
+    "success_criterion": false,
+    "trigger": false
+   },
+   "names_solution": true,
+   "role": "BUILDER"
+  }
+ },
+ "host": "api.tensorx.ai",
+ "model": "deepseek/deepseek-v4.1-flash",
+ "prompt_hash": "571345085eb1354f",
+ "reasoning_effort": "none"
+}

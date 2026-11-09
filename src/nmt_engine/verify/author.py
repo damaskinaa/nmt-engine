@@ -4,6 +4,7 @@ verbatim is dropped and the post is asked again; a post still unanswered stays N
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 
 from nmt_engine.llm import LLM, LLMError
@@ -11,6 +12,7 @@ from nmt_engine.util import normalize_ws
 from nmt_engine.verify import prompts
 
 ROUNDS = 3
+WORKERS = 6  # concurrent requests; TensorX allows 60 per minute per key
 
 
 @dataclass(frozen=True)
@@ -77,45 +79,60 @@ def _ask(
     parse: Callable[[dict, str], object],
     batch: int,
     rounds: int,
+    workers: int = WORKERS,
 ) -> list:
     out: list = [None] * len(posts)
+
+    def one(cat: str, chunk: list[int], round_: int) -> None:
+        body = "\n\n".join(f"{n}.\n{posts[k].text}" for n, k in enumerate(chunk))
+        prompt = build(cat, body)
+        if round_:  # a changed prompt, so the cache cannot replay an unusable answer
+            prompt += f"\n\n(Retry {round_}: answer every id from 0 to {len(chunk) - 1}.)"
+        try:
+            data = llm.complete_json(prompt, system, purpose)
+        except (LLMError, ValueError):
+            return
+        rows = data.get("posts") if isinstance(data, dict) else None
+        for row in rows if isinstance(rows, list) else []:
+            if not isinstance(row, dict):
+                continue
+            try:
+                n = int(row.get("id"))
+            except (TypeError, ValueError):
+                continue
+            if 0 <= n < len(chunk) and out[chunk[n]] is None:
+                out[chunk[n]] = parse(row, posts[chunk[n]].text)
+
     for round_ in range(rounds):
         by_cat: dict[str, list[int]] = {}
         for k, p in enumerate(posts):
             if out[k] is None:
                 by_cat.setdefault(p.category, []).append(k)
-        for cat, idx in sorted(by_cat.items()):
-            for i in range(0, len(idx), batch):
-                chunk = idx[i : i + batch]
-                body = "\n\n".join(f"{n}.\n{posts[k].text}" for n, k in enumerate(chunk))
-                prompt = build(cat, body)
-                if round_:  # a changed prompt, so the cache cannot replay an unusable answer
-                    prompt += f"\n\n(Retry {round_}: answer every id from 0 to {len(chunk) - 1}.)"
-                try:
-                    data = llm.complete_json(prompt, system, purpose)
-                except (LLMError, ValueError):
-                    continue
-                rows = data.get("posts") if isinstance(data, dict) else None
-                for row in rows if isinstance(rows, list) else []:
-                    if not isinstance(row, dict):
-                        continue
-                    try:
-                        n = int(row.get("id"))
-                    except (TypeError, ValueError):
-                        continue
-                    if 0 <= n < len(chunk) and out[chunk[n]] is None:
-                        out[chunk[n]] = parse(row, posts[chunk[n]].text)
+        jobs = [
+            (cat, idx[i : i + batch], round_)
+            for cat, idx in sorted(by_cat.items())
+            for i in range(0, len(idx), batch)
+        ]
+        with ThreadPoolExecutor(max(1, min(workers, len(jobs)))) as pool:
+            list(pool.map(lambda j: one(*j), jobs))  # BudgetExceeded propagates
     return out
 
 
 def author_gate(
-    llm: LLM, posts: Sequence[Post], purpose: str = "verify.author", batch=8, rounds=ROUNDS
+    llm: LLM,
+    posts: Sequence[Post],
+    purpose: str = "verify.author",
+    batch=8,
+    rounds=ROUNDS,
+    gold: bool = False,
 ) -> list[AuthorVerdict | None]:
     return _ask(
         llm,
         posts,
-        lambda cat, body: prompts.AUTHOR_PROMPT.format(category=cat, posts=body),
-        prompts.AUTHOR_SYSTEM,
+        lambda cat, body: (prompts.GOLD_AUTHOR_PROMPT if gold else prompts.AUTHOR_PROMPT).format(
+            category=cat, posts=body
+        ),
+        prompts.GOLD_AUTHOR_SYSTEM if gold else prompts.AUTHOR_SYSTEM,
         purpose,
         parse_author,
         batch,
@@ -124,15 +141,20 @@ def author_gate(
 
 
 def tag_elements(
-    llm: LLM, posts: Sequence[Post], purpose: str = "verify.elements", batch=8, rounds=ROUNDS
+    llm: LLM,
+    posts: Sequence[Post],
+    purpose: str = "verify.elements",
+    batch=8,
+    rounds=ROUNDS,
+    gold: bool = False,
 ) -> list[dict[str, bool] | None]:
     return _ask(
         llm,
         posts,
-        lambda cat, body: prompts.ELEMENT_PROMPT.format(
+        lambda cat, body: (prompts.GOLD_ELEMENT_PROMPT if gold else prompts.ELEMENT_PROMPT).format(
             category=cat, posts=body, fields=prompts.ELEMENT_FIELDS
         ),
-        prompts.ELEMENT_SYSTEM,
+        prompts.GOLD_ELEMENT_SYSTEM if gold else prompts.ELEMENT_SYSTEM,
         purpose,
         parse_elements,
         batch,
