@@ -219,7 +219,7 @@ Status key: **built** = merged on main · **salvage** = in PR 4/5, move into a n
 5. **Pre-registration** before every verdict run (hash in the PR). Results never change rules.
 6. **Budgets in code:** $20 per run, with per-step caps. Truncated replies fail loudly and are
    never cached.
-7. **Small PRs:** about 1,500 lines plus fixtures, one capability each, CI green before the
+7. **Small PRs:** one per build step, about 1,500 lines plus fixtures, one capability each, CI green before the
    next. Devin stops after each PR.
 8. **Pinned models + cache:** the model id, host and prompt hash are logged; reruns replay from
    cache.
@@ -243,15 +243,15 @@ The Session A and v2 verdicts stay on record (open mining fails).
 
 ## 6. Build sequence
 
-| PR | Content | Reuses | Stops for you? |
+| Step | Content | Reuses | Stops for you? |
 |---|---|---|---|
-| 6 | Subtraction config, gold set + CI precision gate, salvage Wilson / auditor / embeddings from PR 5, close PRs 4–5 | PR 4, 5 | **Yes:** label 30 posts blind (15 min) |
-| 7 | L0 brief + L1 hypothesis graph + PREREG_v3 | store, schema | No |
-| 8 | L2 query planner + L3 verify + L4 node status → **T1, T2** | collectors, gates | No |
-| 9 | L6 segment agents, switching world, SSR, cross-model, historical replay → **T3** | leakage guard, registry | No |
-| 10 | L7 Monte Carlo + synthetic validation + red team; L5 wired to L4/L6 | PR 2 core | No |
-| 11 | L8 report (HTML/PDF), all gates on it | viewer | **Yes:** read the first invoicing report |
-| 12 | `site/` deploy notes + `nmt intake` from Netlify | site | **Yes:** add `NETLIFY_TOKEN` |
+| B1 | Subtraction config, gold set + CI precision gate, salvage Wilson / auditor / embeddings from PR 5, close PRs 4–5 | PR 4, 5 | **Yes:** label 30 posts blind (15 min) |
+| B2 | L0 brief + L1 hypothesis graph + PREREG_v3 | store, schema | No |
+| B3 | L2 query planner + L3 verify + L4 node status → **T1, T2** | collectors, gates | No |
+| B4 | L6 segment agents, switching world, SSR, cross-model, historical replay → **T3** | leakage guard, registry | No |
+| B5 | L7 Monte Carlo + synthetic validation + red team; L5 wired to L4/L6 | PR 2 core | No |
+| B6 | L8 report (HTML/PDF), all gates on it | viewer | **Yes:** read the first invoicing report |
+| B7 | `site/` deploy notes + `nmt intake` from Netlify | site | **Yes:** add `NETLIFY_TOKEN` |
 
 Your only other job is T4: deploy the site and share it on one channel (`site/README.md`).
 
@@ -260,18 +260,18 @@ Your only other job is T4: deploy the site and share it on one channel (`site/RE
 ## 7. Hand-over message to Devin
 
 ```text
-New plan. Read docs/ARCHITECTURE_v3.md on branch docs/architecture-v3 (PR "Architecture v3").
+New plan. Read docs/ARCHITECTURE_v3.md on branch docs/architecture-v3 (GitHub PR #6).
 It is the single source of truth and replaces every earlier prompt. Do not merge that PR. I'll
 merge it after you confirm you've read it.
 
 Do now:
 1. Reply with any contradiction or ambiguity you see in the document, before coding.
-2. Then build PR 6 → PR 12 in order, exactly as in §6, following the rules in §4. TensorX only
+2. Then build steps B1 → B7 in order, exactly as in §6, following the rules in §4. TensorX only
    (DeepSeek V4.1 Flash producer, Kimi K3.1 Pro auditor, Qwen3 embeddings).
    Budget $20 per run.
 3. Stop and wait for me only at the three points marked "Yes" in §6. Otherwise continue to the
    next PR when CI is green and the PR description has its report.
-4. Close PR 4 and PR 5 in PR 6 after salvaging what §6 lists. Keep their verdicts in
+4. Close PR 4 and PR 5 in step B1 after salvaging what §6 lists. Keep their verdicts in
    docs/VERDICTS.md.
 Never put emails or other personal data in git. Never copy canon text into prompts or outputs.
 ```
