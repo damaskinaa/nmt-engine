@@ -1,21 +1,21 @@
 {
  "model": "z-ai/glm-5.3",
- "pairs": 38,
+ "pairs": 85,
  "unanswered_items": 0,
- "agreement": 1.0,
- "kappa": null,
+ "agreement": 0.9647,
+ "kappa": 0.5534,
  "per_class": {
   "supports": {
-   "n": 0,
-   "agree": null
+   "n": 4,
+   "agree": 0.5
   },
   "contradicts": {
    "n": 0,
    "agree": null
   },
   "unrelated": {
-   "n": 38,
-   "agree": 1.0
+   "n": 81,
+   "agree": 0.9877
   }
  },
  "passed": true,
