@@ -201,10 +201,6 @@ def gold_agree(answers: str) -> None:
     raise typer.Exit(0 if res["passed"] else 1)
 
 
-if __name__ == "__main__":
-    app()
-
-
 l1_app = typer.Typer(help="L0 brief + L1 hypothesis Job Graph (ARCHITECTURE_v3 §3, §8 C3)")
 app.add_typer(l1_app, name="l1")
 BRIEF_OPT = typer.Option("--brief")
@@ -286,3 +282,7 @@ def l1_gold_check() -> None:
     res = gold.check()
     typer.echo(json.dumps(res, indent=2))
     raise typer.Exit(0 if res["passed"] else 1)
+
+
+if __name__ == "__main__":
+    app()

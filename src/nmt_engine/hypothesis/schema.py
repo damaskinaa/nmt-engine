@@ -20,8 +20,12 @@ COST = {"low": 1.0, "medium": 3.0, "high": 9.0}
 PARENT_LEVEL = {"core": "big", "small": "core", "micro": "small"}
 PREFIX = {"job": "J", "solution": "S", "criterion": "C", "segment": "G", "problem": "P"}
 N_SEGMENTS = (3, 6)
+N_CORE = (3, 5)
+MIN_CRITERIA = 2  # per Core Job, as the draft prompt says
 # no invented quantities: a number is a digit run not glued to a preceding letter ("B2B" and
 # "Q1" are words, "3 weeks" and "£20" are numbers). Solution names may contain any digits.
+# Best effort, not a proof: \d also matches non-ASCII digits, but spelled-out numerals ("three")
+# and digits glued to a letter ("x3") pass. Numbers used downstream come from code, never text.
 _NUMBER = re.compile(r"(?<![A-Za-z])\d[\d.,]*%?")
 
 
@@ -113,6 +117,9 @@ class HypothesisGraph(BaseModel):
         bigs = [n for n in self.nodes if n.type == "job" and n.level == "big"]
         if len(bigs) != 1:
             errs.append(f"exactly one Big Job, got {len(bigs)}")
+        cores = [n for n in self.nodes if n.type == "job" and n.level == "core"]
+        if not N_CORE[0] <= len(cores) <= N_CORE[1]:
+            errs.append(f"{len(cores)} Core Jobs; need {N_CORE[0]}-{N_CORE[1]}")
         for n in self.nodes:
             if n.type == "job" and n.parent:
                 ref(n, n.parent, "job", PARENT_LEVEL[n.level])
@@ -133,8 +140,8 @@ class HypothesisGraph(BaseModel):
         if len(set(orders)) != len(orders):
             errs.append("two segments share the same criteria order")
         for core in (n for n in self.nodes if n.level == "core"):
-            if not any(c.job == core.id for c in self.of("criterion")):
-                errs.append(f"{core.id}: a Core Job needs at least one success criterion")
+            if sum(c.job == core.id for c in self.of("criterion")) < MIN_CRITERIA:
+                errs.append(f"{core.id}: a Core Job needs at least {MIN_CRITERIA} success criteria")
             if not any(core.id in s.serves for s in self.of("solution")):
                 errs.append(
                     f"{core.id}: a Core Job needs at least one Solution hired today; fix: add "

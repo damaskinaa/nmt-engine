@@ -33,10 +33,15 @@ def nodes():
         n("C1", "criterion", "The invoice looks professional", job="J2"),
         n("C2", "criterion", "Clients pay without a reminder", job="J3"),
         n("C3", "criterion", "Little time spent per invoice", job="J2"),
+        n("C4", "criterion", "I know who is late without checking", job="J3"),
         n("P1", "problem", "Reminders feel awkward", job="J3", solution="S2", criteria=["C2"]),
         n("G1", "segment", "Solo designers", core_jobs=["J2"], criteria_order=["C1", "C3"]),
         n("G2", "segment", "Busy consultants", core_jobs=["J2"], criteria_order=["C3", "C1"]),
         n("G3", "segment", "Agencies", core_jobs=["J2", "J3"], criteria_order=["C2", "C1"]),
+        n("J6", "job", "I want to keep a record of what I billed", level="core", parent="J1"),
+        n("S3", "solution", "Accountant's ledger", kind="service", serves=["J6"]),
+        n("C5", "criterion", "I can find any old invoice fast", job="J6"),
+        n("C6", "criterion", "My accountant accepts the records as they are", job="J6"),
     ]
 
 
@@ -81,13 +86,16 @@ def test_schema_rejects(patch, msg):
 
 
 def test_core_job_needs_criterion_and_solution_and_segment_count():
-    ns = [x for x in nodes() if x["id"] != "C2"]
-    p1 = next(x for x in ns if x["id"] == "P1")
-    p1["criteria"], ns[-1]["criteria_order"] = ["C1"], ["C3", "C1", "C1"][:2][::-1]
-    with pytest.raises(ValidationError):
+    ns = [x for x in nodes() if x["id"] != "C4"]
+    with pytest.raises(ValidationError, match="J3: a Core Job needs at least 2 success criteria"):
+        graph(ns)
+    ns = [x for x in nodes() if x["id"] != "S3"]
+    with pytest.raises(ValidationError, match="J6: a Core Job needs at least one Solution"):
         graph(ns)
     with pytest.raises(ValidationError, match="segments"):
         graph([x for x in nodes() if x["id"] not in ("G2", "G3")])
+    with pytest.raises(ValidationError, match="2 Core Jobs; need 3-5"):
+        graph([x for x in nodes() if x["id"] not in ("J6", "S3", "C5", "C6")])
 
 
 def test_link_errors_are_reported_together():
@@ -101,7 +109,7 @@ def test_link_errors_are_reported_together():
 
 def test_problem_may_name_a_job_its_solution_is_not_listed_for():
     ns = nodes()
-    ns[10].update(job="J4", solution="S1", criteria=["C1"])
+    next(x for x in ns if x["id"] == "P1").update(job="J4", solution="S1", criteria=["C1"])
     graph(ns)
 
 
@@ -196,6 +204,9 @@ def test_l1_ci_consistency_gate_on_current_prompt():
     res = gold.check()
     assert "error" not in res, res.get("error")
     assert res["passed"], res
+    assert all(c["test"]["status"] == "PASS" for c in res["classes"].values()), res
     path = repo_root() / "briefs" / "invoicing.l1.json"
-    assert json.loads(path.read_text("utf-8"))["l1_status"] == "passed"
+    frozen = json.loads(path.read_text("utf-8"))
+    assert frozen["l1_status"] == "passed"
+    assert frozen["brief_hash"] == load_brief("invoicing").hash  # brief edits must not drift
     generate.load(path)
