@@ -39,10 +39,6 @@ MIN_CALLS = 20  # fewer positive calls on test: NOT MEASURED, never a pass
 QUOTE_CHARS = 120
 BATCH = 8
 PRODUCER_REASONING = "none"
-GOLD_PROVENANCE = (
-    "model-labelled (Kimi), not human-verified; precision against model labels; "
-    "cross-model agreement with GLM-5.3 91.3% (kappa 0.88); human check NOT DONE"
-)
 
 
 def prompt_hash(model: str = PRODUCER, reasoning: str | None = PRODUCER_REASONING) -> str:
@@ -195,7 +191,7 @@ def check(out: Path = GOLD_DIR, phash: str | None = None) -> dict:
     if not path.is_file():
         return {
             "prompt_hash": phash,
-            "gold_provenance": GOLD_PROVENANCE,
+            "gold_provenance": provenance(out),
             "classes": {},
             "t1_passed_for": [],
             "not_measured": [],
@@ -204,7 +200,7 @@ def check(out: Path = GOLD_DIR, phash: str | None = None) -> dict:
         }
     rec = json.loads(path.read_text("utf-8"))["answers"]
     gold = _read_jsonl(out / "gold.jsonl")
-    res: dict = {"prompt_hash": phash, "gold_provenance": GOLD_PROVENANCE, "classes": {}}
+    res: dict = {"prompt_hash": phash, "gold_provenance": provenance(out), "classes": {}}
     for split in ("dev", "test"):
         rows = [g for g in gold if g["split"] == split and g["role"] is not None]
         pred = [rec.get(g["id"], {}).get("role") for g in rows]
@@ -294,6 +290,23 @@ def cross_agreement(path: Path, out: Path = GOLD_DIR) -> dict:
         "classes": classes,
         "passed": agree >= CROSS_MIN,
     }
+
+
+def provenance(out: Path = GOLD_DIR) -> str:
+    """Recomputed from the gold and second-model labels on disk, so it never goes stale."""
+    gold = _read_jsonl(out / "gold.jsonl") if (out / "gold.jsonl").is_file() else []
+    who = gold[0].get("labeller", "unknown") if gold else "unknown"
+    parts = [f"model-labelled ({who}), not human-verified", "precision against model labels"]
+    for path in sorted(out.glob("cross_*.json")):
+        if path.name == "cross_agreement.json" or not gold:
+            continue
+        r = cross_agreement(path, out)
+        parts.append(
+            f"cross-model agreement with {r['second_labeller']} {r['role']['agreement']:.1%} "
+            f"(kappa {r['role']['kappa']:.2f})"
+        )
+    parts.append("human check NOT DONE")
+    return "; ".join(parts)
 
 
 def _binary(a: list[bool], b: list[bool]) -> dict:
