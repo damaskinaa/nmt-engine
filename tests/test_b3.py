@@ -235,3 +235,15 @@ def test_stackexchange_keeps_earlier_pages_when_a_deep_page_is_refused():
             return kw["url"]
 
     assert stackexchange.collect(C(), "q", date(2023, 1, 1), similar=True) == ["u1"]
+
+
+def test_l2_collector_returns_already_stored_sources(tmp_path):
+    from nmt_engine.collect.base import Collector
+
+    c = Collector(tmp_path, salt="s")
+    kw = dict(adapter="hn", kind="forum", platform="hn", url="https://x/1", text="hi")
+    kw |= dict(access_basis="api", terms_url="https://x/terms")
+    first = c.add_source(**kw)
+    assert c.add_source(**kw) is None
+    c.return_existing = True
+    assert c.add_source(**kw).id == first.id

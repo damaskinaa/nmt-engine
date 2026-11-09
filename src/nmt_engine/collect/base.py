@@ -212,8 +212,11 @@ class Collector:
     resolve_hosts: bool = field(default_factory=lambda: env("NMT_EGRESS_RESOLVE") == "1")
     # operator-supplied hosts on top of BUILTIN_HOSTS (see `operator_hosts`)
     extra_hosts: frozenset[str] = frozenset()
+    # return already-stored sources from add_source (L2 attributes every hit to its queries)
+    return_existing: bool = False
     _last: dict[str, float] = field(default_factory=dict)
     _ids: set[str] = field(default_factory=set)
+    _known: dict | None = None
 
     def __post_init__(self) -> None:
         self.run_dir = Path(self.run_dir)
@@ -421,7 +424,11 @@ class Collector:
             raise ForbiddenHostError(url)
         sid = "S-" + hashlib.sha256(f"{url}\n{text}".encode()).hexdigest()[:16]
         if sid in self._ids:
-            return self.store.current("source").get(sid) if existing_ok else None
+            if not (existing_ok or self.return_existing):
+                return None
+            if self._known is None:
+                self._known = self.store.current("source")
+            return self._known.get(sid)
         rel = f"sources/{sid}.txt"
         (self.run_dir / rel).write_text(text, "utf-8")
         src = Source(
@@ -444,6 +451,8 @@ class Collector:
         self.store.append(src)
         self._log(url, urlparse(url).hostname or "", adapter, 200, sid, None, src.sha256)
         self._ids.add(sid)
+        if self._known is not None:
+            self._known[sid] = src
         return src
 
 

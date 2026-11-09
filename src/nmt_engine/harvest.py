@@ -222,6 +222,7 @@ def run(p: HarvestPlan, run_dir: Path, collector: Collector | None = None) -> di
         salt=env("NMT_AUTHOR_SALT"),
         extra_hosts=operator_hosts(p.competitors),
     )
+    c.return_existing = True  # a post found by several queries counts for each, at its rank
     (run_dir / "harvest_plan.json").write_text(
         json.dumps({**p.as_dict(), "hash": p.hash}, indent=1), "utf-8"
     )
