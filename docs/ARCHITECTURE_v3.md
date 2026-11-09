@@ -134,9 +134,9 @@ Status key: **built** = merged on main · **salvage** = in PR 4/5, move into a n
   **contradicted** / **unknown**, with the receipts.
 - Evidence families: discussion, support_issue, qa, review count as customer voice;
   vendor_page, change_history, search_demand and market_record are context only.
-- Active gates: 1 quote exists, 2 voices, 4 calc recompute, 7 source exists, 10 licence,
-  11 diversity (by family), 13 simulation firewall, 14 access basis. The others are off by
-  default.
+- Active gates: 1 quote exists, 2 voices, 4 calc recompute, 7 source exists, 8 validation
+  wording, 10 licence, 11 diversity (by family), 13 simulation firewall, 14 access basis. The
+  others are off by default.
 - Kill criterion (**T2**): ≥ 5 of the 10 riskiest nodes end decisive (supported or
   contradicted).
 
@@ -223,7 +223,7 @@ Status key: **built** = merged on main · **salvage** = in PR 4/5, move into a n
    next. Devin stops after each PR.
 8. **Pinned models + cache:** the model id, host and prompt hash are logged; reruns replay from
    cache.
-9. **Subtraction:** gates 3, 5, 6, 8, 9 and 12 are off; collectors other than the six above
+9. **Subtraction:** gates 3, 5, 6, 9 and 12 are off; collectors other than the six above
    are off. Re-enable only with a reason.
 
 ---
@@ -275,3 +275,25 @@ Do now:
    docs/VERDICTS.md.
 Never put emails or other personal data in git. Never copy canon text into prompts or outputs.
 ```
+
+---
+
+## 8. Resolved decisions (Devin review, 9 Nov 2026)
+
+These override anything above that conflicts with them.
+
+| # | Topic | Decision |
+|---|---|---|
+| C1 | Salvage in B1 | Also salvage PR 4's `llm.py` (TensorX client, cache, logs, budgets, retries) and viewer, plus PR 5's `evidence_family` and collector fixes. The miner and kill-line code stay as history |
+| C2 | Gate 8 | Stays **on**: 9 active gates |
+| C3 | RAT numbers in L1 | The model picks low / medium / high with a reason; code maps them to numbers |
+| C4 | L5 data vs 6 collectors | The 6 collectors serve L2. L5 uses keyless statistical sources as reference data. Companies House and Adzuna stay off until keys exist. Vendr and Twin-2K-500 only if their licences allow; checked in B5 |
+| A1 | CI precision gate | Model outputs for the gold set are committed, keyed by prompt hash. A changed prompt without re-recorded outputs fails CI; re-recorded outputs must keep test precision ≥ 85%. No API key in CI |
+| A2 | Gold labels | Kimi labels 300; the human labels 30 blind; agreement < 24/30 stops. B1 gold covers the author gate and element tags; node-check gold is added in B3 with no extra stop |
+| A3 | T1 precision | Separately ≥ 85% for: USER (author gate), supports, contradicts, each element tag |
+| A4 | Past the author gate | Only USER posts naming a Solution used now or before reach node checks. Other USER posts count toward Problems only |
+| A5 | Contradicted | The mirror of supported (≥ 3 USER voices, ≥ 2 families). A node that meets both is **unknown, flagged contested** |
+| A6 | T3 events | Fewer than 3 usable past price or plan changes → T3 undecidable; simulation ships as "exploratory" |
+| A7 | Models | Cross-model third model = GLM-5.3, thinking off. Red team = Kimi |
+| A8 | PR size | B4 splits into B4a (agents, world, SSR) and B4b (cross-model check, replay → T3); no stop between them |
+| A9 | Personal data | Git holds only source ids, URLs, labels and masked quotes; author ids are salted hashes; full post text stays in the gitignored cache |
