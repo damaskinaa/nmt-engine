@@ -1,0 +1,1355 @@
+{
+ "anchor_hash": "a00868b939aaaeee",
+ "sims": {
+  "SG-consider-000": {
+   "consider": 0.5556849837303162,
+   "stay": 0.5619380474090576,
+   "switch:A home-made reminder email template kept in a notes app": 0.3624993860721588,
+   "switch:A spreadsheet invoice and receivables tracker": 0.4905907213687897,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.48009392619132996,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.534731924533844,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4419100284576416
+  },
+  "SG-consider-001": {
+   "consider": 0.7767579555511475,
+   "stay": 0.7449557185173035,
+   "switch:A home-made reminder email template kept in a notes app": 0.4951457977294922,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6171746850013733,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5729541182518005,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6998143196105957,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5451350808143616
+  },
+  "SG-consider-002": {
+   "consider": 0.7488461136817932,
+   "stay": 0.7232112884521484,
+   "switch:A home-made reminder email template kept in a notes app": 0.5554475784301758,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6157338619232178,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.579594075679779,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6589150428771973,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5377045273780823
+  },
+  "SG-consider-003": {
+   "consider": 0.761131227016449,
+   "stay": 0.6509997248649597,
+   "switch:A home-made reminder email template kept in a notes app": 0.4693112075328827,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5825963616371155,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5149633884429932,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6145153045654297,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5040057301521301
+  },
+  "SG-consider-004": {
+   "consider": 0.7061050534248352,
+   "stay": 0.6614676117897034,
+   "switch:A home-made reminder email template kept in a notes app": 0.5125831365585327,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5601790547370911,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5240163207054138,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6502941250801086,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5129181742668152
+  },
+  "SG-consider-005": {
+   "consider": 0.7200204730033875,
+   "stay": 0.6350538730621338,
+   "switch:A home-made reminder email template kept in a notes app": 0.45470938086509705,
+   "switch:A spreadsheet invoice and receivables tracker": 0.649810254573822,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6001481413841248,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6800684928894043,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5506001114845276
+  },
+  "SG-consider-006": {
+   "consider": 0.7119536995887756,
+   "stay": 0.6393008828163147,
+   "switch:A home-made reminder email template kept in a notes app": 0.49323225021362305,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6774218082427979,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5956141352653503,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6871128082275391,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5473946928977966
+  },
+  "SG-consider-007": {
+   "consider": 0.6931195259094238,
+   "stay": 0.655025064945221,
+   "switch:A home-made reminder email template kept in a notes app": 0.5285659432411194,
+   "switch:A spreadsheet invoice and receivables tracker": 0.659139096736908,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5938416123390198,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6984156966209412,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5958303213119507
+  },
+  "SG-consider-008": {
+   "consider": 0.6749032139778137,
+   "stay": 0.5993413329124451,
+   "switch:A home-made reminder email template kept in a notes app": 0.4844028055667877,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6607357859611511,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6111677289009094,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.672827959060669,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5873798727989197
+  },
+  "SG-consider-009": {
+   "consider": 0.7307968735694885,
+   "stay": 0.6823928952217102,
+   "switch:A home-made reminder email template kept in a notes app": 0.4869840145111084,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6525260210037231,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6309358477592468,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6575265526771545,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5559948086738586
+  },
+  "SG-consider-010": {
+   "consider": 0.7521372437477112,
+   "stay": 0.6842188835144043,
+   "switch:A home-made reminder email template kept in a notes app": 0.4950098991394043,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6586183905601501,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6539548635482788,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.698797881603241,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5672562718391418
+  },
+  "SG-consider-011": {
+   "consider": 0.7561782002449036,
+   "stay": 0.6186109781265259,
+   "switch:A home-made reminder email template kept in a notes app": 0.4671051502227783,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5764188766479492,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5226059556007385,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6159054040908813,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4833064377307892
+  },
+  "SG-consider-012": {
+   "consider": 0.5625046491622925,
+   "stay": 0.5479004979133606,
+   "switch:A home-made reminder email template kept in a notes app": 0.425370454788208,
+   "switch:A spreadsheet invoice and receivables tracker": 0.43442797660827637,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.38804900646209717,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.4726963937282562,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4196462333202362
+  },
+  "SG-consider-013": {
+   "consider": 0.6857365965843201,
+   "stay": 0.6648337244987488,
+   "switch:A home-made reminder email template kept in a notes app": 0.45892298221588135,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5901922583580017,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5942255854606628,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6644517779350281,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5252397656440735
+  },
+  "SG-consider-014": {
+   "consider": 0.7138476371765137,
+   "stay": 0.5936996936798096,
+   "switch:A home-made reminder email template kept in a notes app": 0.44515955448150635,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5673809051513672,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5356835126876831,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5707494616508484,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4804857075214386
+  },
+  "SG-consider-015": {
+   "consider": 0.690142810344696,
+   "stay": 0.6228963732719421,
+   "switch:A home-made reminder email template kept in a notes app": 0.5793508887290955,
+   "switch:A spreadsheet invoice and receivables tracker": 0.672356128692627,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6166563630104065,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7027838230133057,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5685060620307922
+  },
+  "SG-consider-016": {
+   "consider": 0.6077914237976074,
+   "stay": 0.5769171714782715,
+   "switch:A home-made reminder email template kept in a notes app": 0.5597767233848572,
+   "switch:A spreadsheet invoice and receivables tracker": 0.654526948928833,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5393604636192322,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6522913575172424,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5326058864593506
+  },
+  "SG-consider-017": {
+   "consider": 0.7324233055114746,
+   "stay": 0.6797778010368347,
+   "switch:A home-made reminder email template kept in a notes app": 0.499080091714859,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6402179598808289,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5781883597373962,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6666343808174133,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.538443922996521
+  },
+  "SG-consider-018": {
+   "consider": 0.6410846710205078,
+   "stay": 0.6252427101135254,
+   "switch:A home-made reminder email template kept in a notes app": 0.6015058159828186,
+   "switch:A spreadsheet invoice and receivables tracker": 0.661597490310669,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6065482497215271,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6679871678352356,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5935931205749512
+  },
+  "SG-consider-019": {
+   "consider": 0.6920318007469177,
+   "stay": 0.6247825622558594,
+   "switch:A home-made reminder email template kept in a notes app": 0.5381725430488586,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6247756481170654,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5786365866661072,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7252076268196106,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5355585217475891
+  },
+  "SG-consider-020": {
+   "consider": 0.7296805381774902,
+   "stay": 0.6999137997627258,
+   "switch:A home-made reminder email template kept in a notes app": 0.541981041431427,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6832740902900696,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6090671420097351,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7213470339775085,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6203374266624451
+  },
+  "SG-consider-021": {
+   "consider": 0.7205455303192139,
+   "stay": 0.6182669997215271,
+   "switch:A home-made reminder email template kept in a notes app": 0.49395403265953064,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6459037065505981,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5811543464660645,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7076151371002197,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5800058245658875
+  },
+  "SG-consider-022": {
+   "consider": 0.6496050357818604,
+   "stay": 0.5878700017929077,
+   "switch:A home-made reminder email template kept in a notes app": 0.535417377948761,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5284945368766785,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4173201620578766,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5368180871009827,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.47787413001060486
+  },
+  "SG-consider-023": {
+   "consider": 0.7475029826164246,
+   "stay": 0.7121315002441406,
+   "switch:A home-made reminder email template kept in a notes app": 0.505491316318512,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6373329162597656,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5132531523704529,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6142961978912354,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5449844002723694
+  },
+  "SG-consider-024": {
+   "consider": 0.7920265197753906,
+   "stay": 0.6790220141410828,
+   "switch:A home-made reminder email template kept in a notes app": 0.5016520619392395,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5915145874023438,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5145535469055176,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6125101447105408,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5042912364006042
+  },
+  "SG-consider-025": {
+   "consider": 0.7091169953346252,
+   "stay": 0.6874740719795227,
+   "switch:A home-made reminder email template kept in a notes app": 0.48930779099464417,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5773410797119141,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5461252331733704,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6177186369895935,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5589057803153992
+  },
+  "SG-consider-026": {
+   "consider": 0.7227584719657898,
+   "stay": 0.6833973526954651,
+   "switch:A home-made reminder email template kept in a notes app": 0.6006314754486084,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6566914916038513,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6296987533569336,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6350083351135254,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6130586862564087
+  },
+  "SG-consider-027": {
+   "consider": 0.7004251480102539,
+   "stay": 0.6453344225883484,
+   "switch:A home-made reminder email template kept in a notes app": 0.4793606102466583,
+   "switch:A spreadsheet invoice and receivables tracker": 0.50955730676651,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5803492665290833,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4922170639038086,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.47566816210746765
+  },
+  "SG-consider-028": {
+   "consider": 0.7633037567138672,
+   "stay": 0.7176067233085632,
+   "switch:A home-made reminder email template kept in a notes app": 0.5174316763877869,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6432339549064636,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6468366980552673,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5788938999176025,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.589494526386261
+  },
+  "SG-consider-029": {
+   "consider": 0.6954534649848938,
+   "stay": 0.6213333010673523,
+   "switch:A home-made reminder email template kept in a notes app": 0.5744860768318176,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5812931656837463,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5666003227233887,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5474328994750977,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5519047379493713
+  },
+  "SG-consider-030": {
+   "consider": 0.6960940361022949,
+   "stay": 0.6426070928573608,
+   "switch:A home-made reminder email template kept in a notes app": 0.4895254075527191,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7372307777404785,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6090580821037292,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5860891342163086,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5592959523200989
+  },
+  "SG-consider-031": {
+   "consider": 0.7366499900817871,
+   "stay": 0.6961384415626526,
+   "switch:A home-made reminder email template kept in a notes app": 0.5202510356903076,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6943800449371338,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6530376672744751,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.560085654258728,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5800173282623291
+  },
+  "SG-consider-032": {
+   "consider": 0.734666109085083,
+   "stay": 0.6992985606193542,
+   "switch:A home-made reminder email template kept in a notes app": 0.4842188060283661,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7616092562675476,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6472201347351074,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6149783134460449,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5838890075683594
+  },
+  "SG-consider-033": {
+   "consider": 0.5899277329444885,
+   "stay": 0.5868456363677979,
+   "switch:A home-made reminder email template kept in a notes app": 0.47524213790893555,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6756386756896973,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5289701819419861,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5726501941680908,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5296134352684021
+  },
+  "SG-consider-034": {
+   "consider": 0.5850434303283691,
+   "stay": 0.5802419781684875,
+   "switch:A home-made reminder email template kept in a notes app": 0.5570677518844604,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5876453518867493,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6081950068473816,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.481430321931839,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5007062554359436
+  },
+  "SG-consider-035": {
+   "consider": 0.7484380602836609,
+   "stay": 0.7550418972969055,
+   "switch:A home-made reminder email template kept in a notes app": 0.46456608176231384,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6256710290908813,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6693302989006042,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6057736277580261,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5729153156280518
+  },
+  "SG-consider-036": {
+   "consider": 0.7919864654541016,
+   "stay": 0.7203180193901062,
+   "switch:A home-made reminder email template kept in a notes app": 0.5237239003181458,
+   "switch:A spreadsheet invoice and receivables tracker": 0.683297872543335,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6914613842964172,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.627890944480896,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6051238179206848
+  },
+  "SG-consider-037": {
+   "consider": 0.7293453216552734,
+   "stay": 0.717768669128418,
+   "switch:A home-made reminder email template kept in a notes app": 0.45729467272758484,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5712306499481201,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6654475927352905,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6053349375724792,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5247290134429932
+  },
+  "SG-consider-038": {
+   "consider": 0.7929803729057312,
+   "stay": 0.7635075449943542,
+   "switch:A home-made reminder email template kept in a notes app": 0.5119639039039612,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7123651504516602,
+   "switch:Accounting software such as QuickBooks or Xero": 0.721668004989624,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6487542986869812,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.649188220500946
+  },
+  "SG-consider-039": {
+   "consider": 0.6816310882568359,
+   "stay": 0.5990490317344666,
+   "switch:A home-made reminder email template kept in a notes app": 0.4209049642086029,
+   "switch:A spreadsheet invoice and receivables tracker": 0.49738550186157227,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6286283731460571,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.45664969086647034,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.43804463744163513
+  },
+  "SG-consider-040": {
+   "consider": 0.7491511702537537,
+   "stay": 0.6803507804870605,
+   "switch:A home-made reminder email template kept in a notes app": 0.5550889372825623,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6588464379310608,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6411884427070618,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5971085429191589,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5800127387046814
+  },
+  "SG-consider-041": {
+   "consider": 0.660831868648529,
+   "stay": 0.6302443742752075,
+   "switch:A home-made reminder email template kept in a notes app": 0.4934522211551666,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6234729886054993,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6223494410514832,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5576449632644653,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5413475036621094
+  },
+  "SG-consider-042": {
+   "consider": 0.6360049247741699,
+   "stay": 0.546697199344635,
+   "switch:A home-made reminder email template kept in a notes app": 0.5210770964622498,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5962771773338318,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5757569670677185,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5826812982559204,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5390133261680603
+  },
+  "SG-consider-043": {
+   "consider": 0.7043933868408203,
+   "stay": 0.6799073815345764,
+   "switch:A home-made reminder email template kept in a notes app": 0.4717651903629303,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6139320135116577,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6243011355400085,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5581009984016418,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5573171973228455
+  },
+  "SG-consider-044": {
+   "consider": 0.6184843182563782,
+   "stay": 0.5695503354072571,
+   "switch:A home-made reminder email template kept in a notes app": 0.5272695422172546,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6039072871208191,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6265701651573181,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5634827017784119,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5423614382743835
+  },
+  "SG-consider-045": {
+   "consider": 0.792236328125,
+   "stay": 0.7370931506156921,
+   "switch:A home-made reminder email template kept in a notes app": 0.5663087964057922,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7035260200500488,
+   "switch:Accounting software such as QuickBooks or Xero": 0.7278332710266113,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6346547603607178,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6544408202171326
+  },
+  "SG-consider-046": {
+   "consider": 0.5756305456161499,
+   "stay": 0.5124516487121582,
+   "switch:A home-made reminder email template kept in a notes app": 0.43501225113868713,
+   "switch:A spreadsheet invoice and receivables tracker": 0.4325636923313141,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5170969367027283,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.3736577033996582,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4321647584438324
+  },
+  "SG-consider-047": {
+   "consider": 0.7327730655670166,
+   "stay": 0.6734592914581299,
+   "switch:A home-made reminder email template kept in a notes app": 0.4445120096206665,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6187527179718018,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5982972979545593,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5890540480613708,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.554169237613678
+  },
+  "SG-consider-048": {
+   "consider": 0.7368562817573547,
+   "stay": 0.6903205513954163,
+   "switch:A home-made reminder email template kept in a notes app": 0.5648248791694641,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6866300702095032,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6825025677680969,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5914865732192993,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6232647895812988
+  },
+  "SG-consider-049": {
+   "consider": 0.6766074299812317,
+   "stay": 0.6542244553565979,
+   "switch:A home-made reminder email template kept in a notes app": 0.5149781107902527,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6648449897766113,
+   "switch:Accounting software such as QuickBooks or Xero": 0.664523184299469,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5531571507453918,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5656055808067322
+  },
+  "SG-stay-000": {
+   "consider": 0.6320239305496216,
+   "stay": 0.7220252156257629,
+   "switch:A home-made reminder email template kept in a notes app": 0.4752183258533478,
+   "switch:A spreadsheet invoice and receivables tracker": 0.611671507358551,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5956115126609802,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6569222807884216,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5399249196052551
+  },
+  "SG-stay-001": {
+   "consider": 0.6105237007141113,
+   "stay": 0.6556650400161743,
+   "switch:A home-made reminder email template kept in a notes app": 0.5396837592124939,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6248182654380798,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6080008149147034,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6588370203971863,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5807809233665466
+  },
+  "SG-stay-002": {
+   "consider": 0.515932023525238,
+   "stay": 0.6629194617271423,
+   "switch:A home-made reminder email template kept in a notes app": 0.338932603597641,
+   "switch:A spreadsheet invoice and receivables tracker": 0.46718862652778625,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4328896105289459,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.4756549298763275,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.42899179458618164
+  },
+  "SG-stay-003": {
+   "consider": 0.6730672717094421,
+   "stay": 0.7392773628234863,
+   "switch:A home-made reminder email template kept in a notes app": 0.44344785809516907,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5638985633850098,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.548198401927948,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6481439471244812,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.48964500427246094
+  },
+  "SG-stay-004": {
+   "consider": 0.6002704501152039,
+   "stay": 0.6999630331993103,
+   "switch:A home-made reminder email template kept in a notes app": 0.47972020506858826,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5427071452140808,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5549726486206055,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5952652096748352,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.48751071095466614
+  },
+  "SG-stay-005": {
+   "consider": 0.6386340260505676,
+   "stay": 0.6993445754051208,
+   "switch:A home-made reminder email template kept in a notes app": 0.40094128251075745,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5642650723457336,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5545819401741028,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6195901036262512,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.49333807826042175
+  },
+  "SG-stay-006": {
+   "consider": 0.6350904107093811,
+   "stay": 0.6549330353736877,
+   "switch:A home-made reminder email template kept in a notes app": 0.452070951461792,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5444446802139282,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4945363998413086,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6105987429618835,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4738908112049103
+  },
+  "SG-stay-007": {
+   "consider": 0.6529403328895569,
+   "stay": 0.7202820777893066,
+   "switch:A home-made reminder email template kept in a notes app": 0.4110802114009857,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5708560347557068,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5658789873123169,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5989693999290466,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5125223994255066
+  },
+  "SG-stay-008": {
+   "consider": 0.557806670665741,
+   "stay": 0.6644238829612732,
+   "switch:A home-made reminder email template kept in a notes app": 0.5017485618591309,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5724091529846191,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5731886029243469,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.622028112411499,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5554330945014954
+  },
+  "SG-stay-009": {
+   "consider": 0.5371320247650146,
+   "stay": 0.6232525110244751,
+   "switch:A home-made reminder email template kept in a notes app": 0.4490238130092621,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5585557818412781,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5270107984542847,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5785698294639587,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4821142256259918
+  },
+  "SG-stay-010": {
+   "consider": 0.7035861015319824,
+   "stay": 0.7560414671897888,
+   "switch:A home-made reminder email template kept in a notes app": 0.39529240131378174,
+   "switch:A spreadsheet invoice and receivables tracker": 0.49343442916870117,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4949871301651001,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5469970703125,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.43797990679740906
+  },
+  "SG-stay-011": {
+   "consider": 0.6776337623596191,
+   "stay": 0.7260424494743347,
+   "switch:A home-made reminder email template kept in a notes app": 0.4000358581542969,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5067041516304016,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4860818684101105,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5454708933830261,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.45492610335350037
+  },
+  "SG-stay-012": {
+   "consider": 0.5521308183670044,
+   "stay": 0.6546671986579895,
+   "switch:A home-made reminder email template kept in a notes app": 0.390000581741333,
+   "switch:A spreadsheet invoice and receivables tracker": 0.45183834433555603,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4613517224788666,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.48779749870300293,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.41681262850761414
+  },
+  "SG-stay-013": {
+   "consider": 0.5801098942756653,
+   "stay": 0.6502261757850647,
+   "switch:A home-made reminder email template kept in a notes app": 0.5519208312034607,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5812038779258728,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5389130115509033,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6081698536872864,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5317041277885437
+  },
+  "SG-stay-014": {
+   "consider": 0.549401581287384,
+   "stay": 0.6297979950904846,
+   "switch:A home-made reminder email template kept in a notes app": 0.4364641010761261,
+   "switch:A spreadsheet invoice and receivables tracker": 0.4671168625354767,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.41870418190956116,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.4860076606273651,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.43739351630210876
+  },
+  "SG-stay-015": {
+   "consider": 0.6405162215232849,
+   "stay": 0.7218418717384338,
+   "switch:A home-made reminder email template kept in a notes app": 0.46691736578941345,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6044418215751648,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5918673872947693,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6451427936553955,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5288544297218323
+  },
+  "SG-stay-016": {
+   "consider": 0.6698229908943176,
+   "stay": 0.7261750102043152,
+   "switch:A home-made reminder email template kept in a notes app": 0.6110052466392517,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6434205174446106,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6029663681983948,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6766365170478821,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6156952977180481
+  },
+  "SG-stay-017": {
+   "consider": 0.6698810458183289,
+   "stay": 0.7146079540252686,
+   "switch:A home-made reminder email template kept in a notes app": 0.5724482536315918,
+   "switch:A spreadsheet invoice and receivables tracker": 0.58538419008255,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5759488940238953,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6109021902084351,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5223459005355835
+  },
+  "SG-stay-018": {
+   "consider": 0.49877166748046875,
+   "stay": 0.6026571393013,
+   "switch:A home-made reminder email template kept in a notes app": 0.48044753074645996,
+   "switch:A spreadsheet invoice and receivables tracker": 0.43110227584838867,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.3607541620731354,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.45185816287994385,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4095213711261749
+  },
+  "SG-stay-019": {
+   "consider": 0.599270224571228,
+   "stay": 0.701793909072876,
+   "switch:A home-made reminder email template kept in a notes app": 0.4752628803253174,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5857349038124084,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.597773015499115,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5787102580070496,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5567299723625183
+  },
+  "SG-stay-020": {
+   "consider": 0.677511990070343,
+   "stay": 0.742770254611969,
+   "switch:A home-made reminder email template kept in a notes app": 0.5365298986434937,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7237856984138489,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6236233115196228,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6951757073402405,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6646456122398376
+  },
+  "SG-stay-021": {
+   "consider": 0.6336373686790466,
+   "stay": 0.7374162673950195,
+   "switch:A home-made reminder email template kept in a notes app": 0.4701554477214813,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5475261807441711,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5130696892738342,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.5800707936286926,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5426058769226074
+  },
+  "SG-stay-022": {
+   "consider": 0.6531112194061279,
+   "stay": 0.7420727610588074,
+   "switch:A home-made reminder email template kept in a notes app": 0.5178433060646057,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6213085055351257,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5832597613334656,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6401937007904053,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6030228137969971
+  },
+  "SG-stay-023": {
+   "consider": 0.649546205997467,
+   "stay": 0.7291415333747864,
+   "switch:A home-made reminder email template kept in a notes app": 0.47963765263557434,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5900517106056213,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5820293426513672,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6251904368400574,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6057358980178833
+  },
+  "SG-stay-024": {
+   "consider": 0.5800024271011353,
+   "stay": 0.6661226749420166,
+   "switch:A home-made reminder email template kept in a notes app": 0.511657178401947,
+   "switch:A spreadsheet invoice and receivables tracker": 0.591585636138916,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5429421663284302,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6455325484275818,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6037902235984802
+  },
+  "SG-stay-025": {
+   "consider": 0.6903178095817566,
+   "stay": 0.7417771220207214,
+   "switch:A home-made reminder email template kept in a notes app": 0.49812397360801697,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5737563967704773,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5840745568275452,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5502017140388489,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5369603633880615
+  },
+  "SG-stay-026": {
+   "consider": 0.5999428629875183,
+   "stay": 0.6180208325386047,
+   "switch:A home-made reminder email template kept in a notes app": 0.5303069949150085,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5461872220039368,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5254958271980286,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5283777117729187,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5226806998252869
+  },
+  "SG-stay-027": {
+   "consider": 0.6280164122581482,
+   "stay": 0.6915728449821472,
+   "switch:A home-made reminder email template kept in a notes app": 0.41820263862609863,
+   "switch:A spreadsheet invoice and receivables tracker": 0.4953806698322296,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5290656685829163,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5184581875801086,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.48776867985725403
+  },
+  "SG-stay-028": {
+   "consider": 0.5362803339958191,
+   "stay": 0.5743116736412048,
+   "switch:A home-made reminder email template kept in a notes app": 0.4464997351169586,
+   "switch:A spreadsheet invoice and receivables tracker": 0.4601325988769531,
+   "switch:Accounting software such as QuickBooks or Xero": 0.48563680052757263,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4228990077972412,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4619772136211395
+  },
+  "SG-stay-029": {
+   "consider": 0.6159407496452332,
+   "stay": 0.6482441425323486,
+   "switch:A home-made reminder email template kept in a notes app": 0.4178154468536377,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5097471475601196,
+   "switch:Accounting software such as QuickBooks or Xero": 0.4986528158187866,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5823306441307068,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5356884598731995
+  },
+  "SG-stay-030": {
+   "consider": 0.6693482398986816,
+   "stay": 0.7073189616203308,
+   "switch:A home-made reminder email template kept in a notes app": 0.44852128624916077,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6460205316543579,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5626106858253479,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5575814843177795,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5225269794464111
+  },
+  "SG-stay-031": {
+   "consider": 0.6951239705085754,
+   "stay": 0.7034416794776917,
+   "switch:A home-made reminder email template kept in a notes app": 0.46222424507141113,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6734979748725891,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5974078178405762,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5740481019020081,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5666742920875549
+  },
+  "SG-stay-032": {
+   "consider": 0.6809026598930359,
+   "stay": 0.7274978756904602,
+   "switch:A home-made reminder email template kept in a notes app": 0.5208105444908142,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6728355884552002,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6388018727302551,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5723505020141602,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6071164608001709
+  },
+  "SG-stay-033": {
+   "consider": 0.6331693530082703,
+   "stay": 0.6773635745048523,
+   "switch:A home-made reminder email template kept in a notes app": 0.4795147180557251,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6297346353530884,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6120778918266296,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5619699358940125,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5660190582275391
+  },
+  "SG-stay-034": {
+   "consider": 0.6175717711448669,
+   "stay": 0.6443893313407898,
+   "switch:A home-made reminder email template kept in a notes app": 0.47932156920433044,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6283023953437805,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5432748198509216,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4926992654800415,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5026906132698059
+  },
+  "SG-stay-035": {
+   "consider": 0.7011628746986389,
+   "stay": 0.7376079559326172,
+   "switch:A home-made reminder email template kept in a notes app": 0.44725608825683594,
+   "switch:A spreadsheet invoice and receivables tracker": 0.616175651550293,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6315203309059143,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5927994847297668,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5712096095085144
+  },
+  "SG-stay-036": {
+   "consider": 0.6536751389503479,
+   "stay": 0.6974649429321289,
+   "switch:A home-made reminder email template kept in a notes app": 0.44880303740501404,
+   "switch:A spreadsheet invoice and receivables tracker": 0.585146963596344,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6446952223777771,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6029125452041626,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5570290684700012
+  },
+  "SG-stay-037": {
+   "consider": 0.5889020562171936,
+   "stay": 0.6435404419898987,
+   "switch:A home-made reminder email template kept in a notes app": 0.3898483216762543,
+   "switch:A spreadsheet invoice and receivables tracker": 0.4819352626800537,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5941160321235657,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5075234770774841,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.41120290756225586
+  },
+  "SG-stay-038": {
+   "consider": 0.677727997303009,
+   "stay": 0.733544111251831,
+   "switch:A home-made reminder email template kept in a notes app": 0.47105884552001953,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6470231413841248,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6545372605323792,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6284205913543701,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.590225875377655
+  },
+  "SG-stay-039": {
+   "consider": 0.6383897662162781,
+   "stay": 0.7109835743904114,
+   "switch:A home-made reminder email template kept in a notes app": 0.437209814786911,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5586001873016357,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6114890575408936,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5711649060249329,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.525163471698761
+  },
+  "SG-stay-040": {
+   "consider": 0.6412420868873596,
+   "stay": 0.67329341173172,
+   "switch:A home-made reminder email template kept in a notes app": 0.5104513764381409,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5898401141166687,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5745955109596252,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5355613827705383,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5215283036231995
+  },
+  "SG-stay-041": {
+   "consider": 0.5934540033340454,
+   "stay": 0.6486119627952576,
+   "switch:A home-made reminder email template kept in a notes app": 0.47854217886924744,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5797774195671082,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5712878704071045,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5301534533500671,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.539133608341217
+  },
+  "SG-stay-042": {
+   "consider": 0.6108056306838989,
+   "stay": 0.6224938035011292,
+   "switch:A home-made reminder email template kept in a notes app": 0.4878646433353424,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5467948913574219,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5323562026023865,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5354709625244141,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.47242388129234314
+  },
+  "SG-stay-043": {
+   "consider": 0.6236193180084229,
+   "stay": 0.6426235437393188,
+   "switch:A home-made reminder email template kept in a notes app": 0.5325121879577637,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5823037624359131,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5419071316719055,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5214226841926575,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5238573551177979
+  },
+  "SG-stay-044": {
+   "consider": 0.47476235032081604,
+   "stay": 0.5210060477256775,
+   "switch:A home-made reminder email template kept in a notes app": 0.5032445788383484,
+   "switch:A spreadsheet invoice and receivables tracker": 0.45655420422554016,
+   "switch:Accounting software such as QuickBooks or Xero": 0.48911699652671814,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.40905436873435974,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.4386589527130127
+  },
+  "SG-stay-045": {
+   "consider": 0.7276980876922607,
+   "stay": 0.7087393403053284,
+   "switch:A home-made reminder email template kept in a notes app": 0.5000002384185791,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6426053047180176,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6342262029647827,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5768880248069763,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6095860600471497
+  },
+  "SG-stay-046": {
+   "consider": 0.555105447769165,
+   "stay": 0.5550709962844849,
+   "switch:A home-made reminder email template kept in a notes app": 0.47151538729667664,
+   "switch:A spreadsheet invoice and receivables tracker": 0.41623321175575256,
+   "switch:Accounting software such as QuickBooks or Xero": 0.49984216690063477,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.3591744899749756,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.40605485439300537
+  },
+  "SG-stay-047": {
+   "consider": 0.5520094633102417,
+   "stay": 0.5840551257133484,
+   "switch:A home-made reminder email template kept in a notes app": 0.4842095375061035,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5356965065002441,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5567421317100525,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4970732629299164,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5136232972145081
+  },
+  "SG-stay-048": {
+   "consider": 0.5561054348945618,
+   "stay": 0.5570292472839355,
+   "switch:A home-made reminder email template kept in a notes app": 0.5156761407852173,
+   "switch:A spreadsheet invoice and receivables tracker": 0.48711133003234863,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5333924889564514,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.42221149802207947,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.45012977719306946
+  },
+  "SG-stay-049": {
+   "consider": 0.6637129783630371,
+   "stay": 0.6974785923957825,
+   "switch:A home-made reminder email template kept in a notes app": 0.5130403637886047,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6222838163375854,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5790344476699829,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5978227257728577,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6464815735816956
+  },
+  "SG-switch-000": {
+   "consider": 0.5827717781066895,
+   "stay": 0.5929601788520813,
+   "switch:A home-made reminder email template kept in a notes app": 0.4684687554836273,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5550230145454407,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5210310220718384,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7840283513069153,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5235996842384338
+  },
+  "SG-switch-001": {
+   "consider": 0.6204482913017273,
+   "stay": 0.6248704195022583,
+   "switch:A home-made reminder email template kept in a notes app": 0.51017826795578,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6585049629211426,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5908343195915222,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7605122923851013,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6083022952079773
+  },
+  "SG-switch-002": {
+   "consider": 0.6285009980201721,
+   "stay": 0.6339084506034851,
+   "switch:A home-made reminder email template kept in a notes app": 0.48365914821624756,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6232514381408691,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5739752650260925,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7864470481872559,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5543153882026672
+  },
+  "SG-switch-003": {
+   "consider": 0.6594824194908142,
+   "stay": 0.6613069772720337,
+   "switch:A home-made reminder email template kept in a notes app": 0.5548626780509949,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6658253073692322,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5850338935852051,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7518278956413269,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6327522993087769
+  },
+  "SG-switch-004": {
+   "consider": 0.6431207656860352,
+   "stay": 0.6491219401359558,
+   "switch:A home-made reminder email template kept in a notes app": 0.46459415555000305,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5994349122047424,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5983082056045532,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7432162165641785,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5350093245506287
+  },
+  "SG-switch-005": {
+   "consider": 0.6014102101325989,
+   "stay": 0.5981627106666565,
+   "switch:A home-made reminder email template kept in a notes app": 0.4619728624820709,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7097139954566956,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5692599415779114,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6787958145141602,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5874826908111572
+  },
+  "SG-switch-006": {
+   "consider": 0.6363264918327332,
+   "stay": 0.6378452777862549,
+   "switch:A home-made reminder email template kept in a notes app": 0.4984581470489502,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7614490389823914,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6206693649291992,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6864158511161804,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6269060969352722
+  },
+  "SG-switch-007": {
+   "consider": 0.6049249172210693,
+   "stay": 0.6290410161018372,
+   "switch:A home-made reminder email template kept in a notes app": 0.5239210724830627,
+   "switch:A spreadsheet invoice and receivables tracker": 0.8072457313537598,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6458039283752441,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7237020134925842,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6219167709350586
+  },
+  "SG-switch-008": {
+   "consider": 0.6456175446510315,
+   "stay": 0.6411522626876831,
+   "switch:A home-made reminder email template kept in a notes app": 0.5124817490577698,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7500426173210144,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6112369894981384,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6814672350883484,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6408040523529053
+  },
+  "SG-switch-009": {
+   "consider": 0.6797536015510559,
+   "stay": 0.671893835067749,
+   "switch:A home-made reminder email template kept in a notes app": 0.5168870091438293,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7802663445472717,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6288421154022217,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7169780731201172,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6395780444145203
+  },
+  "SG-switch-010": {
+   "consider": 0.6174870133399963,
+   "stay": 0.6818297505378723,
+   "switch:A home-made reminder email template kept in a notes app": 0.5245057344436646,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6285300254821777,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6326644420623779,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6875141263008118,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.7380437850952148
+  },
+  "SG-switch-011": {
+   "consider": 0.6084483861923218,
+   "stay": 0.6145792603492737,
+   "switch:A home-made reminder email template kept in a notes app": 0.48426151275634766,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6009746193885803,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5779064297676086,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6540809273719788,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6766647696495056
+  },
+  "SG-switch-012": {
+   "consider": 0.6132080554962158,
+   "stay": 0.628092348575592,
+   "switch:A home-made reminder email template kept in a notes app": 0.48378196358680725,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6147034168243408,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6149507164955139,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6635526418685913,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.666813313961029
+  },
+  "SG-switch-013": {
+   "consider": 0.641613781452179,
+   "stay": 0.6597945094108582,
+   "switch:A home-made reminder email template kept in a notes app": 0.521127462387085,
+   "switch:A spreadsheet invoice and receivables tracker": 0.636860191822052,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.602173388004303,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6985265612602234,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6993141770362854
+  },
+  "SG-switch-014": {
+   "consider": 0.5957037806510925,
+   "stay": 0.640476644039154,
+   "switch:A home-made reminder email template kept in a notes app": 0.5723806619644165,
+   "switch:A spreadsheet invoice and receivables tracker": 0.638430655002594,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6158432364463806,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6734078526496887,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.7501702904701233
+  },
+  "SG-switch-015": {
+   "consider": 0.5487614274024963,
+   "stay": 0.5754847526550293,
+   "switch:A home-made reminder email template kept in a notes app": 0.5142980217933655,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6162837147712708,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.7293375134468079,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6750951409339905,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5690298676490784
+  },
+  "SG-switch-016": {
+   "consider": 0.6058768033981323,
+   "stay": 0.6373129487037659,
+   "switch:A home-made reminder email template kept in a notes app": 0.47930392622947693,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6370365619659424,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.7032151222229004,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6944804191589355,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6050109267234802
+  },
+  "SG-switch-017": {
+   "consider": 0.5477692484855652,
+   "stay": 0.5659942626953125,
+   "switch:A home-made reminder email template kept in a notes app": 0.5115506052970886,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5904687643051147,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.7049410939216614,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6284483671188354,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5544748306274414
+  },
+  "SG-switch-018": {
+   "consider": 0.6177897453308105,
+   "stay": 0.6438798308372498,
+   "switch:A home-made reminder email template kept in a notes app": 0.5124914050102234,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6157624125480652,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.69802325963974,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6638105511665344,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6225211024284363
+  },
+  "SG-switch-019": {
+   "consider": 0.5897268056869507,
+   "stay": 0.6045063138008118,
+   "switch:A home-made reminder email template kept in a notes app": 0.5140666365623474,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6476743817329407,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.7138727307319641,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6824655532836914,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5591996312141418
+  },
+  "SG-switch-020": {
+   "consider": 0.5159115195274353,
+   "stay": 0.5481712222099304,
+   "switch:A home-made reminder email template kept in a notes app": 0.7530744671821594,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5536738038063049,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5085853934288025,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6023509502410889,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6069797277450562
+  },
+  "SG-switch-021": {
+   "consider": 0.5931325554847717,
+   "stay": 0.6186478734016418,
+   "switch:A home-made reminder email template kept in a notes app": 0.7388546466827393,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6490434408187866,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6037545800209045,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6715285181999207,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.633573591709137
+  },
+  "SG-switch-022": {
+   "consider": 0.6341718435287476,
+   "stay": 0.6637416481971741,
+   "switch:A home-made reminder email template kept in a notes app": 0.6889775395393372,
+   "switch:A spreadsheet invoice and receivables tracker": 0.607491672039032,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5282086730003357,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.657196581363678,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.621830403804779
+  },
+  "SG-switch-023": {
+   "consider": 0.5682588815689087,
+   "stay": 0.5920973420143127,
+   "switch:A home-made reminder email template kept in a notes app": 0.7230879664421082,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6564324498176575,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5851238369941711,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.6957265734672546,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6796523928642273
+  },
+  "SG-switch-024": {
+   "consider": 0.6682486534118652,
+   "stay": 0.6894267201423645,
+   "switch:A home-made reminder email template kept in a notes app": 0.7717176079750061,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6765456199645996,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6025924682617188,
+   "switch:Freelancer invoicing apps such as Bonsai or Wave": 0.7002192139625549,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6516711115837097
+  },
+  "SG-switch-025": {
+   "consider": 0.6721525192260742,
+   "stay": 0.6886923909187317,
+   "switch:A home-made reminder email template kept in a notes app": 0.5203078389167786,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6575261950492859,
+   "switch:Accounting software such as QuickBooks or Xero": 0.7497882843017578,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6138399243354797,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6114011406898499
+  },
+  "SG-switch-026": {
+   "consider": 0.6698005795478821,
+   "stay": 0.6379895806312561,
+   "switch:A home-made reminder email template kept in a notes app": 0.4939577281475067,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6148291826248169,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6575953364372253,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5942261815071106,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5577282309532166
+  },
+  "SG-switch-027": {
+   "consider": 0.671722412109375,
+   "stay": 0.6599099040031433,
+   "switch:A home-made reminder email template kept in a notes app": 0.5117540955543518,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6239444613456726,
+   "switch:Accounting software such as QuickBooks or Xero": 0.704397976398468,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.62579745054245,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.603468656539917
+  },
+  "SG-switch-028": {
+   "consider": 0.6435003280639648,
+   "stay": 0.6429858803749084,
+   "switch:A home-made reminder email template kept in a notes app": 0.5244988799095154,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6569649577140808,
+   "switch:Accounting software such as QuickBooks or Xero": 0.7979908585548401,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5978589653968811,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6078466773033142
+  },
+  "SG-switch-029": {
+   "consider": 0.7009037137031555,
+   "stay": 0.7022116184234619,
+   "switch:A home-made reminder email template kept in a notes app": 0.4800683557987213,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6096341013908386,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6418540477752686,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6134738922119141,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6047258377075195
+  },
+  "SG-switch-030": {
+   "consider": 0.7089529037475586,
+   "stay": 0.7279300093650818,
+   "switch:A home-made reminder email template kept in a notes app": 0.5055840611457825,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7253533005714417,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6338645815849304,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5802183747291565,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6117028594017029
+  },
+  "SG-switch-031": {
+   "consider": 0.7029508948326111,
+   "stay": 0.6880123019218445,
+   "switch:A home-made reminder email template kept in a notes app": 0.5701707005500793,
+   "switch:A spreadsheet invoice and receivables tracker": 0.8108572363853455,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6923211216926575,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6396317481994629,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6490731835365295
+  },
+  "SG-switch-032": {
+   "consider": 0.732857882976532,
+   "stay": 0.7280687689781189,
+   "switch:A home-made reminder email template kept in a notes app": 0.538650631904602,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7804169654846191,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6675384044647217,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6085899472236633,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6194544434547424
+  },
+  "SG-switch-033": {
+   "consider": 0.673337459564209,
+   "stay": 0.6604807376861572,
+   "switch:A home-made reminder email template kept in a notes app": 0.4971223771572113,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7584571838378906,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6436354517936707,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5825979113578796,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6035845875740051
+  },
+  "SG-switch-034": {
+   "consider": 0.7019574046134949,
+   "stay": 0.6999053955078125,
+   "switch:A home-made reminder email template kept in a notes app": 0.4746459424495697,
+   "switch:A spreadsheet invoice and receivables tracker": 0.7447616457939148,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6180056929588318,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5757810473442078,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5700597167015076
+  },
+  "SG-switch-035": {
+   "consider": 0.703212559223175,
+   "stay": 0.725553035736084,
+   "switch:A home-made reminder email template kept in a notes app": 0.5262036919593811,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6334789395332336,
+   "switch:Accounting software such as QuickBooks or Xero": 0.635087251663208,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6008730530738831,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.7106866240501404
+  },
+  "SG-switch-036": {
+   "consider": 0.6793459057807922,
+   "stay": 0.7213215827941895,
+   "switch:A home-made reminder email template kept in a notes app": 0.5463259220123291,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6531099081039429,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6088358163833618,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.634498655796051,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.7488648295402527
+  },
+  "SG-switch-037": {
+   "consider": 0.601203978061676,
+   "stay": 0.635958194732666,
+   "switch:A home-made reminder email template kept in a notes app": 0.5387278199195862,
+   "switch:A spreadsheet invoice and receivables tracker": 0.544923722743988,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5296406149864197,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5484572052955627,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.7160094380378723
+  },
+  "SG-switch-038": {
+   "consider": 0.6633526086807251,
+   "stay": 0.6957737803459167,
+   "switch:A home-made reminder email template kept in a notes app": 0.5508723855018616,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6517274379730225,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6188693046569824,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6385255455970764,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.7748708724975586
+  },
+  "SG-switch-039": {
+   "consider": 0.6909956932067871,
+   "stay": 0.730705738067627,
+   "switch:A home-made reminder email template kept in a notes app": 0.49963948130607605,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6224458813667297,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6300032734870911,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6119730472564697,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6856066584587097
+  },
+  "SG-switch-040": {
+   "consider": 0.634939968585968,
+   "stay": 0.6567442417144775,
+   "switch:A home-made reminder email template kept in a notes app": 0.4430212080478668,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5706160068511963,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5763540863990784,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6892539858818054,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5633131861686707
+  },
+  "SG-switch-041": {
+   "consider": 0.6062946319580078,
+   "stay": 0.6129622459411621,
+   "switch:A home-made reminder email template kept in a notes app": 0.4858619272708893,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5986149311065674,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6718922257423401,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6094961762428284,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5716228485107422
+  },
+  "SG-switch-042": {
+   "consider": 0.5993406772613525,
+   "stay": 0.6216927766799927,
+   "switch:A home-made reminder email template kept in a notes app": 0.44789400696754456,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5541291832923889,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5911572575569153,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6935588717460632,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5372365117073059
+  },
+  "SG-switch-043": {
+   "consider": 0.5809940099716187,
+   "stay": 0.5874158143997192,
+   "switch:A home-made reminder email template kept in a notes app": 0.46179261803627014,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6131995320320129,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6188164353370667,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.7297973036766052,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5565490126609802
+  },
+  "SG-switch-044": {
+   "consider": 0.6828832030296326,
+   "stay": 0.7067978978157043,
+   "switch:A home-made reminder email template kept in a notes app": 0.48386073112487793,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6025445461273193,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6434084177017212,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.6602397561073303,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.55892413854599
+  },
+  "SG-switch-045": {
+   "consider": 0.5876854062080383,
+   "stay": 0.5818231701850891,
+   "switch:A home-made reminder email template kept in a notes app": 0.7359001636505127,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5591654181480408,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5436984300613403,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5206907391548157,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5734084844589233
+  },
+  "SG-switch-046": {
+   "consider": 0.6551434993743896,
+   "stay": 0.6594767570495605,
+   "switch:A home-made reminder email template kept in a notes app": 0.7439351677894592,
+   "switch:A spreadsheet invoice and receivables tracker": 0.6245254874229431,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6041702628135681,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.5470049977302551,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6530567407608032
+  },
+  "SG-switch-047": {
+   "consider": 0.5991553664207458,
+   "stay": 0.5933352112770081,
+   "switch:A home-made reminder email template kept in a notes app": 0.7044218182563782,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5669195055961609,
+   "switch:Accounting software such as QuickBooks or Xero": 0.6180203557014465,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4930201768875122,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.5933601260185242
+  },
+  "SG-switch-048": {
+   "consider": 0.5739887952804565,
+   "stay": 0.5922332406044006,
+   "switch:A home-made reminder email template kept in a notes app": 0.7709957957267761,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5315239429473877,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5493165254592896,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4460560381412506,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6026036739349365
+  },
+  "SG-switch-049": {
+   "consider": 0.5604934096336365,
+   "stay": 0.5885009169578552,
+   "switch:A home-made reminder email template kept in a notes app": 0.8034880757331848,
+   "switch:A spreadsheet invoice and receivables tracker": 0.5386603474617004,
+   "switch:Accounting software such as QuickBooks or Xero": 0.5585532188415527,
+   "switch:An accountant or bookkeeper who issues invoices and chases payment": 0.4665171205997467,
+   "switch:Writing and sending invoices by hand from a word processor and email": 0.6053495407104492
+  }
+ }
+}

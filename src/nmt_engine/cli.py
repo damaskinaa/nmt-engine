@@ -514,5 +514,82 @@ def l4_run(
     raise typer.Exit(0 if res["t2"]["passed"] else 1)
 
 
+sim_app = typer.Typer(
+    help="L6 simulation world, SSR and its gold (ARCHITECTURE_v3 L6, PREREG amendment 4)"
+)
+app.add_typer(sim_app, name="sim")
+SIM_DIR = Path("runs/b4")
+
+
+def _sim_graph():
+    from nmt_engine.verify import node_gold
+
+    return node_gold.candidates()[0]
+
+
+@sim_app.command("ssr-gold")
+def sim_ssr_gold(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = SIM_DIR,
+    generate: Annotated[
+        bool, typer.Option("--generate", help="Kimi writes the 150 answers")
+    ] = False,
+) -> None:
+    """SSR anchor gold: (optionally) generate, record similarities under the anchor hash, check."""
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.sim import ssr_gold
+
+    if generate:
+        llm = _tensorx(AUDITOR, run_dir, max_tokens=8000)
+        try:
+            typer.echo(json.dumps(ssr_gold.generate(llm, _sim_graph())))
+        finally:
+            llm.close()
+    with Embedder(run_dir) as emb:
+        ssr_gold.record(emb, _sim_graph())
+    res = ssr_gold.check()
+    typer.echo(json.dumps(res, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)
+
+
+@sim_app.command("world")
+def sim_world(
+    model: Annotated[str, typer.Option("--model")] = "deepseek/deepseek-v4.1-flash",
+    repeats: Annotated[int, typer.Option("--repeats")] = 1,
+    harvest_dir: Annotated[Path, typer.Option("--harvest-dir")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = SIM_DIR,
+) -> None:
+    """Main world: every segment agent on every incumbent it can hold, under every condition."""
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import PRODUCER, THIRD_MODEL
+    from nmt_engine.sim import agents, world
+    from nmt_engine.sim.ssr import SSR
+    from nmt_engine.verify import gold
+
+    g = _sim_graph()
+    reasoning = {THIRD_MODEL: "none", PRODUCER: gold.PRODUCER_REASONING}.get(model)
+    llm = _tensorx(model, run_dir, reasoning, max_tokens=1200)
+    with Embedder(run_dir) as emb:
+        ags = agents.build(g, emb, agents.user_pool(harvest_dir))
+        cells = world.main_cells(g, ags, repeats)
+        out = run_dir / f"world_{model.split('/')[-1]}_r{repeats}.jsonl"
+        try:
+            rows = world.run(llm, SSR(emb), g, ags, cells, out)
+        finally:
+            llm.close()
+    grounding = {a.id: a.quote_ids for a in ags}
+    typer.echo(
+        json.dumps(
+            {
+                "cells": len(rows),
+                "out": str(out),
+                "grounding": grounding,
+                "budget": llm.budget.as_dict(),
+            },
+            indent=2,
+        )
+    )
+
+
 if __name__ == "__main__":
     app()
