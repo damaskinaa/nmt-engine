@@ -81,15 +81,24 @@ def test_element_yes_needs_a_quote(tmp_path):
 
 
 def test_committed_gold_has_no_post_text_or_emails():
-    for name in ("items.jsonl", "gold.jsonl"):
+    names = ("items.jsonl", "gold.jsonl", "node_gold_amend1.jsonl", "node_gold.jsonl")
+    names += ("node_items.jsonl", "node_authors.jsonl")
+    for name in names:
+        if not (gold.GOLD_DIR / name).is_file():
+            continue
         for line in (gold.GOLD_DIR / name).read_text().splitlines():
             row = json.loads(line)
-            assert not {"text", "role_quote"} & set(row) and "@" not in json.dumps(row)
+            assert not {"text", "role_quote", "quotes"} & set(row)
+            assert "@" not in json.dumps(row)
 
 
-def test_gold_split_is_200_dev_100_test():
+def test_gold_split_is_200_dev_100_test_plus_grown_test():
     rows = [json.loads(x) for x in (gold.GOLD_DIR / "items.jsonl").read_text().splitlines()]
-    assert len(rows) == 300 and sum(r["split"] == "test" for r in rows) == 100
+    base = [r for r in rows if "round" not in r]
+    assert len(base) == 300 and sum(r["split"] == "test" for r in base) == 100
+    grown = [r for r in rows if "round" in r]
+    assert all(r["split"] == "test" for r in grown)
+    assert len({r["source_id"] for r in rows}) == len({r["url"] for r in rows}) == len(rows)
 
 
 def test_ci_precision_gate_on_current_prompts():

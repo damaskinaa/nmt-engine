@@ -83,3 +83,37 @@ families, collector fixes, graph viewer and statistics.
     USER definition.
   - **Owner: B3.** Target: USER recall ≥ 60% at USER precision ≥ 85%, on a test split large
     enough for 20 or more calls per class. B1 is not blocked on it.
+  - **B3 status: fixed.** After the dev-only prompt fix (hash `77cc88767bdfe9df`) and growth
+    round 1 (150 posts, all to test), USER test precision is 75/77 = **97.4%** with recall
+    75/84 = 89%, and problem is 44/44. Both now have 20 or more calls and PASS (precision
+    against model labels). Growth stopped after round 1: each round costs about $3.2, and the
+    remaining element classes (trigger 6, success_criterion 2, alternative 5, aha 0 test calls)
+    would not reach 20 within the B3 budget. They stay NOT MEASURED.
+
+## B3: node verification (T1 nodes, T2) — invoicing
+
+- **Round 0 (amendment 2, targeted harvest pairs): run and failed.** 12 posts qualified (USER
+  naming a Solution), 38 designated pairs, Kimi and GLM both said unrelated for all 38. Finding
+  for all 10 nodes: "no public evidence in this harvest". Kept on record, not scored.
+- **Amendment 3 (customer-voice pool, Qwen3 ranking):** pool 3,359 posts (3,343 App Store
+  reviews, 16 HN USER posts; no Reddit collector in the first build). Per node, top 8 by
+  embedding similarity to the closed question plus 2 random, split by post id. 38 posts
+  qualified; 33 items, 85 designated pairs (33 dev, 52 test). Canary 6/6 (amendment 2).
+  - **Kimi node gold:** 4 supports (J2 ×2, J3, S2), 0 contradicts, 81 unrelated.
+  - **Cross-model agreement (GLM-5.3, thinking off):** 82/85 = 96.5%, kappa 0.55; passes the
+    80% bar. Not human-verified.
+  - **Producer on test:** supports 1/1 called, contradicts 0 called.
+  - **Cost:** $1.62 (cap $6). B3 total about $11 (cap $20).
+- **Pre-registered outcome: supports + contradicts have 1 test call (< 20). Node precision is
+  NOT MEASURED and T2 FAILS.** Per §5 the product narrows to the **Radar** (problems +
+  alternatives): downstream layers report problems and alternatives, and no node is reported as
+  supported or contradicted by public evidence.
+- **Planner finding (affects future harvests, not this test):** the L2 planner retrieved
+  BUILDER/OTHER-heavy sources (GitHub issues, tax questions on Stack Exchange). New plans now
+  carry `source_weights` (App Store 2.0, HN 1.0, Stack Exchange 0.3, GitHub 0.3).
+- **Harvest data-quality finding:** 60 of the 3,343 App Store reviews come from two unrelated
+  listings that share the name "Wave" (Wave Mobile Money 58, a dating app 2). They were in the
+  amendment-3 pool, but none was selected as a node item or labelled. Future App Store harvests need an
+  app-ID allow-list.
+- **Scope after T2:** `docs/RADAR_SCOPE.md` describes the Radar report that B1–B3 can support
+  and which of B4–B7 it still needs. B4 (simulation) is on hold pending the owner's decision.

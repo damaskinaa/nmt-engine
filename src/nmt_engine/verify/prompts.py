@@ -73,7 +73,21 @@ Return {{"posts": [{{"id": <post number>, {fields}}}, ...]}} with one entry per 
 ELEMENT_FIELDS = ", ".join(f'"{e}": <true|false>, "{e}_quote": <string|null>' for e in ELEMENTS)
 
 AUTHOR_SYSTEM = GOLD_AUTHOR_SYSTEM
-AUTHOR_PROMPT = GOLD_AUTHOR_PROMPT  # role rules now live in the frozen gold prompt
+AUTHOR_PROMPT = GOLD_AUTHOR_PROMPT.replace(
+    "Each label must cite the verbatim phrase that decided it.",
+    "Each label must cite the verbatim phrase that decided it.\n"
+    "Checks before answering USER (all must hold, else pick another role):\n"
+    "- OWN: the experience is the author's own work. A spouse's, employer's or client's system \
+the author only describes is OTHER.\n"
+    "- SOLUTION: the post is about a {category} Solution the author relies on, not a passing \
+mention inside commentary on something else (computers, AI, jobs, ERP stories). Passing mentions \
+are OTHER.\n"
+    "- SELF-BUILT: someone who built their own {category} tool is USER only if they name the \
+product they left and why; otherwise a list of their projects or a note about building it is \
+BUILDER.",
+    1,
+)  # producer refinement, tuned on the dev split only
+assert AUTHOR_PROMPT != GOLD_AUTHOR_PROMPT
 ELEMENT_SYSTEM = GOLD_ELEMENT_SYSTEM
 ELEMENT_PROMPT = GOLD_ELEMENT_PROMPT.replace(
     "- alternative: does the post name another product or method the author used, tried or \
@@ -89,3 +103,41 @@ is not a problem with a product they use.",
     1,
 )
 assert ELEMENT_PROMPT != GOLD_ELEMENT_PROMPT
+
+# --- step b: node check (PREREG_v3 amendment 1) -------------------------------------------------
+
+VERDICTS = ("supports", "contradicts", "unrelated")
+
+GOLD_NODE_SYSTEM = (
+    "You check what authors of public posts say about their own experience against fixed "
+    "statements. You answer closed questions only and back every supports or contradicts with a "
+    "quote copied exactly from the post. Unrelated is the default. Output JSON only."
+)
+
+GOLD_NODE_PROMPT = """Category: {category}
+
+Each post below was written by someone describing their own experience with a {category} \
+Solution. Check each statement against what the author says about their OWN experience.
+- supports: the post shows the statement is true for the author (they do it, use it, judge by it \
+or have that problem).
+- contradicts: the post shows the statement is false for the author (they do the opposite, do not \
+need it, judge by something else instead, or say the Solution does what the statement says it \
+fails at).
+- unrelated: anything else, including posts that do not touch the statement. When unsure, answer \
+unrelated.
+Every supports or contradicts needs a quote copied exactly from the post.
+
+Statements:
+{statements}
+
+Posts (possibly cut short):
+
+{posts}
+
+For each post answer every statement.
+Return {{"posts": [{{"id": <post number>, "answers": [{{"node": "<statement id>", \
+"verdict": "supports|contradicts|unrelated", "quote": <string|null>}}, ...]}}, ...]}} with one \
+entry per post."""
+
+NODE_SYSTEM = GOLD_NODE_SYSTEM
+NODE_PROMPT = GOLD_NODE_PROMPT

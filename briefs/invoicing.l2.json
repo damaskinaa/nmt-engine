@@ -1,0 +1,319 @@
+{
+ "brief_hash": "fe3d09b3e2071bbe",
+ "riskiest": [
+  "J2",
+  "J3",
+  "C3",
+  "C4",
+  "J11",
+  "P3",
+  "J4",
+  "J5",
+  "S2",
+  "J12"
+ ],
+ "queries": [
+  {
+   "text": "alternative to Bonsai",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "switched from Bonsai",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "Bonsai too expensive",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "Bonsai vs QuickBooks",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "Bonsai vs Wave",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "Bonsai vs Xero",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "alternative to Wave",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "switched from Wave",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "Wave too expensive",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "QuickBooks vs Wave",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "Wave vs Xero",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "template"
+  },
+  {
+   "text": "how to send invoice after finishing work",
+   "nodes": [
+    "J2"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "when should i invoice a client",
+   "nodes": [
+    "J2"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "send invoice right away or wait",
+   "nodes": [
+    "J2"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "tracking unpaid invoices and how late",
+   "nodes": [
+    "J3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "which clients still owe me money",
+   "nodes": [
+    "J3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "how much do clients owe me total",
+   "nodes": [
+    "C3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "see unpaid balance without adding up",
+   "nodes": [
+    "C3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "total outstanding invoices at a glance",
+   "nodes": [
+    "C3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "forgot to send an invoice",
+   "nodes": [
+    "C4"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "invoice slipped through the cracks",
+   "nodes": [
+    "C4"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "how to stop missing unpaid invoices",
+   "nodes": [
+    "C4"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "clients behind on payments list",
+   "nodes": [
+    "J11"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "how long clients have owed me",
+   "nodes": [
+    "J11"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "keep forgetting to send payment reminders",
+   "nodes": [
+    "P3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "writing invoices by hand is a pain",
+   "nodes": [
+    "P3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "putting off chasing late payments",
+   "nodes": [
+    "P3"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "remind client to pay without being rude",
+   "nodes": [
+    "J4"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "polite payment reminder wording",
+   "nodes": [
+    "J4"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "chasing payment without ruining relationship",
+   "nodes": [
+    "J4"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "proof of what was agreed and billed",
+   "nodes": [
+    "J5"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "keep records of work and invoices",
+   "nodes": [
+    "J5"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "how to prove a client owes me",
+   "nodes": [
+    "J5"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "bonsai or wave for invoicing",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "freelancer invoicing app recommendations",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "best invoicing app for freelancers",
+   "nodes": [
+    "S2"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "warn me before invoice is overdue",
+   "nodes": [
+    "J12"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "alert when payment is due soon",
+   "nodes": [
+    "J12"
+   ],
+   "origin": "producer"
+  },
+  {
+   "text": "reminder before invoice goes past due",
+   "nodes": [
+    "J12"
+   ],
+   "origin": "producer"
+  }
+ ],
+ "apps": [
+  "Bonsai",
+  "FreshBooks",
+  "Harvest",
+  "Invoice Ninja",
+  "Invoice Simple",
+  "Invoice2go",
+  "QuickBooks",
+  "Wave",
+  "Xero",
+  "Zoho Invoice"
+ ],
+ "competitors": [
+  "xero.com",
+  "freshbooks.com",
+  "waveapps.com",
+  "hellobonsai.com",
+  "getharvest.com",
+  "invoiceninja.com"
+ ],
+ "app_countries": [
+  "us",
+  "gb",
+  "ie"
+ ],
+ "since": "2023-01-01",
+ "geo": "IE",
+ "per_query": 30,
+ "hash": "6c40fe13abf722e7"
+}

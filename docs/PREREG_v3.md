@@ -92,3 +92,131 @@ T1 is precision against **model labels**. The L3 gold labels are Kimi's (model-l
   - Code-corrupted links are "inconsistent": a link is re-pointed at a node under a different Core Job.
   - Dev and test are split by origin node.
 - **Gate:** the same precision rule as T1, for both classes, with Kimi's answers committed under the check prompt hash.
+
+## 8. Amendment 1 (2026-11-09, B3, before any T1 or T2 run)
+
+Written before the L2 harvest, before the node-check gold exists, and before any test split is
+scored for a T1 verdict. It corrects one stale figure and fills in details §3 left open. It
+changes no threshold and no rule in §2–§7. The PR records the new sha256.
+
+**Correction to §3.** The cross-model figure in §3 (91.3%, kappa 0.88) was from round 2, which
+was superseded. The final round used the project owner's frozen role rules: 262 of 292 posts
+agree (89.7%), Cohen's kappa 0.86, USER-class agreement 93.5%. GLM left 8 posts unlabelled after
+its one shorter-quote retry. The gold set stays model-labelled (Kimi), not human-verified; the
+human check stays NOT DONE.
+
+**Node check (§3, supports and contradicts).**
+- **Candidate nodes:** the 10 riskiest nodes of the frozen graph (§2).
+- **Statements:** code writes one statement per node from the frozen graph, by node type:
+  - job: the author needs to do that Job;
+  - solution: the author uses that Solution for the Jobs it serves;
+  - criterion: the author judges that Job by that criterion;
+  - problem: the author has that problem with that Solution.
+- **Answers:** supports, contradicts or unrelated per post and node, with a verbatim quote for
+  supports and contradicts. Unrelated is the default.
+- **Gold items:** every gold post that Kimi labels USER and naming a Solution (A4), crossed with
+  the 10 candidate nodes. A pair takes its post's split.
+- **Gold labels:** Kimi, with a frozen gold node prompt committed before labelling; one try plus
+  exactly one retry with a shorter quote, as in B1.
+- **Calls:** a class's test calls are the producer's answers of that class on test pairs that
+  Kimi answered.
+
+**Producer prompts.** The producer prompts may be refined on dev only. They are frozen before
+growth round 1 and do not change during growth. The B3 refinement of the author prompt was
+tuned on the 200 dev posts.
+
+**Growing the test split (§3).**
+- **Pool:** customer-voice posts (discussion, support_issue, qa, review) from the one L2 harvest
+  of §5, minus posts already in the gold set (same source id or URL).
+- **Rounds:** 150 posts per round, stratified by evidence family, seeded with the round number.
+  Every new post goes to test.
+- **Labels:** Kimi labels each new post with the frozen author and element prompts, then
+  node-labels the posts it calls USER and naming a Solution.
+- **Stop:** when USER, supports and contradicts each have at least 20 test calls, or after 6
+  rounds (900 posts), or when the pool runs out, whichever comes first.
+- **Then:** each class is scored once on test (§3). A class still under 20 calls is NOT
+  MEASURED. For USER, supports or contradicts, that means T2 does not run, and the build stops
+  for the user.
+
+## 9. Amendment 2 (2026-11-09, B3, before any node-check T1 is scored)
+
+Reason: the project owner's decision after the first node gold (19 random gold USER posts × 10
+nodes) came back 190/190 unrelated. Random posts are unrelated to a given node almost by design,
+so that design could not measure supports or contradicts. That first node gold is kept as a record
+(`node_gold_amend1.jsonl`) and is never scored. This amendment replaces amendment 1's "Gold items"
+and its growth rule for the node classes only. Thresholds and the USER rules are unchanged.
+
+Pool. Customer-voice posts from the L2 harvest (`runs/l2`, the plan hash committed in
+`briefs/invoicing.l2.json`) that are not already node items. A post's rank for node n is the best
+(lowest) position at which any query listed for n returned it, counting from 0 within each step.
+Ties are broken by source id.
+
+Who counts as USER. Kimi labels author role with the frozen gold author prompt (one try plus one
+shorter-quote retry), working through each node's candidates in rank order. A post qualifies if
+it is USER and names a Solution (§8 A4). For each node, labelling stops when 8 qualifying posts are
+found, after 60 candidates, or when the candidates run out, whichever comes first.
+
+Pairs. For each node: its top 8 qualifying posts by rank, plus 2 qualifying posts drawn at random
+(seed `"<round>:<node>"`) from the qualifying posts not retrieved for that node at all, or failing
+that, from the qualifying posts outside that node's top 8. A (post, node) pair is a designated pair.
+Each node item is checked against all 10 statements in one call (same frozen prompts as
+amendment 1), but only designated pairs are scored.
+
+Split. Fixed by post before any labelling: `test` if `int(sha256(source_id), 16)` is odd, else
+`dev`. All pairs of a post share its split.
+
+Growth. If supports or contradicts has fewer than 20 producer calls on test, each growth round r
+(1 to 6) adds, per node, the next 8 qualifying posts by rank plus 2 random negatives. Only posts not
+yet node items are eligible, and every growth post goes to `test`. The USER test split still grows
+by the amendment 1 rule (150 random posts per round, stratified by family).
+
+Canary. Before any node-gold labelling, 6 synthetic pairs (2 obvious supports, 2 obvious
+contradicts, 2 unrelated) run through the frozen gold node prompt. If Kimi gets an obvious supports
+or contradicts wrong, the prompt is broken and gets fixed on dev before any gold labelling. Canaries
+never count toward T1.
+
+Cross-model check. GLM-5.3 (thinking off) labels every node item blind with the same prompt.
+Agreement and Cohen's kappa are computed over designated pairs. At 80% or above, gold stays Kimi.
+Below 80% the work stops and the owner is told. This is called cross-model agreement, never
+human-verified.
+
+Reporting. Any node with 0 supports and 0 contradicts in node gold is reported per node as "no
+public evidence in this harvest". It is not padded.
+
+## 10. Amendment 3 (2026-11-09, B3, before any amendment-3 labelling)
+
+Reason: the project owner's decision after amendment 2 round 0. Of 475 query-retrieved candidates,
+12 were USER posts naming a Solution, and all 38 designated pairs came back unrelated (GLM agreed
+on 38/38). The query-retrieved pool is mostly BUILDER (GitHub issues) and OTHER (tax questions on
+Stack Exchange), and App Store reviews never got a node rank because no query returns them.
+
+Round 0 stays on record as run and failed: "no public evidence in this harvest" for all 10
+nodes. Its items stay in `node_items.jsonl` and are not scored. Amendment 3 changes only the
+candidate pool and its ranking. The labels (frozen gold author and node prompts, one
+shorter-quote retry), the 80% cross-model agreement bar and the 85% precision bar stay as they
+are. The frozen amendment-2 node growth is stopped. The USER test split keeps growing under
+amendment 1.
+
+Pool. Every customer-voice post of these kinds: App Store reviews of the named invoicing apps in
+the L2 harvest (`runs/l2`), plus Hacker News posts that Kimi already labelled USER (in `gold.jsonl`
+or `node_authors.jsonl`). Reddit is not in the first-build collectors, so it adds no posts. Round-0
+node items are left out.
+
+Ranking. For each node, every pool post is ranked by cosine similarity between its Qwen3 embedding
+(`qwen/qwen3-embedding-8b`) and the embedding of the node's closed question (the statement the node
+check asks about). Ties go by source id.
+
+Pick, split and labels. These follow amendment 2. Kimi labels author role down each node's ranking
+until 8 posts qualify (USER and naming a Solution), after 60 candidates, or when the pool runs out.
+HN posts already labelled keep their label. Each node gets its top 8 qualifying posts plus 2
+qualifying posts drawn at random (seed `"a3:<node>"`) from the qualifying posts outside its top 8.
+The split is fixed by post id (`test` if `int(sha256(source_id), 16)` is odd). Kimi labels each
+item against all 10 statements. GLM-5.3 (thinking off) labels them blind, and agreement below
+80% stops the work. Only amendment-3 designated pairs are scored for the node classes.
+
+Budget. Amendment 3 costs at most $6, embeddings included. B3 stays at or under $20 in total.
+
+Pre-registered outcome. If the producer's supports plus contradicts calls on the test split come to
+fewer than 20 in total, node precision is NOT MEASURED and T2 FAILS. Per §5 the product then
+narrows to the Radar (problems + alternatives), which is recorded, and the work goes on to B4
+without stopping. With 20 or more, T1 runs as written, and then T2 runs if T1 allows it.

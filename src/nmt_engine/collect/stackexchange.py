@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from datetime import UTC, date, datetime, time
 
+import httpx
+
 from nmt_engine.collect.base import Collector, env, ts
 from nmt_engine.collect.text import html_to_text
 
@@ -15,12 +17,22 @@ NAME = "stackexchange"
 ACCESS_BASIS = "public_api_terms_ok"
 TERMS_URL = "https://stackexchange.com/legal/api-terms-of-use"
 API = "https://api.stackexchange.com/2.3/search/advanced"
+SIMILAR = "https://api.stackexchange.com/2.3/similar"
 
 
-def collect(c: Collector, query: str, since: date, site: str = "stackoverflow", limit: int = 100):
+def collect(
+    c: Collector,
+    query: str,
+    since: date,
+    site: str = "stackoverflow",
+    limit: int = 100,
+    similar: bool = False,
+):
+    """`similar=True` uses /similar, which ranks questions by a natural-language title; the
+    default /search/advanced needs every word to match, so long customer phrasings find little."""
     out, page = [], 1
     params = {
-        "q": query,
+        ("title" if similar else "q"): query,
         "site": site,
         "fromdate": int(datetime.combine(since, time(), UTC).timestamp()),
         "order": "desc",
@@ -31,7 +43,13 @@ def collect(c: Collector, query: str, since: date, site: str = "stackoverflow", 
     if key := env("STACKEXCHANGE_KEY"):
         params["key"] = key
     while len(out) < limit:
-        data = c.fetch_json(API, NAME, params={**params, "page": page})
+        try:
+            data = c.fetch_json(SIMILAR if similar else API, NAME, params={**params, "page": page})
+        except httpx.HTTPStatusError as exc:
+            # keyless /similar refuses deep pages with 400; keep what earlier pages returned
+            if page > 1 and exc.response.status_code == 400:
+                break
+            raise
         for q in data.get("items", []):
             src = c.add_source(
                 adapter=NAME,
