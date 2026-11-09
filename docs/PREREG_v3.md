@@ -220,3 +220,80 @@ Pre-registered outcome. If the producer's supports plus contradicts calls on the
 fewer than 20 in total, node precision is NOT MEASURED and T2 FAILS. Per §5 the product then
 narrows to the Radar (problems + alternatives), which is recorded, and the work goes on to B4
 without stopping. With 20 or more, T1 runs as written, and then T2 runs if T1 allows it.
+
+## 11. Amendment 4 (2026-11-09, B4, before any simulation, SSR-gold or replay run)
+
+Reason: §6 fixes T3 but leaves the simulator, the SSR scoring, "usable", "beats" and the event
+date rule open. This amendment fixes them before any L6 output exists. §6 and ARCHITECTURE_v3 §5
+are unchanged except where a rule below says so. B3 ended with T2 FAILED, so the product is
+narrowed to the Radar. L6 still runs, behind the firewall: its output never counts toward L4,
+T2 or a Job node (gate 13).
+
+Agents. One agent per L1 segment (G1–G5), defined by its Core Jobs and its criteria in order.
+Each agent is grounded by up to 5 masked quotes (first 300 characters) from posts Kimi labelled
+USER naming a Solution (`gold.jsonl`, `node_authors.jsonl`), ranked by Qwen3 cosine similarity
+to the segment's text. Only post ids go to git. In a replay, only posts published before the
+freeze date are eligible.
+
+World. In the main world each agent starts once on every L1 Solution whose `serves` overlaps its
+Core Jobs, and the offers are the other L1 Solutions. Each run is one round under one condition:
+no change, incumbent price +10%, incumbent price +50%, a new entrant, the incumbent drops a Job,
+a service takes the Job off the customer, and a competitor copies the incumbent's best feature.
+The prompt gives the agent its criteria in order, the 6 costs, the five switching conditions
+(push, pull, habit, anxiety, barriers) and the condition. It answers in 2–4 sentences of free
+text and never gives a number. The producer (DeepSeek V4.1 Flash) runs the world.
+
+SSR. Each outcome has 3 fixed anchor statements: stay, consider (looks but does not move yet),
+and switch to X, one outcome for every offer X. The response and anchors are embedded with Qwen3.
+With s_i the outcome's mean cosine similarity, p_i ∝ s_i − min_j s_j + 0.01. P(switch) is the sum
+over the switch outcomes.
+
+SSR gold (CI gate, ARCHITECTURE_v3 §4 rule 3). Kimi writes 150 synthetic answers, 50 for each
+intended class (stay, consider, switch), across the 5 segments and the 7 conditions. These are
+model-written, not human-verified. Split by answer id (`test` if `int(sha256(id), 16)` is odd).
+The predicted class is the largest of P(stay), P(consider) and P(switch). Bar: per class ≥85%
+precision with ≥20 test calls; fewer than 20 is NOT MEASURED. Anchors may be changed on dev only.
+Similarities are committed under the anchor-set hash, and CI fails if they are missing or below
+the bar. If SSR fails, T3 does not run and the simulation ships as "exploratory, unvalidated".
+
+Cross-model stability. The main world runs on DeepSeek, GLM-5.3 (thinking off) and Kimi. Cells
+are agent × incumbent × condition, and the value is P(switch). ρ is the lowest pairwise
+Spearman. ρ < 0.5: unusable (exploratory, and Q4/Q7 lose the simulated family). 0.5 ≤ ρ < 0.8:
+the simulated family is capped at S1. ρ ≥ 0.8: no cap.
+
+Internal validity (reported, not a gate). Repeat consistency is the mean absolute difference in
+P(switch) over 3 DeepSeek repeats (the prompt carries the repeat number). Scale compression is
+the standard deviation of P(switch) across cells. Preserved relationship is the share of agent ×
+incumbent pairs where P(switch) for none ≤ +10% ≤ +50%.
+
+Replay events (replaces "date known to the day" in §6). Products: the 10 apps in
+`briefs/invoicing.l2.json`. Wayback monthly snapshots of each pricing page since 2019-01-01. A
+candidate is a pair of consecutive snapshots whose diff adds or removes a line with a currency
+amount, and Kimi confirms from the diff that it is a price or plan change (closed question with
+a verbatim quote). Daily snapshots between the pair bracket the change: T0 is the last snapshot
+with the old page and T1 the first with the new one. A gap above 31 days makes the event
+unusable. Evidence is frozen at T0 − 1 day (leakage guard), and outcomes are counted from T1.
+
+Options. For every event: the other 9 apps, plus "a spreadsheet", "invoices by hand (word
+processor and email)", "an accountant or bookkeeper" and "a self-built tool". The list is fixed
+before outcomes are read.
+
+Prediction. The 5 agents start on the product. The condition is the change, taken from the
+diff lines as they are. Offers are the options by name. The prediction is the option with the
+highest mean P(switch to X) across agents (DeepSeek). The baseline is the option named most
+often, by a code count of names, in posts mentioning the product dated in the 365 days before
+T0 (HN comments and App Store reviews). Ties go to option order. Predictions and baselines for
+every candidate event are written and committed before any outcome is read.
+
+Outcomes. Posts mentioning the product dated T1 to T1 + 365 days (HN comments and App Store
+reviews). For each one, Kimi answers a closed question with a verbatim quote: does the author
+say they themselves left or are leaving the product, and for which option (or "other" or "not
+said")? One vote per author hash. An event is usable if at least 3 authors name an option.
+
+Beats and pass. The simulator beats the baseline on an event if the actual share of its top
+option is strictly greater than the actual share of the baseline's top option. When the two
+pick the same option, the simulator does not beat it. T3 passes if there are at least 3 usable
+events and the simulator beats the baseline on at least 2/3 of them. With fewer than 3 usable
+events, T3 is undecidable (A6) and the simulation ships as "exploratory, unvalidated".
+
+Budget. The $20 run cap and the step caps (`sim` $8) apply. B4 as a whole stays at or under $20.
