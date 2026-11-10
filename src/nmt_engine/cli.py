@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 from typing import Annotated
 
@@ -775,3 +776,100 @@ def sim_replay_outcomes(
 
 if __name__ == "__main__":
     app()
+
+
+radar_app = typer.Typer(help="B5 Radar inputs (PREREG_v3 amendment 7).", no_args_is_help=True)
+app.add_typer(radar_app, name="radar")
+B5_DIR = Path("runs/b5")
+
+
+@radar_app.command("build")
+def radar_build(
+    harvest: Annotated[Path, typer.Option("--harvest")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+) -> None:
+    """Pool, producer pass, k=12 problem groups, Kimi group names, alternatives map."""
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import AUDITOR, PRODUCER
+    from nmt_engine.radar import build
+    from nmt_engine.verify.gold import PRODUCER_REASONING
+
+    run_dir.mkdir(parents=True, exist_ok=True)
+    posts = build.pool(harvest)
+    cache = run_dir / "radar_posts.jsonl"
+    done = {}
+    for line in cache.read_text("utf-8").splitlines() if cache.is_file() else []:
+        r = json.loads(line)
+        done[r["id"]] = r
+    if len(done) != len(posts):
+        prod = _tensorx(PRODUCER, run_dir, PRODUCER_REASONING)
+        build.producer_pass(prod, posts)
+        cache.write_text(
+            "".join(
+                json.dumps({k: p.get(k) for k in ("id", "role", "problem")}) + "\n" for p in posts
+            ),
+            "utf-8",
+        )
+    else:
+        for p in posts:
+            p.update(role=done[p["id"]]["role"], problem=done[p["id"]]["problem"])
+    radar = [p for p in posts if p.get("role") == "USER" and p.get("problem")]
+    with Embedder(run_dir) as emb:
+        gs = build.groups(emb, radar)
+    kimi = _tensorx(AUDITOR, run_dir, max_tokens=2000)
+    build.name_groups(kimi, gs, {p["id"]: p["text"] for p in radar})
+    users = [p for p in posts if p.get("role") == "USER"]
+    doc = {
+        "pool": len(posts),
+        "by_platform": dict(Counter(p["platform"] for p in posts)),
+        "unanswered": sum(p.get("role") is None for p in posts),
+        "user": len(users),
+        "radar": len(radar),
+        "radar_authors": len({p["author"] for p in radar}),
+        "k": build.K,
+        "groups": gs,
+        "alternatives": build.alternatives(users),
+        "quotes": {i: p["text"][:600] for p in radar for i in [p["id"]]},
+        "meta": {
+            p["id"]: {k: p[k] for k in ("app", "year", "country", "url", "platform")} for p in radar
+        },
+    }
+    build.write(run_dir / "radar.json", {k: v for k, v in doc.items() if k != "quotes"})
+    build.write(run_dir / "radar_quotes.json", doc["quotes"])
+    keys = ("pool", "by_platform", "unanswered", "user", "radar", "radar_authors")
+    typer.echo(json.dumps({k: doc[k] for k in keys}))
+
+
+report_app = typer.Typer(help="B6 Groundwork report (ARCHITECTURE_v3 L8).", no_args_is_help=True)
+app.add_typer(report_app, name="report")
+
+
+@report_app.command("build")
+def report_build(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+    red_team: Annotated[bool, typer.Option("--red-team/--no-red-team")] = True,
+) -> None:
+    """Packet -> GLM red team (once, cached) -> HTML + PDF in run_dir/reports; then run gates."""
+    from nmt_engine.llm import THIRD_MODEL
+    from nmt_engine.report import groundwork
+
+    pkt = groundwork.packet()
+    (run_dir / "packet.json").write_text(json.dumps(pkt, indent=2, default=str), "utf-8")
+    rt_path, rt = run_dir / "redteam.json", None
+    if rt_path.is_file():
+        rt = json.loads(rt_path.read_text("utf-8"))
+    elif red_team:
+        llm = _tensorx(THIRD_MODEL, run_dir, "none", max_tokens=6000)
+        try:
+            rt = groundwork.red_team(llm, pkt)
+        finally:
+            llm.close()
+        rt_path.write_text(json.dumps(rt, indent=2), "utf-8")
+    resp = run_dir / "redteam_responses.json"
+    if rt and resp.is_file():
+        answers = json.loads(resp.read_text("utf-8"))
+        for i, f in enumerate(rt.get("overreach") or []):
+            f["response"] = answers.get(str(i))
+    html = groundwork.render(pkt, rt, run_dir / "reports" / "groundwork.html")
+    out = groundwork.pdf(html)
+    typer.echo(json.dumps({"html": str(html), "pdf": str(out) if out else None}))

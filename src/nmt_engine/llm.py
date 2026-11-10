@@ -79,6 +79,7 @@ STEP_CAPS: dict[str, float] = {
     "l2": 1.0,
     "verify": 10.0,
     "sim": 8.0,
+    "radar": 4.0,
     "redteam": 2.0,
     "report": 2.0,
 }

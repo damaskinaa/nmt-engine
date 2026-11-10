@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Groundwork: {{ p.market }} (Radar)</title>
+<style>
+  body { font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1d232a; max-width: 960px; margin: 2rem auto; padding: 0 1.2rem; }
+  h1 { font-size: 1.9rem; margin-bottom: .2rem; } h2 { margin-top: 2.4rem; border-bottom: 2px solid #1d232a; padding-bottom: .2rem; }
+  h3 { margin-bottom: .3rem; }
+  .sub { color: #5b6570; margin-top: 0; }
+  .status { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin: 1.2rem 0; }
+  .tile { border: 1px solid #d5dbe1; border-radius: 8px; padding: .8rem; background: #f7f9fb; }
+  .tile b { display: block; font-size: 1.6rem; }
+  .warn { background: #fff6e5; border-color: #f0c36d; }
+  table { border-collapse: collapse; width: 100%; margin: .6rem 0 1rem; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: .35rem .5rem; border-bottom: 1px solid #e3e7eb; }
+  th { background: #f0f3f6; }
+  .syn { display: inline-block; background: #efe7ff; color: #4b2a99; border-radius: 4px; padding: 0 .35rem; font-size: 12px; font-weight: 600; }
+  .unk { display: inline-block; background: #eceff2; border-radius: 4px; padding: 0 .35rem; font-size: 12px; font-weight: 600; }
+  blockquote { margin: .3rem 0 .3rem 0; padding-left: .7rem; border-left: 3px solid #c8d0d8; color: #39424c; }
+  .small { font-size: 13px; color: #5b6570; }
+  .page { page-break-after: always; }
+  a { color: #1f5fbf; }
+  @media print { body { margin: 0 auto; } h2 { page-break-after: avoid; } tr { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<section class="page">
+<h1>Groundwork: {{ p.market }}</h1>
+<p class="sub">Outside-in Radar from public data. No interviews and no private customer data.</p>
+
+<div class="status">
+  <div class="tile warn"><b>{{ p.status.supported }} of {{ p.status.nodes }}</b>riskiest Job guesses supported by public evidence ({{ p.status.contradicted }} contradicted)</div>
+  <div class="tile warn"><b>{{ p.status.no_public_evidence }} of {{ p.status.nodes }}</b>Job guesses have no public evidence in this harvest</div>
+  <div class="tile warn"><b>{{ p.status.human_check }}</b>human label check</div>
+  <div class="tile warn"><b>No money figure</b>every Q1&ndash;Q9 is S0, so synthetic validation fails</div>
+</div>
+
+<h3>What this means</h3>
+<ul>
+  <li><b>Decision: {{ d.decision }}.</b> The cheapest market touch is the {{ p.touch }}.</li>
+  <li>The {{ p.status.nodes }} riskiest guesses about the customer's Job all have status <b>unknown</b>. J2, J3 and S2 have some supporting posts, below the bar of 3 distinct authors in 2 customer-voice families. The other {{ p.status.no_public_evidence }} have no public evidence in this harvest.</li>
+  <li>What the data does show: the problems {{ "{:,}".format(p.radar.radar_authors) }} app reviewers describe, grouped into {{ p.radar.groups|length }} themes, and which other options they name.</li>
+  <li>All precision figures are against model labels: {{ p.status.gold }}.</li>
+  <li><b>Simulation is exploratory and unvalidated.</b> It upgrades no node and feeds no estimate. Its section is at the end; every number there is labelled <span class="syn">{{ label }}</span>.</li>
+</ul>
+<p class="small">Scope: {{ p.scope }}.</p>
+</section>
+
+<h2>1. Problem radar</h2>
+<p>Pool: {{ "{:,}".format(p.radar.pool) }} posts ({% for k, v in p.radar.by_platform.items() %}{{ k }} {{ "{:,}".format(v) }}{% if not loop.last %}, {% endif %}{% endfor %}). The producer model called {{ "{:,}".format(p.radar.user) }} of them first-hand users and found a problem in {{ "{:,}".format(p.radar.radar) }} ({{ "{:,}".format(p.radar.radar_authors) }} distinct authors){% if p.radar.unanswered %}; {{ p.radar.unanswered }} got no usable answer{% endif %}. Themes come from k-means (k = {{ p.radar.k }}, fixed in advance) on text embeddings; theme names are model labels (Kimi), not findings. Counts are voices in this pool, not market prevalence.</p>
+<table>
+<tr><th>Theme</th><th>Voices</th><th>Share</th><th>Apps (voices)</th><th>Example, verbatim</th></tr>
+{% for g in p.radar.groups %}
+<tr>
+  <td><b>{{ g.name or "unnamed (no verbatim quote after retry)" }}</b>{% if g.thin %} <span class="unk">thin</span>{% endif %}<br><span class="small">{{ g.description or "" }}</span></td>
+  <td>{{ g.authors }}</td>
+  <td>{{ "%.0f"|format(g.share * 100) }}%</td>
+  <td class="small">{% for a, n in g.apps.items() %}{{ a }} {{ n }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+  <td>{% if g.quote %}<blockquote>&ldquo;{{ g.quote }}&rdquo;</blockquote><a class="small" href="{{ g.receipt }}">receipt</a>{% endif %}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h2>2. Alternatives map</h2>
+<p>For reviews of each app, how many distinct authors name another option. Matching is by name only (the model's alternative tag is NOT MEASURED). A mention is not a switch.</p>
+<table>
+<tr><th>Reviews of</th><th>Other options named (distinct authors)</th></tr>
+{% for app, opts in p.radar.alternatives.items() %}
+<tr><td>{{ app }}</td><td>{% for o, n in opts.items() %}{{ o }} {{ n }}{% if not loop.last %}; {% endif %}{% else %}none{% endfor %}</td></tr>
+{% endfor %}
+</table>
+
+<h2>3. Riskiest assumptions</h2>
+<p>From the L1 hypothesis graph, ranked by risk priority. None has a status. Simulation cannot change these.</p>
+<table>
+<tr><th>Node</th><th>Guess</th><th>Status</th><th>Public evidence</th><th>Test that would settle it</th></tr>
+{% for n in p.riskiest %}
+<tr><td>{{ n.id }}</td><td>{{ n.text }}</td><td><span class="unk">{{ n.status }}</span></td><td>{{ n.evidence }}</td><td class="small">{{ n.test }}</td></tr>
+{% endfor %}
+</table>
+
+<h2>4. Strategy object</h2>
+<table>
+<tr><th>Part</th><th>Status</th></tr>
+<tr><td>Target segment and Core Job</td><td>Not chosen: no segment or Job node has public support.</td></tr>
+<tr><td>Value hypothesis and mechanic</td><td>Not established. The radar shows problems voiced, not a value gap (Q8 is S0).</td></tr>
+<tr><td>Why we win</td><td>Not established.</td></tr>
+<tr><td>Unit economics</td><td>No figure: Q4&ndash;Q6 and Q9 are S0.</td></tr>
+<tr><td>Demand plan</td><td>{{ p.touch }}.</td></tr>
+<tr><td>Top-3 riskiest assumptions</td><td>{% for n in p.riskiest[:3] %}{{ n.id }}: {{ n.text }}{% if not loop.last %}<br>{% endif %}{% endfor %}<br><span class="small">Cheapest test for each: the evidence bar in section 3, then the landing-page test.</span></td></tr>
+</table>
+
+<h2>5. Quantities and decision</h2>
+<table>
+<tr><th>Q</th><th>Quantity</th><th>Grade</th><th>Why</th></tr>
+{% for q in p.quantities %}
+<tr><td>{{ q.q }}</td><td>{{ q.name }}</td><td>{{ q.grade }}</td><td class="small">{{ q.notes|join("; ") }}</td></tr>
+{% endfor %}
+</table>
+<p>S0 means unanchored and is never cited. Monte Carlo (10,000 runs, seed 0): {% if p.monte_carlo.ran is defined and not p.monte_carlo.ran %}not run, because {{ p.monte_carlo.blocked_by|join(", ") }} are below S1.{% else %}ran.{% endif %} EVPI: {{ d.evpi }}.</p>
+<table>
+<tr><th>Synthetic validation check</th><th>Result</th></tr>
+{% for k, v in d.checks.items() %}<tr><td>{{ k }}</td><td>{{ "pass" if v else "fail" }}</td></tr>{% endfor %}
+</table>
+
+<h2>6. Red team</h2>
+{% if rt %}
+<p>A different model family (GLM-5.3, thinking off) read only the report packet.</p>
+<p><b>Single input that flips the conclusion:</b> {% if rt.flip and rt.flip.exists %}yes: {{ rt.flip.input }} ({{ rt.flip.why }}){% else %}none found{% if rt.flip and rt.flip.why %} ({{ rt.flip.why }}){% endif %}{% endif %}.</p>
+<table>
+<tr><th>Where</th><th>Claim it flagged</th><th>Why</th><th>Response</th></tr>
+{% for f in rt.overreach %}<tr><td class="small">{{ f.where }}</td><td>{{ f.claim }}</td><td class="small">{{ f.why }}</td><td class="small">{{ f.response or "" }}</td></tr>{% else %}<tr><td colspan="4">none</td></tr>{% endfor %}
+</table>
+{% else %}<p>Not run.</p>{% endif %}
+
+<h2>7. Simulation (exploratory, unvalidated)</h2>
+<p><b>Status: {{ p.simulation.status }}.</b> SSR gold failed (stay 78%, switch 77%, bar 85%); cross-model agreement is unusable (lowest Spearman &rho; {{ p.simulation.stability.rho }} on {{ p.simulation.stability.cells }} cells); T3 is {{ p.simulation.t3.t3 }} ({{ p.simulation.t3.usable }} of {{ p.simulation.t3.events }} past price changes had enough switchers to score). This section is not evidence, does not count toward any node, and feeds no quantity.</p>
+<p class="small">Model: {{ p.simulation.model }}. Calibrated on {{ p.simulation.calibrated_on|length }} masked public posts: measured inputs USER and problem (precision against model labels), the 4 below-bar supporting posts, and unmeasured tags at low weight ({{ p.simulation.calibration.unmeasured_low_weight|join(", ") }}). Interval: 80% bootstrap over agent &times; app &times; repeat cells. Repeat MAD {{ p.simulation.validity.repeat_mad }}; price order preserved in {{ p.simulation.validity.price_order_preserved }}.</p>
+<table>
+<tr><th>If&hellip;</th><th>Mean P(switch)</th><th>80% interval</th><th>Label</th></tr>
+{% for c in p.simulation.conditions %}<tr><td>{{ c.text }}</td><td>{{ c.p_switch }}</td><td>{{ c.interval80[0] }}&ndash;{{ c.interval80[1] }}</td><td><span class="syn">{{ c.label }}</span></td></tr>{% endfor %}
+</table>
+
+<h2>8. Method and limits</h2>
+<ul>
+  <li>Producer: DeepSeek V4.1 Flash. Auditor and gold labels: Kimi K3.1 Pro. Cross-model check: GLM-5.3. Embeddings: Qwen3. All through TensorX.</li>
+  <li>Precision on the held-out test split (against model labels): {% for c, v in p.t1.items() %}{{ c }} {{ v.tp }}/{{ v.called }}{% if v.status %} ({{ v.status }}){% endif %}{% if not loop.last %}; {% endif %}{% endfor %}. Fewer than 20 calls means NOT MEASURED. Human label check: NOT DONE.</li>
+  <li>T2 failed: supports plus contradicts had fewer than 20 test calls, so no node can be supported or contradicted. The product narrowed to this Radar.</li>
+  <li>Pool limits: App Store reviews from 9 allow-listed invoicing apps (US, GB, IE); the two unrelated "Wave" listings are excluded; there is no Reddit collector; star ratings were not stored; only 1 of the 16 HN USER posts is in this harvest.</li>
+  <li>Voices are counted once per salted author hash. No names, emails or private data are stored.</li>
+</ul>
+</body>
+</html>
