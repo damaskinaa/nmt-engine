@@ -413,3 +413,42 @@ except where a rule below says otherwise.
    take B4 past $8, it stops there, and cross-model stability is reported on DeepSeek and GLM only,
    saying so. Kimi world answers may use up to 4,000 output tokens, because the first run was cut
    off at 1,200.
+
+## 14. Amendment 7 (2026-11-10, B5; before any B5 model call)
+
+T2 failed and T3 is UNDECIDABLE with the simulation exploratory (amendments 3 and 6). B5 builds
+the Radar inputs (`docs/RADAR_SCOPE.md`) and the L5/L7 decision step on what B1–B4 measured.
+Nothing here changes a B3 label, T1, T2 or T3, or any node status.
+
+1. **Pool.** The amendment-3 App Store reviews restricted to an app-ID allow-list of the nine L2
+   invoicing listings (`replay.APPSTORE_IDS`): this drops the two unrelated "Wave" listings
+   (ids 1523884528 and 1506820334, 60 reviews). Plus the 16 HN posts labelled USER. The pool has
+   11 App Store ids in total, not 13 as earlier text said; the earlier number was a miscount.
+2. **Producer pass.** DeepSeek runs the frozen B3 producer prompts (author gate, then element
+   tags) on every pool post, batch 8, as recorded for T1. The Radar keeps posts the producer
+   calls USER and tags with a problem: the two classes that PASS (precision against Kimi model
+   labels, human check NOT DONE). Other element tags are not used.
+3. **Problem groups.** Qwen3 embeddings of the masked post text (first 300 characters), cosine,
+   k-means with k = 12 and seed 0 (scipy `kmeans2`, `++` init, on unit vectors). k is fixed here
+   and not tuned. Each group reports distinct author hashes, apps, a count per year, the mean
+   star rating and the share of all Radar posts. A group with fewer than 3 distinct authors or
+   fewer than 2 apps is shown as "thin". Kimi names each group from the 8 posts nearest its
+   centroid, with a verbatim quote from one of them and one retry; the name is a label, not a
+   finding. Counts are voices in this pool, not market prevalence.
+4. **Alternatives map.** Deterministic only: the app each review is about (store metadata) and
+   the other listed options named in the text (the `replay.option_patterns` matcher). No model
+   alternative tag is used (NOT MEASURED).
+5. **L5 quantities.** Q1–Q9 are graded by the existing code (`synth.grade`). The simulated
+   family is dropped (cross-model ρ < 0.5; T3 UNDECIDABLE). B1–B4 collected no supply-side,
+   statistical or revealed-price inputs that are tied to this Job and segment, so every Q is
+   graded from what exists, with no new collection in B5.
+6. **L7 decision.** The Monte Carlo (≥ 10,000 runs, seed 0) runs only when every Q on the chain
+   to profit is at least S1. Synthetic validation follows ARCHITECTURE_v3 L7 verbatim. If it
+   fails, the report shows no money figure and the decision is NO GO to build; the next step is
+   the cheapest market touch (T4).
+7. **Red team.** GLM-5.3 (thinking off), clean context, receives only the report packet (the
+   claims and their receipts, as JSON). It lists claims that overreach their receipts and any
+   single input that would flip the conclusion. Every finding is recorded and shown in the
+   report; an overreaching claim is reworded or removed, and the change is logged.
+8. **Budget.** B5 at most $6: producer pass $3, group naming $1, red team $2 (`redteam` step
+   cap). A step that would exceed its cap stops and is reported.
