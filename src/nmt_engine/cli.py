@@ -853,7 +853,7 @@ def report_build(
     from nmt_engine.llm import THIRD_MODEL
     from nmt_engine.report import groundwork
 
-    pkt = groundwork.packet()
+    pkt = groundwork.packet(b5=run_dir)
     (run_dir / "packet.json").write_text(json.dumps(pkt, indent=2, default=str), "utf-8")
     rt_path, rt = run_dir / "redteam.json", None
     if rt_path.is_file():

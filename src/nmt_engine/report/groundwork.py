@@ -149,8 +149,8 @@ def radar(b5: Path) -> dict:
     return r
 
 
-def packet(root: Path = Path(".")) -> dict:
-    b4, b5 = root / "runs" / "b4", root / "runs" / "b5"
+def packet(root: Path = Path("."), b5: Path | None = None) -> dict:
+    b4, b5 = root / "runs" / "b4", b5 or root / "runs" / "b5"
     qs = quantities()
     blocked = chain.can_run(qs)
     mc = None if blocked else chain.monte_carlo(qs, chain.Targets())
