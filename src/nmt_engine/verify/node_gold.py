@@ -361,6 +361,8 @@ def pick_embed(llm: LLM, emb, run_dir: Path, out: Path = GOLD_DIR, path: Path = 
             want += [s for s in order[n] if s not in auth and s not in want][:PICK_TOP]
         if not want:
             break
+        # the pool embedding (about $0.004) is counted here but has already been spent; the
+        # cap is checked before each batch, so the worst case is one batch over it
         if llm.budget.spent + emb.cost >= A3_MAX_USD:
             stopped = f"labelling budget {A3_MAX_USD} reached"
             break

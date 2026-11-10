@@ -41,7 +41,11 @@ def render(stmts: dict[str, str]) -> str:
 
 
 def parse_nodes(node_ids: Sequence[str]):
-    """Parser for one post's answers: every node answered, quotes verbatim, else None."""
+    """Parser for one post's answers: every node answered, quotes verbatim, else None.
+
+    Whole-post rejection is the frozen node-check rule (PREREG_v3 amendment 1): a rejected post is
+    re-asked, and one that still fails stays unlabelled and is counted in the report, so a bad
+    quote never yields a partial label set."""
 
     def parse(row: dict, text: str) -> dict[str, dict] | None:
         answers = row.get("answers")
