@@ -33,14 +33,14 @@
   <div class="tile warn"><b>{{ p.status.supported }} of {{ p.status.nodes }}</b>riskiest Job guesses supported by public evidence ({{ p.status.contradicted }} contradicted)</div>
   <div class="tile warn"><b>{{ p.status.no_public_evidence }} of {{ p.status.nodes }}</b>Job guesses have no public evidence in this harvest</div>
   <div class="tile warn"><b>{{ p.status.human_check }}</b>human label check</div>
-  <div class="tile warn"><b>No money figure</b>every Q1&ndash;Q9 is S0, so synthetic validation fails</div>
+  <div class="tile warn"><b>No money figure</b>{% set s0 = p.quantities|selectattr("grade", "equalto", "S0")|list %}{% if s0|length == p.quantities|length %}every Q1&ndash;Q9 is S0{% else %}{{ s0|length }} of {{ p.quantities|length }} quantities are S0{% endif %}, so synthetic validation fails</div>
 </div>
 
 <h3>What this means</h3>
 <ul>
   <li><b>Decision: {{ d.decision }}.</b> The cheapest market touch is the {{ p.touch }}.</li>
   <li>The {{ p.status.nodes }} riskiest guesses about the customer's Job all have status <b>unknown</b>. J2, J3 and S2 have some supporting posts, below the bar of 3 distinct authors in 2 customer-voice families. The other {{ p.status.no_public_evidence }} have no public evidence in this harvest.</li>
-  <li>What the data does show: the problems {{ "{:,}".format(p.radar.radar_authors) }} app reviewers describe, grouped into {{ p.radar.groups|length }} themes, and which other options they name.</li>
+  <li>What the data does show: the problems {{ "{:,}".format(p.radar.radar_authors) }} app reviewers describe, grouped into {% if p.radar.themes %}{{ p.radar.themes|length }} merged themes ({{ p.radar.groups|length }} groups before merging){% else %}{{ p.radar.groups|length }} themes{% endif %}, and which other options they name.</li>
   <li>All precision figures are against model labels: {{ p.status.gold }}.</li>
   <li><b>Simulation is exploratory and unvalidated.</b> It upgrades no node and feeds no estimate. Its section is at the end; every number there is labelled <span class="syn">{{ label }}</span>.</li>
 </ul>
@@ -49,6 +49,22 @@
 
 <h2>1. Problem radar</h2>
 <p>Pool: {{ "{:,}".format(p.radar.pool) }} posts ({% for k, v in p.radar.by_platform.items() %}{{ k }} {{ "{:,}".format(v) }}{% if not loop.last %}, {% endif %}{% endfor %}). The producer model called {{ "{:,}".format(p.radar.user) }} of them first-hand users and found a problem in {{ "{:,}".format(p.radar.radar) }} ({{ "{:,}".format(p.radar.radar_authors) }} distinct authors){% if p.radar.unanswered %}; {{ p.radar.unanswered }} got no usable answer{% endif %}. Themes come from k-means (k = {{ p.radar.k }}, fixed in advance) on text embeddings; theme names are model labels (Kimi), not findings. Counts are voices in this pool, not market prevalence.</p>
+{% if p.radar.themes %}
+<p>Merged themes (amendment 8): the {{ p.radar.groups|length }} groups were merged by average-linkage clustering of their centroids, cut at cosine distance {{ "%.3f"|format(p.radar.merge.threshold) }} (the {{ "%.0f"|format(p.radar.merge.quantile * 100) }}th percentile of pairwise centroid distances, fixed before the merge was seen). No theme was merged or split by hand. A theme's name is the name of its largest group. Voices are distinct authors across the merged groups, each counted once. "Largest app" is the share of a theme's voices that reviewed one app; over 50% is flagged.</p>
+<table>
+<tr><th>Theme</th><th>Voices</th><th>Largest app</th><th>Groups merged</th><th>Example, verbatim</th></tr>
+{% for t in p.radar.themes %}
+<tr>
+  <td><b>{{ t.theme }}</b>{% if t.concentration.flag %}<br><span class="unk">{{ t.concentration.flag }}</span>{% endif %}</td>
+  <td>{{ t.authors }}</td>
+  <td>{{ t.concentration.top_app }} {{ "%.0f"|format(t.concentration.top_share * 100) }}%</td>
+  <td class="small">{{ t.group_names|join("; ") }}</td>
+  <td>{% if t.quote %}<blockquote>&ldquo;{{ t.quote }}&rdquo;</blockquote><a class="small" href="{{ t.receipt }}">receipt</a>{% endif %}</td>
+</tr>
+{% endfor %}
+</table>
+<p class="small">The original {{ p.radar.groups|length }}-group table (k = {{ p.radar.k }}) is kept unchanged in Appendix A.</p>
+{% else %}
 <table>
 <tr><th>Theme</th><th>Voices</th><th>Share</th><th>Apps (voices)</th><th>Example, verbatim</th></tr>
 {% for g in p.radar.groups %}
@@ -61,6 +77,7 @@
 </tr>
 {% endfor %}
 </table>
+{% endif %}
 
 <h2>2. Alternatives map</h2>
 <p>For reviews of each app, how many distinct authors name another option. Matching is by name only (the model's alternative tag is NOT MEASURED). A mention is not a switch.</p>
@@ -86,7 +103,7 @@
 <tr><td>Target segment and Core Job</td><td>Not chosen: no segment or Job node has public support.</td></tr>
 <tr><td>Value hypothesis and mechanic</td><td>Not established. The radar shows problems voiced, not a value gap (Q8 is S0).</td></tr>
 <tr><td>Why we win</td><td>Not established.</td></tr>
-<tr><td>Unit economics</td><td>No figure: Q4&ndash;Q6 and Q9 are S0.</td></tr>
+<tr><td>Unit economics</td><td>No figure: {% for q in p.quantities if q.q in ("Q4", "Q5", "Q6", "Q9") %}{{ q.q }} {{ q.grade }}{% if not loop.last %}, {% endif %}{% endfor %}.{% if p.prices %} Q4 rests on list prices only, which are not willingness to pay.{% endif %}</td></tr>
 <tr><td>Demand plan</td><td>{{ p.touch }}.</td></tr>
 <tr><td>Top-3 riskiest assumptions</td><td>{% for n in p.riskiest[:3] %}{{ n.id }}: {{ n.text }}{% if not loop.last %}<br>{% endif %}{% endfor %}<br><span class="small">Cheapest test for each: the evidence bar in section 3, then the landing-page test.</span></td></tr>
 </table>
@@ -98,6 +115,16 @@
 <tr><td>{{ q.q }}</td><td>{{ q.name }}</td><td>{{ q.grade }}</td><td class="small">{{ q.notes|join("; ") }}</td></tr>
 {% endfor %}
 </table>
+{% if p.prices %}
+<h3>List prices of the alternatives (input to Q4)</h3>
+<p>From the archived pricing pages the B4 replay had already fetched (latest snapshot at or before {{ p.prices.until[:4] }}-{{ p.prices.until[4:6] }}-{{ p.prices.until[6:] }}; no new harvest). The producer model read each page; a row is kept only if its quote is verbatim on the page and contains the price. {% if p.prices.missing %}No price could be read for {{ p.prices.missing|join(", ") }}.{% endif %}</p>
+<table>
+<tr><th>App</th><th>Plan</th><th>Price</th><th>Currency</th><th>Billing period</th><th>Snapshot</th></tr>
+{% for r in p.prices.rows %}<tr><td>{{ r.app }}</td><td>{{ r.plan }}</td><td>{{ "%g"|format(r.price) }}{% if r.per_user %} per user{% endif %}</td><td>{{ r.currency }}</td><td>{{ r.period }}</td><td class="small"><a href="{{ r.url }}">{{ r.snapshot_date }}</a></td></tr>{% endfor %}
+</table>
+{% set q4 = p.quantities|selectattr("q", "equalto", "Q4")|first %}
+<p><b>Q4 is {{ q4.grade }}.</b> Entry price per app (lowest paid plan, USD a month, monthly billing): {% for a, v in p.prices.entry_monthly_usd.items() %}{{ a }} {{ "%g"|format(v) }}{% if not loop.last %}, {% endif %}{% endfor %}. Median {{ q4.estimate[0] }}, 10th&ndash;90th percentile {{ q4.estimate[1] }}&ndash;{{ q4.estimate[2] }} USD a month. This is one family (revealed price), so the frozen grading rule stops at S1; S2 needs at least 3 agreeing families. <b>List price is not willingness to pay</b>: it is what vendors ask, not what this segment would pay for a new app.</p>
+{% endif %}
 <p>S0 means unanchored and is never cited. Monte Carlo (10,000 runs, seed 0): {% if p.monte_carlo.ran is defined and not p.monte_carlo.ran %}not run, because {{ p.monte_carlo.blocked_by|join(", ") }} are below S1.{% else %}ran.{% endif %} EVPI: {{ d.evpi }}.</p>
 <table>
 <tr><th>Synthetic validation check</th><th>Result</th></tr>
@@ -106,13 +133,22 @@
 
 <h2>6. Red team</h2>
 {% if rt %}
-<p>A different model family (GLM-5.3, thinking off) read only the report packet.</p>
+<p>A different model family (GLM-5.3, thinking off) read only the packet of the first report (before amendment 8).</p>
 <p><b>Single input that flips the conclusion:</b> {% if rt.flip and rt.flip.exists %}yes: {{ rt.flip.input }} ({{ rt.flip.why }}){% else %}none found{% if rt.flip and rt.flip.why %} ({{ rt.flip.why }}){% endif %}{% endif %}.</p>
 <table>
 <tr><th>Where</th><th>Claim it flagged</th><th>Why</th><th>Response</th></tr>
 {% for f in rt.overreach %}<tr><td class="small">{{ f.where }}</td><td>{{ f.claim }}</td><td class="small">{{ f.why }}</td><td class="small">{{ f.response or "" }}</td></tr>{% else %}<tr><td colspan="4">none</td></tr>{% endfor %}
 </table>
 {% else %}<p>Not run.</p>{% endif %}
+{% if rt8 %}
+<h3>Red team on the amendment-8 changes</h3>
+<p>GLM-5.3 (thinking off) read only the changed sections: merged themes, app concentration, the list-price table, the Q4 grade and the Monte Carlo status.</p>
+<p><b>Single input that flips the conclusion, as GLM claimed it:</b> {% if rt8.flip and rt8.flip.exists %}{{ rt8.flip.input }} ({{ rt8.flip.why }}){% else %}none found{% if rt8.flip and rt8.flip.why %} ({{ rt8.flip.why }}){% endif %}{% endif %}.{% if rt8.flip and rt8.flip.response %} <b>Response:</b> {{ rt8.flip.response }}{% endif %}</p>
+<table>
+<tr><th>Where</th><th>Claim it flagged</th><th>Why</th><th>Response</th></tr>
+{% for f in rt8.overreach %}<tr><td class="small">{{ f.where }}</td><td>{{ f.claim }}</td><td class="small">{{ f.why }}</td><td class="small">{{ f.response or "" }}</td></tr>{% else %}<tr><td colspan="4">none</td></tr>{% endfor %}
+</table>
+{% endif %}
 
 <section id="simulation">
 <h2>7. Simulation (exploratory, unvalidated)</h2>
@@ -130,9 +166,26 @@
   <li>Precision on the held-out test split (against model labels): {% for c, v in p.t1.items() %}{{ c }} {{ v.tp }}/{{ v.called }}{% if v.status %} ({{ v.status }}){% endif %}{% if not loop.last %}; {% endif %}{% endfor %}. Fewer than 20 calls means NOT MEASURED. Human label check: NOT DONE.</li>
   <li>T2 failed: supports plus contradicts had fewer than 20 test calls, so no node can be supported or contradicted. The product narrowed to this Radar.</li>
   <li>Pool limits: App Store reviews from 9 allow-listed invoicing apps (US, GB, IE); the two unrelated "Wave" listings are excluded; there is no Reddit collector; star ratings sit in the review text but are not analysed; only 1 of the 16 HN USER posts is in this harvest. So the radar is one customer-voice family, not a market-level picture.</li>
-  <li>Themes: k = 12 was fixed before clustering and nothing was merged afterwards, so some themes overlap (three about crashes, three about price). Some themes come mostly from one app; the Apps column shows the split. Year counts have no per-year denominator and are not trends.</li>
+  {% if p.radar.themes %}<li>Themes: k = 12 was fixed before clustering; amendment 8 then merged the groups by a rule fixed in advance. The rule compares whole reviews, not just the problem, so it does not sort cleanly by problem: the largest theme combines crash, fee, mobile and price groups, and one price group stays on its own. Flagged themes come mostly from one app. Year counts have no per-year denominator and are not trends.</li>{% else %}<li>Themes: k = 12 was fixed before clustering and nothing was merged afterwards, so some themes overlap (three about crashes, three about price). Some themes come mostly from one app; the Apps column shows the split. Year counts have no per-year denominator and are not trends.</li>{% endif %}
   <li>Alternatives: app names are matched by regex; the generic options (by hand / manually, accountant, spreadsheet) also match passing mentions such as "I have to enter it manually", so those counts are upper bounds.</li>
   <li>Voices are counted once per salted author hash. No names, emails or private data are stored.</li>
 </ul>
+{% if p.radar.themes %}
+<h2>Appendix A. Original {{ p.radar.groups|length }} groups (k = {{ p.radar.k }}, amendment 7)</h2>
+<p class="small">Unchanged from the first report, plus the largest-app share of each group's voices.</p>
+<table>
+<tr><th>Theme</th><th>Voices</th><th>Share</th><th>Largest app</th><th>Apps (voices)</th><th>Example, verbatim</th></tr>
+{% for g in p.radar.groups %}
+<tr>
+  <td><b>{{ g.name or "unnamed (no verbatim quote after retry)" }}</b>{% if g.thin %} <span class="unk">thin</span>{% endif %}<br><span class="small">{{ g.description or "" }}</span></td>
+  <td>{{ g.authors }}</td>
+  <td>{{ "%.0f"|format(g.share * 100) }}%</td>
+  <td>{{ g.concentration.top_app }} {{ "%.0f"|format(g.concentration.top_share * 100) }}%{% if g.concentration.flag %}<br><span class="unk">{{ g.concentration.flag }}</span>{% endif %}</td>
+  <td class="small">{% for a, n in g.apps.items() %}{{ a }} {{ n }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+  <td>{% if g.quote %}<blockquote>&ldquo;{{ g.quote }}&rdquo;</blockquote><a class="small" href="{{ g.receipt }}">receipt</a>{% endif %}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "radar.groups[0..11] (all 12 groups)": "Agreed. k = 12 was fixed in amendment 7 before clustering, and no merge was done afterwards. Three crash themes and three price themes overlap; read them as about 6 broader themes (crashes after updates, price and fees, account and payment support, mobile limits, receipts, mileage).",
+  "radar.groups[0..11] (all 12 groups)": "Agreed. k = 12 was fixed in amendment 7 before clustering, Three crash themes and three price themes overlapped. Amendment 8 merged the groups by a rule fixed in advance (section 1); the original 12 are in Appendix A.",
   "radar.groups[*].years": "Partly. Year counts are raw voices with no per-year denominator, so the report draws no trend from them. 2026 is not an error: the harvest ran in November 2026.",
   "radar.by_platform": "Agreed. The radar is one customer-voice family (App Store reviews, US/GB/IE). It is not a market-level claim; added to Method and limits.",
   "radar.groups[*].apps": "Agreed. Per-app voices are in the Apps column: 'Rising prices and invoice limits' is 108 of 125 Invoice Simple, 'Mobile app is unreliable and limited' is 60 of 97 Harvest. Read single-app themes as app-specific.",

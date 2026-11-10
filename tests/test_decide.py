@@ -104,3 +104,81 @@ def test_payback_counts_only_retained_margin():
     qs["Q9"] = _q("Q9", (0.9, 0.89, 0.91))
     churn = chain.monte_carlo(qs, t)["p_payback"]
     assert churn < no_churn - 0.1
+
+
+def test_report_gate_flags_monte_carlo_figures_without_interval_even_if_ran_missing():
+    from nmt_engine.report import groundwork
+
+    pkt = {
+        "status": {"supported": 0, "contradicted": 0},
+        "simulation": {"conditions": []},
+        "radar": {"groups": []},
+    }
+    ok = (
+        '<section id="page1">'
+        + " ".join(groundwork.PAGE_ONE)
+        + '</section><section id="simulation"></section>'
+    )
+    for mc in ({"p_volume": 0.7}, {"ran": True}):
+        assert any("interval" in p for p in groundwork.check(ok, pkt | {"monte_carlo": mc}))
+    assert groundwork.check(ok, pkt | {"monte_carlo": {"ran": False, "blocked_by": ["Q1"]}}) == []
+
+
+def test_list_prices_grade_q4_s1_and_skip_annual_billing():
+    from nmt_engine.decide import prices
+
+    text = "Pro $12 Per month. Pro $10 Per month with an annual plan! Team $190 per year"
+    good = {"plan": "Pro", "price": 12, "quote": "$12 Per month"}
+    assert prices._ok(good, text)
+    assert not prices._ok(good | {"price": 13}, text)
+    assert not prices._ok(good | {"quote": "$12 a month"}, text)
+    rows = [
+        {
+            "app": "A",
+            "price": 12.0,
+            "currency": "USD",
+            "period": "month",
+            "plan": "Pro",
+            "quote": "$12 Per month",
+        },
+        {
+            "app": "A",
+            "price": 10.0,
+            "currency": "USD",
+            "period": "month",
+            "plan": "Pro",
+            "quote": "$10 Per month with an annual plan!",
+        },
+        {
+            "app": "B",
+            "price": 120.0,
+            "currency": "USD",
+            "period": "year",
+            "plan": "Team",
+            "quote": "$120 per year",
+        },
+        {
+            "app": "B",
+            "price": 0.0,
+            "currency": "USD",
+            "period": "month",
+            "plan": "Free",
+            "quote": "$0",
+        },
+        {
+            "app": "C",
+            "price": 9.0,
+            "currency": "CAD",
+            "period": "month",
+            "plan": "X",
+            "quote": "$9CAD",
+        },
+    ]
+    entry = prices.entry_monthly_usd(rows)
+    assert entry == {"A": 12.0, "B": 10.0}
+    q = prices.q4(entry)
+    assert q.grade == "S1" and q.estimate[0] == 11.0
+    assert any("not willingness to pay" in n for n in q.notes)
+    assert prices.q4({}).grade == "S0"
+    qs = _all() | {"Q4": q, "Q1": _q("Q1", None, "S0")}
+    assert chain.can_run(qs) == ["Q1"]

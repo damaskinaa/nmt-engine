@@ -840,6 +840,86 @@ def radar_build(
     typer.echo(json.dumps({k: doc[k] for k in keys}))
 
 
+@radar_app.command("themes")
+def radar_themes(
+    harvest: Annotated[Path, typer.Option("--harvest")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+) -> None:
+    """Amendment 8 rules 1-2: merge the k=12 groups into themes; one-app concentration."""
+    import numpy as np
+
+    from nmt_engine.embed import Embedder
+    from nmt_engine.radar import build, themes
+    from nmt_engine.sim.agents import QUOTE_CHARS, _mask
+
+    r = json.loads((run_dir / "radar.json").read_text("utf-8"))
+    ids = {i for g in r["groups"] for i in g["members"]}
+    posts = [p for p in build.pool(harvest) if p["id"] in ids]
+    if len(posts) != len(ids):
+        raise typer.BadParameter(f"{len(ids) - len(posts)} radar posts are not in the pool")
+    texts = [_mask(p["text"])[:QUOTE_CHARS] for p in posts]
+    with Embedder(run_dir) as emb:
+        v = np.asarray(emb.embed(texts, "a8.embed"), dtype=float)
+    v /= np.linalg.norm(v, axis=1, keepdims=True)
+    vec = {p["id"]: v[k] for k, p in enumerate(posts)}
+    meta = {p["id"]: {"author": p["author"], "app": p["app"]} for p in posts}
+    doc = themes.themes(r["groups"], vec, meta)
+    doc["group_concentration"] = {g["group"]: g["concentration"] for g in r["groups"]}
+    build.write(run_dir / "themes.json", doc)
+    typer.echo(
+        json.dumps(
+            {
+                "threshold": round(doc["threshold"], 4),
+                "themes": [
+                    (t["theme"], t["groups"], t["authors"], t["concentration"]["flag"])
+                    for t in doc["themes"]
+                ],
+            },
+            indent=1,
+        )
+    )
+
+
+@radar_app.command("prices")
+def radar_prices(
+    replay_store: Annotated[Path, typer.Option("--replay-store")] = Path("runs/b4/replay/store"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+) -> None:
+    """Amendment 8 rule 3: list prices from the B4 Wayback snapshots -> table and Q4 grade."""
+    from nmt_engine.decide import prices
+    from nmt_engine.llm import PRODUCER, Budget
+    from nmt_engine.radar import build
+    from nmt_engine.verify.gold import PRODUCER_REASONING
+
+    snaps = prices.latest_snapshots(replay_store)
+    llm = _tensorx(PRODUCER, run_dir, PRODUCER_REASONING, budget=Budget(step_caps={"a8": 2.0}))
+    rows, read = [], {}
+    try:
+        for app in prices.PRICING:
+            got = prices.extract(llm, app, snaps[app]) if app in snaps else []
+            read[app] = {
+                "snapshot_date": snaps[app]["date"] if app in snaps else None,
+                "url": snaps[app]["url"] if app in snaps else None,
+                "rows": len(got),
+            }
+            rows += got
+    finally:
+        llm.close()
+    entry = prices.entry_monthly_usd(rows)
+    q = prices.q4(entry)
+    build.write(
+        run_dir / "prices.json",
+        {
+            "until": prices.UNTIL,
+            "pages": read,
+            "rows": rows,
+            "entry_monthly_usd": entry,
+            "q4": q.row(),
+        },
+    )
+    typer.echo(json.dumps({"pages": read, "entry_monthly_usd": entry, "q4": q.row()}, indent=1))
+
+
 report_app = typer.Typer(help="B6 Groundwork report (ARCHITECTURE_v3 L8).", no_args_is_help=True)
 app.add_typer(report_app, name="report")
 
@@ -865,12 +945,29 @@ def report_build(
         finally:
             llm.close()
         rt_path.write_text(json.dumps(rt, indent=2), "utf-8")
-    resp = run_dir / "redteam_responses.json"
-    if rt and resp.is_file():
-        answers = json.loads(resp.read_text("utf-8"))
-        for i, f in enumerate(rt.get("overreach") or []):
-            f["response"] = answers.get(f.get("where", ""), answers.get(str(i)))
-    html = groundwork.render(pkt, rt, run_dir / "reports" / "groundwork.html")
+    rt8_path, rt8 = run_dir / "redteam_a8.json", None
+    if rt8_path.is_file():
+        rt8 = json.loads(rt8_path.read_text("utf-8"))
+    elif red_team and pkt["prices"] is not None:
+        from nmt_engine.llm import Budget
+
+        llm = _tensorx(
+            THIRD_MODEL, run_dir, "none", max_tokens=6000, budget=Budget(step_caps={"a8": 2.0})
+        )
+        try:
+            rt8 = groundwork.red_team(llm, groundwork.changed_sections(pkt), "a8.redteam")
+        finally:
+            llm.close()
+        rt8_path.write_text(json.dumps(rt8, indent=2), "utf-8")
+    for r, name in ((rt, "redteam_responses.json"), (rt8, "redteam_a8_responses.json")):
+        resp = run_dir / name
+        if r and resp.is_file():
+            answers = json.loads(resp.read_text("utf-8"))
+            for i, f in enumerate(r.get("overreach") or []):
+                f["response"] = answers.get(f.get("where", ""), answers.get(str(i)))
+            if isinstance(r.get("flip"), dict) and "flip" in answers:
+                r["flip"]["response"] = answers["flip"]
+    html = groundwork.render(pkt, rt, run_dir / "reports" / "groundwork.html", rt8, run_dir)
     out = groundwork.pdf(html)
     problems = groundwork.check(html.read_text("utf-8"), pkt)
     typer.echo(json.dumps({"html": str(html), "pdf": str(out) if out else None, "gate": problems}))

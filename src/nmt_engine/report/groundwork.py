@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from nmt_engine.decide import chain
+from nmt_engine.decide import chain, prices
 from nmt_engine.sim.agents import _mask
 from nmt_engine.sim.stability import internal_validity
 from nmt_engine.sim.world import CLAIM_LABEL, CONDITIONS
@@ -30,8 +30,7 @@ Q_NOTES = {
     "Q3": (NO_INPUT,),
     "Q4": (
         "simulated family dropped: cross-model rho below 0.5 and SSR gold failed",
-        "list prices of 9 alternatives exist as Wayback snapshots (B4 replay) but are not "
-        "extracted into a recomputable calculation",
+        "no list-price table (amendment 8) in this run dir",
     ),
     "Q5": (NO_INPUT,),
     "Q6": (NO_INPUT,),
@@ -53,10 +52,12 @@ def _jsonl(p: Path) -> list[dict]:
     return [json.loads(x) for x in p.read_text("utf-8").splitlines() if x.strip()]
 
 
-def quantities() -> dict[str, chain.Quantity]:
-    return {
-        q: chain.Quantity(q, GradeInputs(anchored=False), None, Q_NOTES[q]) for q in chain.CHAIN
-    }
+def quantities(b5: Path | None = None) -> dict[str, chain.Quantity]:
+    """Q1-Q9; Q4 from the amendment-8 list-price table when it exists in `b5`."""
+    qs = {q: chain.Quantity(q, GradeInputs(anchored=False), None, Q_NOTES[q]) for q in chain.CHAIN}
+    if b5 is not None and (b5 / "prices.json").is_file():
+        qs["Q4"] = prices.q4(_load(b5 / "prices.json")["entry_monthly_usd"])
+    return qs
 
 
 def riskiest(graph_path: Path = node_gold.GRAPH) -> list[dict]:
@@ -153,13 +154,35 @@ def radar(b5: Path) -> dict:
             {"text": _mask(quotes[i])[:240], "url": r["meta"][i]["url"]} for i in g["nearest"][:3]
         ]
         g.pop("members", None)
+    th = b5 / "themes.json"
+    if th.is_file():
+        t = _load(th)
+        conc = t["group_concentration"]
+        for g in r["groups"]:
+            g["concentration"] = conc[str(g["group"])]
+        for x in t["themes"]:
+            pid = x.get("quote_post")
+            x["receipt"] = r["meta"][pid]["url"] if pid else None
+            x["quote"] = _mask(x["quote"]) if x.get("quote") else None
+            x["verbatim"] = bool(pid) and _nfc(x["quote"]) in _nfc(_mask(quotes[pid]))
+        r["merge"] = {k: t[k] for k in ("threshold", "quantile")}
+        r["themes"] = t["themes"]
     r.pop("meta", None)
     return r
 
 
+def price_table(b5: Path) -> dict | None:
+    p = b5 / "prices.json"
+    if not p.is_file():
+        return None
+    d = _load(p)
+    d["missing"] = [a for a, v in d["pages"].items() if not v["rows"]]
+    return d
+
+
 def packet(root: Path = Path("."), b5: Path | None = None) -> dict:
     b4, b5 = root / "runs" / "b4", b5 or root / "runs" / "b5"
-    qs = quantities()
+    qs = quantities(b5)
     blocked = chain.can_run(qs)
     mc = None if blocked else chain.monte_carlo(qs, chain.Targets())
     t1 = _load(root / "runs" / "t1.json")
@@ -178,8 +201,9 @@ def packet(root: Path = Path("."), b5: Path | None = None) -> dict:
         "t1": {c: v["test"] for c, v in t1["classes"].items()},
         "riskiest": risk,
         "radar": radar(b5),
+        "prices": price_table(b5),
         "quantities": [q.row() for q in qs.values()],
-        "monte_carlo": mc or {"ran": False, "blocked_by": blocked},
+        "monte_carlo": {"ran": True} | mc if mc else {"ran": False, "blocked_by": blocked},
         "touch": TOUCH,
         "simulation": simulation(b4),
     }
@@ -199,29 +223,52 @@ Answer as JSON: {{"overreach": [{{"where": "...", "claim": "...", "why": "..."}}
 "flip": {{"exists": true or false, "input": "...", "why": "..."}}}}"""
 
 
-def red_team(llm, pkt: dict) -> dict:
+def red_team(llm, pkt: dict, purpose: str = "redteam.report") -> dict:
     body = json.dumps(pkt, default=str)
-    a = llm.complete_json(RT_PROMPT.format(packet=body), RT_SYSTEM, "redteam.report")
+    a = llm.complete_json(RT_PROMPT.format(packet=body), RT_SYSTEM, purpose)
     if not isinstance(a, dict):
         raise ValueError("red team answer is not an object")
     return a
 
 
-def decide(pkt: dict, rt: dict | None) -> dict:
-    qs = quantities()
-    flip = None if rt is None else bool((rt.get("flip") or {}).get("exists"))
+A8_KEYS = ("themes", "merge", "groups_concentration", "prices", "Q4", "monte_carlo")
+
+
+def changed_sections(pkt: dict) -> dict:
+    """Amendment 8 rule 4: only what amendment 8 changed goes to the red team."""
+    r = pkt["radar"]
+    return {
+        "themes": [{k: v for k, v in t.items() if k != "receipt"} for t in r.get("themes", [])],
+        "merge": r.get("merge"),
+        "groups_concentration": [
+            {"group": g["group"], "name": g.get("name"), "authors": g["authors"]}
+            | g.get("concentration", {})
+            for g in r["groups"]
+        ],
+        "prices": pkt["prices"],
+        "Q4": next(q for q in pkt["quantities"] if q["q"] == "Q4"),
+        "monte_carlo": pkt["monte_carlo"],
+    }
+
+
+def decide(pkt: dict, rt: dict | None, b5: Path | None = None, rt8: dict | None = None) -> dict:
+    qs = quantities(b5)
+    flips = [bool((r.get("flip") or {}).get("exists")) for r in (rt, rt8) if r is not None]
+    flip = any(flips) if flips else None
     mc = pkt["monte_carlo"] if pkt["monte_carlo"].get("ran", True) else None
     v = chain.validate(qs, mc, flip)
     return v | {"decision": chain.decision(v["validated"], None, 0.0), "evpi": "not computed"}
 
 
-def render(pkt: dict, rt: dict | None, out: Path) -> Path:
+def render(
+    pkt: dict, rt: dict | None, out: Path, rt8: dict | None = None, b5: Path | None = None
+) -> Path:
     env = Environment(
         loader=FileSystemLoader(Path(__file__).parent / "templates"),
         autoescape=select_autoescape(["html", "j2"]),
     )
     html = env.get_template("groundwork.html.j2").render(
-        p=pkt, rt=rt, d=decide(pkt, rt), label=CLAIM_LABEL
+        p=pkt, rt=rt, rt8=rt8, d=decide(pkt, rt, b5, rt8), label=CLAIM_LABEL
     )
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, "utf-8")
@@ -284,10 +331,12 @@ def check(html: str, pkt: dict) -> list[str]:
     if rows != len(pkt["simulation"]["conditions"]) or sim.count(CLAIM_LABEL) < rows:
         problems.append("a simulation row lacks its SYNTHETIC label")
     quotes, receipts = html.count("<blockquote>"), html.count(">receipt</a>")
-    bad = [g["name"] for g in pkt["radar"]["groups"] if g.get("quote") and not g["verbatim"]]
+    items = pkt["radar"]["groups"] + pkt["radar"].get("themes", [])
+    bad = [g.get("name") or g.get("theme") for g in items if g.get("quote") and not g["verbatim"]]
     problems += [f"quote not verbatim in its receipt: {n}" for n in bad]
     if quotes != receipts:
         problems.append(f"{quotes - receipts} quotes without a receipt")
-    if pkt["monte_carlo"].get("ran") and not pkt["monte_carlo"].get("interval80"):
-        problems.append("money figure without an interval")
+    mc = pkt["monte_carlo"]
+    if (mc.get("ran") or any(k.startswith("p_") for k in mc)) and not mc.get("interval80"):
+        problems.append("Monte Carlo ran but reports no interval")
     return problems

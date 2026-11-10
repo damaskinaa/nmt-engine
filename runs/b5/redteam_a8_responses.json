@@ -1,0 +1,17 @@
+{
+  "0": "Agreed. Theme names follow the fixed rule (the name of the largest merged group), and the Groups merged column lists every group in the theme. Method and limits says the merge compares whole reviews and that this theme mixes crash, fee, mobile and price groups. The name is a label, not a finding.",
+  "1": "Partly. The flag applies at theme level, as amendment 8 specifies. Group-level shares and flags are in Appendix A, where the QuickBooks-heavy groups are flagged.",
+  "2": "Agreed. Theme names follow the fixed rule (the name of the largest merged group), and the Groups merged column lists every group in the theme. This theme also covers limitation complaints. It is flagged mostly one app: QuickBooks.",
+  "3": "Agreed. Theme names follow the fixed rule (the name of the largest merged group), and the Groups merged column lists every group in the theme. The merge put receipt-upload complaints with crashes, and the theme is flagged mostly one app: QuickBooks. Read it as app-specific.",
+  "4": "Agreed. 'Poor support' is the Kimi group name, a model label rather than a measured support-quality score. The report already says theme names are model labels, not findings.",
+  "5": "Agreed. These are complaints, not churn data; no exit rate is measured. The theme is flagged mostly one app: Invoice Simple.",
+  "6": "Partly. Amendment 8 fixed the rule in advance: the list price is the regular ('was'/'usually') price, not the promotion. The FreshBooks rows follow that rule, and the snapshot link shows the page.",
+  "7": "Partly. Same rule: the regular price ($38) is used, not the 50%-off promotion ($19). With $19 the median entry price would still be $19, so Q4's median does not move.",
+  "8": "Partly. Same rule: 'Usually $25' is the regular price, so it is used.",
+  "9": "Agreed. Invoice2go's archived pricing page had no readable plan prices, and the report says so. Q4 is computed from 7 apps, not 9.",
+  "10": "Agreed. Zoho's latest archived pricing page is from 2023-07-25. Its only plan is free, so it adds nothing to the entry prices, which use paid plans only.",
+  "11": "Agreed that it is not WTP; the report says list price is not willingness to pay. The S1 grade is what the frozen rule gives: anchored, with one family. S1 is the lowest anchored grade, and S2 would need three agreeing families.",
+  "12": "Agreed. Bonsai and Harvest are priced per user, and the table marks them. The spread is shown as a 10th-90th percentile range, not as comparable point prices.",
+  "13": "Agreed. Monte Carlo did not run (8 of 9 quantities are S0), so no figure has a sensitivity analysis. The report shows no money figure.",
+  "flip": "No flip. The decision is already NO GO, with the market touch first. Q4 is labelled list prices, not WTP, and feeds no figure, because Monte Carlo stays blocked. Dropping it leaves the conclusion unchanged."
+}

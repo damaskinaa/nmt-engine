@@ -1,0 +1,397 @@
+{
+  "until": "20251107",
+  "pages": {
+    "Bonsai": {
+      "snapshot_date": "2025-09-11",
+      "url": "https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing",
+      "rows": 4
+    },
+    "FreshBooks": {
+      "snapshot_date": "2025-10-11",
+      "url": "https://web.archive.org/web/20251011152857id_/https://www.freshbooks.com/pricing",
+      "rows": 3
+    },
+    "Harvest": {
+      "snapshot_date": "2025-10-01",
+      "url": "https://web.archive.org/web/20251001032531id_/https://www.getharvest.com/pricing",
+      "rows": 2
+    },
+    "Invoice Ninja": {
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/",
+      "rows": 7
+    },
+    "Invoice2go": {
+      "snapshot_date": "2025-11-07",
+      "url": "https://web.archive.org/web/20251107035639id_/https://invoice.2go.com/pricing/",
+      "rows": 0
+    },
+    "QuickBooks": {
+      "snapshot_date": "2025-11-04",
+      "url": "https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/",
+      "rows": 4
+    },
+    "Wave": {
+      "snapshot_date": "2025-10-08",
+      "url": "https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing",
+      "rows": 5
+    },
+    "Xero": {
+      "snapshot_date": "2025-11-05",
+      "url": "https://web.archive.org/web/20251105030007id_/https://www.xero.com/us/pricing-plans/",
+      "rows": 3
+    },
+    "Zoho Invoice": {
+      "snapshot_date": "2023-07-25",
+      "url": "https://web.archive.org/web/20230725165414id_/https://www.zoho.com/invoice/pricing/",
+      "rows": 1
+    }
+  },
+  "rows": [
+    {
+      "app": "Bonsai",
+      "plan": "Basic",
+      "price": 15.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": true,
+      "quote": "Basic\n\n$15/user/month",
+      "snapshot_date": "2025-09-11",
+      "url": "https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing"
+    },
+    {
+      "app": "Bonsai",
+      "plan": "Essentials",
+      "price": 25.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": true,
+      "quote": "Essentials\n\n$25/user/month",
+      "snapshot_date": "2025-09-11",
+      "url": "https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing"
+    },
+    {
+      "app": "Bonsai",
+      "plan": "Premium",
+      "price": 39.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": true,
+      "quote": "Premium\n\n$39/user/month",
+      "snapshot_date": "2025-09-11",
+      "url": "https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing"
+    },
+    {
+      "app": "Bonsai",
+      "plan": "Elite",
+      "price": 59.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": true,
+      "quote": "Elite\n\n$59/user/month",
+      "snapshot_date": "2025-09-11",
+      "url": "https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing"
+    },
+    {
+      "app": "FreshBooks",
+      "plan": "Lite",
+      "price": 21.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "Was $21.00 | Save $63.00*",
+      "snapshot_date": "2025-10-11",
+      "url": "https://web.archive.org/web/20251011152857id_/https://www.freshbooks.com/pricing"
+    },
+    {
+      "app": "FreshBooks",
+      "plan": "Plus",
+      "price": 38.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "Was $38.00 | Save $114.00*",
+      "snapshot_date": "2025-10-11",
+      "url": "https://web.archive.org/web/20251011152857id_/https://www.freshbooks.com/pricing"
+    },
+    {
+      "app": "FreshBooks",
+      "plan": "Premium",
+      "price": 65.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "Was $65.00 | Save $195.00*",
+      "snapshot_date": "2025-10-11",
+      "url": "https://web.archive.org/web/20251011152857id_/https://www.freshbooks.com/pricing"
+    },
+    {
+      "app": "Harvest",
+      "plan": "Free",
+      "price": 0.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$0forever",
+      "snapshot_date": "2025-10-01",
+      "url": "https://web.archive.org/web/20251001032531id_/https://www.getharvest.com/pricing"
+    },
+    {
+      "app": "Harvest",
+      "plan": "Pro",
+      "price": 13.75,
+      "currency": "USD",
+      "period": "month",
+      "per_user": true,
+      "quote": "$13.75 per seat/month",
+      "snapshot_date": "2025-10-01",
+      "url": "https://web.archive.org/web/20251001032531id_/https://www.getharvest.com/pricing"
+    },
+    {
+      "app": "Invoice Ninja",
+      "plan": "Free",
+      "price": 0.0,
+      "currency": "USD",
+      "period": "year",
+      "per_user": false,
+      "quote": "$0 Per year",
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/"
+    },
+    {
+      "app": "Invoice Ninja",
+      "plan": "Ninja Pro (annual)",
+      "price": 10.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$10 Per month with an annual plan!",
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/"
+    },
+    {
+      "app": "Invoice Ninja",
+      "plan": "Enterprise (annual)",
+      "price": 160.0,
+      "currency": "USD",
+      "period": "year",
+      "per_user": false,
+      "quote": "$160 Per year",
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/"
+    },
+    {
+      "app": "Invoice Ninja",
+      "plan": "Premium Business+",
+      "price": 240.0,
+      "currency": "USD",
+      "period": "year",
+      "per_user": false,
+      "quote": "From $240*",
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/"
+    },
+    {
+      "app": "Invoice Ninja",
+      "plan": "Free (monthly)",
+      "price": 0.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$0 Per month",
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/"
+    },
+    {
+      "app": "Invoice Ninja",
+      "plan": "Ninja Pro (monthly)",
+      "price": 12.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$12 Per month",
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/"
+    },
+    {
+      "app": "Invoice Ninja",
+      "plan": "Enterprise (monthly)",
+      "price": 16.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$16 Per month",
+      "snapshot_date": "2025-09-04",
+      "url": "https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/"
+    },
+    {
+      "app": "QuickBooks",
+      "plan": "Simple Start",
+      "price": 38.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$38\n\n$19/mo",
+      "snapshot_date": "2025-11-04",
+      "url": "https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/"
+    },
+    {
+      "app": "QuickBooks",
+      "plan": "Essentials",
+      "price": 75.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$75\n\n$37.50/mo",
+      "snapshot_date": "2025-11-04",
+      "url": "https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/"
+    },
+    {
+      "app": "QuickBooks",
+      "plan": "Plus",
+      "price": 115.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$115\n\n$57.50/mo",
+      "snapshot_date": "2025-11-04",
+      "url": "https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/"
+    },
+    {
+      "app": "QuickBooks",
+      "plan": "Advanced",
+      "price": 275.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$275\n\n$137.50/mo",
+      "snapshot_date": "2025-11-04",
+      "url": "https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/"
+    },
+    {
+      "app": "Wave",
+      "plan": "Starter",
+      "price": 0.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$0",
+      "snapshot_date": "2025-10-08",
+      "url": "https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing"
+    },
+    {
+      "app": "Wave",
+      "plan": "Pro",
+      "price": 19.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$19USD/month*",
+      "snapshot_date": "2025-10-08",
+      "url": "https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing"
+    },
+    {
+      "app": "Wave",
+      "plan": "Pro",
+      "price": 25.0,
+      "currency": "CAD",
+      "period": "month",
+      "per_user": false,
+      "quote": "$25CAD/month*",
+      "snapshot_date": "2025-10-08",
+      "url": "https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing"
+    },
+    {
+      "app": "Wave",
+      "plan": "Pro",
+      "price": 190.0,
+      "currency": "USD",
+      "period": "year",
+      "per_user": false,
+      "quote": "$190USD/year*",
+      "snapshot_date": "2025-10-08",
+      "url": "https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing"
+    },
+    {
+      "app": "Wave",
+      "plan": "Pro",
+      "price": 250.0,
+      "currency": "CAD",
+      "period": "year",
+      "per_user": false,
+      "quote": "$250CAD/year*",
+      "snapshot_date": "2025-10-08",
+      "url": "https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing"
+    },
+    {
+      "app": "Xero",
+      "plan": "Early",
+      "price": 25.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "Usually $25",
+      "snapshot_date": "2025-11-05",
+      "url": "https://web.archive.org/web/20251105030007id_/https://www.xero.com/us/pricing-plans/"
+    },
+    {
+      "app": "Xero",
+      "plan": "Growing",
+      "price": 55.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "Usually $55",
+      "snapshot_date": "2025-11-05",
+      "url": "https://web.archive.org/web/20251105030007id_/https://www.xero.com/us/pricing-plans/"
+    },
+    {
+      "app": "Xero",
+      "plan": "Established",
+      "price": 90.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "Usually $90",
+      "snapshot_date": "2025-11-05",
+      "url": "https://web.archive.org/web/20251105030007id_/https://www.xero.com/us/pricing-plans/"
+    },
+    {
+      "app": "Zoho Invoice",
+      "plan": "Zoho Invoice",
+      "price": 0.0,
+      "currency": "USD",
+      "period": "month",
+      "per_user": false,
+      "quote": "The best of invoicing. Now available for free! $ 0",
+      "snapshot_date": "2023-07-25",
+      "url": "https://web.archive.org/web/20230725165414id_/https://www.zoho.com/invoice/pricing/"
+    }
+  ],
+  "entry_monthly_usd": {
+    "Bonsai": 15.0,
+    "FreshBooks": 21.0,
+    "Harvest": 13.75,
+    "Invoice Ninja": 12.0,
+    "QuickBooks": 38.0,
+    "Wave": 19.0,
+    "Xero": 25.0
+  },
+  "q4": {
+    "q": "Q4",
+    "name": "WTP",
+    "grade": "S1",
+    "families": [
+      "revealed_price"
+    ],
+    "estimate": [
+      19.0,
+      13.05,
+      30.2
+    ],
+    "notes": [
+      "list prices of the alternatives (one family: revealed_price); list price is not willingness to pay",
+      "simulated family dropped: cross-model rho below 0.5 and SSR gold failed"
+    ]
+  }
+}

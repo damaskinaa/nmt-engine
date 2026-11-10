@@ -196,3 +196,27 @@ evidence; 0 of 10 supported, 0 of 10 contradicted. Nothing in B4 changes that.
   check NOT DONE, simulation exploratory and unvalidated, no money figure; no banned claim; every
   simulation row is labelled SYNTHETIC (simulation estimate) with its interval and calibration
   inputs; every quote is verbatim in its receipt.
+
+## B6 fixes: PREREG_v3 amendment 8 (after the user read the first report)
+
+- **Merged themes:** the 12 k-means groups merged by average linkage on centroid cosine distance,
+  cut at the pre-registered 25th percentile of pairwise distances (0.1235), give **7 themes**.
+  Distinct voices are recounted across merged groups. The rule compares whole reviews, so it
+  does not sort cleanly by problem: the largest theme (614 voices) combines crash, fee, mobile
+  and price groups, and one price group stays on its own. The original 12 groups are in report
+  Appendix A, unchanged.
+- **Single-app concentration:** 5 of 7 themes are flagged "mostly one app" (QuickBooks ×3,
+  Invoice Simple, Harvest).
+- **List prices (Q4):** prices were read from the latest archived pricing pages the B4 replay had
+  already fetched (no new harvest); 29 rows passed the verbatim-quote check. No prices were
+  readable for Invoice2go; Zoho's only plan is free (snapshot 2023-07-25). Entry prices of the 7
+  apps with a paid USD plan give a median of 19 USD a month (10th–90th percentile 13.05–30.2).
+  **Q4 = S1** under the frozen rule (anchored, one family: revealed price). List price is not
+  willingness to pay.
+- **Decision unchanged:** 8 of 9 quantities are still S0, so the Monte Carlo stays blocked and the
+  report says NO GO, run the market touch (T4) first. Page 1 facts, node statuses and the
+  simulation labels are unchanged.
+- **Red team (GLM-5.3) on the changed sections only:** 14 overreach points, all answered in the
+  report. GLM named Q4 as a flip input, but the decision is already NO GO and Q4 feeds no
+  figure, so it does not flip. Synthetic validation counts it as a failed check.
+- **Spend:** $0.033 of the $2 cap (price extraction $0.018, red team $0.015).

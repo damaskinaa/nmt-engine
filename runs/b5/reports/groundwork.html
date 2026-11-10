@@ -33,14 +33,14 @@
   <div class="tile warn"><b>0 of 10</b>riskiest Job guesses supported by public evidence (0 contradicted)</div>
   <div class="tile warn"><b>7 of 10</b>Job guesses have no public evidence in this harvest</div>
   <div class="tile warn"><b>NOT DONE</b>human label check</div>
-  <div class="tile warn"><b>No money figure</b>every Q1&ndash;Q9 is S0, so synthetic validation fails</div>
+  <div class="tile warn"><b>No money figure</b>8 of 9 quantities are S0, so synthetic validation fails</div>
 </div>
 
 <h3>What this means</h3>
 <ul>
   <li><b>Decision: NO GO to build: run the cheapest market touch first.</b> The cheapest market touch is the T4 landing-page test (not run yet; B7): 3 headlines, EUR 49 vs EUR 149, about 200 founders or PMs.</li>
   <li>The 10 riskiest guesses about the customer's Job all have status <b>unknown</b>. J2, J3 and S2 have some supporting posts, below the bar of 3 distinct authors in 2 customer-voice families. The other 7 have no public evidence in this harvest.</li>
-  <li>What the data does show: the problems 1,859 app reviewers describe, grouped into 12 themes, and which other options they name.</li>
+  <li>What the data does show: the problems 1,859 app reviewers describe, grouped into 7 merged themes (12 groups before merging), and which other options they name.</li>
   <li>All precision figures are against model labels: model-labelled (moonshotai/kimi-k3.1-pro), not human-verified; precision against model labels; cross-model agreement with z-ai/glm-5.3 89.7% (kappa 0.86); human check NOT DONE.</li>
   <li><b>Simulation is exploratory and unvalidated.</b> It upgrades no node and feeds no estimate. Its section is at the end; every number there is labelled <span class="syn">SYNTHETIC (simulation estimate)</span>.</li>
 </ul>
@@ -49,106 +49,70 @@
 
 <h2>1. Problem radar</h2>
 <p>Pool: 3,284 posts (appstore 3,283, hackernews 1). The producer model called 3,135 of them first-hand users and found a problem in 1,868 (1,859 distinct authors). Themes come from k-means (k = 12, fixed in advance) on text embeddings; theme names are model labels (Kimi), not findings. Counts are voices in this pool, not market prevalence.</p>
+
+<p>Merged themes (amendment 8): the 12 groups were merged by average-linkage clustering of their centroids, cut at cosine distance 0.124 (the 25th percentile of pairwise centroid distances, fixed before the merge was seen). No theme was merged or split by hand. A theme's name is the name of its largest group. Voices are distinct authors across the merged groups, each counted once. "Largest app" is the share of a theme's voices that reviewed one app; over 50% is flagged.</p>
 <table>
-<tr><th>Theme</th><th>Voices</th><th>Share</th><th>Apps (voices)</th><th>Example, verbatim</th></tr>
+<tr><th>Theme</th><th>Voices</th><th>Largest app</th><th>Groups merged</th><th>Example, verbatim</th></tr>
 
 <tr>
-  <td><b>Constant crashes and broken functionality</b><br><span class="small">Reviewers report crashes, freezing, loading or login failures, and broken features after updates that make the app unreliable or unusable.</span></td>
-  <td>303</td>
-  <td>16%</td>
-  <td class="small">QuickBooks 221, FreshBooks 22, Invoice2go 15, Xero 13, Invoice Simple 13, Harvest 8, Zoho Invoice 6, Bonsai 5</td>
-  <td><blockquote>&ldquo;Gets worse with every single update &amp; is now completely unusable&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-14193902873">receipt</a></td>
-</tr>
-
-<tr>
-  <td><b>Updates cause crashes and invoice failures</b><br><span class="small">Reviewers say recent updates have made the app slow and unstable, causing freezing or crashes and preventing invoices from loading or sending.</span></td>
-  <td>196</td>
-  <td>10%</td>
-  <td class="small">QuickBooks 112, FreshBooks 34, Invoice2go 27, Invoice Simple 11, Zoho Invoice 5, Xero 5, Invoice Ninja 2</td>
+  <td><b>Updates cause crashes and invoice failures</b></td>
+  <td>614</td>
+  <td>Invoice Simple 29%</td>
+  <td class="small">Updates cause crashes and invoice failures; Rising fees and payment frustrations; Mobile app fails at basic invoicing tasks; Rising prices and invoice limits</td>
   <td><blockquote>&ldquo;This app was seamless before whatever update has been given. Now takes an age to load crashes constantly while trying to send invoices.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-12676177044">receipt</a></td>
 </tr>
 
 <tr>
-  <td><b>Frequent crashes and freezing</b><br><span class="small">Reviewers say the app has become buggy and unstable, often freezing or crashing and preventing them from invoicing or completing other work.</span></td>
-  <td>181</td>
-  <td>10%</td>
-  <td class="small">QuickBooks 154, Xero 14, FreshBooks 8, Zoho Invoice 3, Invoice Simple 1, Invoice2go 1</td>
+  <td><b>Constant crashes and broken functionality</b><br><span class="unk">mostly one app: QuickBooks</span></td>
+  <td>472</td>
+  <td>QuickBooks 62%</td>
+  <td class="small">Constant crashes and broken functionality; App is limited and unreliable</td>
+  <td><blockquote>&ldquo;Gets worse with every single update &amp; is now completely unusable&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-14193902873">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Frequent crashes and freezing</b><br><span class="unk">mostly one app: QuickBooks</span></td>
+  <td>315</td>
+  <td>QuickBooks 81%</td>
+  <td class="small">Frequent crashes and freezing; Receipt uploads are broken</td>
   <td><blockquote>&ldquo;New update on this app is now unusable. unable to raise invoices on phone, as app just crashes&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-14277908959">receipt</a></td>
 </tr>
 
 <tr>
-  <td><b>Account and payment problems with poor support</b><br><span class="small">Reviewers say blocked accounts, withheld or failed payments, and broken billing features disrupted their businesses, while customer support provided little or no effective help.</span></td>
+  <td><b>Account and payment problems with poor support</b></td>
   <td>178</td>
-  <td>10%</td>
-  <td class="small">Invoice2go 82, QuickBooks 32, Invoice Simple 23, FreshBooks 15, Xero 12, Zoho Invoice 8, Bonsai 5, Invoice Ninja 1</td>
+  <td>Invoice2go 46%</td>
+  <td class="small">Account and payment problems with poor support</td>
   <td><blockquote>&ldquo;Could not process a clients payment and their service is terrible ! No phone line just messaging people that will eventually just cancel your subscription because they feel like your not worth the headache terrible.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id1333596451#review-10075276325">receipt</a></td>
 </tr>
 
 <tr>
-  <td><b>App is limited and unreliable</b><br><span class="small">Reviewers find the app confusing, buggy, slow, or lacking essential functionality, making it difficult to accomplish what they need.</span></td>
-  <td>169</td>
-  <td>9%</td>
-  <td class="small">QuickBooks 73, Xero 25, Invoice Simple 23, Invoice2go 20, Harvest 8, FreshBooks 8, Zoho Invoice 7, Invoice Ninja 3, Bonsai 3</td>
-  <td><blockquote>&ldquo;Can’t do much on the app at all. Not very useful.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id584606479#review-14495290653">receipt</a></td>
-</tr>
-
-<tr>
-  <td><b>Rising fees and payment frustrations</b><br><span class="small">Reviewers object to rising prices, unexpected charges, high payment-collection fees, and pressure to use built-in payment processing.</span></td>
-  <td>155</td>
-  <td>8%</td>
-  <td class="small">Invoice2go 43, Invoice Simple 37, Zoho Invoice 33, QuickBooks 14, Xero 12, FreshBooks 7, Harvest 5, Invoice Ninja 3, Bonsai 3</td>
-  <td><blockquote>&ldquo;When I first started using this app everything was free, then they added abt a $12 charge for basically nothing, now charging to make and send invoices?&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id694831622#review-11664174508">receipt</a></td>
-</tr>
-
-<tr>
-  <td><b>Mobile app fails at basic invoicing tasks</b><br><span class="small">Reviewers report that the mobile app cannot reliably perform essential tasks such as viewing, creating, editing, sending, and managing invoices or receipts.</span></td>
-  <td>138</td>
-  <td>7%</td>
-  <td class="small">QuickBooks 40, Xero 30, Invoice Simple 20, FreshBooks 18, Invoice2go 14, Zoho Invoice 12, Harvest 3, Bonsai 1</td>
-  <td><blockquote>&ldquo;The latest update has totally ruined it, can’t see any of my invoicing or create a new one, the buttons don’t work/show.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-13348693259">receipt</a></td>
-</tr>
-
-<tr>
-  <td><b>Receipt uploads are broken</b><br><span class="small">Reviewers say receipt capture and uploading have become buggy, slow, or unreliable, often preventing them from attaching receipts to expenses or transactions.</span></td>
-  <td>134</td>
-  <td>7%</td>
-  <td class="small">QuickBooks 100, Xero 14, FreshBooks 9, Invoice Simple 4, Harvest 4, Bonsai 3</td>
-  <td><blockquote>&ldquo;Suddenly can’t upload pics of receipts.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id584606479#review-14280237529">receipt</a></td>
-</tr>
-
-<tr>
-  <td><b>Rising prices and invoice limits</b><br><span class="small">Reviewers object to steep subscription price increases and new monthly invoice caps that force them to pay more.</span></td>
-  <td>125</td>
-  <td>7%</td>
-  <td class="small">Invoice Simple 108, Invoice2go 12, FreshBooks 2, QuickBooks 2, Zoho Invoice 1</td>
-  <td><blockquote>&ldquo;Have used this app for the past few years, with price increases every year and locking certain features. Now they are limiting the number of invoices you can even send per month.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id694831622#review-13003353390">receipt</a></td>
-</tr>
-
-<tr>
-  <td><b>Repeated price increases drive users away</b><br><span class="small">Reviewers say recurring price increases have made the apps too expensive, prompting some to consider switching or canceling.</span></td>
+  <td><b>Repeated price increases drive users away</b><br><span class="unk">mostly one app: Invoice Simple</span></td>
   <td>116</td>
-  <td>6%</td>
-  <td class="small">Invoice Simple 75, Xero 12, Invoice2go 11, QuickBooks 9, Harvest 8, FreshBooks 1</td>
+  <td>Invoice Simple 65%</td>
+  <td class="small">Repeated price increases drive users away</td>
   <td><blockquote>&ldquo;But price keep increasing every year. Last year it was $89 this year $99 and it started at $60 aprox per year. No longer rentable for me.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id694831622#review-11786567040">receipt</a></td>
 </tr>
 
 <tr>
-  <td><b>Mobile app is unreliable and limited</b><br><span class="small">Reviewers find the mobile app less dependable or capable than the web or desktop version, citing bugs, lost entries, slow syncing, extra steps, and missing features.</span></td>
+  <td><b>Mobile app is unreliable and limited</b><br><span class="unk">mostly one app: Harvest</span></td>
   <td>97</td>
-  <td>5%</td>
-  <td class="small">Harvest 60, FreshBooks 11, Bonsai 10, Zoho Invoice 5, QuickBooks 5, Invoice Simple 3, Invoice2go 2, Invoice Ninja 1</td>
+  <td>Harvest 62%</td>
+  <td class="small">Mobile app is unreliable and limited</td>
   <td><blockquote>&ldquo;App misses time entries and has lag on updates&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id355395846#review-11575821361">receipt</a></td>
 </tr>
 
 <tr>
-  <td><b>Mileage tracking does not work</b><br><span class="small">Reviewers report that mileage tracking is unreliable, stops working, or fails to record trips for extended periods.</span></td>
+  <td><b>Mileage tracking does not work</b><br><span class="unk">mostly one app: QuickBooks</span></td>
   <td>73</td>
-  <td>4%</td>
-  <td class="small">QuickBooks 55, FreshBooks 18</td>
+  <td>QuickBooks 75%</td>
+  <td class="small">Mileage tracking does not work</td>
   <td><blockquote>&ldquo;the mileage tracking is completely broken&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id584606479#review-14392587107">receipt</a></td>
 </tr>
 
 </table>
+<p class="small">The original 12-group table (k = 12) is kept unchanged in Appendix A.</p>
+
 
 <h2>2. Alternatives map</h2>
 <p>For reviews of each app, how many distinct authors name another option. Matching is by name only (the model's alternative tag is NOT MEASURED). A mention is not a switch.</p>
@@ -208,7 +172,7 @@
 <tr><td>Target segment and Core Job</td><td>Not chosen: no segment or Job node has public support.</td></tr>
 <tr><td>Value hypothesis and mechanic</td><td>Not established. The radar shows problems voiced, not a value gap (Q8 is S0).</td></tr>
 <tr><td>Why we win</td><td>Not established.</td></tr>
-<tr><td>Unit economics</td><td>No figure: Q4&ndash;Q6 and Q9 are S0.</td></tr>
+<tr><td>Unit economics</td><td>No figure: Q4 S1, Q5 S0, Q6 S0, Q9 S0. Q4 rests on list prices only, which are not willingness to pay.</td></tr>
 <tr><td>Demand plan</td><td>T4 landing-page test (not run yet; B7): 3 headlines, EUR 49 vs EUR 149, about 200 founders or PMs.</td></tr>
 <tr><td>Top-3 riskiest assumptions</td><td>J2: I want to send a clear, correct invoice to the client as soon as the work is done<br>J3: I want to know which invoices are unpaid and how late they are<br>C3: I can see the true unpaid balance without adding anything up myself<br><span class="small">Cheapest test for each: the evidence bar in section 3, then the landing-page test.</span></td></tr>
 </table>
@@ -223,7 +187,7 @@
 
 <tr><td>Q3</td><td>job budget</td><td>S0</td><td class="small">no input of any family was collected in B1-B4</td></tr>
 
-<tr><td>Q4</td><td>WTP</td><td>S0</td><td class="small">simulated family dropped: cross-model rho below 0.5 and SSR gold failed; list prices of 9 alternatives exist as Wayback snapshots (B4 replay) but are not extracted into a recomputable calculation</td></tr>
+<tr><td>Q4</td><td>WTP</td><td>S1</td><td class="small">list prices of the alternatives (one family: revealed_price); list price is not willingness to pay; simulated family dropped: cross-model rho below 0.5 and SSR gold failed</td></tr>
 
 <tr><td>Q5</td><td>cost-to-serve</td><td>S0</td><td class="small">no input of any family was collected in B1-B4</td></tr>
 
@@ -236,19 +200,38 @@
 <tr><td>Q9</td><td>retention</td><td>S0</td><td class="small">no input of any family was collected in B1-B4</td></tr>
 
 </table>
-<p>S0 means unanchored and is never cited. Monte Carlo (10,000 runs, seed 0): not run, because Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9 are below S1. EVPI: not computed.</p>
+
+<h3>List prices of the alternatives (input to Q4)</h3>
+<p>From the archived pricing pages the B4 replay had already fetched (latest snapshot at or before 2025-11-07; no new harvest). The producer model read each page; a row is kept only if its quote is verbatim on the page and contains the price. No price could be read for Invoice2go.</p>
+<table>
+<tr><th>App</th><th>Plan</th><th>Price</th><th>Currency</th><th>Billing period</th><th>Snapshot</th></tr>
+<tr><td>Bonsai</td><td>Basic</td><td>15 per user</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing">2025-09-11</a></td></tr><tr><td>Bonsai</td><td>Essentials</td><td>25 per user</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing">2025-09-11</a></td></tr><tr><td>Bonsai</td><td>Premium</td><td>39 per user</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing">2025-09-11</a></td></tr><tr><td>Bonsai</td><td>Elite</td><td>59 per user</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250911034733id_/https://www.hellobonsai.com/pricing">2025-09-11</a></td></tr><tr><td>FreshBooks</td><td>Lite</td><td>21</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251011152857id_/https://www.freshbooks.com/pricing">2025-10-11</a></td></tr><tr><td>FreshBooks</td><td>Plus</td><td>38</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251011152857id_/https://www.freshbooks.com/pricing">2025-10-11</a></td></tr><tr><td>FreshBooks</td><td>Premium</td><td>65</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251011152857id_/https://www.freshbooks.com/pricing">2025-10-11</a></td></tr><tr><td>Harvest</td><td>Free</td><td>0</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251001032531id_/https://www.getharvest.com/pricing">2025-10-01</a></td></tr><tr><td>Harvest</td><td>Pro</td><td>13.75 per user</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251001032531id_/https://www.getharvest.com/pricing">2025-10-01</a></td></tr><tr><td>Invoice Ninja</td><td>Free</td><td>0</td><td>USD</td><td>year</td><td class="small"><a href="https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/">2025-09-04</a></td></tr><tr><td>Invoice Ninja</td><td>Ninja Pro (annual)</td><td>10</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/">2025-09-04</a></td></tr><tr><td>Invoice Ninja</td><td>Enterprise (annual)</td><td>160</td><td>USD</td><td>year</td><td class="small"><a href="https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/">2025-09-04</a></td></tr><tr><td>Invoice Ninja</td><td>Premium Business+</td><td>240</td><td>USD</td><td>year</td><td class="small"><a href="https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/">2025-09-04</a></td></tr><tr><td>Invoice Ninja</td><td>Free (monthly)</td><td>0</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/">2025-09-04</a></td></tr><tr><td>Invoice Ninja</td><td>Ninja Pro (monthly)</td><td>12</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/">2025-09-04</a></td></tr><tr><td>Invoice Ninja</td><td>Enterprise (monthly)</td><td>16</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20250904032245id_/https://invoiceninja.com/pricing-plans/">2025-09-04</a></td></tr><tr><td>QuickBooks</td><td>Simple Start</td><td>38</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/">2025-11-04</a></td></tr><tr><td>QuickBooks</td><td>Essentials</td><td>75</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/">2025-11-04</a></td></tr><tr><td>QuickBooks</td><td>Plus</td><td>115</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/">2025-11-04</a></td></tr><tr><td>QuickBooks</td><td>Advanced</td><td>275</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251104095739id_/https://quickbooks.intuit.com/pricing/">2025-11-04</a></td></tr><tr><td>Wave</td><td>Starter</td><td>0</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing">2025-10-08</a></td></tr><tr><td>Wave</td><td>Pro</td><td>19</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing">2025-10-08</a></td></tr><tr><td>Wave</td><td>Pro</td><td>25</td><td>CAD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing">2025-10-08</a></td></tr><tr><td>Wave</td><td>Pro</td><td>190</td><td>USD</td><td>year</td><td class="small"><a href="https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing">2025-10-08</a></td></tr><tr><td>Wave</td><td>Pro</td><td>250</td><td>CAD</td><td>year</td><td class="small"><a href="https://web.archive.org/web/20251008043341id_/https://www.waveapps.com/pricing">2025-10-08</a></td></tr><tr><td>Xero</td><td>Early</td><td>25</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251105030007id_/https://www.xero.com/us/pricing-plans/">2025-11-05</a></td></tr><tr><td>Xero</td><td>Growing</td><td>55</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251105030007id_/https://www.xero.com/us/pricing-plans/">2025-11-05</a></td></tr><tr><td>Xero</td><td>Established</td><td>90</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20251105030007id_/https://www.xero.com/us/pricing-plans/">2025-11-05</a></td></tr><tr><td>Zoho Invoice</td><td>Zoho Invoice</td><td>0</td><td>USD</td><td>month</td><td class="small"><a href="https://web.archive.org/web/20230725165414id_/https://www.zoho.com/invoice/pricing/">2023-07-25</a></td></tr>
+</table>
+
+<p><b>Q4 is S1.</b> Entry price per app (lowest paid plan, USD a month, monthly billing): Bonsai 15, FreshBooks 21, Harvest 13.75, Invoice Ninja 12, QuickBooks 38, Wave 19, Xero 25. Median 19.0, 10th&ndash;90th percentile 13.05&ndash;30.2 USD a month. This is one family (revealed price), so the frozen grading rule stops at S1; S2 needs at least 3 agreeing families. <b>List price is not willingness to pay</b>: it is what vendors ask, not what this segment would pay for a new app.</p>
+
+<p>S0 means unanchored and is never cited. Monte Carlo (10,000 runs, seed 0): not run, because Q1, Q2, Q3, Q5, Q6, Q7, Q8, Q9 are below S1. EVPI: not computed.</p>
 <table>
 <tr><th>Synthetic validation check</th><th>Result</th></tr>
-<tr><td>Q1-Q4 and Q7 at least S3</td><td>fail</td></tr><tr><td>the rest at least S2</td><td>fail</td></tr><tr><td>three probabilities at least 0.6</td><td>fail</td></tr><tr><td>Q8 &gt; 0 with p at least 0.8</td><td>fail</td></tr><tr><td>red team finds no single input that flips the result</td><td>pass</td></tr>
+<tr><td>Q1-Q4 and Q7 at least S3</td><td>fail</td></tr><tr><td>the rest at least S2</td><td>fail</td></tr><tr><td>three probabilities at least 0.6</td><td>fail</td></tr><tr><td>Q8 &gt; 0 with p at least 0.8</td><td>fail</td></tr><tr><td>red team finds no single input that flips the result</td><td>fail</td></tr>
 </table>
 
 <h2>6. Red team</h2>
 
-<p>A different model family (GLM-5.3, thinking off) read only the report packet.</p>
+<p>A different model family (GLM-5.3, thinking off) read only the packet of the first report (before amendment 8).</p>
 <p><b>Single input that flips the conclusion:</b> none found (The NO GO rests on structural zeros: 0 supported nodes (max observed is 2 supports vs a bar of 3 authors in 2 families), all 9 quantities S0 with no inputs collected, and Monte Carlo blocked. No single input change flips it because the evidence bar requires at least 3 distinct authors in at least 2 customer-voice families, and the harvest has only 1 non-app-store post, so even a large new app-review batch cannot satisfy the 2-family requirement; a flip requires a new evidence family (e.g. a user community harvest), which is a new collection, not a change to an existing input. The closest single candidate is J2 (2 supports, 0 contradicts): one additional distinct author from a second family would make it supported, but that alone would not flip the overall NO GO since 9 of 10 nodes would remain unsupported and all money figures would stay S0.).</p>
 <table>
 <tr><th>Where</th><th>Claim it flagged</th><th>Why</th><th>Response</th></tr>
-<tr><td class="small">radar.groups[0..11] (all 12 groups)</td><td>12 distinct problem themes with named labels like &#39;Constant crashes and broken functionality&#39;, &#39;Updates cause crashes and invoice failures&#39;, &#39;Frequent crashes and freezing&#39;</td><td class="small">Groups 10, 11, and 2 are near-duplicates (crashes/freezing after updates) and groups 5, 0, and 7 overlap heavily (price increases); the packet presents them as separate findings without a dedup check, inflating apparent breadth of problems</td><td class="small">Agreed. k = 12 was fixed in amendment 7 before clustering, and no merge was done afterwards. Three crash themes and three price themes overlap; read them as about 6 broader themes (crashes after updates, price and fees, account and payment support, mobile limits, receipts, mileage).</td></tr><tr><td class="small">radar.groups[*].years</td><td>Trend claims implied by year breakdowns (e.g. group 10: 2023:24, 2024:22, 2025:90, 2026:167)</td><td class="small">No denominator per year is given; rising counts may just reflect harvest volume, and &#39;2026&#39; reviews (167 posts) are future-dated relative to a normal calendar, suggesting a date-parsing or labeling error that is not flagged</td><td class="small">Partly. Year counts are raw voices with no per-year denominator, so the report draws no trend from them. 2026 is not an error: the harvest ran in November 2026.</td></tr><tr><td class="small">radar.by_platform</td><td>Market-level &#39;invoicing&#39; problem radar</td><td class="small">3283 of 3284 posts are App Store reviews and only 1 is Hacker News; the evidence bar requires 2 customer-voice families, so the radar is effectively a single-family (app reviews) sample and cannot support claims about the broader invoicing market</td><td class="small">Agreed. The radar is one customer-voice family (App Store reviews, US/GB/IE). It is not a market-level claim; added to Method and limits.</td></tr><tr><td class="small">radar.groups[*].apps</td><td>Cross-app problem patterns (e.g. group 0 &#39;Rising prices and invoice limits&#39; spread over Invoice Simple, Invoice2go, FreshBooks)</td><td class="small">Group 0 is 108/125 Invoice Simple and group 3 is 60/97 Harvest; these are single-app complaint clusters presented as market-wide themes</td><td class="small">Agreed. Per-app voices are in the Apps column: &#39;Rising prices and invoice limits&#39; is 108 of 125 Invoice Simple, &#39;Mobile app is unreliable and limited&#39; is 60 of 97 Harvest. Read single-app themes as app-specific.</td></tr><tr><td class="small">simulation.conditions</td><td>Quantified switch probabilities, e.g. p_switch 0.515 for &#39;copy&#39; and 0.294 for &#39;take_job&#39;, with 80% intervals</td><td class="small">The packet&#39;s own validity metrics refute these numbers: price_order_preserved 8/27, repeat_mad 0.1589, sd_p_switch 0.2568, cross-model rho 0.4036 with verdict &#39;unusable&#39;, and T3 UNDECIDABLE; the intervals imply a precision the simulation does not have</td><td class="small">Agreed. That is why the section is exploratory, sits last and feeds no quantity or node. The intervals are a bootstrap over cells: sampling spread only, not validity.</td></tr><tr><td class="small">simulation.conditions[price10 vs price50]</td><td>A 10% price raise yields higher p_switch (0.428) than a 50% raise (0.404)</td><td class="small">This non-monotonic result is internally inconsistent with any sane demand model and the packet&#39;s own 8/27 price-order check confirms it is noise, yet the numbers are still reported as estimates</td><td class="small">Agreed: noise, consistent with price order preserved in only 8 of 27 cases. Shown as a failure signal, not an estimate.</td></tr><tr><td class="small">status.gold</td><td>Cross-model agreement 89.7% (kappa 0.86) presented as a quality signal</td><td class="small">Agreement is between two models (Kimi and GLM), not against ground truth; human_check is NOT DONE, so this measures model correlation, not correctness, and the label &#39;gold&#39; overstates it</td><td class="small">Agreed. The report calls these labels model-labelled (Kimi), the GLM figure cross-model agreement, and the human check NOT DONE. &#39;gold&#39; is only the file name.</td></tr><tr><td class="small">t1.trigger / success_criterion / alternative / aha / supports / contradicts</td><td>Precision figures (0.5, 1.0, 0.8, null) reported per label</td><td class="small">Called counts are 6, 2, 5, 0, 1, 0; these are far too small for the stated precision values and several are marked NOT MEASURED, yet numeric precisions are still displayed as if informative</td><td class="small">Agreed. The report shows only counts for these classes, each marked NOT MEASURED (fewer than 20 calls); no precision is claimed.</td></tr><tr><td class="small">riskiest[*].priority</td><td>Priority scores (1.8, 1.5) ranking the 10 riskiest nodes</td><td class="small">0 of 10 nodes have any supporting evidence (7 no_public_evidence, rest below bar) and the structure comes from the unvalidated L1 hypothesis graph; priorities rank unverified hypotheses</td><td class="small">Agreed. Priority is the L1 risk ranking of unverified guesses: it orders what to test, not what is true.</td></tr><tr><td class="small">alternatives (all)</td><td>Alternative-usage mapping, e.g. QuickBooks users consider &#39;invoices by hand&#39; (25) and &#39;an accountant&#39; (18)</td><td class="small">These counts come from the same single-family app-review harvest with no extraction-quality check on the &#39;alternative&#39; label (precision 0.8 on 5 calls); they are presented as a switching map without any status</td><td class="small">Partly. The map does not use the model&#39;s alternative tag (NOT MEASURED); it is name matching by regex. Agreed that it has no quality check: the generic patterns (manually, accountant) also match passing mentions; added to Method and limits.</td></tr><tr><td class="small">touch</td><td>&#39;T4 landing-page test: 3 headlines, EUR 49 vs EUR 149, about 200 founders or PMs&#39;</td><td class="small">This is a plan, not a result; the packet gives no data from it, so listing it alongside measured sections implies a test that has not run</td><td class="small">Agreed. It is a plan, not a result; the report now says not run (B7).</td></tr><tr><td class="small">monte_carlo</td><td>Monte Carlo blocked by Q1-Q9</td><td class="small">Not an overreach per se, but the report&#39;s NO GO / run-touch-first conclusion is presented as final while every quantity is S0 with null estimates; the conclusion is only as strong as the absence of data, which the packet does state, but any headline framing &#39;market too small / not validated&#39; would overreach</td><td class="small">Agreed. NO GO means do not build yet, because the inputs are missing; it does not mean the market is too small.</td></tr>
+<tr><td class="small">radar.groups[0..11] (all 12 groups)</td><td>12 distinct problem themes with named labels like &#39;Constant crashes and broken functionality&#39;, &#39;Updates cause crashes and invoice failures&#39;, &#39;Frequent crashes and freezing&#39;</td><td class="small">Groups 10, 11, and 2 are near-duplicates (crashes/freezing after updates) and groups 5, 0, and 7 overlap heavily (price increases); the packet presents them as separate findings without a dedup check, inflating apparent breadth of problems</td><td class="small">Agreed. k = 12 was fixed in amendment 7 before clustering, Three crash themes and three price themes overlapped. Amendment 8 merged the groups by a rule fixed in advance (section 1); the original 12 are in Appendix A.</td></tr><tr><td class="small">radar.groups[*].years</td><td>Trend claims implied by year breakdowns (e.g. group 10: 2023:24, 2024:22, 2025:90, 2026:167)</td><td class="small">No denominator per year is given; rising counts may just reflect harvest volume, and &#39;2026&#39; reviews (167 posts) are future-dated relative to a normal calendar, suggesting a date-parsing or labeling error that is not flagged</td><td class="small">Partly. Year counts are raw voices with no per-year denominator, so the report draws no trend from them. 2026 is not an error: the harvest ran in November 2026.</td></tr><tr><td class="small">radar.by_platform</td><td>Market-level &#39;invoicing&#39; problem radar</td><td class="small">3283 of 3284 posts are App Store reviews and only 1 is Hacker News; the evidence bar requires 2 customer-voice families, so the radar is effectively a single-family (app reviews) sample and cannot support claims about the broader invoicing market</td><td class="small">Agreed. The radar is one customer-voice family (App Store reviews, US/GB/IE). It is not a market-level claim; added to Method and limits.</td></tr><tr><td class="small">radar.groups[*].apps</td><td>Cross-app problem patterns (e.g. group 0 &#39;Rising prices and invoice limits&#39; spread over Invoice Simple, Invoice2go, FreshBooks)</td><td class="small">Group 0 is 108/125 Invoice Simple and group 3 is 60/97 Harvest; these are single-app complaint clusters presented as market-wide themes</td><td class="small">Agreed. Per-app voices are in the Apps column: &#39;Rising prices and invoice limits&#39; is 108 of 125 Invoice Simple, &#39;Mobile app is unreliable and limited&#39; is 60 of 97 Harvest. Read single-app themes as app-specific.</td></tr><tr><td class="small">simulation.conditions</td><td>Quantified switch probabilities, e.g. p_switch 0.515 for &#39;copy&#39; and 0.294 for &#39;take_job&#39;, with 80% intervals</td><td class="small">The packet&#39;s own validity metrics refute these numbers: price_order_preserved 8/27, repeat_mad 0.1589, sd_p_switch 0.2568, cross-model rho 0.4036 with verdict &#39;unusable&#39;, and T3 UNDECIDABLE; the intervals imply a precision the simulation does not have</td><td class="small">Agreed. That is why the section is exploratory, sits last and feeds no quantity or node. The intervals are a bootstrap over cells: sampling spread only, not validity.</td></tr><tr><td class="small">simulation.conditions[price10 vs price50]</td><td>A 10% price raise yields higher p_switch (0.428) than a 50% raise (0.404)</td><td class="small">This non-monotonic result is internally inconsistent with any sane demand model and the packet&#39;s own 8/27 price-order check confirms it is noise, yet the numbers are still reported as estimates</td><td class="small">Agreed: noise, consistent with price order preserved in only 8 of 27 cases. Shown as a failure signal, not an estimate.</td></tr><tr><td class="small">status.gold</td><td>Cross-model agreement 89.7% (kappa 0.86) presented as a quality signal</td><td class="small">Agreement is between two models (Kimi and GLM), not against ground truth; human_check is NOT DONE, so this measures model correlation, not correctness, and the label &#39;gold&#39; overstates it</td><td class="small">Agreed. The report calls these labels model-labelled (Kimi), the GLM figure cross-model agreement, and the human check NOT DONE. &#39;gold&#39; is only the file name.</td></tr><tr><td class="small">t1.trigger / success_criterion / alternative / aha / supports / contradicts</td><td>Precision figures (0.5, 1.0, 0.8, null) reported per label</td><td class="small">Called counts are 6, 2, 5, 0, 1, 0; these are far too small for the stated precision values and several are marked NOT MEASURED, yet numeric precisions are still displayed as if informative</td><td class="small">Agreed. The report shows only counts for these classes, each marked NOT MEASURED (fewer than 20 calls); no precision is claimed.</td></tr><tr><td class="small">riskiest[*].priority</td><td>Priority scores (1.8, 1.5) ranking the 10 riskiest nodes</td><td class="small">0 of 10 nodes have any supporting evidence (7 no_public_evidence, rest below bar) and the structure comes from the unvalidated L1 hypothesis graph; priorities rank unverified hypotheses</td><td class="small">Agreed. Priority is the L1 risk ranking of unverified guesses: it orders what to test, not what is true.</td></tr><tr><td class="small">alternatives (all)</td><td>Alternative-usage mapping, e.g. QuickBooks users consider &#39;invoices by hand&#39; (25) and &#39;an accountant&#39; (18)</td><td class="small">These counts come from the same single-family app-review harvest with no extraction-quality check on the &#39;alternative&#39; label (precision 0.8 on 5 calls); they are presented as a switching map without any status</td><td class="small">Partly. The map does not use the model&#39;s alternative tag (NOT MEASURED); it is name matching by regex. Agreed that it has no quality check: the generic patterns (manually, accountant) also match passing mentions; added to Method and limits.</td></tr><tr><td class="small">touch</td><td>&#39;T4 landing-page test: 3 headlines, EUR 49 vs EUR 149, about 200 founders or PMs&#39;</td><td class="small">This is a plan, not a result; the packet gives no data from it, so listing it alongside measured sections implies a test that has not run</td><td class="small">Agreed. It is a plan, not a result; the report now says not run (B7).</td></tr><tr><td class="small">monte_carlo</td><td>Monte Carlo blocked by Q1-Q9</td><td class="small">Not an overreach per se, but the report&#39;s NO GO / run-touch-first conclusion is presented as final while every quantity is S0 with null estimates; the conclusion is only as strong as the absence of data, which the packet does state, but any headline framing &#39;market too small / not validated&#39; would overreach</td><td class="small">Agreed. NO GO means do not build yet, because the inputs are missing; it does not mean the market is too small.</td></tr>
+</table>
+
+
+<h3>Red team on the amendment-8 changes</h3>
+<p>GLM-5.3 (thinking off) read only the changed sections: merged themes, app concentration, the list-price table, the Q4 grade and the Monte Carlo status.</p>
+<p><b>Single input that flips the conclusion, as GLM claimed it:</b> q4 estimate (the [19.0, 13.05, 30.2] WTP figure built solely on the revealed_price family) (the packet&#39;s only money figure and the sole basis for any go/no-go economics; its own notes concede list price ≠ WTP and the second family failed validation. Reclassify it as &#39;list prices, not WTP&#39; (or drop it) and there is no supported WTP node, no monetization evidence, and the decision collapses to NO GO / run the market touch first — no other input change is needed since themes and prices are descriptive only.). <b>Response:</b> No flip. The decision is already NO GO, with the market touch first. Q4 is labelled list prices, not WTP, and feeds no figure, because Monte Carlo stays blocked. Dropping it leaves the conclusion unchanged.</p>
+<table>
+<tr><th>Where</th><th>Claim it flagged</th><th>Why</th><th>Response</th></tr>
+<tr><td class="small">themes[0] &#39;Updates cause crashes and invoice failures&#39;</td><td>theme title implies update-caused crashes across 616 posts</td><td class="small">groups [11,5,8,0] include &#39;Rising fees&#39; and &#39;Rising prices and invoice limits&#39; — fee complaints are not crash/invoice-failure evidence; top app Invoice Simple at only 28.7% share, so no single app&#39;s update behavior is established</td><td class="small">Agreed. Theme names follow the fixed rule (the name of the largest merged group), and the Groups merged column lists every group in the theme. Method and limits says the merge compares whole reviews and that this theme mixes crash, fee, mobile and price groups. The name is a label, not a finding.</td></tr><tr><td class="small">themes[0].concentration.flag = null</td><td>implicitly a cross-app &#39;updates&#39; theme</td><td class="small">flag null but group-level data show group 11 is 57% QuickBooks; the aggregate hides that the update-crash signal is mostly one app</td><td class="small">Partly. The flag applies at theme level, as amendment 8 specifies. Group-level shares and flags are in Appendix A, where the QuickBooks-heavy groups are flagged.</td></tr><tr><td class="small">themes[1] &#39;Constant crashes and broken functionality&#39;</td><td>473 posts of crashes</td><td class="small">merges group 4 &#39;App is limited and unreliable&#39; — limitation complaints counted as crash evidence; 62% QuickBooks, flagged, but title generalizes</td><td class="small">Agreed. Theme names follow the fixed rule (the name of the largest merged group), and the Groups merged column lists every group in the theme. This theme also covers limitation complaints. It is flagged mostly one app: QuickBooks.</td></tr><tr><td class="small">themes[2] &#39;Frequent crashes and freezing&#39;</td><td>315 posts of crash/freeze</td><td class="small">includes group 1 &#39;Receipt uploads are broken&#39; — broken uploads are not crashes/freezes; 81% QuickBooks, so it&#39;s a QuickBooks-specific issue presented as a market theme</td><td class="small">Agreed. Theme names follow the fixed rule (the name of the largest merged group), and the Groups merged column lists every group in the theme. The merge put receipt-upload complaints with crashes, and the theme is flagged mostly one app: QuickBooks. Read it as app-specific.</td></tr><tr><td class="small">themes[3] &#39;Account and payment problems with poor support&#39;</td><td>support is &#39;poor&#39;</td><td class="small">single verbatim quote from one Invoice2go user (46% share, unflagged); no support-quality metric behind the theme name</td><td class="small">Agreed. &#39;Poor support&#39; is the Kimi group name, a model label rather than a measured support-quality score. The report already says theme names are model labels, not findings.</td></tr><tr><td class="small">themes[4] &#39;Repeated price increases drive users away&#39;</td><td>increases &#39;drive users away&#39;</td><td class="small">data show complaints, not churn; no switching/exit data; 65% Invoice Simple, so it&#39;s one app&#39;s pricing story generalized</td><td class="small">Agreed. These are complaints, not churn data; no exit rate is measured. The theme is flagged mostly one app: Invoice Simple.</td></tr><tr><td class="small">prices.rows FreshBooks</td><td>Lite $21/mo, Plus $38, Premium $65</td><td class="small">quotes are &#39;Was $21.00 | Save $63.00*&#39; — struck-through promo framing; actual current price ambiguous, asterisked terms unstated</td><td class="small">Partly. Amendment 8 fixed the rule in advance: the list price is the regular (&#39;was&#39;/&#39;usually&#39;) price, not the promotion. The FreshBooks rows follow that rule, and the snapshot link shows the page.</td></tr><tr><td class="small">prices.rows QuickBooks</td><td>Simple Start $38/mo etc.</td><td class="small">quotes show &#39;$38 / $19/mo&#39; — 50%-off promo price likely the live one; list vs promo price unresolved, yet entry_monthly_usd uses 38</td><td class="small">Partly. Same rule: the regular price ($38) is used, not the 50%-off promotion ($19). With $19 the median entry price would still be $19, so Q4&#39;s median does not move.</td></tr><tr><td class="small">prices.rows Xero</td><td>Early $25/mo</td><td class="small">quote &#39;Usually $25&#39; implies a discounted current price not captured</td><td class="small">Partly. Same rule: &#39;Usually $25&#39; is the regular price, so it is used.</td></tr><tr><td class="small">prices.pages Invoice2go</td><td>Invoice2go pricing included in market scan</td><td class="small">rows: 0 — snapshot captured no plans; app is in &#39;missing&#39; yet themes[3] is 46% Invoice2go, so its price story is unsupported</td><td class="small">Agreed. Invoice2go&#39;s archived pricing page had no readable plan prices, and the report says so. Q4 is computed from 7 apps, not 9.</td></tr><tr><td class="small">prices.pages Zoho Invoice</td><td>Zoho Invoice $0</td><td class="small">snapshot dated 2023-07-25, over 2 years stale vs 2025 data elsewhere; &#39;Now available for free&#39; may no longer hold</td><td class="small">Agreed. Zoho&#39;s latest archived pricing page is from 2023-07-25. Its only plan is free, so it adds nothing to the entry prices, which use paid plans only.</td></tr><tr><td class="small">q4 WTP estimate [19.0, 13.05, 30.2]</td><td>a willingness-to-pay figure</td><td class="small">notes admit it&#39;s list prices of alternatives, &#39;list price is not willingness to pay&#39;; simulated family dropped (rho &lt; 0.5, SSR gold failed); grade S1 overstated given single weak family</td><td class="small">Agreed that it is not WTP; the report says list price is not willingness to pay. The S1 grade is what the frozen rule gives: anchored, with one family. S1 is the lowest anchored grade, and S2 would need three agreeing families.</td></tr><tr><td class="small">entry_monthly_usd</td><td>comparable entry prices across 7 apps</td><td class="small">mixes per-user (Bonsai 15, Harvest 13.75) with flat (FreshBooks 21, Wave 19) and promo-ambiguous (QuickBooks 38) prices; Invoice2go absent — not apples-to-apples</td><td class="small">Agreed. Bonsai and Harvest are priced per user, and the table marks them. The spread is shown as a 10th-90th percentile range, not as comparable point prices.</td></tr><tr><td class="small">monte_carlo</td><td>report robustness implied</td><td class="small">ran: false, blocked by Q1–Q3, Q5–Q9 — no sensitivity analysis backs any figure</td><td class="small">Agreed. Monte Carlo did not run (8 of 9 quantities are S0), so no figure has a sensitivity analysis. The report shows no money figure.</td></tr>
 </table>
 
 
@@ -268,9 +251,125 @@
   <li>Precision on the held-out test split (against model labels): USER 75/77 (PASS); trigger 3/6 (NOT MEASURED); success_criterion 2/2 (NOT MEASURED); alternative 4/5 (NOT MEASURED); problem 44/44 (PASS); aha 0/0 (NOT MEASURED); supports 1/1 (NOT MEASURED); contradicts 0/0 (NOT MEASURED). Fewer than 20 calls means NOT MEASURED. Human label check: NOT DONE.</li>
   <li>T2 failed: supports plus contradicts had fewer than 20 test calls, so no node can be supported or contradicted. The product narrowed to this Radar.</li>
   <li>Pool limits: App Store reviews from 9 allow-listed invoicing apps (US, GB, IE); the two unrelated "Wave" listings are excluded; there is no Reddit collector; star ratings sit in the review text but are not analysed; only 1 of the 16 HN USER posts is in this harvest. So the radar is one customer-voice family, not a market-level picture.</li>
-  <li>Themes: k = 12 was fixed before clustering and nothing was merged afterwards, so some themes overlap (three about crashes, three about price). Some themes come mostly from one app; the Apps column shows the split. Year counts have no per-year denominator and are not trends.</li>
+  <li>Themes: k = 12 was fixed before clustering; amendment 8 then merged the groups by a rule fixed in advance. The rule compares whole reviews, not just the problem, so it does not sort cleanly by problem: the largest theme combines crash, fee, mobile and price groups, and one price group stays on its own. Flagged themes come mostly from one app. Year counts have no per-year denominator and are not trends.</li>
   <li>Alternatives: app names are matched by regex; the generic options (by hand / manually, accountant, spreadsheet) also match passing mentions such as "I have to enter it manually", so those counts are upper bounds.</li>
   <li>Voices are counted once per salted author hash. No names, emails or private data are stored.</li>
 </ul>
+
+<h2>Appendix A. Original 12 groups (k = 12, amendment 7)</h2>
+<p class="small">Unchanged from the first report, plus the largest-app share of each group's voices.</p>
+<table>
+<tr><th>Theme</th><th>Voices</th><th>Share</th><th>Largest app</th><th>Apps (voices)</th><th>Example, verbatim</th></tr>
+
+<tr>
+  <td><b>Constant crashes and broken functionality</b><br><span class="small">Reviewers report crashes, freezing, loading or login failures, and broken features after updates that make the app unreliable or unusable.</span></td>
+  <td>303</td>
+  <td>16%</td>
+  <td>QuickBooks 73%<br><span class="unk">mostly one app: QuickBooks</span></td>
+  <td class="small">QuickBooks 221, FreshBooks 22, Invoice2go 15, Xero 13, Invoice Simple 13, Harvest 8, Zoho Invoice 6, Bonsai 5</td>
+  <td><blockquote>&ldquo;Gets worse with every single update &amp; is now completely unusable&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-14193902873">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Updates cause crashes and invoice failures</b><br><span class="small">Reviewers say recent updates have made the app slow and unstable, causing freezing or crashes and preventing invoices from loading or sending.</span></td>
+  <td>196</td>
+  <td>10%</td>
+  <td>QuickBooks 57%<br><span class="unk">mostly one app: QuickBooks</span></td>
+  <td class="small">QuickBooks 112, FreshBooks 34, Invoice2go 27, Invoice Simple 11, Zoho Invoice 5, Xero 5, Invoice Ninja 2</td>
+  <td><blockquote>&ldquo;This app was seamless before whatever update has been given. Now takes an age to load crashes constantly while trying to send invoices.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-12676177044">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Frequent crashes and freezing</b><br><span class="small">Reviewers say the app has become buggy and unstable, often freezing or crashing and preventing them from invoicing or completing other work.</span></td>
+  <td>181</td>
+  <td>10%</td>
+  <td>QuickBooks 85%<br><span class="unk">mostly one app: QuickBooks</span></td>
+  <td class="small">QuickBooks 154, Xero 14, FreshBooks 8, Zoho Invoice 3, Invoice Simple 1, Invoice2go 1</td>
+  <td><blockquote>&ldquo;New update on this app is now unusable. unable to raise invoices on phone, as app just crashes&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-14277908959">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Account and payment problems with poor support</b><br><span class="small">Reviewers say blocked accounts, withheld or failed payments, and broken billing features disrupted their businesses, while customer support provided little or no effective help.</span></td>
+  <td>178</td>
+  <td>10%</td>
+  <td>Invoice2go 46%</td>
+  <td class="small">Invoice2go 82, QuickBooks 32, Invoice Simple 23, FreshBooks 15, Xero 12, Zoho Invoice 8, Bonsai 5, Invoice Ninja 1</td>
+  <td><blockquote>&ldquo;Could not process a clients payment and their service is terrible ! No phone line just messaging people that will eventually just cancel your subscription because they feel like your not worth the headache terrible.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id1333596451#review-10075276325">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>App is limited and unreliable</b><br><span class="small">Reviewers find the app confusing, buggy, slow, or lacking essential functionality, making it difficult to accomplish what they need.</span></td>
+  <td>169</td>
+  <td>9%</td>
+  <td>QuickBooks 43%</td>
+  <td class="small">QuickBooks 73, Xero 25, Invoice Simple 23, Invoice2go 20, Harvest 8, FreshBooks 8, Zoho Invoice 7, Invoice Ninja 3, Bonsai 3</td>
+  <td><blockquote>&ldquo;Can’t do much on the app at all. Not very useful.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id584606479#review-14495290653">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Rising fees and payment frustrations</b><br><span class="small">Reviewers object to rising prices, unexpected charges, high payment-collection fees, and pressure to use built-in payment processing.</span></td>
+  <td>155</td>
+  <td>8%</td>
+  <td>Invoice2go 28%</td>
+  <td class="small">Invoice2go 43, Invoice Simple 37, Zoho Invoice 33, QuickBooks 14, Xero 12, FreshBooks 7, Harvest 5, Invoice Ninja 3, Bonsai 3</td>
+  <td><blockquote>&ldquo;When I first started using this app everything was free, then they added abt a $12 charge for basically nothing, now charging to make and send invoices?&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id694831622#review-11664174508">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Mobile app fails at basic invoicing tasks</b><br><span class="small">Reviewers report that the mobile app cannot reliably perform essential tasks such as viewing, creating, editing, sending, and managing invoices or receipts.</span></td>
+  <td>138</td>
+  <td>7%</td>
+  <td>QuickBooks 29%</td>
+  <td class="small">QuickBooks 40, Xero 30, Invoice Simple 20, FreshBooks 18, Invoice2go 14, Zoho Invoice 12, Harvest 3, Bonsai 1</td>
+  <td><blockquote>&ldquo;The latest update has totally ruined it, can’t see any of my invoicing or create a new one, the buttons don’t work/show.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id584606479#review-13348693259">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Receipt uploads are broken</b><br><span class="small">Reviewers say receipt capture and uploading have become buggy, slow, or unreliable, often preventing them from attaching receipts to expenses or transactions.</span></td>
+  <td>134</td>
+  <td>7%</td>
+  <td>QuickBooks 75%<br><span class="unk">mostly one app: QuickBooks</span></td>
+  <td class="small">QuickBooks 100, Xero 14, FreshBooks 9, Invoice Simple 4, Harvest 4, Bonsai 3</td>
+  <td><blockquote>&ldquo;Suddenly can’t upload pics of receipts.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id584606479#review-14280237529">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Rising prices and invoice limits</b><br><span class="small">Reviewers object to steep subscription price increases and new monthly invoice caps that force them to pay more.</span></td>
+  <td>125</td>
+  <td>7%</td>
+  <td>Invoice Simple 86%<br><span class="unk">mostly one app: Invoice Simple</span></td>
+  <td class="small">Invoice Simple 108, Invoice2go 12, FreshBooks 2, QuickBooks 2, Zoho Invoice 1</td>
+  <td><blockquote>&ldquo;Have used this app for the past few years, with price increases every year and locking certain features. Now they are limiting the number of invoices you can even send per month.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/gb/app/id694831622#review-13003353390">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Repeated price increases drive users away</b><br><span class="small">Reviewers say recurring price increases have made the apps too expensive, prompting some to consider switching or canceling.</span></td>
+  <td>116</td>
+  <td>6%</td>
+  <td>Invoice Simple 65%<br><span class="unk">mostly one app: Invoice Simple</span></td>
+  <td class="small">Invoice Simple 75, Xero 12, Invoice2go 11, QuickBooks 9, Harvest 8, FreshBooks 1</td>
+  <td><blockquote>&ldquo;But price keep increasing every year. Last year it was $89 this year $99 and it started at $60 aprox per year. No longer rentable for me.&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id694831622#review-11786567040">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Mobile app is unreliable and limited</b><br><span class="small">Reviewers find the mobile app less dependable or capable than the web or desktop version, citing bugs, lost entries, slow syncing, extra steps, and missing features.</span></td>
+  <td>97</td>
+  <td>5%</td>
+  <td>Harvest 62%<br><span class="unk">mostly one app: Harvest</span></td>
+  <td class="small">Harvest 60, FreshBooks 11, Bonsai 10, Zoho Invoice 5, QuickBooks 5, Invoice Simple 3, Invoice2go 2, Invoice Ninja 1</td>
+  <td><blockquote>&ldquo;App misses time entries and has lag on updates&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id355395846#review-11575821361">receipt</a></td>
+</tr>
+
+<tr>
+  <td><b>Mileage tracking does not work</b><br><span class="small">Reviewers report that mileage tracking is unreliable, stops working, or fails to record trips for extended periods.</span></td>
+  <td>73</td>
+  <td>4%</td>
+  <td>QuickBooks 75%<br><span class="unk">mostly one app: QuickBooks</span></td>
+  <td class="small">QuickBooks 55, FreshBooks 18</td>
+  <td><blockquote>&ldquo;the mileage tracking is completely broken&rdquo;</blockquote><a class="small" href="https://apps.apple.com/us/app/id584606479#review-14392587107">receipt</a></td>
+</tr>
+
+</table>
+
 </body>
 </html>
