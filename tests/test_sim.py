@@ -182,3 +182,78 @@ def test_ssr_gold_committed_recording():
     res = ssr_gold.check()
     assert "error" not in res
     assert res["t3_may_run"] is False
+
+
+def test_replay_options_and_name_patterns():
+    from nmt_engine.sim import replay
+
+    opts = replay.options("Xero")
+    assert len(opts) == 13 and "Xero" not in opts and opts[-1] == "a self-built tool"
+    assert replay.mentions("Wave", "We left Wave for Xero")
+    assert not replay.mentions("Wave", "a wave of churn")
+    assert replay.mentions("QuickBooks", "quickbooks online got pricey")
+    base = replay.baseline("Xero", [{"text": "moved to FreshBooks"}, {"text": "freshbooks, excel"}])
+    assert base["option"] == "FreshBooks" and base["counts"]["a spreadsheet"] == 1
+
+
+def test_replay_select_votes_and_score():
+    from nmt_engine.sim import replay
+
+    rows = [
+        {"app": "Xero", "confirmed": True, "t1": "2020-01-10", "id": "a"},
+        {"app": "Xero", "confirmed": True, "t1": "2020-06-01", "id": "b"},  # within 365 days
+        {"app": "Xero", "confirmed": True, "t1": "2021-03-01", "id": "c"},
+        {"app": "Xero", "confirmed": False, "t1": "2023-03-01", "id": "d"},
+    ]
+    assert [r["id"] for r in replay.select(rows)] == ["a", "c"]
+    posts = [
+        {"id": f"p{i}", "author": f"u{i % 4}", "published": f"2020-0{i + 1}-01"} for i in range(6)
+    ]
+    labels = {
+        "p0": {"left": True, "to": "FreshBooks"},
+        "p1": {"left": True, "to": "Wave"},
+        "p2": {"left": True, "to": "FreshBooks"},
+        "p3": None,
+        "p4": {"left": True, "to": "Wave"},  # u0 again: only the earliest post votes
+        "p5": {"left": True, "to": "Wave"},  # u1 again
+    }
+    v = replay.votes(posts, labels, "Xero")
+    assert v["named"]["FreshBooks"] == 2 and v["named"]["Wave"] == 1 and v["usable"]
+
+    def ev(sim, base, usable=True):
+        return {
+            "prediction": {"option": sim},
+            "baseline": {"option": base},
+            "outcome": {"usable": usable, "share": {"A": 0.6, "B": 0.4}},
+        }
+
+    res = replay.score([ev("A", "B"), ev("A", "B"), ev("B", "A"), ev("A", "A")])
+    assert (res["usable"], res["wins"], res["t3"]) == (4, 2, "FAIL")
+    assert replay.score([ev("A", "B"), ev("A", "B"), ev("B", "A")])["t3"] == "PASS"
+    assert replay.score([ev("A", "B"), ev("A", "B", False)])["t3"] == "UNDECIDABLE"
+    assert replay.score([ev("A", "B")])["simulation_section"] == "exploratory"
+
+
+def test_prefilter_caps_and_needs_leaving_word():
+    from nmt_engine.sim import replay
+
+    rows = [{"id": f"p{i}", "text": f"I switched off Xero {i}"} for i in range(80)]
+    rows.append({"id": "q", "text": "Xero is fine"})
+    got = replay.prefilter("Xero", rows, "Xero:1:2")
+    assert len(got) == replay.OUTCOME_CAP and all(r["id"] != "q" for r in got)
+    assert got == replay.prefilter("Xero", list(reversed(rows)), "Xero:1:2")
+
+
+def test_calibrated_agents_put_supporting_posts_first(graph):
+    pool = [
+        {"id": f"S{i}", "text": f"post {i}", "published": None, "tags": {"problem": i % 2 == 0}}
+        for i in range(8)
+    ]
+    support = {"S7": "S2"}  # every segment holds S2, which serves J2 and J3
+    agents = ag.build(graph, HashEmb(), pool, support=support)
+    for a in agents:
+        assert a.quote_ids[0] == "S7" and len(a.quote_ids) == ag.QUOTES
+        assert a.calibration[0]["supports"] == "S2" and a.calibration[0]["weight"] is None
+    assert ag.weight_class({"trigger": True}) == "unmeasured"
+    assert ag.weight_class({"problem": True, "aha": True}) == "measured"
+    assert ag.weight_class(None) == "none"

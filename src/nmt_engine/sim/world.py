@@ -16,6 +16,7 @@ from nmt_engine.sim.ssr import SSR, collapse
 from nmt_engine.util import canonical_json, sha256_text
 
 LABEL = "SIMULATED"
+CLAIM_LABEL = "SYNTHETIC (simulation estimate)"  # PREREG amendment 6 rule 2
 CONDITIONS: dict[str, str] = {
     "none": "Nothing on the market has changed.",
     "price10": "{inc} raises its price by 10% from next month.",
@@ -107,6 +108,16 @@ def answer(llm: LLM, prompt: str, purpose: str) -> str:
     return llm.complete(prompt, system=SYSTEM, purpose=purpose, check=check).strip()
 
 
+def _safe_answer(llm: LLM, prompt: str, purpose: str) -> str | None:
+    """A cell that fails (cut-off answer, budget reached) is left out and counted, not fatal."""
+    from nmt_engine.llm import BudgetExceeded, LLMError
+
+    try:
+        return answer(llm, prompt, purpose)
+    except (LLMError, BudgetExceeded):
+        return None
+
+
 def solutions(graph: HypothesisGraph) -> dict[str, str]:
     return {n.id: n.text for n in graph.nodes if n.type == "solution"}
 
@@ -142,13 +153,17 @@ def run(
         jobs.append((c, inc, offers, render(a, inc, offers, cond, c.repeat)))
     purpose = f"sim.world.{llm.model.split('/')[-1]}"
     with ThreadPoolExecutor(workers) as pool:
-        texts = list(pool.map(lambda j: answer(llm, j[3], purpose), jobs))
-    ps = ssr.score(texts, [j[2] for j in jobs], [j[1] for j in jobs], "sim.ssr")
+        texts = list(pool.map(lambda j: _safe_answer(llm, j[3], purpose), jobs))
+    done = [(j, t) for j, t in zip(jobs, texts, strict=True) if t is not None]
+    jobs, texts = [j for j, _ in done], [t for _, t in done]
+    ps = ssr.score(texts, [j[2] for j in jobs], [j[1] for j in jobs], "sim.ssr") if jobs else []
     rows = []
     for (c, *_), text, p in zip(jobs, texts, ps, strict=True):
         rows.append(
             {
                 "label": LABEL,
+                "claim_label": CLAIM_LABEL,
+                "calibrated_on": by_id[c.agent].quote_ids,
                 "simulated": True,
                 "family": "simulated",
                 "model": llm.model,
