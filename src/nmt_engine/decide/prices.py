@@ -76,8 +76,10 @@ def extract(llm, app: str, snap: dict) -> list[dict]:
         plans = a.get("plans") if isinstance(a, dict) else None
         if not isinstance(plans, list):
             continue
-        rows = [r for r in plans if _ok(r, text)]
-        if rows and len(rows) == len(plans):
+        kept = [r for r in plans if _ok(r, text)]
+        if len(kept) > len(rows):
+            rows = kept
+        if kept and len(kept) == len(plans):
             break
     return [
         {
