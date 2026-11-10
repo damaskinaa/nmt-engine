@@ -260,19 +260,26 @@ def confirm(llm, rows: list[dict], workers: int = 4) -> list[dict]:
     return rows
 
 
-def select(rows: list[dict]) -> list[dict]:
-    """Per app, confirmed events by date; drop one whose T1 is within 365 days of a kept one."""
+def select(rows: list[dict], confirm_fn=None) -> list[dict]:
+    """Per app, confirmed events by date; drop one whose T1 is within 365 days of a kept one.
+    With `confirm_fn`, a candidate is confirmed only when it could be kept (same result as
+    confirming every candidate first, fewer Kimi calls)."""
     kept = []
     for app in PRICING:
         last = None
-        for r in sorted(
-            (r for r in rows if r["app"] == app and r.get("confirmed")), key=lambda r: r["t1"]
-        ):
+        mine = sorted(
+            (r for r in rows if r["app"] == app and r.get("usable_dates")), key=lambda r: r["t1"]
+        )
+        for r in mine:
             t1 = datetime.fromisoformat(r["t1"])
             if last is not None and (t1 - last).days <= WINDOW_DAYS:
+                r.setdefault("skipped", "within 365 days of a kept event")
                 continue
-            kept.append(r)
-            last = t1
+            if confirm_fn is not None and "confirmed" not in r:
+                confirm_fn([r])
+            if r.get("confirmed"):
+                kept.append(r)
+                last = t1
     return kept
 
 

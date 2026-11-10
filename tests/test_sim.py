@@ -205,7 +205,20 @@ def test_replay_select_votes_and_score():
         {"app": "Xero", "confirmed": True, "t1": "2021-03-01", "id": "c"},
         {"app": "Xero", "confirmed": False, "t1": "2023-03-01", "id": "d"},
     ]
+    for r in rows:
+        r["usable_dates"] = True
     assert [r["id"] for r in replay.select(rows)] == ["a", "c"]
+    asked = []
+
+    def fake_confirm(rs):
+        asked.extend(r["id"] for r in rs)
+        for r in rs:
+            r["confirmed"] = r["id"] not in ("x", "d")
+
+    lazy = [{k: v for k, v in r.items() if k != "confirmed"} for r in rows]
+    lazy.insert(0, {"app": "Xero", "t1": "2019-12-01", "id": "x", "usable_dates": True})
+    assert [r["id"] for r in replay.select(lazy, fake_confirm)] == ["a", "c"]
+    assert asked == ["x", "a", "c", "d"]  # b is never sent: it could not be kept
     posts = [
         {"id": f"p{i}", "author": f"u{i % 4}", "published": f"2020-0{i + 1}-01"} for i in range(6)
     ]
