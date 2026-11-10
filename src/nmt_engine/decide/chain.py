@@ -64,12 +64,15 @@ def monte_carlo(qs: dict[str, Quantity], t: Targets, n: int = RUNS, seed: int = 
         return rng.lognormal(mu, sd, n)
 
     d = {q: draw(q) for q in ("Q1", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9")}
-    keep = np.clip(d["Q9"], 0.0, 0.999)
-    lifetime = 1 / (1 - keep)
+    keep = np.clip(d["Q9"], 1e-6, 0.999)
     unit = d["Q4"] - d["Q5"]
     margin = unit / d["Q4"]
-    payback = np.where(unit > 0, d["Q6"] / np.maximum(unit, 1e-12), np.inf)
-    payback = np.where(payback <= lifetime, payback, np.inf)
+    # month m at which expected margin from retained customers, unit (1 - keep^m) / (1 - keep),
+    # covers CAC; never if CAC is at least the lifetime margin unit / (1 - keep)
+    left = 1 - d["Q6"] * (1 - keep) / np.maximum(unit, 1e-12)
+    payback = np.where(
+        (unit > 0) & (left > 0), np.log(np.maximum(left, 1e-300)) / np.log(keep), np.inf
+    )
     first_year_months = (1 - keep**12) / (1 - keep)
     revenue = d["Q1"] * d["Q7"] * d["Q4"] * first_year_months
     return {

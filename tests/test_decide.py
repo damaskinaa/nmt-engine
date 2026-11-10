@@ -88,3 +88,15 @@ def test_retention_moves_volume_and_payback():
     lo["Q9"] = _q("Q9", (0.3, 0.2, 0.4))
     a, b = chain.monte_carlo(hi, t), chain.monte_carlo(lo, t)
     assert a["p_volume"] > b["p_volume"] and a["p_payback"] > b["p_payback"]
+
+
+def test_payback_counts_only_retained_margin():
+    # unit margin about 35, CAC about 150: 4.3 months with no churn, but at 90% monthly
+    # retention the retained customers need about 5.3 months to repay it
+    qs = _all()
+    t = chain.Targets(annual_revenue=300_000, payback_months=5)
+    qs["Q9"] = _q("Q9", (0.999, 0.998, 0.9995))
+    no_churn = chain.monte_carlo(qs, t)["p_payback"]
+    qs["Q9"] = _q("Q9", (0.9, 0.89, 0.91))
+    churn = chain.monte_carlo(qs, t)["p_payback"]
+    assert churn < no_churn - 0.1
