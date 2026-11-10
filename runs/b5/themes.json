@@ -1,0 +1,289 @@
+{
+  "threshold": 0.12350674091270819,
+  "quantile": 0.25,
+  "labels": [
+    1,
+    3,
+    4,
+    5,
+    1,
+    3,
+    3,
+    4,
+    3,
+    6,
+    2,
+    7
+  ],
+  "themes": [
+    {
+      "theme": "Updates cause crashes and invoice failures",
+      "groups": [
+        11,
+        5,
+        8,
+        0
+      ],
+      "group_names": [
+        "Updates cause crashes and invoice failures",
+        "Rising fees and payment frustrations",
+        "Mobile app fails at basic invoicing tasks",
+        "Rising prices and invoice limits"
+      ],
+      "posts": 616,
+      "authors": 614,
+      "author_sum_of_groups": 614,
+      "apps": {
+        "Invoice Simple": 176,
+        "QuickBooks": 168,
+        "Invoice2go": 96,
+        "FreshBooks": 61,
+        "Zoho Invoice": 51,
+        "Xero": 47,
+        "Harvest": 8,
+        "Invoice Ninja": 5,
+        "Bonsai": 4
+      },
+      "concentration": {
+        "top_app": "Invoice Simple",
+        "top_share": 0.2866,
+        "flag": null
+      },
+      "quote": "This app was seamless before whatever update has been given. Now takes an age to load crashes constantly while trying to send invoices.",
+      "quote_post": "S-6a7246ef50881370"
+    },
+    {
+      "theme": "Constant crashes and broken functionality",
+      "groups": [
+        10,
+        4
+      ],
+      "group_names": [
+        "Constant crashes and broken functionality",
+        "App is limited and unreliable"
+      ],
+      "posts": 473,
+      "authors": 472,
+      "author_sum_of_groups": 472,
+      "apps": {
+        "QuickBooks": 294,
+        "Xero": 38,
+        "Invoice Simple": 36,
+        "Invoice2go": 35,
+        "FreshBooks": 30,
+        "Harvest": 16,
+        "Zoho Invoice": 13,
+        "Bonsai": 8,
+        "Invoice Ninja": 3
+      },
+      "concentration": {
+        "top_app": "QuickBooks",
+        "top_share": 0.6229,
+        "flag": "mostly one app: QuickBooks"
+      },
+      "quote": "Gets worse with every single update & is now completely unusable",
+      "quote_post": "S-178d0fabce46252b"
+    },
+    {
+      "theme": "Frequent crashes and freezing",
+      "groups": [
+        2,
+        1
+      ],
+      "group_names": [
+        "Frequent crashes and freezing",
+        "Receipt uploads are broken"
+      ],
+      "posts": 315,
+      "authors": 315,
+      "author_sum_of_groups": 315,
+      "apps": {
+        "QuickBooks": 254,
+        "Xero": 28,
+        "FreshBooks": 17,
+        "Invoice Simple": 5,
+        "Harvest": 4,
+        "Zoho Invoice": 3,
+        "Bonsai": 3,
+        "Invoice2go": 1
+      },
+      "concentration": {
+        "top_app": "QuickBooks",
+        "top_share": 0.8063,
+        "flag": "mostly one app: QuickBooks"
+      },
+      "quote": "New update on this app is now unusable. unable to raise invoices on phone, as app just crashes",
+      "quote_post": "S-215ed7947308dbb1"
+    },
+    {
+      "theme": "Account and payment problems with poor support",
+      "groups": [
+        6
+      ],
+      "group_names": [
+        "Account and payment problems with poor support"
+      ],
+      "posts": 178,
+      "authors": 178,
+      "author_sum_of_groups": 178,
+      "apps": {
+        "Invoice2go": 82,
+        "QuickBooks": 32,
+        "Invoice Simple": 23,
+        "FreshBooks": 15,
+        "Xero": 12,
+        "Zoho Invoice": 8,
+        "Bonsai": 5,
+        "Invoice Ninja": 1
+      },
+      "concentration": {
+        "top_app": "Invoice2go",
+        "top_share": 0.4607,
+        "flag": null
+      },
+      "quote": "Could not process a clients payment and their service is terrible ! No phone line just messaging people that will eventually just cancel your subscription because they feel like your not worth the headache terrible.",
+      "quote_post": "S-998d2f39991340df"
+    },
+    {
+      "theme": "Repeated price increases drive users away",
+      "groups": [
+        7
+      ],
+      "group_names": [
+        "Repeated price increases drive users away"
+      ],
+      "posts": 116,
+      "authors": 116,
+      "author_sum_of_groups": 116,
+      "apps": {
+        "Invoice Simple": 75,
+        "Xero": 12,
+        "Invoice2go": 11,
+        "QuickBooks": 9,
+        "Harvest": 8,
+        "FreshBooks": 1
+      },
+      "concentration": {
+        "top_app": "Invoice Simple",
+        "top_share": 0.6466,
+        "flag": "mostly one app: Invoice Simple"
+      },
+      "quote": "But price keep increasing every year. Last year it was $89 this year $99 and it started at $60 aprox per year. No longer rentable for me.",
+      "quote_post": "S-222e7b0c12b1a9f1"
+    },
+    {
+      "theme": "Mobile app is unreliable and limited",
+      "groups": [
+        3
+      ],
+      "group_names": [
+        "Mobile app is unreliable and limited"
+      ],
+      "posts": 97,
+      "authors": 97,
+      "author_sum_of_groups": 97,
+      "apps": {
+        "Harvest": 60,
+        "FreshBooks": 11,
+        "Bonsai": 10,
+        "Zoho Invoice": 5,
+        "QuickBooks": 5,
+        "Invoice Simple": 3,
+        "Invoice2go": 2,
+        "Invoice Ninja": 1
+      },
+      "concentration": {
+        "top_app": "Harvest",
+        "top_share": 0.6186,
+        "flag": "mostly one app: Harvest"
+      },
+      "quote": "App misses time entries and has lag on updates",
+      "quote_post": "S-142d44a178678efd"
+    },
+    {
+      "theme": "Mileage tracking does not work",
+      "groups": [
+        9
+      ],
+      "group_names": [
+        "Mileage tracking does not work"
+      ],
+      "posts": 73,
+      "authors": 73,
+      "author_sum_of_groups": 73,
+      "apps": {
+        "QuickBooks": 55,
+        "FreshBooks": 18
+      },
+      "concentration": {
+        "top_app": "QuickBooks",
+        "top_share": 0.7534,
+        "flag": "mostly one app: QuickBooks"
+      },
+      "quote": "the mileage tracking is completely broken",
+      "quote_post": "S-26013a9da1603006"
+    }
+  ],
+  "group_concentration": {
+    "10": {
+      "top_app": "QuickBooks",
+      "top_share": 0.7294,
+      "flag": "mostly one app: QuickBooks"
+    },
+    "11": {
+      "top_app": "QuickBooks",
+      "top_share": 0.5714,
+      "flag": "mostly one app: QuickBooks"
+    },
+    "2": {
+      "top_app": "QuickBooks",
+      "top_share": 0.8508,
+      "flag": "mostly one app: QuickBooks"
+    },
+    "6": {
+      "top_app": "Invoice2go",
+      "top_share": 0.4607,
+      "flag": null
+    },
+    "4": {
+      "top_app": "QuickBooks",
+      "top_share": 0.432,
+      "flag": null
+    },
+    "5": {
+      "top_app": "Invoice2go",
+      "top_share": 0.2774,
+      "flag": null
+    },
+    "8": {
+      "top_app": "QuickBooks",
+      "top_share": 0.2899,
+      "flag": null
+    },
+    "1": {
+      "top_app": "QuickBooks",
+      "top_share": 0.7463,
+      "flag": "mostly one app: QuickBooks"
+    },
+    "0": {
+      "top_app": "Invoice Simple",
+      "top_share": 0.864,
+      "flag": "mostly one app: Invoice Simple"
+    },
+    "7": {
+      "top_app": "Invoice Simple",
+      "top_share": 0.6466,
+      "flag": "mostly one app: Invoice Simple"
+    },
+    "3": {
+      "top_app": "Harvest",
+      "top_share": 0.6186,
+      "flag": "mostly one app: Harvest"
+    },
+    "9": {
+      "top_app": "QuickBooks",
+      "top_share": 0.7534,
+      "flag": "mostly one app: QuickBooks"
+    }
+  }
+}

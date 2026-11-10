@@ -183,3 +183,12 @@ def load_run(run_dir: Path) -> RunData:
     if errors:
         raise SchemaError(errors)
     return data
+
+
+def read_text_in(run_dir: Path, rel: str) -> str:
+    """Read a stored source text, refusing paths that leave run_dir."""
+    root = Path(run_dir).resolve()
+    path = (root / rel).resolve()
+    if not path.is_relative_to(root):
+        raise ValueError(f"source text path leaves the run dir: {rel}")
+    return path.read_text(encoding="utf-8")

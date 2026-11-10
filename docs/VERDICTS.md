@@ -117,3 +117,106 @@ families, collector fixes, graph viewer and statistics.
   app-ID allow-list.
 - **Scope after T2:** `docs/RADAR_SCOPE.md` describes the Radar report that B1–B3 can support
   and which of B4–B7 it still needs. B4 (simulation) is on hold pending the owner's decision.
+
+## B4: simulation world, SSR, cross-model, replay (T3) — invoicing
+
+Resumed by the owner after T2 failed (PREREG_v3 amendment 6). B3 node status is fixed: all 10
+nodes unknown; J2, J3 and S2 have some supporting posts below the L4 bar; 7 nodes have no public
+evidence; 0 of 10 supported, 0 of 10 contradicted. Nothing in B4 changes that.
+
+- **SSR gold (amendment 4 gate): FAILED.** Test precision stay 18/23 = 78.3%, switch 23/30 =
+  76.7% (bar 85%); consider 17/19, NOT MEASURED. Precision is against Kimi-written synthetic
+  answers, not human labels. **The simulation section is exploratory whatever T3 says.**
+- **Calibrated world (amendment 6 rule 3):** 5 segment agents, each grounded on 5 masked quotes:
+  the 4 B3 supporting posts first (up to 2 per agent, where the node is one of the agent's), then
+  posts weighted 1.0 (problem tag, measured), 0.6 (only unmeasured tags) or 0.5 (no tag). Record:
+  `runs/b4/calibration.json`. Every row carries `SYNTHETIC (simulation estimate)` and the post
+  ids it was calibrated on.
+  - DeepSeek, 3 repeats: 567/567 cells answered. Repeat MAD 0.159, SD of P(switch) 0.257,
+    price order preserved in 8/27 agent × incumbent pairs.
+  - GLM-5.3 (thinking off), 1 repeat: 189/189 cells.
+  - Kimi K3.1 Pro answered 53 of 189 cells before B4 reached the $8 cap (rule 8). On those 53
+    cells: DeepSeek vs GLM 0.42, DeepSeek vs Kimi 0.40, GLM vs Kimi 0.46. Lowest ρ 0.40:
+    **unusable**, on any pair (`runs/b4/stability_a6.json`).
+- **Cross-model stability: UNUSABLE.** DeepSeek vs GLM Spearman ρ = 0.488 (< 0.5). The lowest
+  pairwise ρ decides, so a third model cannot lift it. Per amendment 4 the simulated family is
+  dropped from Q4/Q7.
+- **Historical replay (amendment 6 rule 5, events frozen in `runs/b4/replay/events.json` before
+  predictions, predictions frozen in `predictions.json` before outcomes):**
+  - Wayback, 9 pinned pricing pages, 2019-01 to 2025-11: 187 candidate currency-line changes,
+    154 with daily snapshots no more than 31 days apart. Kimi confirmed 21 as price or plan
+    changes after the 365-day spacing rule (candidates were confirmed only when they could be
+    kept; this selects the same set as confirming all of them). 7 candidates stayed unlabelled
+    after the retry.
+  - Simulator prediction: Invoice Ninja for 11 events, FreshBooks for 9, Invoice Simple for 1.
+    Baseline (most-mentioned option in the year before): QuickBooks 5, accountant or bookkeeper 5,
+    spreadsheet 4, invoices by hand 3, FreshBooks 2, Xero 1, Bonsai 1 (3 events had no mention in the year before, so the
+    baseline fell back to the first option). They never agreed.
+  - Outcomes: 1,744 posts in the year after T1 (HN comments plus allow-listed App Store
+    reviews), 221 passed the leaving-word prefilter, Kimi labelled 216 (5 posts of the Wave 2025
+    event left unlabelled when the $2 outcome cap was reached). Across all 21 events, Kimi found
+    11 authors who said they left for a listed option; no event had more than 2.
+- **T3: UNDECIDABLE.** 0 of 21 events usable (each needs at least 3 authors naming a listed
+  option; 3 usable events are needed). The 5 unlabelled posts cannot change this: they belong to
+  one event, and one usable event is still fewer than 3. Finding: public posts rarely say where
+  a switcher went, so replay cannot score this simulator at this volume.
+- **Spend:** B4 `sim` step $7.54 of the $8 cap (worlds, replay confirmation,
+  predictions, outcome labelling, Kimi world). No step went over its cap.
+
+## B5: Radar inputs, L7 decision, red team (PREREG_v3 amendment 7)
+
+- **Pool:** 3,284 posts from the app-ID allow-list (3,283 App Store reviews from 9 listings, 1 HN
+  USER post); the 60 reviews of the two unrelated "Wave" listings are excluded.
+- **Producer pass (DeepSeek, frozen B3 prompts):** 3,135 posts called USER, 1,868 of them with a
+  problem (1,859 distinct authors); 0 unanswered. USER and problem are the two classes that pass
+  T1 (precision against model labels); the other element tags are NOT MEASURED and unused.
+- **Problem groups:** k-means, k = 12, seed 0, on Qwen3 vectors; Kimi named each group from its 8
+  nearest posts. No group is thin (all have at least 3 authors and 2 apps). Several overlap (three
+  about crashes, three about price); nothing was merged after clustering.
+- **Alternatives:** regex name matching per reviewed app, one vote per author; the model's
+  alternative tag is not used. Generic options (by hand / manually, accountant, spreadsheet)
+  over-match passing mentions, so those counts are upper bounds.
+- **L7:** every Q1–Q9 is S0 (no input of any family was collected in B1–B4; the simulated family
+  is dropped from Q4/Q7). Monte Carlo (10,000 runs, seed 0) is blocked; synthetic validation
+  fails 4 of 5 conditions. **Decision: NO GO to build; run the cheapest market touch (T4) first.**
+  No money figure and no EVPI.
+- **Red team (GLM-5.3, thinking off, packet only):** 12 overreach findings, each answered in the
+  report (`runs/b5/redteam_responses.json`); 10 agreed and fixed or stated in the limits, 2 partly
+  (year counts are not trends, but 2026 is not a date error; alternatives do not use the model
+  tag). No single input flips the conclusion.
+- **Spend:** $1.30 of the $6 cap (producer $1.09, naming $0.19, red team $0.03).
+- **Known B4 limit (found in review):** for the `entrant` condition the new app was not an SSR
+  switch destination, so its P(switch) is undercounted; the report row says so. Fixing it needs
+  a B4 rerun, which the spent $8 cap does not allow.
+
+## B6: first Groundwork report
+
+- `runs/b5/reports/groundwork.html` and `.pdf` (13 pages), built by `nmt report build`.
+- Report gates pass: page 1 states 0 of 10 supported, 7 of 10 with no public evidence, human
+  check NOT DONE, simulation exploratory and unvalidated, no money figure; no banned claim; every
+  simulation row is labelled SYNTHETIC (simulation estimate) with its interval and calibration
+  inputs; every quote is verbatim in its receipt.
+
+## B6 fixes: PREREG_v3 amendment 8 (after the user read the first report)
+
+- **Merged themes:** the 12 k-means groups merged by average linkage on centroid cosine distance,
+  cut at the pre-registered 25th percentile of pairwise distances (0.1235), give **7 themes**.
+  Distinct voices are recounted across merged groups. The rule compares whole reviews, so it
+  does not sort cleanly by problem: the largest theme (614 voices) combines crash, fee, mobile
+  and price groups, and one price group stays on its own. The original 12 groups are in report
+  Appendix A, unchanged.
+- **Single-app concentration:** 5 of 7 themes are flagged "mostly one app" (QuickBooks ×3,
+  Invoice Simple, Harvest).
+- **List prices (Q4):** prices were read from the latest archived pricing pages the B4 replay had
+  already fetched (no new harvest); 29 rows passed the verbatim-quote check. No prices were
+  readable for Invoice2go; Zoho's only plan is free (snapshot 2023-07-25). Entry prices of the 7
+  apps with a paid USD plan give a median of 19 USD a month (10th–90th percentile 13.05–30.2).
+  **Q4 = S1** under the frozen rule (anchored, one family: revealed price). List price is not
+  willingness to pay.
+- **Decision unchanged:** 8 of 9 quantities are still S0, so the Monte Carlo stays blocked and the
+  report says NO GO, run the market touch (T4) first. Page 1 facts, node statuses and the
+  simulation labels are unchanged.
+- **Red team (GLM-5.3) on the changed sections only:** 14 overreach points, all answered in the
+  report. GLM named Q4 as a flip input, but the decision is already NO GO and Q4 feeds no
+  figure, so it does not flip. Synthetic validation counts it as a failed check.
+- **Spend:** $0.033 of the $2 cap (price extraction $0.018, red team $0.015).

@@ -61,7 +61,7 @@ human-verified, and the human check is NOT DONE.
 
 | Build | Needed for the Radar? | What |
 |---|---|---|
-| B4 (simulation, SSR, replay) | **No** | SSR gold already failed its gate (stay 78%, switch 77% on test), so the simulation would ship "exploratory, unvalidated". On hold for the user's decision. |
-| B5 (L5 wiring, red team) | **Partly** | Needed: L3 over the pool (producer, about $5–10 at about $0.003 a post); problem grouping (Qwen3 embeddings + Kimi naming, under $1; the current build has no clustering code); the name matcher; the app-ID allow-list; and a Kimi red-team read of the draft. Not needed: L7 Monte Carlo and synthetic validation. |
-| B6 (report HTML/PDF) | **Yes** | The four sections above, with receipts. |
+| B4 (simulation, SSR, replay) | **No** | Built after the owner resumed it (amendment 6). SSR gold failed (stay 78%, switch 77%), cross-model ρ 0.40–0.49 (unusable), T3 UNDECIDABLE (0 of 21 events usable). The report shows it only as an exploratory, unvalidated section; it feeds no Q and no node. |
+| B5 (L5 wiring, red team) | **Done** | Producer over the allow-listed pool, k = 12 groups with Kimi names, regex alternatives, L7 (all Q1–Q9 S0, Monte Carlo blocked, NO GO), GLM red team. $1.30 of $6. See VERDICTS.md. |
+| B6 (report HTML/PDF) | **Done** | `runs/b5/reports/groundwork.html` / `.pdf`; report gates pass. Waiting for the user to read it. |
 | B7 (site, demand test) | **Only to publish** | A landing page and demand test for the Radar itself. Not needed for the first report. |

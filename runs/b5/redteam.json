@@ -1,0 +1,69 @@
+{
+  "overreach": [
+    {
+      "where": "radar.groups[0..11] (all 12 groups)",
+      "claim": "12 distinct problem themes with named labels like 'Constant crashes and broken functionality', 'Updates cause crashes and invoice failures', 'Frequent crashes and freezing'",
+      "why": "Groups 10, 11, and 2 are near-duplicates (crashes/freezing after updates) and groups 5, 0, and 7 overlap heavily (price increases); the packet presents them as separate findings without a dedup check, inflating apparent breadth of problems"
+    },
+    {
+      "where": "radar.groups[*].years",
+      "claim": "Trend claims implied by year breakdowns (e.g. group 10: 2023:24, 2024:22, 2025:90, 2026:167)",
+      "why": "No denominator per year is given; rising counts may just reflect harvest volume, and '2026' reviews (167 posts) are future-dated relative to a normal calendar, suggesting a date-parsing or labeling error that is not flagged"
+    },
+    {
+      "where": "radar.by_platform",
+      "claim": "Market-level 'invoicing' problem radar",
+      "why": "3283 of 3284 posts are App Store reviews and only 1 is Hacker News; the evidence bar requires 2 customer-voice families, so the radar is effectively a single-family (app reviews) sample and cannot support claims about the broader invoicing market"
+    },
+    {
+      "where": "radar.groups[*].apps",
+      "claim": "Cross-app problem patterns (e.g. group 0 'Rising prices and invoice limits' spread over Invoice Simple, Invoice2go, FreshBooks)",
+      "why": "Group 0 is 108/125 Invoice Simple and group 3 is 60/97 Harvest; these are single-app complaint clusters presented as market-wide themes"
+    },
+    {
+      "where": "simulation.conditions",
+      "claim": "Quantified switch probabilities, e.g. p_switch 0.515 for 'copy' and 0.294 for 'take_job', with 80% intervals",
+      "why": "The packet's own validity metrics refute these numbers: price_order_preserved 8/27, repeat_mad 0.1589, sd_p_switch 0.2568, cross-model rho 0.4036 with verdict 'unusable', and T3 UNDECIDABLE; the intervals imply a precision the simulation does not have"
+    },
+    {
+      "where": "simulation.conditions[price10 vs price50]",
+      "claim": "A 10% price raise yields higher p_switch (0.428) than a 50% raise (0.404)",
+      "why": "This non-monotonic result is internally inconsistent with any sane demand model and the packet's own 8/27 price-order check confirms it is noise, yet the numbers are still reported as estimates"
+    },
+    {
+      "where": "status.gold",
+      "claim": "Cross-model agreement 89.7% (kappa 0.86) presented as a quality signal",
+      "why": "Agreement is between two models (Kimi and GLM), not against ground truth; human_check is NOT DONE, so this measures model correlation, not correctness, and the label 'gold' overstates it"
+    },
+    {
+      "where": "t1.trigger / success_criterion / alternative / aha / supports / contradicts",
+      "claim": "Precision figures (0.5, 1.0, 0.8, null) reported per label",
+      "why": "Called counts are 6, 2, 5, 0, 1, 0; these are far too small for the stated precision values and several are marked NOT MEASURED, yet numeric precisions are still displayed as if informative"
+    },
+    {
+      "where": "riskiest[*].priority",
+      "claim": "Priority scores (1.8, 1.5) ranking the 10 riskiest nodes",
+      "why": "0 of 10 nodes have any supporting evidence (7 no_public_evidence, rest below bar) and the structure comes from the unvalidated L1 hypothesis graph; priorities rank unverified hypotheses"
+    },
+    {
+      "where": "alternatives (all)",
+      "claim": "Alternative-usage mapping, e.g. QuickBooks users consider 'invoices by hand' (25) and 'an accountant' (18)",
+      "why": "These counts come from the same single-family app-review harvest with no extraction-quality check on the 'alternative' label (precision 0.8 on 5 calls); they are presented as a switching map without any status"
+    },
+    {
+      "where": "touch",
+      "claim": "'T4 landing-page test: 3 headlines, EUR 49 vs EUR 149, about 200 founders or PMs'",
+      "why": "This is a plan, not a result; the packet gives no data from it, so listing it alongside measured sections implies a test that has not run"
+    },
+    {
+      "where": "monte_carlo",
+      "claim": "Monte Carlo blocked by Q1-Q9",
+      "why": "Not an overreach per se, but the report's NO GO / run-touch-first conclusion is presented as final while every quantity is S0 with null estimates; the conclusion is only as strong as the absence of data, which the packet does state, but any headline framing 'market too small / not validated' would overreach"
+    }
+  ],
+  "flip": {
+    "exists": false,
+    "input": "none",
+    "why": "The NO GO rests on structural zeros: 0 supported nodes (max observed is 2 supports vs a bar of 3 authors in 2 families), all 9 quantities S0 with no inputs collected, and Monte Carlo blocked. No single input change flips it because the evidence bar requires at least 3 distinct authors in at least 2 customer-voice families, and the harvest has only 1 non-app-store post, so even a large new app-review batch cannot satisfy the 2-family requirement; a flip requires a new evidence family (e.g. a user community harvest), which is a new collection, not a change to an existing input. The closest single candidate is J2 (2 supports, 0 contradicts): one additional distinct author from a second family would make it supported, but that alone would not flip the overall NO GO since 9 of 10 nodes would remain unsupported and all money figures would stay S0."
+  }
+}

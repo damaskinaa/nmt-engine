@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 from typing import Annotated
 
@@ -514,5 +515,474 @@ def l4_run(
     raise typer.Exit(0 if res["t2"]["passed"] else 1)
 
 
+sim_app = typer.Typer(
+    help="L6 simulation world, SSR and its gold (ARCHITECTURE_v3 L6, PREREG amendment 4)"
+)
+app.add_typer(sim_app, name="sim")
+SIM_DIR = Path("runs/b4")
+
+
+def _sim_budget(run_dir: Path):
+    """The `sim` step cap covers all of B4 (PREREG amendment 6 rule 8): seed spend from the log."""
+    from nmt_engine.llm import Budget
+
+    spent = 0.0
+    log = run_dir / "llm_log.jsonl"
+    for line in log.read_text("utf-8").splitlines() if log.is_file() else []:
+        r = json.loads(line)
+        if r.get("purpose", "").startswith("sim"):
+            spent += r.get("cost_usd") or 0.0
+    return Budget(spent=spent, by_step={"sim": spent})
+
+
+def _sim_graph():
+    from nmt_engine.verify import node_gold
+
+    return node_gold.candidates()[0]
+
+
+@sim_app.command("ssr-gold")
+def sim_ssr_gold(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = SIM_DIR,
+    generate: Annotated[
+        bool, typer.Option("--generate", help="Kimi writes the 150 answers")
+    ] = False,
+) -> None:
+    """SSR anchor gold: (optionally) generate, record similarities under the anchor hash, check."""
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.sim import ssr_gold
+
+    if generate:
+        llm = _tensorx(AUDITOR, run_dir, max_tokens=8000)
+        try:
+            typer.echo(json.dumps(ssr_gold.generate(llm, _sim_graph())))
+        finally:
+            llm.close()
+    with Embedder(run_dir) as emb:
+        ssr_gold.record(emb, _sim_graph())
+    res = ssr_gold.check()
+    typer.echo(json.dumps(res, indent=2))
+    raise typer.Exit(0 if res["passed"] else 1)
+
+
+@sim_app.command("world")
+def sim_world(
+    model: Annotated[str, typer.Option("--model")] = "deepseek/deepseek-v4.1-flash",
+    repeats: Annotated[int, typer.Option("--repeats")] = 1,
+    harvest_dir: Annotated[Path, typer.Option("--harvest-dir")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = SIM_DIR,
+) -> None:
+    """Main world: every segment agent on every incumbent it can hold, under every condition."""
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import AUDITOR, PRODUCER, THIRD_MODEL
+    from nmt_engine.sim import agents, world
+    from nmt_engine.sim.ssr import SSR
+    from nmt_engine.verify import gold
+
+    g = _sim_graph()
+    reasoning = {THIRD_MODEL: "none", PRODUCER: gold.PRODUCER_REASONING}.get(model)
+    budget = _sim_budget(run_dir)
+    llm = _tensorx(
+        model, run_dir, reasoning, max_tokens=4000 if model == AUDITOR else 1200, budget=budget
+    )
+    tagger = _tensorx(PRODUCER, run_dir, gold.PRODUCER_REASONING, budget=budget)
+    with Embedder(run_dir) as emb:
+        pool = agents.user_pool(harvest_dir)
+        agents.tag_pool(tagger, pool, "invoicing")
+        ags = agents.build(g, emb, pool, support=agents.supporting())
+        calib = agents.calibration_record(g, ags)
+        (run_dir / "calibration.json").write_text(json.dumps(calib, indent=2), "utf-8")
+        cells = world.main_cells(g, ags, repeats)
+        out = run_dir / f"world_a6_{model.split('/')[-1]}_r{repeats}.jsonl"
+        try:
+            rows = world.run(llm, SSR(emb), g, ags, cells, out)
+        finally:
+            llm.close()
+            tagger.close()
+    typer.echo(
+        json.dumps(
+            {
+                "cells": len(cells),
+                "answered": len(rows),
+                "out": str(out),
+                "grounding": {a.id: a.quote_ids for a in ags},
+                "budget": budget.as_dict(),
+            },
+            indent=2,
+        )
+    )
+
+
+@sim_app.command("replay-events")
+def sim_replay_events(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = SIM_DIR,
+    until: Annotated[str, typer.Option("--until")] = "20251107",
+) -> None:
+    """Replay events (amendment 6 rule 5): Wayback candidates, Kimi confirmation, selection."""
+    import os
+
+    from nmt_engine.collect.base import Collector
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.sim import replay
+
+    out = run_dir / "replay"
+    cand = out / "candidates.jsonl"
+    if cand.is_file():
+        rows = [json.loads(x) for x in cand.read_text("utf-8").splitlines()]
+    else:
+        c = Collector(out / "store", salt=os.environ.get("NMT_AUTHOR_SALT"))
+        rows = replay.discover(c, out, until)
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=4000, budget=_sim_budget(run_dir))
+    try:
+        events = replay.select(rows, lambda rs: replay.confirm(llm, rs, workers=1), workers=9)
+    finally:
+        llm.close()
+    cand.write_text("".join(json.dumps(r) + "\n" for r in rows), "utf-8")
+    doc = {
+        "amendment": 6,
+        "confirm_prompt_hash": replay.confirm_prompt_hash(),
+        "events": [
+            {
+                k: e[k]
+                for k in (
+                    "id",
+                    "app",
+                    "url",
+                    "old",
+                    "new",
+                    "t0",
+                    "t1",
+                    "gap_days",
+                    "freeze",
+                    "lines",
+                    "quote",
+                )
+            }
+            for e in events
+        ],
+    }
+    (out / "events.json").write_text(json.dumps(doc, indent=2), "utf-8")
+    summary = {
+        "candidates": len(rows),
+        "usable_dates": sum(bool(r.get("usable_dates")) for r in rows),
+        "confirmed": sum(bool(r.get("confirmed")) for r in rows),
+        "unlabelled": sum(bool(r.get("unlabelled")) for r in rows),
+        "events": [e["id"] for e in events],
+        "budget": llm.budget.as_dict(),
+    }
+    typer.echo(json.dumps(summary, indent=2))
+
+
+@sim_app.command("replay-predict")
+def sim_replay_predict(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = SIM_DIR,
+    harvest_dir: Annotated[Path, typer.Option("--harvest-dir")] = Path("runs/l2"),
+) -> None:
+    """Predictions and baselines for every event, written before any outcome post is fetched."""
+    import os
+    from datetime import UTC, datetime, timedelta
+
+    from nmt_engine.collect.base import Collector
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import PRODUCER
+    from nmt_engine.sim import agents, replay
+    from nmt_engine.sim.ssr import SSR
+    from nmt_engine.store import load_run
+    from nmt_engine.verify import gold
+
+    out = run_dir / "replay"
+    events = json.loads((out / "events.json").read_text("utf-8"))["events"]
+    budget = _sim_budget(run_dir)
+    llm = _tensorx(PRODUCER, run_dir, gold.PRODUCER_REASONING, max_tokens=1200, budget=budget)
+    c = Collector(out / "store", salt=os.environ.get("NMT_AUTHOR_SALT"))
+    harvest = load_run(harvest_dir)
+    g = _sim_graph()
+    res = []
+    with Embedder(run_dir) as emb:
+        pool = agents.user_pool(harvest_dir)
+        agents.tag_pool(llm, pool, "invoicing")
+        support = agents.supporting()
+        try:
+            for e in events:
+                t0 = datetime.fromisoformat(e["t0"]).replace(tzinfo=UTC)
+                before = replay.posts(c, harvest, e["app"], t0 - timedelta(days=365), t0)
+                base = replay.baseline(e["app"], before)
+                pred = replay.predict(llm, SSR(emb), g, emb, pool, support, e)
+                res.append({"id": e["id"], "app": e["app"], "baseline": base, "prediction": pred})
+                typer.echo(f"{e['id']}: sim {pred['option']} | baseline {base['option']}")
+        finally:
+            llm.close()
+    doc = {"amendment": 6, "written_before_outcomes": True, "events": res}
+    (out / "predictions.json").write_text(json.dumps(doc, indent=2, default=str), "utf-8")
+    typer.echo(json.dumps({"events": len(res), "budget": budget.as_dict()}, indent=2))
+
+
+@sim_app.command("replay-outcomes")
+def sim_replay_outcomes(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = SIM_DIR,
+    harvest_dir: Annotated[Path, typer.Option("--harvest-dir")] = Path("runs/l2"),
+    max_usd: Annotated[float, typer.Option("--max-usd")] = 2.0,
+) -> None:
+    """Outcomes (amendment 6 rule 7), Kimi labels capped at --max-usd, then T3."""
+    import os
+    from datetime import UTC, datetime, timedelta
+
+    from nmt_engine.collect.base import Collector
+    from nmt_engine.llm import AUDITOR
+    from nmt_engine.sim import replay
+    from nmt_engine.store import load_run
+
+    out = run_dir / "replay"
+    preds = json.loads((out / "predictions.json").read_text("utf-8"))["events"]
+    events = {e["id"]: e for e in json.loads((out / "events.json").read_text("utf-8"))["events"]}
+    budget = _sim_budget(run_dir)
+    budget.step_caps["sim"] = min(budget.step_caps["sim"], budget.spent + max_usd)
+    llm = _tensorx(AUDITOR, run_dir, max_tokens=6000, budget=budget)
+    c = Collector(out / "store", salt=os.environ.get("NMT_AUTHOR_SALT"))
+    harvest = load_run(harvest_dir)
+    labels_all = {}
+    try:
+        for p in sorted(preds, key=lambda p: events[p["id"]]["t1"]):
+            e = events[p["id"]]
+            t1 = datetime.fromisoformat(e["t1"]).replace(tzinfo=UTC)
+            rows = replay.posts(c, harvest, e["app"], t1, t1 + timedelta(days=365))
+            cand = replay.prefilter(e["app"], rows, e["id"])
+            labels = replay.label_outcomes(llm, e["app"], cand)
+            labels_all[e["id"]] = labels
+            p["outcome"] = replay.votes(cand, labels, e["app"]) | {
+                "posts": len(rows),
+                "prefiltered": len(cand),
+                "unlabelled": sum(v is None for v in labels.values()),
+            }
+            typer.echo(f"{e['id']}: {json.dumps(p['outcome']['named'])}")
+    finally:
+        llm.close()
+    res = replay.score(preds)
+    doc = {
+        "amendment": 6,
+        "outcome_prompt_hash": replay.outcome_prompt_hash(),
+        **res,
+        "per_event": [
+            {k: p.get(k) for k in ("id", "app", "beats", "outcome")}
+            | {"sim": p["prediction"]["option"], "baseline": p["baseline"]["option"]}
+            for p in preds
+        ],
+    }
+    (out / "t3.json").write_text(json.dumps(doc, indent=2), "utf-8")
+    (out / "outcome_labels.json").write_text(json.dumps(labels_all, indent=2), "utf-8")
+    typer.echo(json.dumps({**res, "budget": budget.as_dict()}, indent=2))
+
+
 if __name__ == "__main__":
     app()
+
+
+radar_app = typer.Typer(help="B5 Radar inputs (PREREG_v3 amendment 7).", no_args_is_help=True)
+app.add_typer(radar_app, name="radar")
+B5_DIR = Path("runs/b5")
+
+
+@radar_app.command("build")
+def radar_build(
+    harvest: Annotated[Path, typer.Option("--harvest")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+) -> None:
+    """Pool, producer pass, k=12 problem groups, Kimi group names, alternatives map."""
+    from nmt_engine.embed import Embedder
+    from nmt_engine.llm import AUDITOR, PRODUCER
+    from nmt_engine.radar import build
+    from nmt_engine.verify.gold import PRODUCER_REASONING
+
+    run_dir.mkdir(parents=True, exist_ok=True)
+    posts = build.pool(harvest)
+    cache = run_dir / "radar_posts.jsonl"
+    done = {}
+    for line in cache.read_text("utf-8").splitlines() if cache.is_file() else []:
+        r = json.loads(line)
+        done[r["id"]] = r
+    if len(done) != len(posts):
+        prod = _tensorx(PRODUCER, run_dir, PRODUCER_REASONING)
+        build.producer_pass(prod, posts)
+        cache.write_text(
+            "".join(
+                json.dumps({k: p.get(k) for k in ("id", "role", "problem")}) + "\n" for p in posts
+            ),
+            "utf-8",
+        )
+    else:
+        for p in posts:
+            p.update(role=done[p["id"]]["role"], problem=done[p["id"]]["problem"])
+    radar = [p for p in posts if p.get("role") == "USER" and p.get("problem")]
+    with Embedder(run_dir) as emb:
+        gs = build.groups(emb, radar)
+    kimi = _tensorx(AUDITOR, run_dir, max_tokens=2000)
+    build.name_groups(kimi, gs, {p["id"]: p["text"] for p in radar})
+    users = [p for p in posts if p.get("role") == "USER"]
+    doc = {
+        "pool": len(posts),
+        "by_platform": dict(Counter(p["platform"] for p in posts)),
+        "unanswered": sum(p.get("role") is None for p in posts),
+        "user": len(users),
+        "radar": len(radar),
+        "radar_authors": len({p["author"] for p in radar}),
+        "k": build.K,
+        "groups": gs,
+        "alternatives": build.alternatives(users),
+        "quotes": {i: p["text"][:600] for p in radar for i in [p["id"]]},
+        "meta": {
+            p["id"]: {k: p[k] for k in ("app", "year", "country", "url", "platform")} for p in radar
+        },
+    }
+    build.write(run_dir / "radar.json", {k: v for k, v in doc.items() if k != "quotes"})
+    build.write(run_dir / "radar_quotes.json", doc["quotes"])
+    keys = ("pool", "by_platform", "unanswered", "user", "radar", "radar_authors")
+    typer.echo(json.dumps({k: doc[k] for k in keys}))
+
+
+A8_CAP = 2.0
+
+
+def _a8_budget(run_dir: Path):
+    """Amendment 8's $2 covers every a8 call in this run dir, so earlier logged spend counts."""
+    from nmt_engine.llm import Budget
+
+    spent = 0.0
+    log = run_dir / "llm_log.jsonl"
+    if log.is_file():
+        for line in log.read_text("utf-8").splitlines():
+            r = json.loads(line)
+            if str(r.get("purpose", "")).startswith("a8.") and not r.get("cached"):
+                spent += r.get("cost_usd") or 0.0
+    return Budget(step_caps={"a8": A8_CAP}, by_step={"a8": spent})
+
+
+@radar_app.command("themes")
+def radar_themes(
+    harvest: Annotated[Path, typer.Option("--harvest")] = Path("runs/l2"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+) -> None:
+    """Amendment 8 rules 1-2: merge the k=12 groups into themes; one-app concentration."""
+    import numpy as np
+
+    from nmt_engine.embed import Embedder
+    from nmt_engine.radar import build, themes
+    from nmt_engine.sim.agents import QUOTE_CHARS, _mask
+
+    r = json.loads((run_dir / "radar.json").read_text("utf-8"))
+    ids = {i for g in r["groups"] for i in g["members"]}
+    posts = [p for p in build.pool(harvest) if p["id"] in ids]
+    if len(posts) != len(ids):
+        raise typer.BadParameter(f"{len(ids) - len(posts)} radar posts are not in the pool")
+    texts = [_mask(p["text"])[:QUOTE_CHARS] for p in posts]
+    with Embedder(run_dir) as emb:
+        v = np.asarray(emb.embed(texts, "a8.embed"), dtype=float)
+    v /= np.linalg.norm(v, axis=1, keepdims=True)
+    vec = {p["id"]: v[k] for k, p in enumerate(posts)}
+    meta = {p["id"]: {"author": p["author"], "app": p["app"]} for p in posts}
+    doc = themes.themes(r["groups"], vec, meta)
+    doc["group_concentration"] = {g["group"]: g["concentration"] for g in r["groups"]}
+    build.write(run_dir / "themes.json", doc)
+    typer.echo(
+        json.dumps(
+            {
+                "threshold": round(doc["threshold"], 4),
+                "themes": [
+                    (t["theme"], t["groups"], t["authors"], t["concentration"]["flag"])
+                    for t in doc["themes"]
+                ],
+            },
+            indent=1,
+        )
+    )
+
+
+@radar_app.command("prices")
+def radar_prices(
+    replay_store: Annotated[Path, typer.Option("--replay-store")] = Path("runs/b4/replay/store"),
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+) -> None:
+    """Amendment 8 rule 3: list prices from the B4 Wayback snapshots -> table and Q4 grade."""
+    from nmt_engine.decide import prices
+    from nmt_engine.llm import PRODUCER
+    from nmt_engine.radar import build
+    from nmt_engine.verify.gold import PRODUCER_REASONING
+
+    snaps = prices.latest_snapshots(replay_store)
+    llm = _tensorx(PRODUCER, run_dir, PRODUCER_REASONING, budget=_a8_budget(run_dir))
+    rows, read = [], {}
+    try:
+        for app in prices.PRICING:
+            got = prices.extract(llm, app, snaps[app]) if app in snaps else []
+            read[app] = {
+                "snapshot_date": snaps[app]["date"] if app in snaps else None,
+                "url": snaps[app]["url"] if app in snaps else None,
+                "rows": len(got),
+            }
+            rows += got
+    finally:
+        llm.close()
+    entry = prices.entry_monthly_usd(rows)
+    q = prices.q4(entry)
+    build.write(
+        run_dir / "prices.json",
+        {
+            "until": prices.UNTIL,
+            "pages": read,
+            "rows": rows,
+            "entry_monthly_usd": entry,
+            "q4": q.row(),
+        },
+    )
+    typer.echo(json.dumps({"pages": read, "entry_monthly_usd": entry, "q4": q.row()}, indent=1))
+
+
+report_app = typer.Typer(help="B6 Groundwork report (ARCHITECTURE_v3 L8).", no_args_is_help=True)
+app.add_typer(report_app, name="report")
+
+
+@report_app.command("build")
+def report_build(
+    run_dir: Annotated[Path, typer.Option("--run-dir")] = B5_DIR,
+    red_team: Annotated[bool, typer.Option("--red-team/--no-red-team")] = True,
+) -> None:
+    """Packet -> GLM red team (once, cached) -> HTML + PDF in run_dir/reports; then run gates."""
+    from nmt_engine.llm import THIRD_MODEL
+    from nmt_engine.report import groundwork
+
+    pkt = groundwork.packet(b5=run_dir)
+    (run_dir / "packet.json").write_text(json.dumps(pkt, indent=2, default=str), "utf-8")
+    rt_path, rt = run_dir / "redteam.json", None
+    if rt_path.is_file():
+        rt = json.loads(rt_path.read_text("utf-8"))
+    elif red_team:
+        llm = _tensorx(THIRD_MODEL, run_dir, "none", max_tokens=6000)
+        try:
+            rt = groundwork.red_team(llm, pkt)
+        finally:
+            llm.close()
+        rt_path.write_text(json.dumps(rt, indent=2), "utf-8")
+    rt8_path, rt8 = run_dir / "redteam_a8.json", None
+    if rt8_path.is_file():
+        rt8 = json.loads(rt8_path.read_text("utf-8"))
+    elif red_team and (pkt["prices"] is not None or pkt["radar"].get("themes")):
+        llm = _tensorx(THIRD_MODEL, run_dir, "none", max_tokens=6000, budget=_a8_budget(run_dir))
+        try:
+            rt8 = groundwork.red_team(llm, groundwork.changed_sections(pkt), "a8.redteam")
+        finally:
+            llm.close()
+        rt8_path.write_text(json.dumps(rt8, indent=2), "utf-8")
+    for r, name in ((rt, "redteam_responses.json"), (rt8, "redteam_a8_responses.json")):
+        resp = run_dir / name
+        if r and resp.is_file():
+            answers = json.loads(resp.read_text("utf-8"))
+            for i, f in enumerate(r.get("overreach") or []):
+                f["response"] = answers.get(f.get("where", ""), answers.get(str(i)))
+            if isinstance(r.get("flip"), dict) and "flip" in answers:
+                r["flip"]["response"] = answers["flip"]
+    html = groundwork.render(pkt, rt, run_dir / "reports" / "groundwork.html", rt8, run_dir)
+    out = groundwork.pdf(html)
+    problems = groundwork.check(html.read_text("utf-8"), pkt)
+    typer.echo(json.dumps({"html": str(html), "pdf": str(out) if out else None, "gate": problems}))
+    if problems:
+        raise typer.Exit(1)

@@ -1,0 +1,79 @@
+{
+  "overreach": [
+    {
+      "where": "themes[0] 'Updates cause crashes and invoice failures'",
+      "claim": "theme title implies update-caused crashes across 616 posts",
+      "why": "groups [11,5,8,0] include 'Rising fees' and 'Rising prices and invoice limits' \u2014 fee complaints are not crash/invoice-failure evidence; top app Invoice Simple at only 28.7% share, so no single app's update behavior is established"
+    },
+    {
+      "where": "themes[0].concentration.flag = null",
+      "claim": "implicitly a cross-app 'updates' theme",
+      "why": "flag null but group-level data show group 11 is 57% QuickBooks; the aggregate hides that the update-crash signal is mostly one app"
+    },
+    {
+      "where": "themes[1] 'Constant crashes and broken functionality'",
+      "claim": "473 posts of crashes",
+      "why": "merges group 4 'App is limited and unreliable' \u2014 limitation complaints counted as crash evidence; 62% QuickBooks, flagged, but title generalizes"
+    },
+    {
+      "where": "themes[2] 'Frequent crashes and freezing'",
+      "claim": "315 posts of crash/freeze",
+      "why": "includes group 1 'Receipt uploads are broken' \u2014 broken uploads are not crashes/freezes; 81% QuickBooks, so it's a QuickBooks-specific issue presented as a market theme"
+    },
+    {
+      "where": "themes[3] 'Account and payment problems with poor support'",
+      "claim": "support is 'poor'",
+      "why": "single verbatim quote from one Invoice2go user (46% share, unflagged); no support-quality metric behind the theme name"
+    },
+    {
+      "where": "themes[4] 'Repeated price increases drive users away'",
+      "claim": "increases 'drive users away'",
+      "why": "data show complaints, not churn; no switching/exit data; 65% Invoice Simple, so it's one app's pricing story generalized"
+    },
+    {
+      "where": "prices.rows FreshBooks",
+      "claim": "Lite $21/mo, Plus $38, Premium $65",
+      "why": "quotes are 'Was $21.00 | Save $63.00*' \u2014 struck-through promo framing; actual current price ambiguous, asterisked terms unstated"
+    },
+    {
+      "where": "prices.rows QuickBooks",
+      "claim": "Simple Start $38/mo etc.",
+      "why": "quotes show '$38 / $19/mo' \u2014 50%-off promo price likely the live one; list vs promo price unresolved, yet entry_monthly_usd uses 38"
+    },
+    {
+      "where": "prices.rows Xero",
+      "claim": "Early $25/mo",
+      "why": "quote 'Usually $25' implies a discounted current price not captured"
+    },
+    {
+      "where": "prices.pages Invoice2go",
+      "claim": "Invoice2go pricing included in market scan",
+      "why": "rows: 0 \u2014 snapshot captured no plans; app is in 'missing' yet themes[3] is 46% Invoice2go, so its price story is unsupported"
+    },
+    {
+      "where": "prices.pages Zoho Invoice",
+      "claim": "Zoho Invoice $0",
+      "why": "snapshot dated 2023-07-25, over 2 years stale vs 2025 data elsewhere; 'Now available for free' may no longer hold"
+    },
+    {
+      "where": "q4 WTP estimate [19.0, 13.05, 30.2]",
+      "claim": "a willingness-to-pay figure",
+      "why": "notes admit it's list prices of alternatives, 'list price is not willingness to pay'; simulated family dropped (rho < 0.5, SSR gold failed); grade S1 overstated given single weak family"
+    },
+    {
+      "where": "entry_monthly_usd",
+      "claim": "comparable entry prices across 7 apps",
+      "why": "mixes per-user (Bonsai 15, Harvest 13.75) with flat (FreshBooks 21, Wave 19) and promo-ambiguous (QuickBooks 38) prices; Invoice2go absent \u2014 not apples-to-apples"
+    },
+    {
+      "where": "monte_carlo",
+      "claim": "report robustness implied",
+      "why": "ran: false, blocked by Q1\u2013Q3, Q5\u2013Q9 \u2014 no sensitivity analysis backs any figure"
+    }
+  ],
+  "flip": {
+    "exists": true,
+    "input": "q4 estimate (the [19.0, 13.05, 30.2] WTP figure built solely on the revealed_price family)",
+    "why": "the packet's only money figure and the sole basis for any go/no-go economics; its own notes concede list price \u2260 WTP and the second family failed validation. Reclassify it as 'list prices, not WTP' (or drop it) and there is no supported WTP node, no monetization evidence, and the decision collapses to NO GO / run the market touch first \u2014 no other input change is needed since themes and prices are descriptive only."
+  }
+}
