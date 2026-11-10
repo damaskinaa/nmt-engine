@@ -69,14 +69,18 @@ def test_report_gate_flags_missing_page_one_and_banned_claims():
         "monte_carlo": {"ran": False},
     }
     html = '<section class="page">0 of 10</section><p>Customers want reminders.</p>'
+    assert any("not found" in p for p in groundwork.check(html, pkt))
     problems = groundwork.check(html, pkt)
     assert any("7 of 10" in p for p in problems)
     assert any("customers want" in p for p in problems)
     assert any("verbatim" in p for p in problems)
+    html = html.replace('class="page"', 'id="page1"') + '<section id="simulation"></section>'
+    problems = groundwork.check(html, pkt)
+    assert any("7 of 10" in p for p in problems) and not any("not found" in p for p in problems)
     ok = (
-        '<section class="page">'
+        '<section id="page1">'
         + " ".join(groundwork.PAGE_ONE)
-        + "</section><p>not human-verified</p>"
+        + '</section><section id="simulation"></section><p>not human-verified</p>'
     )
     assert groundwork.check(ok, pkt | {"radar": {"groups": []}}) == []
 

@@ -25,7 +25,7 @@
 </style>
 </head>
 <body>
-<section class="page">
+<section class="page" id="page1">
 <h1>Groundwork: invoicing</h1>
 <p class="sub">Outside-in Radar from public data. No interviews and no private customer data.</p>
 
@@ -252,6 +252,7 @@
 </table>
 
 
+<section id="simulation">
 <h2>7. Simulation (exploratory, unvalidated)</h2>
 <p><b>Status: exploratory, unvalidated.</b> SSR gold failed (stay 78%, switch 77%, bar 85%); cross-model agreement is unusable (lowest Spearman &rho; 0.4036 on 53 cells); T3 is UNDECIDABLE (0 of 21 past price changes had enough switchers to score). This section is not evidence, does not count toward any node, and feeds no quantity.</p>
 <p class="small">Model: deepseek/deepseek-v4.1-flash, 3 repeats. Calibrated on 9 masked public posts: measured inputs USER and problem (precision against model labels), the 4 below-bar supporting posts, and unmeasured tags at low weight (trigger, success_criterion, alternative, aha). Interval: 80% bootstrap over agent &times; app &times; repeat cells. Repeat MAD 0.1589; price order preserved in 8/27.</p>
@@ -259,6 +260,7 @@
 <tr><th>If&hellip;</th><th>Mean P(switch)</th><th>80% interval</th><th>Label</th></tr>
 <tr><td>Nothing on the market has changed.</td><td>0.389</td><td>0.354&ndash;0.423</td><td><span class="syn">SYNTHETIC (simulation estimate)</span></td></tr><tr><td>The current app raises its price by 10% from next month.</td><td>0.428</td><td>0.388&ndash;0.468</td><td><span class="syn">SYNTHETIC (simulation estimate)</span></td></tr><tr><td>The current app raises its price by 50% from next month.</td><td>0.404</td><td>0.367&ndash;0.44</td><td><span class="syn">SYNTHETIC (simulation estimate)</span></td></tr><tr><td>A new invoicing app launches that sends payment reminders by itself and shows every unpaid invoice in one place, at about the same price as the current app.<br><span class="small">The new app was not one of the switch destinations SSR scored (B4 offered only existing options), so switching to it is undercounted here.</span></td><td>0.368</td><td>0.332&ndash;0.404</td><td><span class="syn">SYNTHETIC (simulation estimate)</span></td></tr><tr><td>The current app stops helping you get paid.</td><td>0.482</td><td>0.446&ndash;0.519</td><td><span class="syn">SYNTHETIC (simulation estimate)</span></td></tr><tr><td>A service launches that chases your unpaid invoices for you, so the job is taken off your hands, for a monthly fee.</td><td>0.294</td><td>0.261&ndash;0.326</td><td><span class="syn">SYNTHETIC (simulation estimate)</span></td></tr><tr><td>A rival copies the feature you rely on most in the current app.</td><td>0.515</td><td>0.48&ndash;0.548</td><td><span class="syn">SYNTHETIC (simulation estimate)</span></td></tr>
 </table>
+</section>
 
 <h2>8. Method and limits</h2>
 <ul>

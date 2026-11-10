@@ -66,7 +66,8 @@ def riskiest(graph_path: Path = node_gold.GRAPH) -> list[dict]:
     for r in g["riskiest"]:
         c = counts.get(r["id"], {})
         sup, con = c.get("supports", 0), c.get("contradicts", 0)
-        assert sup < L4_AUTHORS and con < L4_AUTHORS, "B3 status is fixed at unknown"
+        if sup >= L4_AUTHORS or con >= L4_AUTHORS:
+            raise ValueError(f"{r['id']}: B3 status is fixed at unknown")
         out.append(
             {
                 "id": r["id"],
@@ -258,11 +259,19 @@ FORBIDDEN = (
 PAGE_ONE = ("0 of 10", "7 of 10", "NOT DONE", "exploratory and unvalidated", "No money figure")
 
 
+def _section(html: str, sid: str) -> str | None:
+    m = re.search(rf'<section[^>]*\bid="{sid}"[^>]*>(.*?)</section>', html, re.S)
+    return m.group(1) if m else None
+
+
 def check(html: str, pkt: dict) -> list[str]:
-    """Report gates: page-1 facts, banned claims, labelled synthetic rows, receipts on quotes."""
+    """Report gates: page-1 facts, banned claims, labelled synthetic rows, receipts on quotes.
+    The banned-claim negation test (not/no/never in the 40 chars before) is a heuristic tripwire."""
     problems = []
-    first = html.split('<section class="page">', 1)[-1].split("</section>", 1)[0]
-    problems += [f"page 1 lacks {s!r}" for s in PAGE_ONE if s not in first]
+    first, sim = _section(html, "page1"), _section(html, "simulation")
+    if first is None or sim is None:
+        problems.append("page 1 or simulation section not found")
+    problems += [f"page 1 lacks {s!r}" for s in PAGE_ONE if s not in (first or "")]
     text = re.sub(r"<[^>]+>", " ", html).lower()
     for s in FORBIDDEN:
         for m in re.finditer(re.escape(s), text):
@@ -270,7 +279,7 @@ def check(html: str, pkt: dict) -> list[str]:
                 problems.append(f"banned claim {s!r}")
     if pkt["status"]["supported"] or pkt["status"]["contradicted"]:
         problems.append("a node has a status; B3 fixed all 10 at unknown")
-    sim = html.split("7. Simulation", 1)[-1].split("8. Method", 1)[0]
+    sim = sim or ""
     rows = sim.count("<tr><td>")
     if rows != len(pkt["simulation"]["conditions"]) or sim.count(CLAIM_LABEL) < rows:
         problems.append("a simulation row lacks its SYNTHETIC label")

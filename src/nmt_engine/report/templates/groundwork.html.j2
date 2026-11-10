@@ -25,7 +25,7 @@
 </style>
 </head>
 <body>
-<section class="page">
+<section class="page" id="page1">
 <h1>Groundwork: {{ p.market }}</h1>
 <p class="sub">Outside-in Radar from public data. No interviews and no private customer data.</p>
 
@@ -114,6 +114,7 @@
 </table>
 {% else %}<p>Not run.</p>{% endif %}
 
+<section id="simulation">
 <h2>7. Simulation (exploratory, unvalidated)</h2>
 <p><b>Status: {{ p.simulation.status }}.</b> SSR gold failed (stay 78%, switch 77%, bar 85%); cross-model agreement is unusable (lowest Spearman &rho; {{ p.simulation.stability.rho }} on {{ p.simulation.stability.cells }} cells); T3 is {{ p.simulation.t3.t3 }} ({{ p.simulation.t3.usable }} of {{ p.simulation.t3.events }} past price changes had enough switchers to score). This section is not evidence, does not count toward any node, and feeds no quantity.</p>
 <p class="small">Model: {{ p.simulation.model }}. Calibrated on {{ p.simulation.calibrated_on|length }} masked public posts: measured inputs USER and problem (precision against model labels), the 4 below-bar supporting posts, and unmeasured tags at low weight ({{ p.simulation.calibration.unmeasured_low_weight|join(", ") }}). Interval: 80% bootstrap over agent &times; app &times; repeat cells. Repeat MAD {{ p.simulation.validity.repeat_mad }}; price order preserved in {{ p.simulation.validity.price_order_preserved }}.</p>
@@ -121,6 +122,7 @@
 <tr><th>If&hellip;</th><th>Mean P(switch)</th><th>80% interval</th><th>Label</th></tr>
 {% for c in p.simulation.conditions %}<tr><td>{{ c.text }}{% if c.note %}<br><span class="small">{{ c.note }}</span>{% endif %}</td><td>{{ c.p_switch }}</td><td>{{ c.interval80[0] }}&ndash;{{ c.interval80[1] }}</td><td><span class="syn">{{ c.label }}</span></td></tr>{% endfor %}
 </table>
+</section>
 
 <h2>8. Method and limits</h2>
 <ul>
