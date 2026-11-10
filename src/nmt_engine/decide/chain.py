@@ -52,7 +52,8 @@ class Targets:
 
 def monte_carlo(qs: dict[str, Quantity], t: Targets, n: int = RUNS, seed: int = SEED) -> dict:
     """Fixed-seed draws along the chain: Q1 x Q7 customers paying Q4 a month, serving cost Q5,
-    acquisition cost Q6. Q8 (value gap vs the best alternative) is normal, the rest log-normal."""
+    acquisition cost Q6, kept month to month with probability Q9. Q8 (value gap vs the best
+    alternative) is normal, the rest log-normal; Q9 is clipped below 1."""
     rng = np.random.default_rng(seed)
 
     def draw(q: str) -> np.ndarray:
@@ -62,11 +63,15 @@ def monte_carlo(qs: dict[str, Quantity], t: Targets, n: int = RUNS, seed: int = 
         mu, sd = to_log(med, lo, hi)
         return rng.lognormal(mu, sd, n)
 
-    d = {q: draw(q) for q in ("Q1", "Q4", "Q5", "Q6", "Q7", "Q8")}
+    d = {q: draw(q) for q in ("Q1", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9")}
+    keep = np.clip(d["Q9"], 0.0, 0.999)
+    lifetime = 1 / (1 - keep)
     unit = d["Q4"] - d["Q5"]
     margin = unit / d["Q4"]
     payback = np.where(unit > 0, d["Q6"] / np.maximum(unit, 1e-12), np.inf)
-    revenue = d["Q1"] * d["Q7"] * d["Q4"] * 12
+    payback = np.where(payback <= lifetime, payback, np.inf)
+    first_year_months = (1 - keep**12) / (1 - keep)
+    revenue = d["Q1"] * d["Q7"] * d["Q4"] * first_year_months
     return {
         "runs": n,
         "seed": seed,

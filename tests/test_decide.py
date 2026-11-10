@@ -79,3 +79,12 @@ def test_report_gate_flags_missing_page_one_and_banned_claims():
         + "</section><p>not human-verified</p>"
     )
     assert groundwork.check(ok, pkt | {"radar": {"groups": []}}) == []
+
+
+def test_retention_moves_volume_and_payback():
+    t = chain.Targets(annual_revenue=300_000)
+    hi, lo = _all(), _all()
+    hi["Q9"] = _q("Q9", (0.97, 0.95, 0.99))
+    lo["Q9"] = _q("Q9", (0.3, 0.2, 0.4))
+    a, b = chain.monte_carlo(hi, t), chain.monte_carlo(lo, t)
+    assert a["p_volume"] > b["p_volume"] and a["p_payback"] > b["p_payback"]
