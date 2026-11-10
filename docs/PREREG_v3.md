@@ -452,3 +452,42 @@ Nothing here changes a B3 label, T1, T2 or T3, or any node status.
    report; an overreaching claim is reworded or removed, and the change is logged.
 8. **Budget.** B5 at most $6: producer pass $3, group naming $1, red team $2 (`redteam` step
    cap). A step that would exceed its cap stops and is reported.
+
+## 15. Amendment 8 (2026-11-10, B6 fixes after the user read the first report; before any run)
+
+The user read the first Groundwork report and approved three fixes while T4 waits. Nothing here
+changes a B3 label, T1, T2, T3, a node status, page 1, the simulation section or its labels, or
+the NO GO. The original k = 12 group table stays in the report as an appendix.
+
+1. **Merged themes.** Input: the 12 amendment-7 groups exactly as recorded in `runs/b5/radar.json`
+   (membership is not recomputed). Each group's centroid is the normalised mean of its members'
+   cached Qwen3 vectors (the same masked first 300 characters; no new embedding spend).
+   Agglomerative merge with average linkage on cosine distance between centroids (scipy
+   `linkage(method="average", metric="cosine")`), cut with `fcluster(criterion="distance")` at
+   the 25th percentile of the 66 pairwise centroid distances. The threshold is fixed here as that
+   quantile, before any merge is seen, and is not tuned. Whatever number of themes it gives is
+   reported. A theme's label is the name of its largest member group (by distinct authors), with
+   the member group names listed under it; no model call. Distinct voices per theme are the
+   union of member author hashes, so an author with posts in two merged groups counts once.
+2. **Single-app concentration.** For each theme (and each original group in the appendix): the
+   share of its distinct authors who reviewed its largest app. Over 50% is flagged
+   "mostly one app: <name>".
+3. **List prices into Q4.** Source: for each of the 9 amendment-6 pricing URLs, the latest
+   status-200 Wayback snapshot at or before 2025-11-07 that the B4 replay already fetched (read
+   from the B4 collector cache via its retrieval log; no new harvest). DeepSeek V4.1 Flash reads
+   the snapshot text (first 20,000 characters) and lists each plan's list price as
+   `{plan, price, currency, period, quote}`; the list price is the regular price, so where a
+   page shows a promotion, the "was"/"usually" price is used. A row is kept only if its quote is
+   verbatim in the snapshot text and contains the price digits; one retry on failure. The table
+   records app, plan, price, currency, billing period, snapshot date and URL.
+   Q4 input per app: the lowest paid (non-zero) plan in USD per month (monthly billing; if only
+   an annual price is shown, annual / 12). Q4 estimate = (median, 10th, 90th percentile) across
+   apps with a value, numpy linear interpolation. Q4 is graded by `synth.grade` with
+   `anchored=True` and one family (`revealed_price`), so the frozen rule gives at most S1. List
+   price is not willingness to pay; the report says so. The Monte Carlo still runs only if every
+   Q on the chain is at least S1 (amendment 7 rule 6).
+4. **Red team.** GLM-5.3 (thinking off) reads only the changed sections (themes, concentration,
+   price table and Q4 grade) as JSON, with the amendment-7 prompt; findings are shown and
+   answered in the report as before.
+5. **Budget.** At most $2 of model spend for this amendment (step `a8`): price extraction and the
+   red team. A call that would exceed it stops and is reported.
