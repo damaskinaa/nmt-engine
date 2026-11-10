@@ -185,6 +185,9 @@ evidence; 0 of 10 supported, 0 of 10 contradicted. Nothing in B4 changes that.
   (year counts are not trends, but 2026 is not a date error; alternatives do not use the model
   tag). No single input flips the conclusion.
 - **Spend:** $1.30 of the $6 cap (producer $1.09, naming $0.19, red team $0.03).
+- **Known B4 limit (found in review):** for the `entrant` condition the new app was not an SSR
+  switch destination, so its P(switch) is undercounted; the report row says so. Fixing it needs
+  a B4 rerun, which the spent $8 cap does not allow.
 
 ## B6: first Groundwork report
 

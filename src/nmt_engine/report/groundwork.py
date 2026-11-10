@@ -91,6 +91,12 @@ def riskiest(graph_path: Path = node_gold.GRAPH) -> list[dict]:
     return out
 
 
+ENTRANT_NOTE = (
+    "The new app was not one of the switch destinations SSR scored (B4 offered only existing "
+    "options), so switching to it is undercounted here."
+)
+
+
 def _nfc(s: str) -> str:
     return unicodedata.normalize("NFC", s)
 
@@ -117,6 +123,7 @@ def simulation(b4: Path) -> dict:
                 "interval80": [round(float(lo), 3), round(float(hi), 3)],
                 "cells": int(len(ps)),
                 "label": CLAIM_LABEL,
+                "note": ENTRANT_NOTE if cond == "entrant" else None,
             }
         )
     cal = _load(b4 / "calibration.json")

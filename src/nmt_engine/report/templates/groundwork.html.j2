@@ -119,7 +119,7 @@
 <p class="small">Model: {{ p.simulation.model }}. Calibrated on {{ p.simulation.calibrated_on|length }} masked public posts: measured inputs USER and problem (precision against model labels), the 4 below-bar supporting posts, and unmeasured tags at low weight ({{ p.simulation.calibration.unmeasured_low_weight|join(", ") }}). Interval: 80% bootstrap over agent &times; app &times; repeat cells. Repeat MAD {{ p.simulation.validity.repeat_mad }}; price order preserved in {{ p.simulation.validity.price_order_preserved }}.</p>
 <table>
 <tr><th>If&hellip;</th><th>Mean P(switch)</th><th>80% interval</th><th>Label</th></tr>
-{% for c in p.simulation.conditions %}<tr><td>{{ c.text }}</td><td>{{ c.p_switch }}</td><td>{{ c.interval80[0] }}&ndash;{{ c.interval80[1] }}</td><td><span class="syn">{{ c.label }}</span></td></tr>{% endfor %}
+{% for c in p.simulation.conditions %}<tr><td>{{ c.text }}{% if c.note %}<br><span class="small">{{ c.note }}</span>{% endif %}</td><td>{{ c.p_switch }}</td><td>{{ c.interval80[0] }}&ndash;{{ c.interval80[1] }}</td><td><span class="syn">{{ c.label }}</span></td></tr>{% endfor %}
 </table>
 
 <h2>8. Method and limits</h2>
