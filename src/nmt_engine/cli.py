@@ -840,6 +840,23 @@ def radar_build(
     typer.echo(json.dumps({k: doc[k] for k in keys}))
 
 
+A8_CAP = 2.0
+
+
+def _a8_budget(run_dir: Path):
+    """Amendment 8's $2 covers every a8 call in this run dir, so earlier logged spend counts."""
+    from nmt_engine.llm import Budget
+
+    spent = 0.0
+    log = run_dir / "llm_log.jsonl"
+    if log.is_file():
+        for line in log.read_text("utf-8").splitlines():
+            r = json.loads(line)
+            if str(r.get("purpose", "")).startswith("a8.") and not r.get("cached"):
+                spent += r.get("cost_usd") or 0.0
+    return Budget(step_caps={"a8": A8_CAP}, by_step={"a8": spent})
+
+
 @radar_app.command("themes")
 def radar_themes(
     harvest: Annotated[Path, typer.Option("--harvest")] = Path("runs/l2"),
@@ -887,12 +904,12 @@ def radar_prices(
 ) -> None:
     """Amendment 8 rule 3: list prices from the B4 Wayback snapshots -> table and Q4 grade."""
     from nmt_engine.decide import prices
-    from nmt_engine.llm import PRODUCER, Budget
+    from nmt_engine.llm import PRODUCER
     from nmt_engine.radar import build
     from nmt_engine.verify.gold import PRODUCER_REASONING
 
     snaps = prices.latest_snapshots(replay_store)
-    llm = _tensorx(PRODUCER, run_dir, PRODUCER_REASONING, budget=Budget(step_caps={"a8": 2.0}))
+    llm = _tensorx(PRODUCER, run_dir, PRODUCER_REASONING, budget=_a8_budget(run_dir))
     rows, read = [], {}
     try:
         for app in prices.PRICING:
@@ -948,12 +965,8 @@ def report_build(
     rt8_path, rt8 = run_dir / "redteam_a8.json", None
     if rt8_path.is_file():
         rt8 = json.loads(rt8_path.read_text("utf-8"))
-    elif red_team and pkt["prices"] is not None:
-        from nmt_engine.llm import Budget
-
-        llm = _tensorx(
-            THIRD_MODEL, run_dir, "none", max_tokens=6000, budget=Budget(step_caps={"a8": 2.0})
-        )
+    elif red_team and (pkt["prices"] is not None or pkt["radar"].get("themes")):
+        llm = _tensorx(THIRD_MODEL, run_dir, "none", max_tokens=6000, budget=_a8_budget(run_dir))
         try:
             rt8 = groundwork.red_team(llm, groundwork.changed_sections(pkt), "a8.redteam")
         finally:

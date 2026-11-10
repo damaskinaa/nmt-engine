@@ -182,3 +182,47 @@ def test_list_prices_grade_q4_s1_and_skip_annual_billing():
     assert prices.q4({}).grade == "S0"
     qs = _all() | {"Q4": q, "Q1": _q("Q1", None, "S0")}
     assert chain.can_run(qs) == ["Q1"]
+
+
+def test_a8_budget_counts_logged_spend(tmp_path):
+    import json
+
+    from nmt_engine.cli import _a8_budget
+
+    rows = [
+        {"purpose": "a8.prices", "cost_usd": 1.5, "cached": False},
+        {"purpose": "a8.prices", "cost_usd": 1.5, "cached": True},
+        {"purpose": "radar.label", "cost_usd": 3.0, "cached": False},
+    ]
+    (tmp_path / "llm_log.jsonl").write_text("\n".join(json.dumps(r) for r in rows))
+    b = _a8_budget(tmp_path)
+    assert b.by_step == {"a8": 1.5}
+    b.reserve("a8.redteam", 0.4)
+    try:
+        b.reserve("a8.redteam", 0.2)
+    except Exception as e:  # noqa: BLE001
+        assert "a8" in str(e)
+    else:
+        raise AssertionError("cap not enforced")
+
+
+def test_price_retry_keeps_the_better_attempt():
+    from nmt_engine.decide import prices
+
+    text = "Pro $12 Per month. Team $20 Per month"
+    good = [
+        {"plan": "Pro", "price": 12, "quote": "$12 Per month"},
+        {"plan": "Team", "price": 20, "quote": "$20 a month"},
+    ]
+    worse = [{"plan": "Pro", "price": 12, "quote": "twelve"}]
+
+    class Fake:
+        def __init__(self):
+            self.answers = [{"plans": good}, {"plans": worse}]
+
+        def complete_json(self, *a):
+            return self.answers.pop(0)
+
+    snap = {"text": text, "url": "u", "date": "2025-01-01"}
+    rows = prices.extract(Fake(), "A", snap)
+    assert [r["plan"] for r in rows] == ["Pro"]
