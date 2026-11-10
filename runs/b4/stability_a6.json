@@ -1,0 +1,10 @@
+{
+  "cells": 53,
+  "pairs": {
+    "deepseek vs glm": 0.423,
+    "deepseek vs kimi": 0.4036,
+    "glm vs kimi": 0.4581
+  },
+  "rho": 0.4036,
+  "verdict": "unusable"
+}

@@ -117,3 +117,48 @@ families, collector fixes, graph viewer and statistics.
   app-ID allow-list.
 - **Scope after T2:** `docs/RADAR_SCOPE.md` describes the Radar report that B1–B3 can support
   and which of B4–B7 it still needs. B4 (simulation) is on hold pending the owner's decision.
+
+## B4: simulation world, SSR, cross-model, replay (T3) — invoicing
+
+Resumed by the owner after T2 failed (PREREG_v3 amendment 6). B3 node status is fixed: all 10
+nodes unknown; J2, J3 and S2 have some supporting posts below the L4 bar; 7 nodes have no public
+evidence; 0 of 10 supported, 0 of 10 contradicted. Nothing in B4 changes that.
+
+- **SSR gold (amendment 4 gate): FAILED.** Test precision stay 18/23 = 78.3%, switch 23/30 =
+  76.7% (bar 85%); consider 17/19, NOT MEASURED. Precision is against Kimi-written synthetic
+  answers, not human labels. **The simulation section is exploratory whatever T3 says.**
+- **Calibrated world (amendment 6 rule 3):** 5 segment agents, each grounded on 5 masked quotes:
+  the 4 B3 supporting posts first (up to 2 per agent, where the node is one of the agent's), then
+  posts weighted 1.0 (problem tag, measured), 0.6 (only unmeasured tags) or 0.5 (no tag). Record:
+  `runs/b4/calibration.json`. Every row carries `SYNTHETIC (simulation estimate)` and the post
+  ids it was calibrated on.
+  - DeepSeek, 3 repeats: 567/567 cells answered. Repeat MAD 0.159, SD of P(switch) 0.257,
+    price order preserved in 8/27 agent × incumbent pairs.
+  - GLM-5.3 (thinking off), 1 repeat: 189/189 cells.
+  - Kimi K3.1 Pro answered 53 of 189 cells before B4 reached the $8 cap (rule 8). On those 53
+    cells: DeepSeek vs GLM 0.42, DeepSeek vs Kimi 0.40, GLM vs Kimi 0.46. Lowest ρ 0.40:
+    **unusable**, on any pair (`runs/b4/stability_a6.json`).
+- **Cross-model stability: UNUSABLE.** DeepSeek vs GLM Spearman ρ = 0.488 (< 0.5). The lowest
+  pairwise ρ decides, so a third model cannot lift it. Per amendment 4 the simulated family is
+  dropped from Q4/Q7.
+- **Historical replay (amendment 6 rule 5, events frozen in `runs/b4/replay/events.json` before
+  predictions, predictions frozen in `predictions.json` before outcomes):**
+  - Wayback, 9 pinned pricing pages, 2019-01 to 2025-11: 187 candidate currency-line changes,
+    154 with daily snapshots no more than 31 days apart. Kimi confirmed 21 as price or plan
+    changes after the 365-day spacing rule (candidates were confirmed only when they could be
+    kept; this selects the same set as confirming all of them). 7 candidates stayed unlabelled
+    after the retry.
+  - Simulator prediction: Invoice Ninja for 11 events, FreshBooks for 9, Invoice Simple for 1.
+    Baseline (most-mentioned option in the year before): QuickBooks 5, accountant or bookkeeper 5,
+    spreadsheet 4, invoices by hand 3, FreshBooks 2, Xero 1, Bonsai 1 (3 events had no mention in the year before, so the
+    baseline fell back to the first option). They never agreed.
+  - Outcomes: 1,744 posts in the year after T1 (HN comments plus allow-listed App Store
+    reviews), 221 passed the leaving-word prefilter, Kimi labelled 216 (5 posts of the Wave 2025
+    event left unlabelled when the $2 outcome cap was reached). Across all 21 events, Kimi found
+    11 authors who said they left for a listed option; no event had more than 2.
+- **T3: UNDECIDABLE.** 0 of 21 events usable (each needs at least 3 authors naming a listed
+  option; 3 usable events are needed). The 5 unlabelled posts cannot change this: they belong to
+  one event, and one usable event is still fewer than 3. Finding: public posts rarely say where
+  a switcher went, so replay cannot score this simulator at this volume.
+- **Spend:** B4 `sim` step $7.54 of the $8 cap (worlds, replay confirmation,
+  predictions, outcome labelling, Kimi world). No step went over its cap.
