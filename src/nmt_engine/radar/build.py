@@ -11,7 +11,7 @@ import numpy as np
 
 from nmt_engine.sim import replay
 from nmt_engine.sim.agents import QUOTE_CHARS, _mask
-from nmt_engine.store import load_run
+from nmt_engine.store import load_run, read_text_in
 from nmt_engine.verify import author
 from nmt_engine.verify.gold import GOLD_DIR, _read_jsonl
 
@@ -45,7 +45,7 @@ def pool(harvest_dir: Path, out: Path = GOLD_DIR) -> list[dict]:
             rows.append((s, None))
     posts = []
     for s, app in rows:
-        text = (Path(harvest_dir) / s.text_path).read_text("utf-8")
+        text = read_text_in(Path(harvest_dir), s.text_path)
         posts.append(
             {
                 "id": s.id,

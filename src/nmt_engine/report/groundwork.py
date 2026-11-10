@@ -9,6 +9,7 @@ import json
 import re
 import shutil
 import subprocess
+import unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -90,6 +91,10 @@ def riskiest(graph_path: Path = node_gold.GRAPH) -> list[dict]:
     return out
 
 
+def _nfc(s: str) -> str:
+    return unicodedata.normalize("NFC", s)
+
+
 def _cap(s: str) -> str:
     return s[:1].upper() + s[1:]
 
@@ -135,7 +140,7 @@ def radar(b5: Path) -> dict:
         pid = g.get("quote_post")
         g["receipt"] = r["meta"][pid]["url"] if pid else None
         g["quote"] = _mask(g["quote"]) if g.get("quote") else None
-        g["verbatim"] = bool(pid) and g["quote"] in _mask(quotes[pid])
+        g["verbatim"] = bool(pid) and _nfc(g["quote"]) in _nfc(_mask(quotes[pid]))
         g["examples"] = [
             {"text": _mask(quotes[i])[:240], "url": r["meta"][i]["url"]} for i in g["nearest"][:3]
         ]

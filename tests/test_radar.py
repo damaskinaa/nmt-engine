@@ -46,3 +46,14 @@ def test_groups_are_deterministic_and_flag_thin():
     assert [g["members"] for g in a] == [g["members"] for g in b]
     assert sum(g["posts"] for g in a) == 30
     assert all(g["thin"] == (g["authors"] < 3 or len(g["apps"]) < 2) for g in a)
+
+
+def test_source_text_cannot_leave_run_dir(tmp_path):
+    import pytest
+
+    from nmt_engine.store import read_text_in
+
+    (tmp_path / "a.txt").write_text("ok", "utf-8")
+    assert read_text_in(tmp_path, "a.txt") == "ok"
+    with pytest.raises(ValueError):
+        read_text_in(tmp_path / "sub", "../a.txt")

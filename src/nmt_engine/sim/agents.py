@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 from nmt_engine.hypothesis.schema import HypothesisGraph
-from nmt_engine.store import load_run
+from nmt_engine.store import load_run, read_text_in
 from nmt_engine.verify import gold
 from nmt_engine.verify.gold import GOLD_DIR, _read_jsonl
 
@@ -51,7 +51,7 @@ def user_pool(run_dir: Path, out: Path = GOLD_DIR) -> list[dict]:
         s = run.sources.get(a["source_id"])
         if s is None or a["role"] != "USER" or not a["names_solution"] or s.id in seen:
             continue
-        text = (Path(run_dir) / s.text_path).read_text("utf-8")
+        text = read_text_in(Path(run_dir), s.text_path)
         pool.append({"id": s.id, "text": _mask(text), "published": s.published_at, "tags": None})
         seen.add(s.id)
     texts = {p.id: p.text for p in gold.load_posts()}
