@@ -57,3 +57,25 @@ def test_validation_needs_every_item():
     assert not chain.validate(qs, mc, False)["validated"]
     assert chain.decision(True, 10, 50) == "GO to build"
     assert chain.decision(True, 100, 50).startswith("NO GO")
+
+
+def test_report_gate_flags_missing_page_one_and_banned_claims():
+    from nmt_engine.report import groundwork
+
+    pkt = {
+        "status": {"supported": 0, "contradicted": 0},
+        "simulation": {"conditions": []},
+        "radar": {"groups": [{"name": "g", "quote": "q", "verbatim": False}]},
+        "monte_carlo": {"ran": False},
+    }
+    html = '<section class="page">0 of 10</section><p>Customers want reminders.</p>'
+    problems = groundwork.check(html, pkt)
+    assert any("7 of 10" in p for p in problems)
+    assert any("customers want" in p for p in problems)
+    assert any("verbatim" in p for p in problems)
+    ok = (
+        '<section class="page">'
+        + " ".join(groundwork.PAGE_ONE)
+        + "</section><p>not human-verified</p>"
+    )
+    assert groundwork.check(ok, pkt | {"radar": {"groups": []}}) == []

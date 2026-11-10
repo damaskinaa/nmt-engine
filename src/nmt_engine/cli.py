@@ -869,7 +869,10 @@ def report_build(
     if rt and resp.is_file():
         answers = json.loads(resp.read_text("utf-8"))
         for i, f in enumerate(rt.get("overreach") or []):
-            f["response"] = answers.get(str(i))
+            f["response"] = answers.get(f.get("where", ""), answers.get(str(i)))
     html = groundwork.render(pkt, rt, run_dir / "reports" / "groundwork.html")
     out = groundwork.pdf(html)
-    typer.echo(json.dumps({"html": str(html), "pdf": str(out) if out else None}))
+    problems = groundwork.check(html.read_text("utf-8"), pkt)
+    typer.echo(json.dumps({"html": str(html), "pdf": str(out) if out else None, "gate": problems}))
+    if problems:
+        raise typer.Exit(1)

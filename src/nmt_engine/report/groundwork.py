@@ -6,6 +6,7 @@ fixed wording. Simulation output appears only in its own section, labelled SYNTH
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -37,7 +38,10 @@ Q_NOTES = {
     "Q8": (NO_INPUT,),
     "Q9": (NO_INPUT,),
 }
-TOUCH = "T4 landing-page test: 3 headlines, EUR 49 vs EUR 149, about 200 founders or PMs"
+TOUCH = (
+    "T4 landing-page test (not run yet; B7): 3 headlines, EUR 49 vs EUR 149, "
+    "about 200 founders or PMs"
+)
 
 
 def _load(p: Path):
@@ -86,6 +90,10 @@ def riskiest(graph_path: Path = node_gold.GRAPH) -> list[dict]:
     return out
 
 
+def _cap(s: str) -> str:
+    return s[:1].upper() + s[1:]
+
+
 def simulation(b4: Path) -> dict:
     rows = _jsonl(b4 / "world_a6_deepseek-v4.1-flash_r3.jsonl")
     rng = np.random.default_rng(0)
@@ -97,7 +105,9 @@ def simulation(b4: Path) -> dict:
         conds.append(
             {
                 "condition": cond,
-                "text": CONDITIONS[cond].format(inc="the current app", job="get paid"),
+                "text": _cap(
+                    CONDITIONS[cond].format(inc="the current app", job="get paid", rival="a rival")
+                ),
                 "p_switch": round(float(ps.mean()), 3),
                 "interval80": [round(float(lo), 3), round(float(hi), 3)],
                 "cells": int(len(ps)),
@@ -125,6 +135,7 @@ def radar(b5: Path) -> dict:
         pid = g.get("quote_post")
         g["receipt"] = r["meta"][pid]["url"] if pid else None
         g["quote"] = _mask(g["quote"]) if g.get("quote") else None
+        g["verbatim"] = bool(pid) and g["quote"] in _mask(quotes[pid])
         g["examples"] = [
             {"text": _mask(quotes[i])[:240], "url": r["meta"][i]["url"]} for i in g["nearest"][:3]
         ]
@@ -210,9 +221,52 @@ def pdf(html: Path) -> Path | None:
         return None
     out = html.with_suffix(".pdf")
     subprocess.run(
-        [exe, "--headless=new", "--no-pdf-header-footer", f"--print-to-pdf={out}", html.as_uri()],
+        [
+            exe,
+            "--headless=new",
+            "--no-pdf-header-footer",
+            f"--print-to-pdf={out.resolve()}",
+            html.resolve().as_uri(),
+        ],
         check=True,
         capture_output=True,
         timeout=120,
     )
     return out
+
+
+FORBIDDEN = (
+    "customers want",
+    "human-verified",
+    "validated simulation",
+    "simulation is validated",
+    "market size",
+    "will pay",
+)
+PAGE_ONE = ("0 of 10", "7 of 10", "NOT DONE", "exploratory and unvalidated", "No money figure")
+
+
+def check(html: str, pkt: dict) -> list[str]:
+    """Report gates: page-1 facts, banned claims, labelled synthetic rows, receipts on quotes."""
+    problems = []
+    first = html.split('<section class="page">', 1)[-1].split("</section>", 1)[0]
+    problems += [f"page 1 lacks {s!r}" for s in PAGE_ONE if s not in first]
+    text = re.sub(r"<[^>]+>", " ", html).lower()
+    for s in FORBIDDEN:
+        for m in re.finditer(re.escape(s), text):
+            if not re.search(r"\b(not|no|never)\b", text[max(0, m.start() - 40) : m.start()]):
+                problems.append(f"banned claim {s!r}")
+    if pkt["status"]["supported"] or pkt["status"]["contradicted"]:
+        problems.append("a node has a status; B3 fixed all 10 at unknown")
+    sim = html.split("7. Simulation", 1)[-1].split("8. Method", 1)[0]
+    rows = sim.count("<tr><td>")
+    if rows != len(pkt["simulation"]["conditions"]) or sim.count(CLAIM_LABEL) < rows:
+        problems.append("a simulation row lacks its SYNTHETIC label")
+    quotes, receipts = html.count("<blockquote>"), html.count(">receipt</a>")
+    bad = [g["name"] for g in pkt["radar"]["groups"] if g.get("quote") and not g["verbatim"]]
+    problems += [f"quote not verbatim in its receipt: {n}" for n in bad]
+    if quotes != receipts:
+        problems.append(f"{quotes - receipts} quotes without a receipt")
+    if pkt["monte_carlo"].get("ran") and not pkt["monte_carlo"].get("interval80"):
+        problems.append("money figure without an interval")
+    return problems

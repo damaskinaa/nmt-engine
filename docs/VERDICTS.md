@@ -162,3 +162,34 @@ evidence; 0 of 10 supported, 0 of 10 contradicted. Nothing in B4 changes that.
   a switcher went, so replay cannot score this simulator at this volume.
 - **Spend:** B4 `sim` step $7.54 of the $8 cap (worlds, replay confirmation,
   predictions, outcome labelling, Kimi world). No step went over its cap.
+
+## B5: Radar inputs, L7 decision, red team (PREREG_v3 amendment 7)
+
+- **Pool:** 3,284 posts from the app-ID allow-list (3,283 App Store reviews from 9 listings, 1 HN
+  USER post); the 60 reviews of the two unrelated "Wave" listings are excluded.
+- **Producer pass (DeepSeek, frozen B3 prompts):** 3,135 posts called USER, 1,868 of them with a
+  problem (1,859 distinct authors); 0 unanswered. USER and problem are the two classes that pass
+  T1 (precision against model labels); the other element tags are NOT MEASURED and unused.
+- **Problem groups:** k-means, k = 12, seed 0, on Qwen3 vectors; Kimi named each group from its 8
+  nearest posts. No group is thin (all have at least 3 authors and 2 apps). Several overlap (three
+  about crashes, three about price); nothing was merged after clustering.
+- **Alternatives:** regex name matching per reviewed app, one vote per author; the model's
+  alternative tag is not used. Generic options (by hand / manually, accountant, spreadsheet)
+  over-match passing mentions, so those counts are upper bounds.
+- **L7:** every Q1–Q9 is S0 (no input of any family was collected in B1–B4; the simulated family
+  is dropped from Q4/Q7). Monte Carlo (10,000 runs, seed 0) is blocked; synthetic validation
+  fails 4 of 5 conditions. **Decision: NO GO to build; run the cheapest market touch (T4) first.**
+  No money figure and no EVPI.
+- **Red team (GLM-5.3, thinking off, packet only):** 12 overreach findings, each answered in the
+  report (`runs/b5/redteam_responses.json`); 10 agreed and fixed or stated in the limits, 2 partly
+  (year counts are not trends, but 2026 is not a date error; alternatives do not use the model
+  tag). No single input flips the conclusion.
+- **Spend:** $1.30 of the $6 cap (producer $1.09, naming $0.19, red team $0.03).
+
+## B6: first Groundwork report
+
+- `runs/b5/reports/groundwork.html` and `.pdf` (13 pages), built by `nmt report build`.
+- Report gates pass: page 1 states 0 of 10 supported, 7 of 10 with no public evidence, human
+  check NOT DONE, simulation exploratory and unvalidated, no money figure; no banned claim; every
+  simulation row is labelled SYNTHETIC (simulation estimate) with its interval and calibration
+  inputs; every quote is verbatim in its receipt.

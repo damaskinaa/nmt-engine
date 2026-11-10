@@ -127,7 +127,9 @@
   <li>Producer: DeepSeek V4.1 Flash. Auditor and gold labels: Kimi K3.1 Pro. Cross-model check: GLM-5.3. Embeddings: Qwen3. All through TensorX.</li>
   <li>Precision on the held-out test split (against model labels): {% for c, v in p.t1.items() %}{{ c }} {{ v.tp }}/{{ v.called }}{% if v.status %} ({{ v.status }}){% endif %}{% if not loop.last %}; {% endif %}{% endfor %}. Fewer than 20 calls means NOT MEASURED. Human label check: NOT DONE.</li>
   <li>T2 failed: supports plus contradicts had fewer than 20 test calls, so no node can be supported or contradicted. The product narrowed to this Radar.</li>
-  <li>Pool limits: App Store reviews from 9 allow-listed invoicing apps (US, GB, IE); the two unrelated "Wave" listings are excluded; there is no Reddit collector; star ratings were not stored; only 1 of the 16 HN USER posts is in this harvest.</li>
+  <li>Pool limits: App Store reviews from 9 allow-listed invoicing apps (US, GB, IE); the two unrelated "Wave" listings are excluded; there is no Reddit collector; star ratings sit in the review text but are not analysed; only 1 of the 16 HN USER posts is in this harvest. So the radar is one customer-voice family, not a market-level picture.</li>
+  <li>Themes: k = 12 was fixed before clustering and nothing was merged afterwards, so some themes overlap (three about crashes, three about price). Some themes come mostly from one app; the Apps column shows the split. Year counts have no per-year denominator and are not trends.</li>
+  <li>Alternatives: app names are matched by regex; the generic options (by hand / manually, accountant, spreadsheet) also match passing mentions such as "I have to enter it manually", so those counts are upper bounds.</li>
   <li>Voices are counted once per salted author hash. No names, emails or private data are stored.</li>
 </ul>
 </body>

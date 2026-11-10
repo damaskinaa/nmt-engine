@@ -1,0 +1,14 @@
+{
+  "radar.groups[0..11] (all 12 groups)": "Agreed. k = 12 was fixed in amendment 7 before clustering, and no merge was done afterwards. Three crash themes and three price themes overlap; read them as about 6 broader themes (crashes after updates, price and fees, account and payment support, mobile limits, receipts, mileage).",
+  "radar.groups[*].years": "Partly. Year counts are raw voices with no per-year denominator, so the report draws no trend from them. 2026 is not an error: the harvest ran in November 2026.",
+  "radar.by_platform": "Agreed. The radar is one customer-voice family (App Store reviews, US/GB/IE). It is not a market-level claim; added to Method and limits.",
+  "radar.groups[*].apps": "Agreed. Per-app voices are in the Apps column: 'Rising prices and invoice limits' is 108 of 125 Invoice Simple, 'Mobile app is unreliable and limited' is 60 of 97 Harvest. Read single-app themes as app-specific.",
+  "simulation.conditions": "Agreed. That is why the section is exploratory, sits last and feeds no quantity or node. The intervals are a bootstrap over cells: sampling spread only, not validity.",
+  "simulation.conditions[price10 vs price50]": "Agreed: noise, consistent with price order preserved in only 8 of 27 cases. Shown as a failure signal, not an estimate.",
+  "status.gold": "Agreed. The report calls these labels model-labelled (Kimi), the GLM figure cross-model agreement, and the human check NOT DONE. 'gold' is only the file name.",
+  "t1.trigger / success_criterion / alternative / aha / supports / contradicts": "Agreed. The report shows only counts for these classes, each marked NOT MEASURED (fewer than 20 calls); no precision is claimed.",
+  "riskiest[*].priority": "Agreed. Priority is the L1 risk ranking of unverified guesses: it orders what to test, not what is true.",
+  "alternatives (all)": "Partly. The map does not use the model's alternative tag (NOT MEASURED); it is name matching by regex. Agreed that it has no quality check: the generic patterns (manually, accountant) also match passing mentions; added to Method and limits.",
+  "touch": "Agreed. It is a plan, not a result; the report now says not run (B7).",
+  "monte_carlo": "Agreed. NO GO means do not build yet, because the inputs are missing; it does not mean the market is too small."
+}
