@@ -314,3 +314,102 @@ Within switch, P(switch to X) = P(switch) · q_X, with q_X ∝ s_X − min_Y s_Y
 switch outcomes (q = 1 with a single offer). Everything else in amendment 4 is unchanged: the
 top class is the largest of P(stay), P(consider), P(switch); each class needs ≥ 20 test calls and
 ≥ 85% precision; the T3 prediction is the highest mean P(switch to X).
+
+## 13. Amendment 6 (2026-11-10, B4 resumed after T2 FAILED; before any further B4 run)
+
+Reason. T2 failed, so the product narrowed to the Radar. The user then chose to keep the full
+plan: B4 resumes and runs to the B6 report. This amendment fixes what the simulation may claim,
+what it is calibrated on and how T3 is run, before any new world, replay or outcome run. Runs
+made before it (the amendment-4 DeepSeek and GLM worlds and the partial Kimi world, about $0.84)
+stay on record as superseded and are not reported as results. Amendments 4 and 5 still hold
+except where a rule below says otherwise.
+
+1. Evidence status is fixed from B3. All 10 riskiest nodes are **unknown**. J2, J3 and S2 have
+   some supporting posts (4 designated supporting pairs: J2 ×2, J3, S2), below the L4 bar of
+   ≥ 3 distinct authors from ≥ 2 families, so their status is unknown. The other 7 have no public
+   evidence in the amendment-3 harvest. 0 of 10 are supported and 0 are contradicted. No L5, L6
+   or replay output may change a node's status (gate 13 and the `simulated` firewall unchanged).
+
+2. Synthetic labelling. Every Job claim that comes from L5 or L6 is written to the ledger and
+   the report labelled **SYNTHETIC (simulation estimate)**, with its interval and the inputs it
+   was calibrated on (post ids, the class each was measured on, and the flag "unmeasured" where it
+   applies). L6 intervals: a cell value (agent × incumbent × condition) is shown with the range
+   over models and repeats; any aggregate (a condition's mean P(switch), a share) is shown with a
+   90% percentile bootstrap over cells (2,000 resamples, seed 6). L5 intervals are the conformal
+   intervals L5 already produces.
+
+3. Calibration inputs. The simulation is grounded only on what was measured:
+   - the quote pool stays the posts Kimi labelled USER naming a Solution (USER: PASS, precision
+     against model labels);
+   - each agent's 5 quote slots start with up to 2 of the 4 supporting posts (N014, N015 for J2;
+     N022 for J3; N029 for S2): those whose node is one of the agent's Core Jobs, or S2 when an
+     agent's incumbents include S2, nearest first by Qwen3 cosine; the rest are filled by cosine ×
+     weight, nearest first;
+   - weight 1.0 if the post carries a problem tag (Kimi gold label for B1 gold posts; the
+     producer's tag, which passed the problem gate, for L2 posts), 0.6 if it carries only
+     unmeasured tags (trigger, success criterion, alternative, aha), 0.5 if it carries none. So
+     the unmeasured classes add 0.1 at most: they are inputs at low weight and flagged as
+     unmeasured in the calibration record;
+   - the segment texts, Core Jobs and criteria order come from the L1 hypothesis graph, which has
+     0 of 10 nodes supported; the record flags them as unmeasured structure.
+
+4. T3 runs even though SSR failed. Amendment 4 said T3 does not run if SSR fails. It now runs
+   as pre-registered and is reported. Because the SSR gold failed (stay 18/23 = 78%, switch
+   23/30 = 77%, bar 85%), the simulation section of the report is marked **exploratory** whatever
+   T3's result. If T3 fails or is undecidable, it is exploratory too, and the build continues.
+
+5. Replay events, pinned. Pricing pages (Wayback, monthly snapshots, status 200, from 2019-01-01
+   to 2025-11-07, so that every outcome window ends before the harvest):
+
+   | App | Page |
+   |---|---|
+   | Bonsai | hellobonsai.com/pricing |
+   | FreshBooks | freshbooks.com/pricing |
+   | Harvest | getharvest.com/pricing |
+   | Invoice Ninja | invoiceninja.com/pricing-plans |
+   | Invoice2go | invoice.2go.com/pricing |
+   | QuickBooks | quickbooks.intuit.com/pricing |
+   | Wave | waveapps.com/pricing |
+   | Xero | xero.com/us/pricing-plans |
+   | Zoho Invoice | zoho.com/invoice/pricing |
+
+   Invoice Simple has no archived pricing page, so it has no events (it stays an option). A
+   candidate is a consecutive pair whose diff adds or removes a line with a currency amount
+   (`$`, `€`, `£` followed by a digit, or a number followed by USD, EUR or GBP). Daily snapshots
+   between the pair bracket the change by binary search on the page's set of currency lines;
+   a gap above 31 days is unusable. Kimi then confirms from the diff lines that it is a price or
+   plan change (closed question, verbatim quote, one retry). Per app, confirmed events are taken
+   in date order, and an event is dropped if its T1 is within 365 days of the T1 of an event
+   already kept for that app, so outcome windows never overlap. The kept list, written to
+   `runs/b4/replay/events.json` and committed, is the event set. Nothing else selects events.
+
+6. Sources, baseline and prediction. Posts mentioning the app (its name, word-bounded, any
+   case, except "Wave" and "Harvest", which must be capitalised because they are common words): HN comments from Algolia searched by the app name, and the B3 App Store reviews of the
+   app's own listings (allow-list: Bonsai 1333596451, FreshBooks 1052884030, Harvest 355395846,
+   Invoice Ninja 1503970375, Invoice2go 540236748, Invoice Simple 694831622, QuickBooks
+   584606479, Xero 441880705, Zoho Invoice 413017364; the two "Wave" listings are other apps and
+   are excluded). The baseline and the 13 options are as in amendment 4, with code name patterns
+   fixed in `nmt_engine.sim.replay.OPTIONS`. The prediction uses the 5 agents built from posts
+   published before the freeze date (T0 − 1 day), each starting on the app, with the condition
+   "{app} changed its pricing page." followed by the removed and added diff lines (at most 12,
+   200 characters each), DeepSeek, 3 repeats. Prediction = highest mean P(switch to X) over agents
+   and repeats; ties go to option order. Predictions and baselines for every event are committed
+   before any outcome post is fetched.
+
+7. Outcomes. Window T1 to T1 + 365 days. Pre-filter by code, before any model reads a post: the
+   post names the app and contains a leaving word (`left`, `leave`, `leaving`, `switch*`,
+   `moved`/`moving` `to`/`from`/`away`, `migrat*`, `cancel*`, `dropped`, `replac*`, `ditch*`,
+   `quit`). At most 60 posts per event: if more pass, the 60 with the smallest
+   sha256(event id + post id). Kimi answers the amendment-4 closed question with a verbatim quote
+   (one retry). One vote per author hash (the author's earliest labelled post in the window).
+   Usable: ≥ 3 authors name a listed option. Actual share of an option = its votes / votes naming
+   any listed option. Beats and pass as in amendment 4: the simulator beats the baseline if the
+   share of its option is strictly greater; T3 passes with ≥ 3 usable events and wins on at least
+   2/3 of them (so 2 of 3, 3 of 4, 4 of 5 …); fewer than 3 usable events is undecidable.
+
+8. Order and budget. The `sim` step cap stays $8 for all of B4 (spent before this amendment:
+   $1.35). Order: calibrated DeepSeek world (3 repeats) and GLM world; replay events, predictions
+   and outcomes (outcome labelling at most $2); then the Kimi world. If the Kimi world would
+   take B4 past $8, it stops there, and cross-model stability is reported on DeepSeek and GLM only,
+   saying so. Kimi world answers may use up to 4,000 output tokens, because the first run was cut
+   off at 1,200.
