@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import re
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -260,13 +261,14 @@ def confirm(llm, rows: list[dict], workers: int = 4) -> list[dict]:
     return rows
 
 
-def select(rows: list[dict], confirm_fn=None) -> list[dict]:
+def select(rows: list[dict], confirm_fn=None, workers: int = 1) -> list[dict]:
     """Per app, confirmed events by date; drop one whose T1 is within 365 days of a kept one.
     With `confirm_fn`, a candidate is confirmed only when it could be kept (same result as
-    confirming every candidate first, fewer Kimi calls)."""
-    kept = []
-    for app in PRICING:
-        last = None
+    confirming every candidate first, fewer Kimi calls). Apps are independent, so they may run
+    in parallel."""
+
+    def one(app: str) -> list[dict]:
+        kept, last = [], None
         mine = sorted(
             (r for r in rows if r["app"] == app and r.get("usable_dates")), key=lambda r: r["t1"]
         )
@@ -280,7 +282,10 @@ def select(rows: list[dict], confirm_fn=None) -> list[dict]:
             if r.get("confirmed"):
                 kept.append(r)
                 last = t1
-    return kept
+        return kept
+
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
+        return [e for kept in pool.map(one, PRICING) for e in kept]
 
 
 # --- posts: HN comments and allow-listed App Store reviews ---------------------------------

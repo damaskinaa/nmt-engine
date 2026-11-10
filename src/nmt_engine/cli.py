@@ -634,7 +634,7 @@ def sim_replay_events(
         rows = replay.discover(c, out, until)
     llm = _tensorx(AUDITOR, run_dir, max_tokens=4000, budget=_sim_budget(run_dir))
     try:
-        events = replay.select(rows, lambda rs: replay.confirm(llm, rs, workers=1))
+        events = replay.select(rows, lambda rs: replay.confirm(llm, rs, workers=1), workers=9)
     finally:
         llm.close()
     cand.write_text("".join(json.dumps(r) + "\n" for r in rows), "utf-8")
